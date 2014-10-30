@@ -448,6 +448,17 @@ dd { margin: 0 0 0 20px; }
 
 /*  5. Images  --------------------------------------------------------- */
 
+.profile-pic {
+	width: 500px;
+	height: 500px;
+	border-radius: 100px;
+	-webkit-border-radius: 100px;
+	-moz-border-radius: 100px;
+	box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+}
+
 img {
    max-width: 100%;
    height: auto;

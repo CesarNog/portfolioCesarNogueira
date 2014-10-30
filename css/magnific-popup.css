@@ -367,6 +367,17 @@ img.mfp-img {
   right: 0;
   padding-top: 0; }
 
+/* text-based popup styling */
+.white-popup {
+  position: relative;
+  background: #FFF;
+  padding: 25px;
+  width:auto;
+  max-width: 400px;
+  margin: 0 auto; 
+}
+
+
 
 
 
