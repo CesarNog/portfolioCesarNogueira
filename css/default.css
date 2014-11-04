@@ -813,6 +813,104 @@ properly.
 	text-align: center !important;
 }
 
+@-webkit-keyframes fade-in{
+from{
+    opacity:0;
+    top:0px;
+}
+to{
+    opacity:1;
+    top:-5px;
+}
+}
 
+@keyframes fade-in{
+from{
+    opacity:0;
+    top:0px;
+}
+to{
+    opacity:1;
+    top:-5px;
+}
+}
 
+@-moz-keyframes fade-in{
+from{
+    opacity:0;
+    top:0px;
+}
+to{
+    opacity:1;
+    top:-5px;
+}
+}
 
+.banner-text h3 {
+	-webkit-animation: fade-in ease-in 5s backwards;
+	-moz-animation: fade-in ease-in 5s backwards;
+	-ms-animation: fade-in ease-in 5s backwards;
+	animation: fade-in ease-in 5s backwards;	
+	
+	-webkit-animation-delay: 2s; /* Chrome, Safari, Opera */
+    animation-delay: 2s;
+	
+}
+
+.responsive-headline {
+	-webkit-animation: blurFadeIn 2s ease-in 0.5s backwards;
+	-moz-animation: blurFadeIn 2s ease-in 0.5s backwards;
+	-ms-animation: blurFadeIn 2s ease-in 0.5s backwards;
+	animation: blurFadeIn 2s ease-in 0.5s backwards;
+	color: transparent;
+	text-shadow: 0px 0px 1px #fff;
+}
+
+@-webkit-keyframes blurFadeIn{
+	0%{
+		opacity: 0;
+		text-shadow: 0px 0px 40px #fff;
+		-webkit-transform: scale(1.3);
+	}
+	50%{
+		opacity: 0.5;
+		text-shadow: 0px 0px 10px #fff;
+		-webkit-transform: scale(1.1);
+	}
+	100%{
+		opacity: 1;
+		text-shadow: 0px 0px 1px #fff;
+		-webkit-transform: scale(1);
+	}
+}
+
+@-moz-keyframes blurFadeIn{
+	0%{
+		opacity: 0;
+		text-shadow: 0px 0px 40px #fff;
+		-moz-transform: scale(1.3);
+	}
+	100%{
+		opacity: 1;
+		text-shadow: 0px 0px 1px #fff;
+		-moz-transform: scale(1);
+	}
+}
+
+@keyframes blurFadeIn{
+	0%{
+		opacity: 0;
+		text-shadow: 0px 0px 40px #fff;
+		transform: scale(1.3);
+	}
+	50%{
+		opacity: 0.5;
+		text-shadow: 0px 0px 10px #fff;
+		transform: scale(1.1);
+	}
+	100%{
+		opacity: 1;
+		text-shadow: 0px 0px 1px #fff;
+		transform: scale(1);
+	}
+}
