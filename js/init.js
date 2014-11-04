@@ -209,6 +209,21 @@ $('a.hinge').magnificPopup({
 
 /*------------------------------------------------------*/  
 
+$(".profilepicture").mouseover(function(){	
+     $(".pulse1").css("-webkit-animation-play-state", "running");  
+	 $(".pulse1").css("animation-play-state", "running");  
+	
+	 $(".pulse2").css("-webkit-animation-play-state", "running");
+	 $(".pulse2").css("animation-play-state", "running");  	 
+ })
+ .mouseleave(function() {
+     $(".pulse1").css("-webkit-animation-play-state", "paused");  
+	 $(".pulse1").css("animation-play-state", "paused");  
+	
+	 $(".pulse2").css("-webkit-animation-play-state", "paused");
+	 $(".pulse2").css("animation-play-state", "paused");
+  });
+
 
 });
 
