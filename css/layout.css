@@ -329,29 +329,69 @@ ul#nav li.current a { color: #F06000; }
   	width: 90%;
   	-moz-animation: css 6s ease;
   	-webkit-animation: css 6s ease;
+	animation: css 5s ease;
 }
 
 .html5 {
   	width: 80%;
   	-moz-animation: html5 5s ease;
   	-webkit-animation: html5 5s ease;
+	animation: html5 5s ease;
 }
 
 .java {
   	width: 80%;
   	-moz-animation: java 5s ease;
   	-webkit-animation: java 5s ease;
+	animation: java 5s ease;
 }
+
+.bar-expand:hover {
+	-moz-animation: fadeIn 3s ease-in-out;
+  	-webkit-animation: fadeIn 3s ease-in-out;
+	animation: fadeIn 3s ease-in-out;  	
+}
+
+@-webkit-keyframes fadeIn { 
+  0% { opacity: 0; }
+  20% { opacity: 0; }
+  40% { opacity: 0.3; }
+  60% { opacity: 0.5; }
+  80% { opacity: 0.9; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  20% { opacity: 0; }
+  40% { opacity: 0.3; }
+  60% { opacity: 0.5; }
+  80% { opacity: 0.9; }
+  100% { opacity: 1; }
+}
+
+@-moz-keyframes fadeIn {
+  0% { opacity: 0; }
+  20% { opacity: 0; }
+  40% { opacity: 0.3; }
+  60% { opacity: 0.5; }
+  80% { opacity: 0.9; }
+  100% { opacity: 1; }
+}
+
+
 
 .android {
   	width: 55%;
   	-moz-animation: android 2s ease;
   	-webkit-animation: android 2s ease;
+	animation: android 5s ease;
 }
 .wordpress {
   	width: 50%;
   	-moz-animation: wordpress 3s ease;
   	-webkit-animation: wordpress 3s ease;
+	animation: wordpress 5s ease;
 }
 
 
@@ -359,6 +399,7 @@ ul#nav li.current a { color: #F06000; }
   	width: 50%;
   	-moz-animation: jquery 2s ease;
   	-webkit-animation: jquery 2s ease;
+	animation: jquery 5s ease;
 }
 
 @-moz-keyframes java {
