@@ -57,9 +57,9 @@ inset 0 0 0 10px  rgba(0,0,255,.2);
     opacity: 0;
     border: 3px solid rgba(255,255,255,.1);
   
-    -webkit-animation: pulsejg1 4s linear infinite;
-    -moz-animation: pulsejg1 4s linear infinite;
-    animation: pulsejg1 4s linear infinite;
+    -webkit-animation: pulsejg1 2s linear infinite;
+    -moz-animation: pulsejg1 2s linear infinite;
+    animation: pulsejg1 2s linear infinite;
 	
 	-webkit-animation-play-state: paused; /* Chrome, Safari, Opera */
     animation-play-state: paused;
@@ -86,9 +86,9 @@ inset 0 0 0 10px  rgba(0,0,255,.2);
     opacity: 0;
     border: 1px solid rgba(255,255,255,0);
   
-    -webkit-animation: pulsejg2 4s linear infinite;
-    -moz-animation: pulsejg2 4s linear infinite;
-    animation: pulsejg2 4s linear infinite;
+    -webkit-animation: pulsejg2 3s linear infinite;
+    -moz-animation: pulsejg2 3s linear infinite;
+    animation: pulsejg2 3s linear infinite;
 	
 	-webkit-animation-play-state: paused; /* Chrome, Safari, Opera */
     animation-play-state: paused;
