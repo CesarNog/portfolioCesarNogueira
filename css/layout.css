@@ -318,39 +318,112 @@ ul#nav li.current a { color: #F06000; }
 
    margin: 0;
    padding-right: 24px;
-  	background: #313131;
+   background: #313131;
    display: inline-block;
-  	height: 42px;
+   height: 42px;
    line-height: 42px;
    border-radius: 3px 0 0 3px;
+   text-align:right;
 }
 
-.css {
-  	width: 90%;
-  	-moz-animation: css 6s ease;
-  	-webkit-animation: css 6s ease;
-	animation: css 5s ease;
-}
-
-.html5 {
-  	width: 80%;
-  	-moz-animation: html5 5s ease;
-  	-webkit-animation: html5 5s ease;
-	animation: html5 5s ease;
+.bar-expand:hover {
+	-moz-animation: fadeIn 3s ease;
+  	-webkit-animation: fadeIn 3s ease;
+	animation: fadeIn 3s ease;  	
 }
 
 .java {
-  	width: 80%;
+  	width: 90%;
   	-moz-animation: java 5s ease;
   	-webkit-animation: java 5s ease;
 	animation: java 5s ease;
 }
-
-.bar-expand:hover {
-	-moz-animation: fadeIn 3s ease-in-out;
-  	-webkit-animation: fadeIn 3s ease-in-out;
-	animation: fadeIn 3s ease-in-out;  	
+@-webkit-keyframes java {
+  0%   { width: 0px;  }
+  100% { width: 90%;  }
 }
+@-moz-keyframes java {
+  0%   { width: 0px;  }
+  100% { width: 90%;  }
+}
+
+
+.css {
+  	width: 50%;
+  	-moz-animation: css 6s ease;
+  	-webkit-animation: css 6s ease;
+	animation: css 5s ease;
+}
+@-webkit-keyframes css {
+  0%   { width: 0px;  }
+  100% { width: 50%;  }
+}
+@-moz-keyframes css {
+  0%   { width: 0px;  }
+  100% { width: 50%;  }
+}
+
+.html5 {
+  	width: 60%;
+  	-moz-animation: html5 5s ease;
+  	-webkit-animation: html5 5s ease;
+	animation: html5 5s ease;
+}
+@-webkit-keyframes html5 {
+  0%   { width: 0px;  }
+  100% { width: 60%;  }
+}
+@-moz-keyframes html5 {
+  0%   { width: 0px;  }
+  100% { width: 80%;  }
+}
+
+.android {
+  	width: 55%;
+  	-moz-animation: android 2s ease;
+  	-webkit-animation: android 2s ease;
+	animation: android 5s ease;
+}
+@-webkit-keyframes android {
+  0%   { width: 0px;  }
+  100% { width: 55%;  }
+}
+@-moz-keyframes android {
+  0%   { width: 0px;  }
+  100% { width: 55%;  }
+}
+
+
+.wordpress {
+  	width: 50%;
+  	-moz-animation: wordpress 3s ease;
+  	-webkit-animation: wordpress 3s ease;
+	animation: wordpress 5s ease;
+}
+@-webkit-keyframes wordpress {
+  0%   { width: 0px;  }
+  100% { width: 50%;  }
+}
+@-moz-keyframes wordpress {
+  0%   { width: 0px;  }
+  100% { width: 50%;  }
+}
+
+.jquery {
+  	width: 60%;
+  	-moz-animation: jquery 2s ease;
+  	-webkit-animation: jquery 2s ease;
+	animation: jquery 5s ease;
+}
+@-webkit-keyframes jquery {
+  0%   { width: 0px;  }
+  100% { width: 60%;  }
+}
+@-moz-keyframes jquery {
+  0%   { width: 0px;  }
+  100% { width: 50%;  }
+}
+
 
 @-webkit-keyframes fadeIn { 
   0% { opacity: 0; }
@@ -381,76 +454,7 @@ ul#nav li.current a { color: #F06000; }
 
 
 
-.android {
-  	width: 55%;
-  	-moz-animation: android 2s ease;
-  	-webkit-animation: android 2s ease;
-	animation: android 5s ease;
-}
-.wordpress {
-  	width: 50%;
-  	-moz-animation: wordpress 3s ease;
-  	-webkit-animation: wordpress 3s ease;
-	animation: wordpress 5s ease;
-}
 
-
-.jquery {
-  	width: 50%;
-  	-moz-animation: jquery 2s ease;
-  	-webkit-animation: jquery 2s ease;
-	animation: jquery 5s ease;
-}
-
-@-moz-keyframes java {
-  0%   { width: 0px;  }
-  100% { width: 80%;  }
-}
-@-moz-keyframes android {
-  0%   { width: 0px;  }
-  100% { width: 55%;  }
-}
-@-moz-keyframes wordpress {
-  0%   { width: 0px;  }
-  100% { width: 50%;  }
-}
-@-moz-keyframes css {
-  0%   { width: 0px;  }
-  100% { width: 90%;  }
-}
-@-moz-keyframes html5 {
-  0%   { width: 0px;  }
-  100% { width: 80%;  }
-}
-@-moz-keyframes jquery {
-  0%   { width: 0px;  }
-  100% { width: 50%;  }
-}
-
-@-webkit-keyframes java {
-  0%   { width: 0px;  }
-  100% { width: 80%;  }
-}
-@-webkit-keyframes android {
-  0%   { width: 0px;  }
-  100% { width: 55%;  }
-}
-@-webkit-keyframes wordpress {
-  0%   { width: 0px;  }
-  100% { width: 50%;  }
-}
-@-webkit-keyframes css {
-  0%   { width: 0px;  }
-  100% { width: 90%;  }
-}
-@-webkit-keyframes html5 {
-  0%   { width: 0px;  }
-  100% { width: 80%;  }
-}
-@-webkit-keyframes jquery {
-  0%   { width: 0px;  }
-  100% { width: 50%;  }
-}
 
 /* ------------------------------------------------------------------ */
 /* e. Portfolio Section
