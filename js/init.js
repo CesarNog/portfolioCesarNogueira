@@ -224,7 +224,6 @@ $(".profilepicture").mouseover(function(){
 	 $(".pulse2").css("animation-play-state", "paused");
   });
 
-
 });
 
 
