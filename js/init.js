@@ -223,6 +223,8 @@ $(".profilepicture").mouseover(function(){
 	 $(".pulse2").css("-webkit-animation-play-state", "paused");
 	 $(".pulse2").css("animation-play-state", "paused");
   });
+  
+  GitHubActivity.feed({ username: "cesarnog", selector: "#feed" });
 
 });
 
