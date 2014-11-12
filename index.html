@@ -24,11 +24,19 @@
    <link rel="stylesheet" href="css/media-queries.css">
    <link rel="stylesheet" href="css/magnific-popup.css">
    <link rel="stylesheet" href="css/pulseProfilePicture.css">
-
+   
+	   <!-- Github Activity -->
+	   <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
+	   <link rel="stylesheet" href="css/github-activity.css">
+   
    <!-- Script
    ================================================== -->
 	<script src="js/modernizr.js"></script>
-
+	
+		<!-- Github Activity -->
+		<script type="text/javascript" src="js/mustache.min.js"></script>
+		<script type="text/javascript" src="js/github-activity.js"></script>
+	
    <!-- Favicons
 	================================================== -->
 	<link rel="shortcut icon" href="favicon.png" >
@@ -330,35 +338,21 @@ Jetty Embedded, Maven 3, PHP conversion to Java, JSP, Informix Databases, Java D
    </section> <!-- Resume Section End-->
 
 
-   <!-- Call-To-Action Section
-   ==================================================
-   <section id="call-to-action">
+   <!-- GitHub Activity
+   ----------------------------------------------- 
+   <section id="github">
 
-      <div class="row">
-
-         <div class="two columns header-col">
-
-            <h1><span>Get Hosting.</span></h1>
-
-         </div>
-
-         <div class="seven columns">
-
-            <h2><a href="http://www.dreamhost.com/r.cgi?287326|STYLESHOUT">Host This Template on Dreamhost.</a></h2>
-            <p>Looking for an awesome and reliable webhosting? Try <a href="http://www.dreamhost.com/r.cgi?287326|STYLESHOUT"><span>DreamHost</span></a>.
-					Get <span>$50 off</span> when you sign up with the promocode <span>STYLESHOUT</span>. </p>
-
-         </div>
-
-         <div class="three columns action">
-
-            <a href="http://www.dreamhost.com/r.cgi?287326|STYLESHOUT" class="button">Sign Up Now</a>
-
+       <div class="row skill"> 
+	   
+         <div class="main-col">
+		   
+           <div id="feed"></div>
+		   
          </div>
 
       </div>
 
-   </section>  Call-To-Action Section End-->
+   </section>  GitHub Activity End -->
 
 
    <!-- Testimonials Section
@@ -596,7 +590,7 @@ Jetty Embedded, Maven 3, PHP conversion to Java, JSP, Informix Databases, Java D
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	  })(window,document,'script','./js/analytics.js','ga');
 
 	  ga('create', 'UA-39005496-2', 'auto');
 	  ga('send', 'pageview');
