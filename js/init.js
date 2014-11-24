@@ -230,33 +230,38 @@
 		$.fancybox.close();
 	});
 	
-	$(window).on('scroll', function (e){
-	
-		numberScrollTop = 1 + Math.floor(Math.random() * 1000);
-	
-		if(($(window).scrollTop() >= (numberScrollTop)) && ($(window).scrollTop() <= (numberScrollTop + 300))){
+	var isMobile = window.matchMedia("only screen and (max-width: 760px)");
+
+    if (!isMobile.matches) {
+        
+		$(window).on('scroll', function (e){
 		
-			if(!hadScrollOnce){
-				$(".fancyboxHourOfCode").fancybox({									
-					autoScale: true,
-					transitionIn	:	'fadeIn',
-					transitionOut	:	'fade',
-					speedIn		:	2000, 
-					speedOut		:	800, 
-					overlayShow	:	true,
-					closeClick: true,
-					content: jQuery('#dataHourOfCode').html()
+			numberScrollTop = 1 + Math.floor(Math.random() * 1000);
+		
+			if(($(window).scrollTop() >= (numberScrollTop)) && ($(window).scrollTop() <= (numberScrollTop + 300))){
+			
+				if(!hadScrollOnce){
+					$(".fancyboxHourOfCode").fancybox({									
+						autoScale: true,
+						transitionIn	:	'fadeIn',
+						transitionOut	:	'fade',
+						speedIn		:	2000, 
+						speedOut		:	800, 
+						overlayShow	:	true,
+						closeClick: true,
+						content: jQuery('#dataHourOfCode').html()
+						
+					}).trigger('click');
+					hadScrollOnce = true;
 					
-				}).trigger('click');
-				hadScrollOnce = true;
-				
-				setTimeout(function() {
-					// Reset to open again after 1 minute
-					hadScrollOnce = false;
-				}, 120000);					
-			}		
-		}			
-	});
+					setTimeout(function() {
+						// Reset to open again after 1 minute
+						hadScrollOnce = false;
+					}, 120000);					
+				}		
+			}			
+		});	
+	}
 /*------------------------------------------------------*/  
 
 /* FadeIn on Scroll - ViewPort.js */	
