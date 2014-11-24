@@ -9,7 +9,6 @@
 /*----------------------------------------------------*/
 /* FitText Settings
 ------------------------------------------------------ */
-
     setTimeout(function() {
 	   $('h1.responsive-headline').fitText(1, { minFontSize: '40px', maxFontSize: '90px' });
 	 }, 100);
@@ -101,7 +100,7 @@
 
 /*----------------------------------------------------*/
 /*	Modal Popup
-------------------------------------------------------*/
+------------------------------------------------------
 
     $('.item-wrap a').magnificPopup({
 
@@ -116,7 +115,7 @@
     $(document).on('click', '.popup-modal-dismiss', function (e) {
     		e.preventDefault();
     		$.magnificPopup.close();
-    });
+    });*/
 /*----------------------------------------------------*/
 
 /*----------------------------------------------------*/
@@ -225,12 +224,18 @@
   ================================================== */ 
 	var hadScrollOnce = false;
 	
+	var numberScrollTop = 0;
+	
 	$('#dataHourOfCode').click(function(e) {	
-		$.fancybox.close(); 		
+		$.fancybox.close();
 	});
 	
 	$(window).on('scroll', function (e){
-		if(($(window).scrollTop() >= 1200) && ($(window).scrollTop() <= 1800)){
+	
+		numberScrollTop = 1 + Math.floor(Math.random() * 1000);
+	
+		if(($(window).scrollTop() >= (numberScrollTop)) && ($(window).scrollTop() <= (numberScrollTop + 300))){
+		
 			if(!hadScrollOnce){
 				$(".fancyboxHourOfCode").fancybox({									
 					autoScale: true,
@@ -239,6 +244,7 @@
 					speedIn		:	2000, 
 					speedOut		:	800, 
 					overlayShow	:	true,
+					closeClick: true,
 					content: jQuery('#dataHourOfCode').html()
 					
 				}).trigger('click');
@@ -247,11 +253,56 @@
 				setTimeout(function() {
 					// Reset to open again after 1 minute
 					hadScrollOnce = false;
-				}, 60000);					
+				}, 120000);					
 			}		
-		}	
+		}			
 	});
 /*------------------------------------------------------*/  
+
+/* FadeIn on Scroll - ViewPort.js */	
+   $('#about').addClass('hidden').viewportChecker({
+		classToAdd: 'visible animated fadeIn', // Class to add to the elements when they are visible
+		offset: 100  		
+   });
+   
+   $('.profilepicture').addClass('hidden').viewportChecker({
+		classToAdd: 'visible animated bounceInLeft', // Class to add to the elements when they are visible	
+		offset: 100  
+   });
+   
+   $('#resume').children('div').addClass('hidden').viewportChecker({
+		classToAdd: 'visible animated fadeInLeft', // Class to add to the elements when they are visible	
+		offset: 100  
+   }); 
+   
+   $('#resumeSectionClick').click(function(e) {	
+		console.log('entrou');
+		$('#resume').children('div').addClass('hidden').viewportChecker({
+			classToRemove: 'visible animated fadeInLeft', // Class to add to the elements when they are visible	
+			offset: 100  
+		}); 
+	});
+	
+	$('.social').find('li').addClass('hidden');
+	
+	$('.social').viewportChecker({
+		classToAdd: 'visible animated fadeIn', // Class to add to the elements when they are visible	
+		offset: 100,
+		callbackFunction: function(elem) {
+			var elements = elem.find('li'),
+				i = 0;
+			interval = setInterval(function(){
+				elements.eq(i++).addClass('visible animated pulse');
+				if(i==elements.length) {
+					clearInterval(interval);
+				}
+			},550);
+		}	
+   }); 
+   
+   
+/*------------------------------------------------------*/  
+
   
 });
 
