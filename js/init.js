@@ -198,7 +198,7 @@
 /* ================================================== */ 
   
 /* GitHubActivity
-  ================================================== */ 
+  ================================================== 
 	$('#github').hide();
 	$('#githubLink').click(function(e) {
 	
@@ -217,7 +217,7 @@
 	
 	});
 	
-	GitHubActivity.feed({ username: "cesarnog", selector: "#feed" }); 
+	GitHubActivity.feed({ username: "cesarnog", selector: "#feed" });  */ 
 
 /* ================================================== */ 
 
