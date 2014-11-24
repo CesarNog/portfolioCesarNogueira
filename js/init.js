@@ -265,15 +265,47 @@
 /*------------------------------------------------------*/  
 
 /* FadeIn on Scroll - ViewPort.js */	
+
+$('.responsive-headline').viewportChecker({
+			classToAdd: 'visible animated fadeIn', // Class to add to the elements when they are visible	
+			offset: 100  
+   });
+	
+	$('.social').find('li').addClass('hidden');
+	
+	$('.social').addClass('hidden').viewportChecker({
+		classToAdd: 'visible animated fadeIn', // Class to add to the elements when they are visible	
+		offset: 100,
+		callbackFunction: function(elem) {
+			var elements = elem.find('li'),
+				i = 0;
+			interval = setInterval(function(){
+				elements.eq(i++).addClass('visible animated pulse');
+				if(i==elements.length) {
+					clearInterval(interval);
+				}
+			},750);
+		}
+   }, 2000); 
+
    $('#about').addClass('hidden').viewportChecker({
 		classToAdd: 'visible animated fadeIn', // Class to add to the elements when they are visible
 		offset: 100  		
    });
    
-   $('.profilepicture').addClass('hidden').viewportChecker({
-		classToAdd: 'visible animated bounceInLeft', // Class to add to the elements when they are visible	
-		offset: 100  
-   });
+   if (!isMobile.matches) {
+   
+	   $('.profilepicture').addClass('hidden').viewportChecker({
+			classToAdd: 'visible animated bounceInLeft', // Class to add to the elements when they are visible	
+			offset: 100  
+	   });
+   
+   } else {
+		$('.profilepicture').addClass('hidden').viewportChecker({
+			classToAdd: 'visible animated fadeIn', // Class to add to the elements when they are visible	
+			offset: 100  
+	   });
+   }
    
    $('#resume').children('div').addClass('hidden').viewportChecker({
 		classToAdd: 'visible animated fadeInLeft', // Class to add to the elements when they are visible	
@@ -288,22 +320,9 @@
 		}); 
 	});
 	
-	$('.social').find('li').addClass('hidden');
 	
-	$('.social').viewportChecker({
-		classToAdd: 'visible animated fadeIn', // Class to add to the elements when they are visible	
-		offset: 100,
-		callbackFunction: function(elem) {
-			var elements = elem.find('li'),
-				i = 0;
-			interval = setInterval(function(){
-				elements.eq(i++).addClass('visible animated pulse');
-				if(i==elements.length) {
-					clearInterval(interval);
-				}
-			},550);
-		}	
-   }); 
+   
+   
    
    
 /*------------------------------------------------------*/  
