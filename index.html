@@ -31,6 +31,9 @@
 	   
 	   <!-- Add fancyBox -->
 	   <link rel="stylesheet" href="css/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+	   
+	   <!-- Animate CSS -->
+	   <link rel="stylesheet" type="text/css" href="css/animate.css" />
    
    <!-- Script
    ================================================== -->
@@ -60,7 +63,7 @@
          <ul id="nav" class="nav">
             <li class="current"><a class="smoothscroll" href="#home">Home</a></li>
             <li><a class="smoothscroll" href="#about">About</a></li>
-	         <li><a class="smoothscroll" href="#resume">Resume</a></li>
+	         <li><a id="resumeSectionClick" class="smoothscroll" href="#resume">Resume</a></li>
             <!-- <li><a class="smoothscroll" href="#portfolio">Works</a></li> -->
             <li><a class="smoothscroll" href="#testimonials">Testimonials</a></li>
             <li><a class="smoothscroll" href="#contact">Contact</a></li>
@@ -535,7 +538,6 @@ Jetty Embedded, Maven 3, PHP conversion to Java, JSP, Informix Databases, Java D
 				</script>
 				<!-- END TweepMap Widget -->
 
-
             </aside>
 
       </div>
@@ -600,13 +602,16 @@ Jetty Embedded, Maven 3, PHP conversion to Java, JSP, Informix Databases, Java D
 
    <!-- Java Script
    ================================================== -->
-   <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+   <script src="js/jquery-2.1.1.min.js"></script>
    <script>window.jQuery || document.write('<script src="js/jquery-2.1.1.min.js"><\/script>')</script>
    <script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
 
    <script src="js/jquery.flexslider.js"></script>
    <script src="js/waypoints.js"></script>
    <script src="js/jquery.fittext.js"></script>
+   
+   <!-- ViewportChecker.js -->
+   <script src="js/viewportchecker.js"></script> 
    
    <!-- Add fancyBox -->
    <script type="text/javascript" src="js/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
@@ -615,6 +620,8 @@ Jetty Embedded, Maven 3, PHP conversion to Java, JSP, Informix Databases, Java D
    <script src="js/magnific-popup.js"></script>
    
    <script src="js/init.js"></script>
+   
+   <!-- Gooogle Analytics -->
    <script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -624,6 +631,7 @@ Jetty Embedded, Maven 3, PHP conversion to Java, JSP, Informix Databases, Java D
 	  ga('create', 'UA-39005496-2', 'auto');
 	  ga('send', 'pageview');
 	</script>
+	<!-- END Gooogle Analytics -->
 </body>
 
 </html>
