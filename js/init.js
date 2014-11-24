@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------------------
 /*
-/* Init JS
+/* Init JS - To initialize functions in JQuery - onLoad Page
 /*
 -----------------------------------------------------------------------------------*/
 
@@ -13,7 +13,7 @@
     setTimeout(function() {
 	   $('h1.responsive-headline').fitText(1, { minFontSize: '40px', maxFontSize: '90px' });
 	 }, 100);
-
+/*----------------------------------------------------*/
 
 /*----------------------------------------------------*/
 /* Smooth Scrolling
@@ -31,7 +31,7 @@
 	        window.location.hash = target;
 	    });
 	});
-
+/*----------------------------------------------------*/
 
 /*----------------------------------------------------*/
 /* Highlight the current section in the navigation bar
@@ -51,14 +51,15 @@
 
 			var active_link = $('#nav-wrap a[href="#' + active_section.attr("id") + '"]');
 
-         navigation_links.parent().removeClass("current");
+			navigation_links.parent().removeClass("current");
+			
 			active_link.parent().addClass("current");
 
 		},
 		offset: '35%'
 
 	});
-
+/*----------------------------------------------------*/
 
 /*----------------------------------------------------*/
 /*	Make sure that #header-background-image height is
@@ -71,7 +72,7 @@
         $('header').css({ 'height': $(window).height() });
         $('body').css({ 'width': $(window).width() })
    });
-
+/*----------------------------------------------------*/
 
 /*----------------------------------------------------*/
 /*	Fade In/Out Primary Navigation
@@ -96,7 +97,7 @@
       }
 
 	});
-
+/*----------------------------------------------------*/
 
 /*----------------------------------------------------*/
 /*	Modal Popup
@@ -116,7 +117,7 @@
     		e.preventDefault();
     		$.magnificPopup.close();
     });
-
+/*----------------------------------------------------*/
 
 /*----------------------------------------------------*/
 /*	Flexslider
@@ -132,9 +133,10 @@
       animationSpeed: 500,
       randomize: true,
    });
+/*----------------------------------------------------*/
 
 /*----------------------------------------------------*/
-/*	contact form
+/*	Contact Form
 ------------------------------------------------------*/
 
    $('form#contactForm button.submit').click(function() {
@@ -175,57 +177,82 @@
       });
       return false;
    });
-   
-   
-
+      
 /*----------------------------------------------------*/
-/*	Modernizer popups effects
-------------------------------------------------------*/   
-$('#inline-popups').magnificPopup({
-  delegate: 'a',
-  removalDelay: 500, //delay removal by X to allow out-animation
-  callbacks: {
-    beforeOpen: function() {	
-       this.st.mainClass = this.st.el.attr('data-effect');
-    }
-  },
-  midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
-});
-
-// Hinge effect popup
-$('a.hinge').magnificPopup({
-  mainClass: 'mfp-with-fade',
-  removalDelay: 1000, //delay removal by X to allow out-animation
-  callbacks: {
-    beforeClose: function() {
-        this.content.addClass('hinge');
-    }, 
-    close: function() {
-        this.content.removeClass('hinge'); 
-    }
-  },
-  midClick: true
-});
-
-/*------------------------------------------------------*/  
-
-$(".profilepicture").mouseover(function(){	
-     $(".pulse1").css("-webkit-animation-play-state", "running");  
-	 $(".pulse1").css("animation-play-state", "running");  
-	
-	 $(".pulse2").css("-webkit-animation-play-state", "running");
-	 $(".pulse2").css("animation-play-state", "running");  	 
- })
- .mouseleave(function() {
-     $(".pulse1").css("-webkit-animation-play-state", "paused");  
-	 $(".pulse1").css("animation-play-state", "paused");  
-	
-	 $(".pulse2").css("-webkit-animation-play-state", "paused");
-	 $(".pulse2").css("animation-play-state", "paused");
-  });
+/*	Profile picture
+------------------------------------------------------*/  
+	$(".profilepicture").mouseover(function(){	
+		 $(".pulse1").css("-webkit-animation-play-state", "running");  
+		 $(".pulse1").css("animation-play-state", "running");  
+		
+		 $(".pulse2").css("-webkit-animation-play-state", "running");
+		 $(".pulse2").css("animation-play-state", "running");  	 
+	 })
+	 .mouseleave(function() {
+		 $(".pulse1").css("-webkit-animation-play-state", "paused");  
+		 $(".pulse1").css("animation-play-state", "paused");  
+		
+		 $(".pulse2").css("-webkit-animation-play-state", "paused");
+		 $(".pulse2").css("animation-play-state", "paused");
+	  });
+/* ================================================== */ 
   
-  GitHubActivity.feed({ username: "cesarnog", selector: "#feed" });
+/* GitHubActivity
+  ================================================== */ 
+	$('#github').hide();
+	$('#githubLink').click(function(e) {
+	
+		e.preventDefault();
 
+		var target = this.hash,
+		$target = $(target);
+	
+		$('html, body').stop().animate({
+			'scrollTop': $('#github').offset().top
+		}, 900, 'swing', function () {
+			window.location.hash = target;
+		});
+	
+		$('#github').fadeIn("slow");
+	
+	});
+	
+	GitHubActivity.feed({ username: "cesarnog", selector: "#feed" }); 
+
+/* ================================================== */ 
+
+/* Hour of code banner - fancyBox
+  ================================================== */ 
+	var hadScrollOnce = false;
+	
+	$('#dataHourOfCode').click(function(e) {	
+		$.fancybox.close(); 		
+	});
+	
+	$(window).on('scroll', function (e){
+		if(($(window).scrollTop() >= 1200) && ($(window).scrollTop() <= 1800)){
+			if(!hadScrollOnce){
+				$(".fancyboxHourOfCode").fancybox({									
+					autoScale: true,
+					transitionIn	:	'fadeIn',
+					transitionOut	:	'fade',
+					speedIn		:	2000, 
+					speedOut		:	800, 
+					overlayShow	:	true,
+					content: jQuery('#dataHourOfCode').html()
+					
+				}).trigger('click');
+				hadScrollOnce = true;
+				
+				setTimeout(function() {
+					// Reset to open again after 1 minute
+					hadScrollOnce = false;
+				}, 60000);					
+			}		
+		}	
+	});
+/*------------------------------------------------------*/  
+  
 });
 
 
