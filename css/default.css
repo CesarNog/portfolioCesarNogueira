@@ -857,15 +857,6 @@ to{
 	
 }
 
-.responsive-headline {
-	-webkit-animation: blurFadeIn 2s ease-in 0.5s backwards;
-	-moz-animation: blurFadeIn 2s ease-in 0.5s backwards;
-	-ms-animation: blurFadeIn 2s ease-in 0.5s backwards;
-	animation: blurFadeIn 2s ease-in 0.5s backwards;
-	color: transparent;
-	text-shadow: 0px 0px 1px #fff;
-}
-
 @-webkit-keyframes blurFadeIn{
 	0%{
 		opacity: 0;
