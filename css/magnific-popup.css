@@ -377,6 +377,101 @@ img.mfp-img {
   margin: 0 auto; 
 }
 
+/* 
+
+====== 3d unfold ======
+
+*/
+.mfp-3d-unfold {
+  
+ 
+  .mfp-content {
+    perspective: 2000px; 
+  }
+  
+  /* start state */
+  .mfp-with-anim {
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    transform-style: preserve-3d;
+    transform: rotateY(-60deg);
+  }
+  
+  
+  &.mfp-bg {
+    opacity: 0;
+	  transition: all 0.5s;
+  }
+  
+  /* animate in */
+  &.mfp-ready {
+    .mfp-with-anim {
+      opacity: 1;
+      transform: rotateY(0deg);
+    }
+    &.mfp-bg {
+      opacity: 0.8;
+    }
+  }
+  
+  /* animate out */
+  &.mfp-removing {
+    
+    .mfp-with-anim {
+      transform: rotateY(60deg);
+      opacity: 0;
+    }
+    &.mfp-bg {
+      opacity: 0;
+    }
+    
+  }
+  
+}
+
+/* 
+
+====== "Hinge" close effect ======
+
+*/
+
+@keyframes hinge {
+	0% { transform: rotate(0); transform-origin: top left; animation-timing-function: ease-in-out; }	
+	20%, 60% { transform: rotate(80deg); transform-origin: top left; animation-timing-function: ease-in-out; }	
+	40% { transform: rotate(60deg); transform-origin: top left; animation-timing-function: ease-in-out; }	
+	80% { transform: rotate(60deg) translateY(0); opacity: 1; transform-origin: top left; animation-timing-function: ease-in-out; }	
+	100% { transform: translateY(700px); opacity: 0; }
+}
+
+.hinge {
+  animation-duration: 1s;
+	animation-name: hinge;
+}
+.mfp-with-fade {
+  // before-open state
+  .mfp-content,
+  &.mfp-bg {
+    opacity: 0;
+    transition: opacity .5s ease-out;
+  }
+  // open state
+  &.mfp-ready {
+    .mfp-content {
+     opacity: 1; 
+    }
+    &.mfp-bg {
+      opacity: 0.8; // background opacity
+    }
+  }
+  
+  // closed state
+  &.mfp-removing {
+    &.mfp-bg {
+      opacity: 0;
+    }
+  }
+}
+
 
 
 
