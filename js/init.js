@@ -224,10 +224,10 @@
   ================================================== */ 
 	var hadScrollOnce = false;
 	
-	var numberScrollTop = 0;
+	var numberScrollTop = 1200;
 	
-	$('#dataHourOfCode').click(function(e) {	
-		$.fancybox.close();
+	$('.fancybox-wrap').click(function(e) {			
+		$.fancybox.close();		
 	});
 	
 	var isMobile = window.matchMedia("only screen and (max-width: 760px)");
@@ -236,9 +236,9 @@
         
 		$(window).on('scroll', function (e){
 		
-			numberScrollTop = 1 + Math.floor(Math.random() * 1000);
-		
-			if(($(window).scrollTop() >= (numberScrollTop)) && ($(window).scrollTop() <= (numberScrollTop + 300))){
+			if(($(window).scrollTop() >= (numberScrollTop)) && ($(window).scrollTop() <= (numberScrollTop + 200))){
+					
+				numberScrollTop += 400;
 			
 				if(!hadScrollOnce){
 					$(".fancyboxHourOfCode").fancybox({									
@@ -257,10 +257,13 @@
 					setTimeout(function() {
 						// Reset to open again after 1 minute
 						hadScrollOnce = false;
+						numberScrollTop -= 200;
 					}, 120000);					
 				}		
 			}			
 		});	
+		
+
 	}
 /*------------------------------------------------------*/  
 
@@ -270,7 +273,7 @@ $('.responsive-headline').viewportChecker({
 			classToAdd: 'visible animated fadeIn', // Class to add to the elements when they are visible	
 			offset: 100  
    });
-	
+   
 	$('.social').find('li').addClass('hidden');
 	
 	$('.social').addClass('hidden').viewportChecker({
@@ -296,35 +299,31 @@ $('.responsive-headline').viewportChecker({
    if (!isMobile.matches) {
    
 	   $('.profilepicture').addClass('hidden').viewportChecker({
-			classToAdd: 'visible animated bounceInLeft', // Class to add to the elements when they are visible	
-			offset: 100  
+			classToAdd: 'hidden visible animated bounceInLeft', // Class to add to the elements when they are visible			
+			repeat: true,
+			offset: 100			
 	   });
    
    } else {
 		$('.profilepicture').addClass('hidden').viewportChecker({
-			classToAdd: 'visible animated fadeIn', // Class to add to the elements when they are visible	
+			classToAdd: 'visible animated fadeIn',
+			repeat: true,			
 			offset: 100  
 	   });
    }
    
-   $('#resume').children('div').addClass('hidden').viewportChecker({
-		classToAdd: 'visible animated fadeInLeft', // Class to add to the elements when they are visible	
+   $('#resume').children('div:odd').addClass('hidden').viewportChecker({
+		classToAdd: 'visible animated slideInLeft', // Class to add to the elements when they are visible	
+        repeat: true,			
 		offset: 100  
    }); 
    
-   $('#resumeSectionClick').click(function(e) {	
-		console.log('entrou');
-		$('#resume').children('div').addClass('hidden').viewportChecker({
-			classToRemove: 'visible animated fadeInLeft', // Class to add to the elements when they are visible	
-			offset: 100  
-		}); 
-	});
+   $('#resume').children('div:even').addClass('hidden').viewportChecker({
+		classToAdd: 'visible animated slideInRight', // Class to add to the elements when they are visible	
+		repeat: true,
+		offset: 100  
+   }); 
 	
-	
-   
-   
-   
-   
 /*------------------------------------------------------*/  
 
   
