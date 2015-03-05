@@ -220,8 +220,10 @@
 
 /* ================================================== */ 
 
+   var isMobile = window.matchMedia("only screen and (max-width: 760px)");
+
 /* Hour of code banner - fancyBox
-  ================================================== */ 
+  ================================================== 
 	var hadScrollOnce = false;
 	
 	var numberScrollTop = 1200;
@@ -230,7 +232,7 @@
 		$.fancybox.close();		
 	});
 	
-	var isMobile = window.matchMedia("only screen and (max-width: 760px)");
+	
 
     if (!isMobile.matches) {
         
@@ -265,7 +267,7 @@
 		
 
 	}
-/*------------------------------------------------------*/  
+------------------------------------------------------*/  
 
 /* FadeIn on Scroll - ViewPort.js */	
 
