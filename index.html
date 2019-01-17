@@ -16,6 +16,16 @@
         a.appendChild(r);
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
    </script>
+	
+   <script type="text/javascript">
+	   $(document).ready(function () {
+            if(window.location.href.indexOf("locale") > -1) 
+            {
+                 document.getElementById("btnDownloadCV").href="./curriculum/CV_CesarAugustoNogueira_EN_US.pdf"; 
+            }
+        });   
+  };
+   </script>
 
    <!--- Basic Page Needs
    ================================================== -->
@@ -199,7 +209,7 @@
 
                <div class="columns download">
                   <p>
-                     <a href="./curriculum/CV_CesarAugustoNogueira.pdf" target="_blank" class="button" download><i class="fa fa-download"></i>Download Resume</a>
+                     <a id="btnDownloadCV" href="./curriculum/CV_CesarAugustoNogueira_EN_US.pdf" target="_blank" class="button" download><i class="fa fa-download"></i>Download Resume</a>
                   </p>
                </div>
 
