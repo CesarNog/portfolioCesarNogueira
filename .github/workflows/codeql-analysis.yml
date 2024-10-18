@@ -2,15 +2,15 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ main ]  # Updated to 'main', change this back to 'master' if that's your default branch
+    branches: [ main ]  # Ensure 'main' matches your default branch
   pull_request:
-    branches: [ main ]  # Make sure this is a subset of the push branches
+    branches: [ main ]
   schedule:
-    - cron: '39 15 * * 1'
+    - cron: '39 15 * * 1'  # Adjust cron schedule as needed
 
 jobs:
   analyze:
-    name: Analyze
+    name: CodeQL Analyze
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -20,21 +20,21 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript', 'python', 'java' ]  # Added 'python' and 'java' as examples. Adjust according to your project's needs.
+        language: [ 'javascript' ]  # Only JavaScript for portfolio page analysis
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3  # Updated to v3
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@v2  # Updated to v2
       with:
         languages: ${{ matrix.language }}
         # Add custom queries if needed
         # queries: +./path/to/local/query, your-org/your-repo/queries@main
 
     - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
+      uses: github/codeql-action/autobuild@v2  # Updated to v2
       # If Autobuild does not work for your project, comment it out and use custom build commands below
 
     # Custom build commands (uncomment and customize if needed)
@@ -43,4 +43,4 @@ jobs:
     #   make release
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v2  # Updated to v2
