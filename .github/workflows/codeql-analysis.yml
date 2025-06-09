@@ -22,7 +22,6 @@ jobs:
       matrix:
         # Analyze both JavaScript and PHP sources
         language: [ 'javascript', 'php' ]
-        language: [ 'javascript', 'php' ]
 
     steps:
     - name: Checkout repository
