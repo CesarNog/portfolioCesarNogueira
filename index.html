@@ -426,20 +426,8 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                         <div class="testimonial-slider__slide swiper-slide">
                             <div id="linkedin-testimonials">Loading testimonials...</div>
                             <script>
-                              const profileApi = 'https://api.linkedin.com/v2/me?projection=(id,profilePicture(displayImage~:playableStreams))'
                               const recommendationsApi = 'https://api.linkedin.com/v2/recommendations?q=received&start=0&count=5&projection=(elements*(recommendationText,recommender~(firstName,lastName,profilePicture(displayImage~:playableStreams))))'
                               const accessToken = 'AQVreBjNPXJ1mmevakpZy6jwGW88Vt0OgH1dxj3xhaKRw4AU1xo3i-0qh-K4CUqLmZ7YkQAthxkgpWwe4DBYLVRSgdjmOcNyLO8GMA5QVotcQiJsDOWiXY4GPKCeqPKnUMjwC72o2fSz9k_DMQf_eTXR9ZoZ50fBM68DoXPphq7Wd2NayM1B2-Q8bwMYrprURt4jIe-XF8lRhGcZfOAK_qkdRwzfhahHcJ_hQkv2JZd6QOar8pbOKex-dUzqqohjLQ1cfZTcQM9s0H2P802AOd4Xqhx-svcxc8ynrZd7HH1q0PbFDAH3fXFuwAvpzqcq823L9_SyR3LNhjQUe8Fyn6zmtpJBFQ'
-                              function fetchProfileImage() {
-                                fetch(profileApi, {
-                                  headers: { 'Authorization': `Bearer ${accessToken}` }
-                                })
-                                  .then(res => res.json())
-                                  .then(data => {
-                                    const imgUrl = data.profilePicture["displayImage~"].elements[0].identifiers[0].identifier
-                                    // do something with imgUrl
-                                  })
-                                  .catch(console.error)
-                              }
 
 
                               async function loadLinkedInTestimonials() {
