@@ -428,18 +428,23 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                             <script>
                               const linkedinURL = "https://r.jina.ai/https://www.linkedin.com/in/cesarnog/details/recommendations/"
 
-                              fetch(linkedinURL)
-                                .then(response => response.text())
-                                .then(html => {
+                              async function loadLinkedInTestimonials() {
+                                const container = document.getElementById('linkedin-testimonials')
+                                try {
+                                  const response = await fetch(linkedinURL)
+                                  const html = await response.text()
                                   const parser = new DOMParser()
-                                  const doc = parser.parseFromString(html, "text/html")
+                                  const doc = parser.parseFromString(html, 'text/html')
                                   const testimonials = Array.from(doc.querySelectorAll('.pv-recommendation-entity')).slice(0, 5)
-                                  const container = document.getElementById('linkedin-testimonials')
                                   container.innerHTML = ''
                                   testimonials.forEach(t => {
                                     const textEl = t.querySelector('.pv-recommendation-entity__text') || t.querySelector('.recommendation')
                                     const text = textEl ? textEl.textContent.trim() : ''
-                                    const img = t.querySelector('img') ? t.querySelector('img').getAttribute('src') : ''
+                                    const imgEl = t.querySelector('img')
+                                    let img = imgEl ? imgEl.getAttribute('src') || imgEl.getAttribute('data-delayed-url') : ''
+                                    if (img && img.startsWith('/')) {
+                                      img = 'https://media.licdn.com' + img
+                                    }
                                     const nameEl = t.querySelector('.pv-recommendation-entity__detail a span:first-child')
                                     const name = nameEl ? nameEl.textContent.trim() : ''
                                     const titleEl = t.querySelector('.pv-recommendation-entity__headline')
@@ -449,7 +454,7 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                                     item.className = 'testimonial-item'
                                     item.innerHTML = `
                                       <div class="testimonial-slider__author">
-                                        <img src="${img}" alt="Author image" class="testimonial-slider__avatar">
+                                        <img src="${img}" alt="${name}" class="testimonial-slider__avatar" loading="lazy">
                                         <cite class="testimonial-slider__cite">
                                           <strong>${name}</strong>
                                           <span>${title}</span>
@@ -458,13 +463,15 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                                       <p>${text}</p>`
                                     container.appendChild(item)
                                   })
-                                })
-                                .catch(error => console.error(error))
+                                } catch (error) {
+                                  console.error(error)
+                                  container.textContent = 'LinkedIn testimonials could not be loaded.'
+                                }
+                              }
+                              loadLinkedInTestimonials()
                             </script>
                         </div> <!-- end testimonial-slider__slide -->
- 
                       </div> <!-- end testimonial slider swiper-wrapper -->
-
                     <div class="swiper-pagination"></div>
 
                 </div> <!-- end swiper-container -->
