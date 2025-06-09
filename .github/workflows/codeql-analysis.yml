@@ -20,7 +20,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript' ]  # Only JavaScript for portfolio page analysis
+        # Analyze both JavaScript and PHP sources
+        language: [ 'javascript', 'php' ]
 
     steps:
     - name: Checkout repository
