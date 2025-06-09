@@ -430,12 +430,11 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                                 
                                 <!-- Add a script tag to execute the JavaScript code -->
                                 <script>
-                                  // Define the LinkedIn API endpoint and access token
-                                  const linkedinURL = "https://api.linkedin.com/v2/me?projection=(id,profilePicture(displayImage~:playableStreams))"
+                                  // --- Fetch profile picture from LinkedIn API ---
+                                  const profileURL = "https://api.linkedin.com/v2/me?projection=(id,profilePicture(displayImage~:playableStreams))"
                                   const accessToken = "your_access_token_here"
-                                
-                                  // Retrieve the image URL using the LinkedIn API
-                                  fetch(linkedinURL, {
+
+                                  fetch(profileURL, {
                                     headers: {
                                       "Authorization": `Bearer ${accessToken}`,
                                       "Content-Type": "application/json"
@@ -443,11 +442,21 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                                   })
                                     .then(response => response.json())
                                     .then(data => {
-                                      // Extract the image URL from the API response
-                                      const profilePicture = data.profilePicture.displayImage~.elements[0].identifiers[0].identifier
-                                
-                                      // Update the src attribute of the img tag with the retrieved URL
+                                      const profilePicture = data.profilePicture["displayImage~"].elements[0].identifiers[0].identifier
                                       document.getElementById("profile-img").src = profilePicture
+                                    })
+                                    .catch(error => console.error(error))
+
+                                  // --- Fetch latest testimonial from LinkedIn page ---
+                                  const testimonialURL = "https://r.jina.ai/https://www.linkedin.com/in/cesarnog/details/recommendations/"
+                                  fetch(testimonialURL)
+                                    .then(response => response.text())
+                                    .then(html => {
+                                      const parser = new DOMParser()
+                                      const doc = parser.parseFromString(html, "text/html")
+                                      const testimonialEl = doc.querySelector('.pv-recommendation-entity__text') || doc.querySelector('.recommendation')
+                                      const testimonial = testimonialEl ? testimonialEl.textContent.trim() : 'Testimonial not available'
+                                      document.getElementById('linkedin-testimonial').textContent = testimonial
                                     })
                                     .catch(error => console.error(error))
                                 </script>
@@ -458,17 +467,7 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                                   <span>Google Cloud Expert and Architect, CI&T Brazil</span>
                                 </cite>
                             </div>
-                            <p>
-                                Cesar is a skilled Java developer who helped us build a Data Analytics platform on top of Google Cloud using Big Data Engineering techniques for a mass media corporation. 
-                            </p>
-                            <p>
-                                He certified himself as Google Cloud Architect and had experience with a broad range of technologies throughout the project. 
-                            </p>
-                            <p>
-                                He is that type of person you can always count on and who's always bringing new stuff to the team. 
-                            </p>
-                            <p> His involvement with tech communities and conferences is also noticeable.
-                            </p>
+                            <p id="linkedin-testimonial">Loading testimonial...</p>
                         </div> <!-- end testimonial-slider__slide -->
         
                         <div class="testimonial-slider__slide swiper-slide">
