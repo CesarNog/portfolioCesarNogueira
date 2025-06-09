@@ -426,10 +426,9 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                         <div class="testimonial-slider__slide swiper-slide">
                             <div id="linkedin-testimonials">Loading testimonials...</div>
                             <script>
-                              const linkedinURL = "https://r.jina.ai/https://www.linkedin.com/in/cesarnog/details/recommendations/"
-
                               const profileApi = 'https://api.linkedin.com/v2/me?projection=(id,profilePicture(displayImage~:playableStreams))'
-                              const accessToken = 'your_access_token_here'
+                              const recommendationsApi = 'https://api.linkedin.com/v2/recommendations?q=received&start=0&count=5&projection=(elements*(recommendationText,recommender~(firstName,lastName,profilePicture(displayImage~:playableStreams))))'
+                              const accessToken = 'AQVreBjNPXJ1mmevakpZy6jwGW88Vt0OgH1dxj3xhaKRw4AU1xo3i-0qh-K4CUqLmZ7YkQAthxkgpWwe4DBYLVRSgdjmOcNyLO8GMA5QVotcQiJsDOWiXY4GPKCeqPKnUMjwC72o2fSz9k_DMQf_eTXR9ZoZ50fBM68DoXPphq7Wd2NayM1B2-Q8bwMYrprURt4jIe-XF8lRhGcZfOAK_qkdRwzfhahHcJ_hQkv2JZd6QOar8pbOKex-dUzqqohjLQ1cfZTcQM9s0H2P802AOd4Xqhx-svcxc8ynrZd7HH1q0PbFDAH3fXFuwAvpzqcq823L9_SyR3LNhjQUe8Fyn6zmtpJBFQ'
                               function fetchProfileImage() {
                                 fetch(profileApi, {
                                   headers: { 'Authorization': `Bearer ${accessToken}` }
@@ -442,56 +441,31 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                                   .catch(console.error)
                               }
 
-                              const fallbackTestimonials = [
-                                {
-                                  img: 'images/avatars/user-02.jpg',
-                                  name: 'Lucas Arruda',
-                                  title: 'Google Cloud Expert at CI&T',
-                                  text: 'Cesar is a skilled Java developer who helped us build a Data Analytics platform on top of Google Cloud using Big Data Engineering techniques for a mass media corporation. He certified himself as Google Cloud Architect and had experience with a broad range of technologies throughout the project. He is that type of person you can always count on and who\'s always bringing new stuff to the team. His involvement with tech communities and conferences is also noticeable.'
-                                },
-                                {
-                                  img: 'images/avatars/user-03.jpg',
-                                  name: 'Dillon Roher',
-                                  title: 'Chief Technical Officer at Apollo Group',
-                                  text: 'Cesar is a highly intelligent individual with a passion for learning. I truly hope to work with him again in the future!'
-                                },
-                                {
-                                  img: 'images/avatars/user-04.jpg',
-                                  name: 'Ivan de Aguirre',
-                                  title: "Project Leader at Eldorado's Research Institute",
-                                  text: 'Cesar is a passionate, highly motivated and skilled software developer. He enjoys coding, studying and researching. He never let an opportunity of improvement go away, he\'s always ready to contribute and take on responsibility. He really loves his profession.'
-                                },
-                                {
-                                  img: 'images/avatars/user-05.jpg',
-                                  name: 'Victor Di Trani',
-                                  title: 'Java Software Engineer at RealWorksBV',
-                                  text: 'Cesar Augusto is an excellent professional for several reasons. In addition to mastering the area in which he works, he knows how to work in groups and deliver results even with challenging deadlines. I say as a friend and co-worker that Cesar is a differential that cannot be missed.'
-                                }
-                              ]
 
                               async function loadLinkedInTestimonials() {
                                 const container = document.getElementById('linkedin-testimonials')
                                 try {
-                                  const response = await fetch(linkedinURL)
+                                  const response = await fetch(recommendationsApi, {
+                                    headers: { 'Authorization': `Bearer ${accessToken}` }
+                                  })
                                   if (!response.ok) throw new Error('Network response was not ok')
-                                  const html = await response.text()
-                                  const parser = new DOMParser()
-                                  const doc = parser.parseFromString(html, 'text/html')
-                                  const testimonials = Array.from(doc.querySelectorAll('.pv-recommendation-entity')).slice(0, 5)
+                                  const data = await response.json()
+                                  const testimonials = data.elements || []
                                   if (testimonials.length === 0) throw new Error('No testimonials found')
                                   container.innerHTML = ''
                                   testimonials.forEach(t => {
-                                    const textEl = t.querySelector('.pv-recommendation-entity__text') || t.querySelector('.recommendation')
-                                    const text = textEl ? textEl.textContent.trim() : ''
-                                    const imgEl = t.querySelector('img')
-                                    let img = imgEl ? imgEl.getAttribute('src') || imgEl.getAttribute('data-delayed-url') : ''
-                                    if (img && img.startsWith('/')) {
-                                      img = 'https://media.licdn.com' + img
+                                    const text = t.recommendationText || ''
+                                    const rec = t.recommender
+                                    const first = rec && rec.firstName ? (rec.firstName.localized ? Object.values(rec.firstName.localized)[0] : rec.firstName) : ''
+                                    const last = rec && rec.lastName ? (rec.lastName.localized ? Object.values(rec.lastName.localized)[0] : rec.lastName) : ''
+                                    const name = `${first} ${last}`.trim()
+                                    let img = ''
+                                    if (rec && rec.profilePicture && rec.profilePicture['displayImage~']) {
+                                      const ids = rec.profilePicture['displayImage~'].elements
+                                      if (ids && ids.length > 0 && ids[0].identifiers && ids[0].identifiers.length > 0) {
+                                        img = ids[0].identifiers[0].identifier
+                                      }
                                     }
-                                    const nameEl = t.querySelector('.pv-recommendation-entity__detail a span:first-child')
-                                    const name = nameEl ? nameEl.textContent.trim() : ''
-                                    const titleEl = t.querySelector('.pv-recommendation-entity__headline')
-                                    const title = titleEl ? titleEl.textContent.trim() : ''
 
                                     const item = document.createElement('div')
                                     item.className = 'testimonial-item'
@@ -500,7 +474,6 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                                         <img src="${img}" alt="${name}" class="testimonial-slider__avatar" loading="lazy">
                                         <cite class="testimonial-slider__cite">
                                           <strong>${name}</strong>
-                                          <span>${title}</span>
                                         </cite>
                                       </div>
                                       <p>${text}</p>`
@@ -508,18 +481,7 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                                   })
                                 } catch (error) {
                                   console.error(error)
-                                  container.innerHTML = fallbackTestimonials.map(t => `
-                                    <div class="testimonial-item">
-                                      <div class="testimonial-slider__author">
-                                        <img src="${t.img}" alt="${t.name}" class="testimonial-slider__avatar" loading="lazy">
-                                        <cite class="testimonial-slider__cite">
-                                          <strong>${t.name}</strong>
-                                          <span>${t.title}</span>
-                                        </cite>
-                                      </div>
-                                      <p>${t.text}</p>
-                                    </div>
-                                  `).join('')
+                                  container.innerHTML = '<p>Testimonials could not be loaded at this time.</p>'
                                 }
                               }
                               loadLinkedInTestimonials()
