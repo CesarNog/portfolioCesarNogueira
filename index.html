@@ -424,101 +424,46 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                     <div class="swiper-wrapper">
 
                         <div class="testimonial-slider__slide swiper-slide">
-                            <div class="testimonial-slider__author">
-                                <!-- Add an id attribute to the img tag -->
-                                <img id="profile-img" alt="Author image" class="testimonial-slider__avatar">
-                                
-                                <!-- Add a script tag to execute the JavaScript code -->
-                                <script>
-                                  // --- Fetch profile picture from LinkedIn API ---
-                                  const profileURL = "https://api.linkedin.com/v2/me?projection=(id,profilePicture(displayImage~:playableStreams))"
-                                  const accessToken = "your_access_token_here"
+                            <div id="linkedin-testimonials">Loading testimonials...</div>
+                            <script>
+                              const linkedinURL = "https://r.jina.ai/https://www.linkedin.com/in/cesarnog/details/recommendations/"
 
-                                  fetch(profileURL, {
-                                    headers: {
-                                      "Authorization": `Bearer ${accessToken}`,
-                                      "Content-Type": "application/json"
-                                    }
+                              fetch(linkedinURL)
+                                .then(response => response.text())
+                                .then(html => {
+                                  const parser = new DOMParser()
+                                  const doc = parser.parseFromString(html, "text/html")
+                                  const testimonials = Array.from(doc.querySelectorAll('.pv-recommendation-entity')).slice(0, 5)
+                                  const container = document.getElementById('linkedin-testimonials')
+                                  container.innerHTML = ''
+                                  testimonials.forEach(t => {
+                                    const textEl = t.querySelector('.pv-recommendation-entity__text') || t.querySelector('.recommendation')
+                                    const text = textEl ? textEl.textContent.trim() : ''
+                                    const img = t.querySelector('img') ? t.querySelector('img').getAttribute('src') : ''
+                                    const nameEl = t.querySelector('.pv-recommendation-entity__detail a span:first-child')
+                                    const name = nameEl ? nameEl.textContent.trim() : ''
+                                    const titleEl = t.querySelector('.pv-recommendation-entity__headline')
+                                    const title = titleEl ? titleEl.textContent.trim() : ''
+
+                                    const item = document.createElement('div')
+                                    item.className = 'testimonial-item'
+                                    item.innerHTML = `
+                                      <div class="testimonial-slider__author">
+                                        <img src="${img}" alt="Author image" class="testimonial-slider__avatar">
+                                        <cite class="testimonial-slider__cite">
+                                          <strong>${name}</strong>
+                                          <span>${title}</span>
+                                        </cite>
+                                      </div>
+                                      <p>${text}</p>`
+                                    container.appendChild(item)
                                   })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                      const profilePicture = data.profilePicture["displayImage~"].elements[0].identifiers[0].identifier
-                                      document.getElementById("profile-img").src = profilePicture
-                                    })
-                                    .catch(error => console.error(error))
-
-                                  // --- Fetch latest testimonial from LinkedIn page ---
-                                  const testimonialURL = "https://r.jina.ai/https://www.linkedin.com/in/cesarnog/details/recommendations/"
-                                  fetch(testimonialURL)
-                                    .then(response => response.text())
-                                    .then(html => {
-                                      const parser = new DOMParser()
-                                      const doc = parser.parseFromString(html, "text/html")
-                                      const testimonialEl = doc.querySelector('.pv-recommendation-entity__text') || doc.querySelector('.recommendation')
-                                      const testimonial = testimonialEl ? testimonialEl.textContent.trim() : 'Testimonial not available'
-                                      document.getElementById('linkedin-testimonial').textContent = testimonial
-                                    })
-                                    .catch(error => console.error(error))
-                                </script>
-                                
-                                <!-- The rest of the HTML code for the testimonial slider -->
-                                <cite class="testimonial-slider__cite">
-                                  <strong><a href="https://www.linkedin.com/in/larruda/" target="_blank">Lucas Arruda <i class="fab fa-linkedin"></i></a></strong>
-                                  <span>Google Cloud Expert and Architect, CI&T Brazil</span>
-                                </cite>
-                            </div>
-                            <p id="linkedin-testimonial">Loading testimonial...</p>
+                                })
+                                .catch(error => console.error(error))
+                            </script>
                         </div> <!-- end testimonial-slider__slide -->
-        
-                        <div class="testimonial-slider__slide swiper-slide">
-                            <div class="testimonial-slider__author">
-                                <img src="https://media-exp1.licdn.com/dms/image/C5603AQHegb4vUkrCAw/profile-displayphoto-shrink_800_800/0/1623874480410?e=1632355200&v=beta&t=Mro1z1LS4bN5YtmkwrJrIUI_XAQp86o3fMqz2sDDWyc" alt="Author image" class="testimonial-slider__avatar">
-                                <cite class="testimonial-slider__cite">
-                                    <strong><a href="https://www.linkedin.com/in/dillon-roher-4b4052157/" target="_blank">
-                                        Dillon Roher <i class="fab fa-linkedin"></i></a></strong>
-                                    <span>Chief Technical Officer, Apollo Group</span>
-                                </cite>
-                            </div>
-                            <p>
-                            Cesar is a highly intelligent individual with a passion for learning. I truly hope to work with him again in the future!
-                            </p>
-                        </div> <!-- end testimonial-slider__slide -->
-        
-                        <div class="testimonial-slider__slide swiper-slide">
-                            <div class="testimonial-slider__author">
-                                <img src="https://media-exp1.licdn.com/dms/image/C4E03AQEF5hn29h5UVA/profile-displayphoto-shrink_800_800/0/1597616806876?e=1632355200&v=beta&t=89HB12C3OBn0xt_31V4wJBoKB9wuOCqy4wumdnkyQj4" alt="Author image" class="testimonial-slider__avatar">
-                                <cite class="testimonial-slider__cite">
-                                    <strong><a href="https://www.linkedin.com/in/ivan-de-aguirre/" target="_blank">
-                                        Ivan de Aguire <i class="fab fa-linkedin"></i></a></strong>
-                                    <span>Project Leader, Eldorado's Research Institute</span>
-                                </cite>
-                            </div>
-                            <p>
-                                Cesar is a passionate, highly motivated and skilled software developer. He enjoys coding, studying and researching. 
-                            </p>
-                            <p> He never let an opportunity of improvement go away, he's always ready to contribute and take on responsibility. 
-                            </p>
-                            <p> He really loves his profession.
-                            </p>
-                        </div> <!-- end testimonial-slider__slide -->
-
-                        <div class="testimonial-slider__slide swiper-slide">
-                            <div class="testimonial-slider__author">
-                                <img src="https://media-exp1.licdn.com/dms/image/C4D03AQEjXmw5CNQx7A/profile-displayphoto-shrink_800_800/0/1561962905576?e=1632355200&v=beta&t=UtnZNZ_eKFZ6GBowPFIJ6Rky9Lgh5lxFa7IPjOmOMPc" alt="Author image" class="testimonial-slider__avatar">
-                                <cite class="testimonial-slider__cite">
-                                    <strong><a href="https://www.linkedin.com/in/victor-di-trani/" target="_blank">
-                                        Victor Di Trani <i class="fab fa-linkedin"></i></a></strong>
-                                    <span>Java Software Engineer, RealWorksBV</span>
-                                </cite>
-                            </div>
-                            <p>
-                                Cesar Augusto is an excellent professional for several reasons. 
-                                In addition to mastering the area in which he works, he knows how to work in groups and deliver results even with challenging deadlines. 
-                                I say as a friend and co-worker that Cesar is a differential that cannot be missed.
-                            </p>
-                        </div> <!-- end testimonial-slider__slide -->
-    
-                    </div> <!-- end testimonial slider swiper-wrapper -->
+ 
+                      </div> <!-- end testimonial slider swiper-wrapper -->
 
                     <div class="swiper-pagination"></div>
 
