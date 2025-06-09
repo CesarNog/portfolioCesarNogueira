@@ -1,7 +1,7 @@
 ﻿<?php
 
 // Replace this with your own email address
-$siteOwnersEmail = 'contato@cesarnogueira.me';
+$siteOwnersEmail = 'contato@cesarnogueira.tech';
 
 if($_POST) {
 
@@ -27,11 +27,12 @@ if($_POST) {
 
 
    // Set Message
+   $message = "";
    $message .= "Email from: " . $name . "<br />";
-	$message .= "<br />Email address: " . $email . "<br />";
+        $message .= "<br />Email address: " . $email . "<br />";
    $message .= "<br />Message: <br /><br />";
    $message .= $contact_message;
-   $message .= "<br /> ----- <br /> This email was sent from your site's contact form (www.cesarnogueira.me). <br />";
+   $message .= "<br /> ----- <br /> This email was sent from your site's contact form (www.cesarnogueira.tech). <br />";
 
    // Set From: header
    $from =  $name . " <" . $email . ">";
