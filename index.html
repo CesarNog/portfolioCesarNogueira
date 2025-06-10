@@ -427,12 +427,15 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                             <div id="linkedin-testimonials">Loading testimonials...</div>
                             <script>
                               const recommendationsApi = 'data/testimonials.json';
-
-
                               async function loadLinkedInTestimonials() {
                                 const container = document.getElementById('linkedin-testimonials')
                                 try {
-                                  const response = await fetch(recommendationsApi)
+                                  const response = await fetch(recommendationsApi, {
+                                    headers: {
+                                      'Authorization': `Bearer ${accessToken}`,
+                                      'X-Restli-Protocol-Version': '2.0.0'
+                                    }
+                                  })
                                   if (!response.ok) throw new Error('Network response was not ok')
                                   const data = await response.json()
                                   const testimonials = Array.isArray(data) ? data : (data.elements || [])
