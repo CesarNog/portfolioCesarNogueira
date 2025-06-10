@@ -426,11 +426,7 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                         <div class="testimonial-slider__slide swiper-slide">
                             <div id="linkedin-testimonials">Loading testimonials...</div>
                             <script>
-                              // Replace with your LinkedIn profile URN and access token
-                              const accessToken = 'AQVreBjNPXJ1mmevakpZy6jwGW88Vt0OgH1dxj3xhaKRw4AU1xo3i-0qh-K4CUqLmZ7YkQAthxkgpWwe4DBYLVRSgdjmOcNyLO8GMA5QVotcQiJsDOWiXY4GPKCeqPKnUMjwC72o2fSz9k_DMQf_eTXR9ZoZ50fBM68DoXPphq7Wd2NayM1B2-Q8bwMYrprURt4jIe-XF8lRhGcZfOAK_qkdRwzfhahHcJ_hQkv2JZd6QOar8pbOKex-dUzqqohjLQ1cfZTcQM9s0H2P802AOd4Xqhx-svcxc8ynrZd7HH1q0PbFDAH3fXFuwAvpzqcq823L9_SyR3LNhjQUe8Fyn6zmtpJBFQ';
-                              const recommendationsApi = 'https://api.linkedin.com/v2/recommendations?q=received&start=0&count=5&projection=(elements*(recommendationText,recommender~(firstName,lastName,profilePicture(displayImage~:playableStreams))))';
-
-
+                              const recommendationsApi = 'data/testimonials.json';
                               async function loadLinkedInTestimonials() {
                                 const container = document.getElementById('linkedin-testimonials')
                                 try {
@@ -442,17 +438,16 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                                   })
                                   if (!response.ok) throw new Error('Network response was not ok')
                                   const data = await response.json()
-                                  const testimonials = data.elements || []
+                                  const testimonials = Array.isArray(data) ? data : (data.elements || [])
                                   if (testimonials.length === 0) throw new Error('No testimonials found')
                                   container.innerHTML = ''
                                   testimonials.forEach(t => {
-                                    const text = t.recommendationText || ''
+                                    const text = t.text || t.recommendationText || ''
+                                    const name = t.name || ''
+                                    const title = t.title || ''
+                                    let img = t.img || ''
                                     const rec = t.recommender || t['recommender~']
-                                    const first = rec && rec.firstName ? (rec.firstName.localized ? Object.values(rec.firstName.localized)[0] : rec.firstName) : ''
-                                    const last = rec && rec.lastName ? (rec.lastName.localized ? Object.values(rec.lastName.localized)[0] : rec.lastName) : ''
-                                    const name = `${first} ${last}`.trim()
-                                    let img = ''
-                                    if (rec && rec.profilePicture && rec.profilePicture['displayImage~']) {
+                                    if (!img && rec && rec.profilePicture && rec.profilePicture['displayImage~']) {
                                       const ids = rec.profilePicture['displayImage~'].elements
                                       if (ids && ids.length > 0 && ids[0].identifiers && ids[0].identifiers.length > 0) {
                                         img = ids[0].identifiers[0].identifier
@@ -466,6 +461,7 @@ cloud solutions (GCP, AWS, Azure, Oracle Cloud)
                                         <img src="${img}" alt="${name}" class="testimonial-slider__avatar" loading="lazy">
                                         <cite class="testimonial-slider__cite">
                                           <strong>${name}</strong>
+                                          <span>${title}</span>
                                         </cite>
                                       </div>
                                       <p>${text}</p>`
