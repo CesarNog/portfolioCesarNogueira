@@ -1,0 +1,39 @@
+name: Update LinkedIn testimonials
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 3 * * *'
+
+jobs:
+  fetch-testimonials:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Fetch recommendations from LinkedIn
+        env:
+          TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+        run: |
+          set -e
+          curl -sfL \
+            -H "Authorization: Bearer $TOKEN" \
+            -H 'X-Restli-Protocol-Version: 2.0.0' \
+            "https://api.linkedin.com/v2/recommendations?q=received&start=0&count=5&projection=(elements*(recommendationText,recommender~(firstName,lastName,profilePicture(displayImage~:playableStreams))))" \
+            -o data/testimonials.json
+
+      - name: Commit updated testimonials
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add data/testimonials.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update testimonials from LinkedIn"
+            git push origin HEAD:${GITHUB_REF}
+          fi
