@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+/*
+  Design tokens — "cloud control center" aesthetic.
+  Dark-first, tinted near-black surface ramp, one restrained accent,
+  hairline borders at low opacity, tight display tracking, mono for data.
+*/
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter-tight), var(--font-inter), sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  /* Layered near-black elevation ramp (not pure #000). */
+  --color-surface-0: #08090a;
+  --color-surface-1: #0f1011;
+  --color-surface-2: #161718;
+  --color-surface-3: #1d1e20;
+
+  --color-fg: #ededee;
+  --color-fg-muted: #8a8f98;
+  --color-fg-subtle: #5c616b;
+
+  /* Single restrained accent (aether blue). */
+  --color-accent: #5b9dff;
+  --color-accent-dim: #3d6fc4;
+
+  /* Hairline border ≈ white at 8% opacity. */
+  --color-hairline: rgba(255, 255, 255, 0.08);
+  --color-hairline-strong: rgba(255, 255, 255, 0.14);
+}
+
+:root {
+  --background: var(--color-surface-0);
+  --foreground: var(--color-fg);
+}
+
+/* Light theme overrides (next-themes attribute="class"). */
+.light {
+  --color-surface-0: #ffffff;
+  --color-surface-1: #fafafa;
+  --color-surface-2: #f4f4f5;
+  --color-surface-3: #ededee;
+  --color-fg: #18181b;
+  --color-fg-muted: #52525b;
+  --color-fg-subtle: #a1a1aa;
+  --color-hairline: rgba(0, 0, 0, 0.08);
+  --color-hairline-strong: rgba(0, 0, 0, 0.14);
+  --background: var(--color-surface-0);
+  --foreground: var(--color-fg);
+}
+
+* {
+  border-color: var(--color-hairline);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Tight display tracking — the premium "typography as brand" signal. */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.04em;
+}
+
+.tracking-tight-body {
+  letter-spacing: -0.011em;
+}
+
+/* Visible, accessible focus ring (WCAG 2.2). */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Global reduced-motion kill-switch. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
