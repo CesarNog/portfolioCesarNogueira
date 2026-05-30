@@ -6,9 +6,9 @@ import { siteConfig } from "@/lib/site-config";
 
 function SectionLabel({ children }: { children: string }) {
   return (
-    <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-accent)]">
+    <h2 className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-accent)]">
       {children}
-    </p>
+    </h2>
   );
 }
 
