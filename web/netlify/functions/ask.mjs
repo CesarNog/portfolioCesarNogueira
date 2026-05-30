@@ -1,9 +1,10 @@
-// Netlify Function: proxy free-text questions to xAI's Grok API.
+// Netlify Function: proxy free-text questions to a FREE LLM (Groq).
 //
-// Set XAI_API_KEY in Netlify > Site settings > Environment variables to enable
-// live AI. Without it (or on any error) the function returns a 200 with a
-// `fallback` flag and the client shows a curated answer instead — so the
-// chatbot never breaks.
+// Groq (https://groq.com) offers a free, fast, OpenAI-compatible API serving
+// open models (Llama 3.3). Get a free key at https://console.groq.com (no
+// credit card) and set GROQ_API_KEY in Netlify > Site settings > Environment
+// variables. Without it (or on any error) this returns a 200 with a `fallback`
+// flag and the client shows a curated answer — so the chatbot never breaks.
 
 const KNOWLEDGE_BASE = `
 Cesar Augusto Nogueira — Principal Cloud Architect, Platform Engineer, DevOps Leader, FinOps Consultant and AI Infrastructure specialist. 10+ years in tech. Based in Vila Real, Portugal; works remotely with international clients via his consultancy UP2CLOUD. Available for international projects.
@@ -18,7 +19,7 @@ Experience:
 - everis/NTT Data Brazil (2019-2020): Cloud Architect — GCP/AWS/Azure/OCI for AndBank, Santander, LATAM Airlines; PII security; observability.
 - CI&T (2017-2019): Software Engineer — Big Data on GCP (Apache Beam, DataFlow, BigQuery, App Engine), Java/Node/React.
 
-Skills: GCP, AWS, Azure, OCI, Kubernetes, Terraform, Docker, Argo, GitHub Actions, GitLab CI, Jenkins/CloudBees, BigQuery, Dataform, dbt, Apache Beam, Python, Java, FinOps, Observability, AI infrastructure (LLMs, Grok/OpenAI integrations).
+Skills: GCP, AWS, Azure, OCI, Kubernetes, Terraform, Docker, Argo, GitHub Actions, GitLab CI, Jenkins/CloudBees, BigQuery, Dataform, dbt, Apache Beam, Python, Java, FinOps, Observability, AI infrastructure (LLMs, OpenAI integrations).
 
 Contact: cesarnogueira1210@gmail.com, LinkedIn linkedin.com/in/cesarnog, GitHub github.com/cesarnog.
 `.trim();
@@ -43,24 +44,25 @@ export default async (req) => {
   }
   if (!question.trim()) return json({ error: "Empty question" }, 400);
 
-  const key = process.env.XAI_API_KEY;
+  // Free LLM via Groq (OpenAI-compatible). GROQ_API_KEY is free from console.groq.com.
+  const key = process.env.GROQ_API_KEY;
   if (!key) {
     return json({
       fallback: true,
       answer:
-        "Live AI is not configured yet. Add XAI_API_KEY in Netlify to enable it.",
+        "Live AI is not configured yet. Add a free GROQ_API_KEY (from console.groq.com) in Netlify to enable it.",
     });
   }
 
   try {
-    const r = await fetch("https://api.x.ai/v1/chat/completions", {
+    const r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${key}`,
       },
       body: JSON.stringify({
-        model: process.env.XAI_MODEL || "grok-2-latest",
+        model: process.env.GROQ_MODEL || "llama-3.3-70b-versatile",
         temperature: 0.4,
         max_tokens: 320,
         messages: [
@@ -72,7 +74,7 @@ export default async (req) => {
 
     if (!r.ok) {
       const detail = await r.text().catch(() => "");
-      return json({ fallback: true, error: `xAI ${r.status}`, detail }, 200);
+      return json({ fallback: true, error: `groq ${r.status}`, detail }, 200);
     }
 
     const data = await r.json();
