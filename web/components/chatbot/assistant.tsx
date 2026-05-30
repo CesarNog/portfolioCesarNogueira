@@ -106,7 +106,7 @@ export function Assistant() {
               <div className="flex-1">
                 <p className="text-sm text-[var(--color-fg)]">Mission Control Assistant</p>
                 <p className="font-mono text-[10px] text-[var(--color-fg-subtle)]">
-                  AI · powered by Grok
+                  AI · Llama 3.3 (free)
                 </p>
               </div>
               <button

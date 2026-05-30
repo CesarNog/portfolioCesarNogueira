@@ -15,7 +15,8 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# AI assistant proxy (xAI / Grok). Set XAI_API_KEY in the Netlify UI to enable
-# live answers; the chatbot falls back to curated FAQ answers without it.
+# AI assistant proxy (free Groq / Llama 3.3). Set a free GROQ_API_KEY (from
+# console.groq.com) in the Netlify UI to enable live answers; the chatbot falls
+# back to curated FAQ answers without it.
 [functions]
   directory = "netlify/functions"
