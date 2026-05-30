@@ -7,7 +7,7 @@ be developed and tested **in complete isolation** from the existing static site
 
 ## Stack
 
-- **Next.js 15** (App Router) + **React 19** + **TypeScript**
+- **Next.js 16** (App Router) + **React 19** + **TypeScript**
 - **Tailwind CSS v4** (`@theme inline` design tokens)
 - **Motion** (`motion/react`) for reveal-on-scroll animation
 - **next-themes** — dark-first, no-flash theming
