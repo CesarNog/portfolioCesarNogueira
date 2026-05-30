@@ -6,12 +6,12 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { siteConfig } from "@/lib/site-config";
 
 const NAV = [
-  { href: "experience", label: "Career" },
-  { href: "certifications", label: "Certs" },
-  { href: "stack", label: "Expertise" },
-  { href: "work", label: "Work" },
-  { href: "finops", label: "FinOps" },
-  { href: "ai", label: "AI" },
+  { href: "summary", label: "Summary" },
+  { href: "experience", label: "Impact" },
+  { href: "work", label: "Stories" },
+  { href: "capabilities", label: "Expertise" },
+  { href: "trust", label: "Trust" },
+  { href: "global", label: "Global" },
   { href: "contact", label: "Contact" },
 ];
 

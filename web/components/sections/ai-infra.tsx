@@ -28,8 +28,8 @@ export function AiInfra() {
         ))}
       </div>
       <p className="mt-6 font-mono text-xs text-[var(--color-fg-subtle)]">
-        // The assistant in the corner of this site is itself an AI integration —
-        ask it anything about Cesar.
+        // The Smart AI FAQ in the corner of this site is itself an AI integration —
+        ask it anything about Cesar&apos;s fit for your role.
       </p>
     </Section>
   );
