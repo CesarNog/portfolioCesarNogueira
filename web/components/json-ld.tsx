@@ -5,14 +5,19 @@ export function JsonLd() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: siteConfig.name,
-    jobTitle: siteConfig.role,
+    jobTitle: siteConfig.shortRole,
+    description: siteConfig.description,
     url: siteConfig.url,
+    email: `mailto:${siteConfig.links.email}`,
     knowsAbout: siteConfig.knowsAbout,
-    sameAs: [siteConfig.links.linkedin, siteConfig.links.github],
+    address: { "@type": "PostalAddress", addressCountry: "PT", addressLocality: "Vila Real" },
+    sameAs: [siteConfig.links.linkedin, siteConfig.links.github, siteConfig.links.x],
     worksFor: {
       "@type": "ProfessionalService",
-      name: `${siteConfig.name} Consulting`,
+      name: siteConfig.company,
       areaServed: "Worldwide",
+      description:
+        "Cloud architecture, platform engineering, DevOps and FinOps consulting.",
     },
   };
 
