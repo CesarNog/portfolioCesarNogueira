@@ -1,0 +1,22 @@
+# Netlify build config for the Next.js portfolio v2 (web/).
+#
+# NOTE: this file only exists on the rebuild branch, so it affects this PR's
+# Deploy Preview only. The production site on `master` has no netlify.toml and
+# is unaffected until this work is intentionally merged.
+#
+# The site is a fully static Next.js export (output: "export"), so Netlify just
+# serves the generated files in web/out — no Next.js runtime/plugin required.
+
+[build]
+  base = "web"
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# AI assistant proxy (free Groq / Llama 3.3). Set a free GROQ_API_KEY (from
+# console.groq.com) in the Netlify UI to enable live answers; the chatbot falls
+# back to curated FAQ answers without it.
+[functions]
+  directory = "netlify/functions"
