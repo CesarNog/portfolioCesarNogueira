@@ -23,19 +23,21 @@ static site on `master`.
 - **Mission Portfolio** case studies, **FinOps** dashboard, **AI Infrastructure** section
 - **⌘K command palette** and an **AI FAQ chatbot** (curated buttons + live Grok)
 
-## AI assistant (Grok / xAI)
+## AI assistant (free — Groq / Llama 3.3)
 
 The "Mission Control Assistant" chatbot answers questions about Cesar.
 
 - Clickable **FAQ buttons** work instantly with curated answers — no key needed.
 - **Free-text questions** call a Netlify Function (`netlify/functions/ask.mjs`)
-  that proxies xAI's Grok API with a bio knowledge base.
+  that proxies **Groq** (a free, fast, OpenAI-compatible API serving open
+  models) with a bio knowledge base.
 
-**To enable live AI:** in Netlify → **Site settings → Environment variables**, add
+**To enable live AI (free):** create a free key at https://console.groq.com
+(no credit card), then in Netlify → **Site settings → Environment variables** add
 
 ```
-XAI_API_KEY = <your xAI API key>      # from https://console.x.ai
-XAI_MODEL   = grok-2-latest           # optional override
+GROQ_API_KEY = <your free Groq key>
+GROQ_MODEL   = llama-3.3-70b-versatile   # optional override
 ```
 
 Without the key (or on any error), the chatbot **gracefully falls back** to the
