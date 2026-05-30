@@ -34,7 +34,10 @@ export function CloudGalaxy() {
       intro="A live force-directed graph of the full stack — clouds, orchestration, CI/CD, data and FinOps. Drag, zoom and explore the connections."
     >
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-        <div className="panel relative min-h-[360px] overflow-hidden rounded-lg lg:min-h-[420px]">
+        <div
+          data-recruiter-dim
+          className="panel relative min-h-[360px] overflow-hidden rounded-lg lg:min-h-[420px]"
+        >
           <ForceGalaxy className="absolute inset-0" activeGroup={active} />
         </div>
 

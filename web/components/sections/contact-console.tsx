@@ -19,7 +19,7 @@ export function ContactConsole() {
       intro={siteConfig.tagline}
     >
       <div className="grid gap-4 lg:grid-cols-[1fr_1fr]">
-        <div className="panel rounded-lg p-6">
+        <div data-recruiter-highlight className="panel rounded-lg p-6">
           <div className="flex items-center gap-3">
             <span className="status-dot" />
             <span className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-ok)]">
@@ -85,7 +85,7 @@ export function ContactConsole() {
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-md border border-[var(--color-hairline-strong)] px-4 py-2.5 text-sm text-[var(--color-fg)] transition-colors hover:border-[var(--color-fg-muted)]"
               >
-                Download CV ↧
+                Download CV ↓
               </a>
             </div>
           </div>
