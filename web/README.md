@@ -1,41 +1,58 @@
-# Portfolio v2 — Next.js rebuild
+# Cloud Command Center 2026 — Cesar Augusto Nogueira
 
-A ground-up rebuild of [cesarnogueira.tech](https://cesarnogueira.tech) as a
-modern, premium "cloud control center" portfolio. This lives in `web/` so it can
-be developed and tested **in complete isolation** from the existing static site
-(served from `master`) — the two never collide.
+A premium, dark-first personal-brand platform for **Cesar Augusto Nogueira** —
+Principal Cloud Architect, Platform Engineer, DevOps Leader, FinOps Consultant
+and AI Infrastructure specialist. Lives in `web/`, isolated from the existing
+static site on `master`.
 
 ## Stack
 
-- **Next.js 16** (App Router) + **React 19** + **TypeScript**
+- **Next.js 16** (App Router, static export) + **React 19** + **TypeScript**
 - **Tailwind CSS v4** (`@theme inline` design tokens)
-- **Motion** (`motion/react`) for reveal-on-scroll animation
+- **Motion** (`motion/react`) — reveals, magnetic buttons, counters
+- **cmdk** — ⌘K command palette
 - **next-themes** — dark-first, no-flash theming
-- `next/font` self-hosted variable fonts (Inter, Inter Tight, Geist Mono)
-- File-based `robots.ts` / `sitemap.ts` + JSON-LD `Person` / `ProfessionalService`
+- `next/font` self-hosted variables (Geist, Geist Mono, Inter, Inter Tight)
+- Hosted on **Netlify** as a static export (`output: "export"` → `out/`)
+
+## Highlights
+
+- **Dynamic Identity Console** hero — animated terminal boot + expertise matrix
+- **Living infrastructure background** — lightweight animated canvas (reduced-motion safe)
+- **Interactive career timeline**, **Certification Command Center**, **engineering galaxy**
+- **Mission Portfolio** case studies, **FinOps** dashboard, **AI Infrastructure** section
+- **⌘K command palette** and an **AI FAQ chatbot** (curated buttons + live Grok)
+
+## AI assistant (Grok / xAI)
+
+The "Mission Control Assistant" chatbot answers questions about Cesar.
+
+- Clickable **FAQ buttons** work instantly with curated answers — no key needed.
+- **Free-text questions** call a Netlify Function (`netlify/functions/ask.mjs`)
+  that proxies xAI's Grok API with a bio knowledge base.
+
+**To enable live AI:** in Netlify → **Site settings → Environment variables**, add
+
+```
+XAI_API_KEY = <your xAI API key>      # from https://console.x.ai
+XAI_MODEL   = grok-2-latest           # optional override
+```
+
+Without the key (or on any error), the chatbot **gracefully falls back** to the
+curated FAQ answers — it never breaks.
 
 ## Develop
 
 ```bash
 cd web
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # production build
+npm run dev          # http://localhost:3000
+npm run build        # static export → web/out
 ```
-
-## Roadmap (from the 2026 research plan)
-
-- **Stage 1 — Foundation** ✅ scaffold, tokens, theming, SEO, fonts, hero + sections
-- **Stage 2 — Content & trust:** 3–5 impact-first case studies, IO scroll-spy,
-  reading-progress bar, `cmdk` command palette
-- **Stage 3 — Signature motion:** `react-force-graph-2d` topology (lazy,
-  `ssr:false`), optional GSAP scroll narrative, View Transitions
-- **Stage 4 — Hardening:** reduced-motion + on-page toggle, a11y/keyboard audit,
-  bundle analysis, Lighthouse >95
 
 ## Design principles
 
-Restraint over decoration: tight negative letter-spacing on display type,
-hairline borders at ~8% opacity, aggressive whitespace, flat layered near-black
-surfaces, one restrained accent, monospace for data/labels, minimal motion.
+Mission-control restraint: tinted near-black surfaces (#05070A / #0B1118 /
+#121A23), accents (electric blue, cloud cyan, infrastructure orange) used only
+when meaningful, hairline borders, tight display tracking, monospace for data.
 Everything respects `prefers-reduced-motion`.
