@@ -151,7 +151,7 @@ body {
   border: 2px solid var(--color-surface-0);
 }
 
-/* Global reduced-motion kill-switch. */
+/* Global reduced-motion kill-switch — system preference OR on-page toggle. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -163,4 +163,20 @@ body {
   }
   .status-dot { animation: none; }
   .cursor-blink::after { animation: none; }
+}
+
+[data-reduce-motion="1"] *,
+[data-reduce-motion="1"] *::before,
+[data-reduce-motion="1"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+[data-reduce-motion="1"] .status-dot { animation: none; }
+[data-reduce-motion="1"] .cursor-blink::after { animation: none; }
+
+/* View Transitions — cross-section navigation. */
+@view-transition {
+  navigation: auto;
 }
