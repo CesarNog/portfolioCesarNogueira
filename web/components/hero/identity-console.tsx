@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from "motion/react";
 import {
   bootSequence,
   expertiseMatrix,
+  heroHighlights,
   siteConfig,
   stats,
 } from "@/lib/site-config";
@@ -55,16 +56,18 @@ export function IdentityConsole() {
       id="top"
       className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden px-6 pt-24 pb-16"
     >
-      <InfraBackground />
-      <div className="pointer-events-none absolute inset-0 grid-bg opacity-60" aria-hidden />
-      <div
-        className="pointer-events-none absolute inset-0"
-        aria-hidden
-        style={{
-          background:
-            "radial-gradient(60% 50% at 50% 0%, color-mix(in oklab, var(--color-blue) 10%, transparent), transparent 70%)",
-        }}
-      />
+      <div data-recruiter-dim className="pointer-events-none absolute inset-0">
+        <InfraBackground />
+        <div className="absolute inset-0 grid-bg opacity-30" aria-hidden />
+        <div
+          className="absolute inset-0"
+          aria-hidden
+          style={{
+            background:
+              "radial-gradient(55% 45% at 50% 0%, color-mix(in oklab, var(--color-blue) 7%, transparent), transparent 70%)",
+          }}
+        />
+      </div>
 
       <div className="relative mx-auto grid w-full max-w-5xl gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         {/* Terminal console */}
@@ -126,23 +129,44 @@ export function IdentityConsole() {
           animate={revealed ? { opacity: 1, y: 0 } : reduce ? { opacity: 1 } : {}}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--color-blue)]">
-            {siteConfig.company} · {siteConfig.location.split("·")[0].trim()}
-          </p>
-          <h1 className="font-display mt-4 text-5xl leading-[0.98] text-[var(--color-fg)] sm:text-6xl">
+          <span className="inline-flex items-center gap-2 rounded-full border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] px-3 py-1">
+            <span className="status-dot" />
+            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-ok)]">
+              Available for global remote consulting
+            </span>
+          </span>
+          <h1 className="font-display mt-5 text-5xl leading-[0.98] text-[var(--color-fg)] sm:text-6xl">
             {siteConfig.name}
           </h1>
-          <p className="mt-5 max-w-md text-base text-[var(--color-fg-muted)]">
-            Principal Cloud Architect — Platform Engineering, DevOps, FinOps &amp;
-            AI Infrastructure. {siteConfig.tagline}
+          <p className="mt-4 font-mono text-sm uppercase tracking-[0.14em] text-[var(--color-blue)]">
+            Principal Cloud Architect · Platform Engineering
+            <span className="text-[var(--color-fg-subtle)]"> · </span>
+            DevOps · FinOps · AI Infrastructure
           </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <p className="mt-5 max-w-md text-base text-[var(--color-fg-muted)]">
+            {siteConfig.tagline} 10+ years building, automating and optimizing
+            enterprise-scale multi-cloud platforms.
+          </p>
+
+          {/* Credibility chips — value proposition in <5s */}
+          <ul className="mt-6 flex flex-wrap gap-2">
+            {heroHighlights.map((h) => (
+              <li
+                key={h}
+                className="rounded-md border border-[var(--color-hairline)] bg-[var(--color-surface-1)] px-2.5 py-1 font-mono text-[11px] text-[var(--color-fg-muted)]"
+              >
+                {h}
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-7 flex flex-wrap items-center gap-3">
             <Magnetic>
               <a
                 href="#contact"
                 className="bg-accent accent-blue inline-flex items-center rounded-md px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
               >
-                Start a mission briefing
+                Book a consultation
               </a>
             </Magnetic>
             <Magnetic>
@@ -150,7 +174,7 @@ export function IdentityConsole() {
                 href="#work"
                 className="inline-flex items-center rounded-md border border-[var(--color-hairline-strong)] px-5 py-2.5 text-sm font-medium text-[var(--color-fg)] transition-colors hover:border-[var(--color-fg-muted)]"
               >
-                View mission portfolio
+                View impact stories
               </a>
             </Magnetic>
             <kbd className="hidden rounded border border-[var(--color-hairline)] px-2 py-1 font-mono text-[10px] text-[var(--color-fg-subtle)] sm:inline-block">

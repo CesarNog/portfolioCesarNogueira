@@ -6,19 +6,23 @@ export function Projects() {
   return (
     <Section
       id="work"
-      label="Mission Portfolio"
-      title="Case studies, impact-first"
-      intro="Real engagements framed as Problem → Architecture → Impact. Outcomes lead; the how follows."
+      label="Selected Impact Stories"
+      title="Consulting-grade case studies, outcome-first"
+      intro="Real engagements as Problem → Architecture → Result. The business outcome leads; the how follows."
     >
       <div className="space-y-4">
         {projects.map((p, i) => (
           <Reveal key={p.id} delay={i * 0.05}>
-            <article className="panel grid gap-6 rounded-lg p-6 transition-colors hover:border-[var(--color-hairline-strong)] md:grid-cols-[1fr_2fr]">
+            <article
+              data-recruiter-highlight
+              className="panel grid gap-6 rounded-lg p-6 transition-colors hover:border-[var(--color-hairline-strong)] md:grid-cols-[1fr_2fr]"
+            >
               <div className="flex flex-col justify-between gap-4">
                 <div>
-                  <p className="font-display text-4xl text-[var(--color-blue)]">
-                    {p.metric}
-                  </p>
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-blue)]">
+                    {p.category}
+                  </span>
+                  <p className="font-display mt-3 text-4xl text-[var(--color-fg)]">{p.metric}</p>
                   <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
                     {p.metricLabel}
                   </p>
@@ -34,11 +38,16 @@ export function Projects() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field label="Problem" value={p.problem} />
                 <Field label="Architecture" value={p.architecture} />
-                <div className="sm:col-span-2">
-                  <p className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-cyan)]">
-                    Impact
+                <div className="sm:col-span-2 rounded-md border border-[var(--color-hairline)] bg-[var(--color-surface-2)] p-4">
+                  <p className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-ok)]">
+                    Business result
                   </p>
-                  <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5">
+                  <p className="mt-1.5 text-sm leading-relaxed text-[var(--color-fg)]">
+                    {p.outcome}
+                  </p>
+                </div>
+                <div className="sm:col-span-2">
+                  <ul className="flex flex-wrap gap-x-5 gap-y-1.5">
                     {p.impact.map((it) => (
                       <li
                         key={it}
@@ -75,9 +84,7 @@ function Field({ label, value }: { label: string; value: string }) {
       <p className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
         {label}
       </p>
-      <p className="mt-1.5 text-sm leading-relaxed text-[var(--color-fg-muted)]">
-        {value}
-      </p>
+      <p className="mt-1.5 text-sm leading-relaxed text-[var(--color-fg-muted)]">{value}</p>
     </div>
   );
 }
