@@ -16,10 +16,13 @@ export function JsonLd() {
     },
   };
 
+  // Escape "<" so a stray "</script>" in any value can't break out of the tag.
+  const serialized = JSON.stringify(jsonLd).replace(/</g, "\\u003c");
+
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      dangerouslySetInnerHTML={{ __html: serialized }}
     />
   );
 }
