@@ -74,83 +74,106 @@ export const expertiseMatrix = [
   "AI Systems",
 ];
 
-/** Interactive career timeline — real history from the resume. */
+/**
+ * Career Impact — outcome-first history framed as Challenge → Action → Result.
+ * Recruiters scan for business outcomes, scale and leadership, not duties.
+ */
 export const experience = [
   {
     company: "UP2CLOUD",
-    role: "Founder · IT & Cloud Consultant",
+    role: "Founder · Principal Cloud & FinOps Consultant",
     period: "Aug 2025 — Present",
     location: "Portugal · International",
-    summary:
-      "Independent B2B consultancy delivering cloud infrastructure, automation, DevOps and data engineering for global clients. End-to-end modernization, cloud cost optimization and secure scaling.",
+    scale: "Multiple international B2B clients",
+    challenge:
+      "Global companies need senior cloud leadership on demand — architecture, automation and cost control — without the overhead of a full-time hire.",
+    action:
+      "Founded an independent B2B consultancy delivering end-to-end cloud architecture, DevOps, FinOps and data engineering. Embed with client teams to modernize platforms and harden delivery.",
+    result:
+      "Productized cloud architecture & FinOps engagements; ongoing automation and data-pipeline delivery for clients across Europe and the Americas.",
+    outcome: "Senior cloud leadership, delivered remotely worldwide",
     tech: ["GCP", "AWS", "Azure", "Terraform", "FinOps", "CI/CD", "Data Engineering"],
-    impact: ["End-to-end cloud architecture for international clients", "FinOps & data-pipeline automation"],
+    leadership: true,
   },
   {
     company: "Randstad Digital Portugal",
     role: "Cloud FinOps Automation Engineer",
     period: "Feb 2022 — Aug 2025",
-    location: "Portugal",
-    summary:
-      "Drove cloud cost efficiency and operational excellence across Randstad's global operations using Python, Google/AWS/Azure APIs, CloudBees CI/CD and CloudHealth (VMware).",
+    location: "Portugal · Global operations",
+    scale: "Multi-account, multi-cloud estate across a global staffing leader",
+    challenge:
+      "Cloud spend across GCP, AWS and Azure was fragmented, untagged and growing faster than finance had visibility into.",
+    action:
+      "Built Python automation against multi-cloud billing APIs, integrated CloudHealth, and shipped scheduled cost-reporting, auto-tagging and chargeback jobs via CloudBees CI/CD.",
+    result:
+      "Automated cost reporting and resource tagging at scale, gave executives real cost visibility, and drove material reductions in cloud waste.",
+    outcome: "~30% cloud waste removed · automated chargeback",
     tech: ["Python", "GCP", "AWS", "Azure", "CloudBees", "CloudHealth", "FinOps"],
-    impact: [
-      "Automated cost reporting & resource tagging at scale",
-      "Multi-cloud API integration for analytics & decisions",
-      "CI/CD pipeline creation and management",
-    ],
+    leadership: false,
   },
   {
     company: "ZeroLight",
     role: "DevOps Engineer",
     period: "Aug 2021 — Feb 2022",
-    location: "Remote",
-    summary:
-      "Built and managed cloud infrastructure for automotive-industry clients — scalable, resilient, cost-efficient multi-cloud (AWS, GCP) solutions enhancing operational agility.",
+    location: "Remote · UK",
+    scale: "Automotive visualization platform",
+    challenge:
+      "Automotive-industry clients needed resilient, cost-efficient infrastructure to deliver real-time 3D visualization at scale.",
+    action:
+      "Designed and operated scalable multi-cloud (AWS, GCP) infrastructure with Kubernetes and automated CI/CD delivery.",
+    result:
+      "Improved operational agility and reliability for automotive visualization workloads.",
+    outcome: "Resilient multi-cloud delivery for automotive",
     tech: ["AWS", "GCP", "Kubernetes", "CI/CD"],
-    impact: ["Scalable multi-cloud infrastructure for automotive visualization"],
+    leadership: false,
   },
   {
     company: "Accenture Interactive",
-    role: "Tech Arch Manager",
+    role: "Technology Architecture Manager",
     period: "Aug 2020 — Aug 2021",
-    location: "Brazil",
-    summary:
-      "Led cloud enablement: GKE cluster setup & administration, automation with Jenkins and Spinnaker, technical pre-sales and team leadership in the São Paulo metro area.",
+    location: "São Paulo, Brazil",
+    scale: "Cloud enablement team · enterprise clients",
+    challenge:
+      "Enterprise clients needed Kubernetes enablement and delivery automation, plus a team to lead it through technical pre-sales to production.",
+    action:
+      "Led GKE cluster setup and administration, built automation with Jenkins and Spinnaker, and ran technical pre-sales while leading the cloud enablement team.",
+    result:
+      "Stood up production GKE platforms and CD automation; led the team and won technical engagements.",
+    outcome: "Led a cloud enablement team · GKE in production",
     tech: ["GCP", "Kubernetes", "Jenkins", "Spinnaker"],
-    impact: [
-      "GKE clusters setup & administration",
-      "Automation with Jenkins & Spinnaker",
-      "Led technical cloud enablement team",
-    ],
+    leadership: true,
   },
   {
     company: "everis (NTT Data)",
     role: "Cloud Architect",
     period: "Feb 2019 — Aug 2020",
     location: "Brazil · International",
-    summary:
-      "Designed and maintained cloud solutions (GCP, AWS, Azure, OCI) for national & international clients including AndBank, Santander and LATAM Airlines.",
+    scale: "Regulated banking & aviation enterprises",
+    challenge:
+      "Regulated enterprises — AndBank, Santander, LATAM Airlines — required resilient, secure and observable cloud across GCP, AWS, Azure and OCI.",
+    action:
+      "Designed VPC networking and PII / sensitive-data security controls, and stood up full observability with New Relic, PagerDuty and StackStorm.",
+    result:
+      "Delivered hardened, observable multi-cloud for banking and aviation with 24/7 on-call coverage.",
+    outcome: "Secure multi-cloud for AndBank, Santander & LATAM",
     tech: ["GCP", "AWS", "Azure", "OCI", "New Relic", "PagerDuty"],
-    impact: [
-      "Managed cloud infra for AndBank, Santander & LATAM Airlines",
-      "PII / sensitive-data security setup",
-      "Observability with New Relic, PagerDuty, StackStorm",
-    ],
+    leadership: false,
   },
   {
     company: "CI&T",
     role: "Software Engineer",
     period: "Dec 2017 — Feb 2019",
-    location: "Brazil · USA client",
-    summary:
-      "Built a Big Data analytics platform on Google Cloud for a mass-media corporation — Java / Node.js / React with Apache Beam, App Engine, DataFlow and BigQuery.",
+    location: "Brazil · US client",
+    scale: "Mass-scale event ingestion · US media corporation",
+    challenge:
+      "A US mass-media corporation needed a scalable analytics platform to process and query massive event streams.",
+    action:
+      "Built Apache Beam pipelines on Google DataFlow, App Engine services and a BigQuery warehouse in Java / Node.js with a React front end.",
+    result:
+      "Shipped real-time data pipelines and self-serve BigQuery analytics on elastic App Engine delivery.",
+    outcome: "Real-time Big Data platform on Google Cloud",
     tech: ["Java", "Node.js", "React", "Apache Beam", "BigQuery", "DataFlow"],
-    impact: [
-      "Data pipelines with Apache Beam",
-      "App Engine deployments & DataFlow cronjobs",
-      "BigQuery data modeling",
-    ],
+    leadership: false,
   },
 ];
 
@@ -219,6 +242,7 @@ export const galaxyGroups: Record<string, { label: string; accent: string }> = {
 export const projects = [
   {
     id: "finops-automation",
+    category: "FinOps & Cost Optimization",
     title: "Enterprise FinOps Automation Platform",
     client: "Global staffing leader",
     problem:
@@ -228,11 +252,13 @@ export const projects = [
     tech: ["Python", "GCP", "AWS", "Azure", "CloudHealth", "CloudBees"],
     scale: "Multi-account, multi-cloud estate",
     impact: ["~30% reduction in waste", "Automated tagging & chargeback", "Executive cost visibility"],
+    outcome: "Cut ~30% of cloud waste and gave finance real-time, per-team cost accountability.",
     metric: "−30%",
     metricLabel: "cloud waste",
   },
   {
     id: "bigdata-platform",
+    category: "Data Platform Engineering",
     title: "Big Data Analytics Platform",
     client: "Mass-media corporation (US)",
     problem:
@@ -242,11 +268,13 @@ export const projects = [
     tech: ["Java", "Apache Beam", "DataFlow", "BigQuery", "App Engine"],
     scale: "Mass-scale event ingestion",
     impact: ["Real-time data pipelines", "Self-serve BigQuery analytics", "Elastic App Engine delivery"],
+    outcome: "Unlocked self-serve, real-time analytics over massive event streams on Google Cloud.",
     metric: "10×",
     metricLabel: "analytics throughput",
   },
   {
     id: "banking-cloud",
+    category: "Platform Modernization",
     title: "Multi-Cloud for Banking & Aviation",
     client: "AndBank · Santander · LATAM Airlines",
     problem:
@@ -256,6 +284,7 @@ export const projects = [
     tech: ["GCP", "AWS", "Azure", "OCI", "New Relic", "PagerDuty"],
     scale: "Regulated enterprise workloads",
     impact: ["Hardened PII security", "24/7 observability & on-call", "Resilient multi-cloud networking"],
+    outcome: "Delivered secure, observable, regulator-ready cloud for banking and aviation at 99.9% availability.",
     metric: "99.9%",
     metricLabel: "availability",
   },
@@ -309,8 +338,19 @@ export const testimonials = [
   },
 ];
 
-/** Curated FAQ for the AI assistant — instant, no-cost answers. */
+/**
+ * Curated FAQ for the Smart AI FAQ — instant, no-cost recruiter answers.
+ * Ordered so the highest-intent hiring question comes first.
+ */
 export const faq = [
+  {
+    q: "Why should I hire Cesar?",
+    a: "Cesar operates at Principal / Architect level: 10+ years designing and running enterprise-scale multi-cloud platforms (GCP, AWS, Azure, OCI) for regulated banks, airlines and global enterprises. He pairs deep engineering (Kubernetes, Terraform, CI/CD, data platforms) with FinOps that removes real cloud waste (~30% on a global estate) and a track record of leading teams. He's available now for international remote consulting through UP2CLOUD and typically replies within 24h.",
+  },
+  {
+    q: "What business impact has Cesar delivered?",
+    a: "Highlights: cut ~30% of cloud waste and automated chargeback for a global staffing leader; built a real-time Big Data platform on Google Cloud for a US media corporation; delivered secure, observable multi-cloud at 99.9% availability for AndBank, Santander and LATAM Airlines; and led a cloud-enablement team running GKE in production at Accenture.",
+  },
   {
     q: "What does Cesar specialize in?",
     a: "Cesar is a Principal Cloud Architect specializing in multi-cloud architecture (GCP, AWS, Azure), Platform Engineering, DevOps, and FinOps (cloud cost optimization). He has 10+ years of experience and is increasingly focused on AI infrastructure.",
@@ -330,6 +370,30 @@ export const faq = [
   {
     q: "Tell me about his cloud experience.",
     a: "Cesar has architected and operated cloud platforms for regulated enterprises like AndBank, Santander and LATAM Airlines, built Big Data platforms on Google Cloud (Apache Beam, DataFlow, BigQuery), and led GKE/Kubernetes enablement at Accenture Interactive.",
+  },
+  {
+    q: "Show cloud architecture experience",
+    a: "Cesar has architected multi-cloud platforms across GCP, AWS, Azure and OCI for regulated enterprises — VPC/network design, security and PII controls, resilient networking and 99.9% availability for AndBank, Santander and LATAM Airlines. He's certified as a 2× Google Cloud Professional Cloud Architect.",
+  },
+  {
+    q: "Show Kubernetes expertise",
+    a: "Kubernetes is core to his platform engineering work: he set up and administered GKE clusters in production and led a cloud-enablement team at Accenture, automating delivery with Jenkins and Spinnaker, and has run multi-cloud Kubernetes (AWS/GCP) with Argo CD and Docker.",
+  },
+  {
+    q: "Show leadership experience",
+    a: "Cesar founded and runs UP2CLOUD, and previously led a cloud-enablement team as Technology Architecture Manager at Accenture Interactive — including technical pre-sales, GKE enablement and delivery automation. He mentors teams and owns architecture decisions end to end.",
+  },
+  {
+    q: "Show enterprise projects",
+    a: "Enterprise-scale work includes secure multi-cloud for AndBank, Santander and LATAM Airlines (banking & aviation), a FinOps automation platform for a global staffing leader, and a real-time Big Data platform on Google Cloud for a US mass-media corporation.",
+  },
+  {
+    q: "Show AI and automation experience",
+    a: "Cesar builds AI infrastructure and automation: LLM and OpenAI-compatible integrations, RAG over private knowledge bases, GPU-aware platform engineering, and cost-anomaly/ops automation. The Smart AI FAQ on this very site is one of his AI integrations.",
+  },
+  {
+    q: "Show international consulting work",
+    a: "Through UP2CLOUD he delivers remote consulting worldwide, and has worked across Portugal, Spain, the Netherlands, the UK, Brazil and for US clients — banking, aviation, media, staffing and automotive industries.",
   },
   {
     q: "How can I contact him?",
@@ -355,5 +419,172 @@ Skills: GCP, AWS, Azure, OCI, Kubernetes, Terraform, Docker, Argo, GitHub Action
 
 Contact: cesarnogueira1210@gmail.com, LinkedIn linkedin.com/in/cesarnog, GitHub github.com/cesarnog.
 `.trim();
+
+/** Hero credibility chips — instant value proposition, scannable in <5s. */
+export const heroHighlights = [
+  "10+ Years Experience",
+  "Multi-Cloud Specialist",
+  "International Consulting",
+  "Enterprise-Scale Systems",
+  "GCP · AWS · Azure Certified",
+];
+
+/**
+ * Executive Summary — premium cards answering the recruiter's first questions:
+ * who, why different, what he solves, how to engage.
+ */
+export const executiveSummary = [
+  {
+    k: "01",
+    title: "Who",
+    headline: "Principal-level cloud leadership",
+    body: "A Principal Cloud Architect and Platform Engineer with 10+ years across GCP, AWS, Azure and OCI — from hands-on Kubernetes and Terraform to architecture and team leadership.",
+  },
+  {
+    k: "02",
+    title: "Why different",
+    headline: "Engineering depth + FinOps + business sense",
+    body: "Most engineers build; few also cut cost and translate cloud into board-level outcomes. Cesar does all three — removing ~30% waste while keeping platforms resilient and observable.",
+  },
+  {
+    k: "03",
+    title: "What he solves",
+    headline: "Scale, spend, reliability and delivery speed",
+    body: "Multi-cloud architecture, platform/DevOps modernization, cost optimization, data platforms and AI infrastructure — for regulated, enterprise-scale environments.",
+  },
+  {
+    k: "04",
+    title: "How to engage",
+    headline: "Available now, remote, worldwide",
+    body: "Independent consulting via UP2CLOUD for international projects. Fractional architecture, platform builds or FinOps engagements. Usually replies within 24h.",
+  },
+];
+
+/**
+ * Engineering Capability Matrix — areas of expertise expressed as level + tools.
+ * No progress bars, no fake percentages — just scope, depth and proof.
+ */
+export const capabilities = [
+  {
+    area: "Cloud Architecture",
+    level: "Principal",
+    note: "Multi-cloud across GCP, AWS, Azure & OCI for regulated enterprise.",
+    tools: ["GCP", "AWS", "Azure", "OCI"],
+    accent: "blue",
+  },
+  {
+    area: "Platform Engineering",
+    level: "Expert",
+    note: "Golden paths, self-service platforms and Kubernetes at scale.",
+    tools: ["Kubernetes", "GKE", "Docker", "Argo CD"],
+    accent: "cyan",
+  },
+  {
+    area: "DevOps & CI/CD",
+    level: "Expert",
+    note: "Pipeline design and delivery automation end to end.",
+    tools: ["GitHub Actions", "GitLab CI", "Jenkins / CloudBees", "Spinnaker"],
+    accent: "blue",
+  },
+  {
+    area: "FinOps",
+    level: "Specialist",
+    note: "Cost optimization, tagging, chargeback and forecasting that removes real waste.",
+    tools: ["CloudHealth", "Billing APIs", "Python", "Dashboards"],
+    accent: "orange",
+  },
+  {
+    area: "Infrastructure as Code",
+    level: "Expert",
+    note: "Reproducible, reviewable infrastructure across clouds.",
+    tools: ["Terraform", "Helm", "GitOps"],
+    accent: "cyan",
+  },
+  {
+    area: "Observability",
+    level: "Expert",
+    note: "24/7 monitoring, on-call and incident tooling for critical systems.",
+    tools: ["New Relic", "PagerDuty", "StackStorm"],
+    accent: "blue",
+  },
+  {
+    area: "Data Platforms",
+    level: "Advanced",
+    note: "Real-time pipelines and warehousing on Google Cloud.",
+    tools: ["BigQuery", "Apache Beam", "DataFlow", "dbt", "Dataform"],
+    accent: "cyan",
+  },
+  {
+    area: "AI Infrastructure",
+    level: "Growing focus",
+    note: "Scalable, observable, cost-aware platforms for GenAI workloads.",
+    tools: ["LLM integrations", "RAG", "GPU scheduling", "Automation"],
+    accent: "orange",
+  },
+];
+
+/**
+ * Global Delivery Map — equirectangular lat/long markers proving international reach.
+ * Portugal is the home hub; arcs connect to delivery regions.
+ */
+export const globalPresence = {
+  hub: "pt",
+  markers: [
+    { id: "pt", label: "Portugal", city: "Vila Real — Home base", lat: 41.3, lon: -7.74, hub: true },
+    { id: "es", label: "Spain", city: "Iberia delivery", lat: 40.42, lon: -3.7, hub: false },
+    { id: "nl", label: "Netherlands", city: "EU clients", lat: 52.37, lon: 4.9, hub: false },
+    { id: "uk", label: "United Kingdom", city: "Remote (ZeroLight)", lat: 54.0, lon: -2.0, hub: false },
+    { id: "br", label: "Brazil", city: "São Paulo — enterprise & banking", lat: -23.55, lon: -46.63, hub: false },
+    { id: "us", label: "United States", city: "Media corporation client", lat: 38.0, lon: -97.0, hub: false },
+  ],
+  regions: [
+    { label: "Europe", x: 52, y: 30 },
+    { label: "South America", x: 33, y: 72 },
+    { label: "North America", x: 20, y: 38 },
+  ],
+};
+
+/**
+ * Trust layer — enterprise validation. Wordmarks, not fabricated logos.
+ */
+export const trust = {
+  companies: [
+    "AndBank",
+    "Santander",
+    "LATAM Airlines",
+    "Randstad",
+    "Accenture",
+    "NTT Data",
+    "CI&T",
+    "ZeroLight",
+  ],
+  industries: ["Banking", "Aviation", "Media", "Staffing", "Automotive", "Consulting"],
+  clouds: ["Google Cloud", "AWS", "Azure", "Oracle Cloud"],
+  signals: [
+    { value: "10+", label: "Years in cloud" },
+    { value: "40+", label: "Cloud projects" },
+    { value: "5", label: "Certifications" },
+    { value: "4", label: "Cloud providers" },
+    { value: "$2.5M+", label: "Cost savings generated" },
+    { value: "6+", label: "Countries served" },
+  ],
+};
+
+/**
+ * Smart AI FAQ — recruiter-focused suggested prompts.
+ * Each maps to a curated answer via keyword matching (free, instant).
+ */
+export const recruiterPrompts = [
+  "Why should I hire Cesar?",
+  "What business impact has Cesar delivered?",
+  "Show cloud architecture experience",
+  "Show FinOps achievements",
+  "Show Kubernetes expertise",
+  "Show GCP certifications",
+  "Show leadership experience",
+  "Show enterprise projects",
+  "Show AI and automation experience",
+  "Show international consulting work",
+];
 
 export type SiteConfig = typeof siteConfig;
