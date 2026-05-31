@@ -6,10 +6,11 @@ import { motion, useReducedMotion } from "motion/react";
 import {
   bootSequence,
   expertiseMatrix,
-  heroHighlights,
   siteConfig,
   stats,
 } from "@/lib/site-config";
+import { useI18n } from "@/lib/i18n";
+import { AVATAR_SRC } from "@/lib/images";
 import { Counter } from "@/components/ui/counter";
 import { Magnetic } from "@/components/ui/magnetic";
 
@@ -22,6 +23,7 @@ type Phase = "boot" | "matrix" | "status" | "done";
 
 export function IdentityConsole() {
   const reduce = useReducedMotion();
+  const { t } = useI18n();
   const [phase, setPhase] = useState<Phase>(reduce ? "done" : "boot");
   const [bootLine, setBootLine] = useState(0);
   const [matrixCount, setMatrixCount] = useState(0);
@@ -129,28 +131,37 @@ export function IdentityConsole() {
           animate={revealed ? { opacity: 1, y: 0 } : reduce ? { opacity: 1 } : {}}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] px-3 py-1">
-            <span className="status-dot" />
-            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-ok)]">
-              Available for global remote consulting
+          {/* Avatar + availability */}
+          <div className="flex items-center gap-4">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={AVATAR_SRC}
+              alt={`Portrait of ${siteConfig.name}`}
+              width={56}
+              height={56}
+              loading="eager"
+              className="h-14 w-14 shrink-0 rounded-full border border-[var(--color-hairline-strong)] object-cover shadow-lg"
+            />
+            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] px-3 py-1">
+              <span className="status-dot" />
+              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-ok)]">
+                {t.hero.available}
+              </span>
             </span>
-          </span>
+          </div>
           <h1 className="font-display mt-5 text-5xl leading-[0.98] text-[var(--color-fg)] sm:text-6xl">
             {siteConfig.name}
           </h1>
           <p className="mt-4 font-mono text-sm uppercase tracking-[0.14em] text-[var(--color-blue)]">
-            Principal Cloud Architect · Platform Engineering
-            <span className="text-[var(--color-fg-subtle)]"> · </span>
-            DevOps · FinOps · AI Infrastructure
+            {t.hero.roleLine}
           </p>
           <p className="mt-5 max-w-md text-base text-[var(--color-fg-muted)]">
-            {siteConfig.tagline} 10+ years building, automating and optimizing
-            enterprise-scale multi-cloud platforms.
+            {t.hero.desc}
           </p>
 
           {/* Credibility chips — value proposition in <5s */}
           <ul className="mt-6 flex flex-wrap gap-2">
-            {heroHighlights.map((h) => (
+            {t.hero.chips.map((h) => (
               <li
                 key={h}
                 className="rounded-md border border-[var(--color-hairline)] bg-[var(--color-surface-1)] px-2.5 py-1 font-mono text-[11px] text-[var(--color-fg-muted)]"
@@ -166,7 +177,7 @@ export function IdentityConsole() {
                 href="#contact"
                 className="bg-accent accent-blue inline-flex items-center rounded-md px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
               >
-                Book a consultation
+                {t.hero.ctaPrimary}
               </a>
             </Magnetic>
             <Magnetic>
@@ -174,7 +185,7 @@ export function IdentityConsole() {
                 href="#work"
                 className="inline-flex items-center rounded-md border border-[var(--color-hairline-strong)] px-5 py-2.5 text-sm font-medium text-[var(--color-fg)] transition-colors hover:border-[var(--color-fg-muted)]"
               >
-                View impact stories
+                {t.hero.ctaSecondary}
               </a>
             </Magnetic>
             <kbd className="hidden rounded border border-[var(--color-hairline)] px-2 py-1 font-mono text-[10px] text-[var(--color-fg-subtle)] sm:inline-block">
