@@ -1,9 +1,10 @@
-# Cloud Command Center 2026 — Cesar Augusto Nogueira
+# Interactive Executive CV Platform — Cesar Augusto Nogueira
 
-A premium, dark-first personal-brand platform for **Cesar Augusto Nogueira** —
-Principal Cloud Architect, Platform Engineer, DevOps Leader, FinOps Consultant
-and AI Infrastructure specialist. Lives in `web/`, isolated from the existing
-static site on `master`.
+A premium, dark-first **Interactive Executive CV Platform** for **Cesar Augusto
+Nogueira** — Principal Cloud Architect, Platform Engineer, DevOps Leader, FinOps
+Consultant and AI Infrastructure specialist. Built for **recruiter conversion**:
+every section sells outcomes, authority and trust before it sells technology.
+Lives in `web/`, isolated from the existing static site on `master`.
 
 ## Stack
 
@@ -15,22 +16,30 @@ static site on `master`.
 - `next/font` self-hosted variables (Geist, Geist Mono, Inter, Inter Tight)
 - Hosted on **Netlify** as a static export (`output: "export"` → `out/`)
 
-## Highlights
+## Highlights (recruiter-conversion flow)
 
-- **Dynamic Identity Console** hero — animated terminal boot + expertise matrix
-- **Living infrastructure background** — lightweight animated canvas (reduced-motion safe)
-- **Interactive career timeline**, **Certification Command Center**, **engineering galaxy**
-- **Mission Portfolio** case studies, **FinOps** dashboard, **AI Infrastructure** section
-- **⌘K command palette** and an **AI FAQ chatbot** (curated buttons + live Grok)
+- **Identity hero** — "Available for global remote consulting" status, role stack and
+  credibility chips (value proposition readable in <5s) over a toned-down background
+- **Executive Summary** — premium cards: who, why different, what he solves, how to engage
+- **Career Impact** — every role framed Challenge → Action → Result, outcome-first
+- **Selected Impact Stories** — consulting-grade case studies with a business-result block
+- **Engineering Capability Matrix** — depth by level + tools (no progress bars, no vanity %)
+- **Enterprise Validation (Trust)** — signal stats, companies, industries, cloud providers
+- **Global Delivery Map** — animated equirectangular map of delivery regions
+- **Certifications**, **FinOps dashboard**, **AI Infrastructure**, live **force-graph galaxy**
+- **Recruiter Mode** — floating toggle that emphasizes impact/leadership/certs/availability
+  and de-emphasizes purely decorative visuals
+- **Smart AI FAQ** (AI Career Assistant) + **⌘K command palette**
 
-## AI assistant (free — Groq / Llama 3.3)
+## Smart AI FAQ (free — Groq / Llama 3.3)
 
-The "Mission Control Assistant" chatbot answers questions about Cesar.
+The **AI Career Assistant** answers recruiter questions about Cesar's fit for a role.
 
-- Clickable **FAQ buttons** work instantly with curated answers — no key needed.
-- **Free-text questions** call a Netlify Function (`netlify/functions/ask.mjs`)
-  that proxies **Groq** (a free, fast, OpenAI-compatible API serving open
-  models) with a bio knowledge base.
+- Recruiter-focused **suggested prompts** ("Why should I hire Cesar?", "Show FinOps
+  achievements"…) resolve instantly from curated, keyword-matched answers — no key needed.
+- **Free-text questions** call a Netlify Function (`netlify/functions/ask.mjs`) that
+  proxies **Groq** (a free, fast, OpenAI-compatible API serving open models) with a
+  recruiter-oriented system prompt and a bio knowledge base.
 
 **To enable live AI (free):** create a free key at https://console.groq.com
 (no credit card), then in Netlify → **Site settings → Environment variables** add
@@ -54,7 +63,7 @@ npm run build        # static export → web/out
 
 ## Design principles
 
-Mission-control restraint: tinted near-black surfaces (#05070A / #0B1118 /
-#121A23), accents (electric blue, cloud cyan, infrastructure orange) used only
-when meaningful, hairline borders, tight display tracking, monospace for data.
-Everything respects `prefers-reduced-motion`.
+Enterprise restraint (Linear / Vercel / Datadog): neutral near-black surfaces,
+one restrained blue accent used only when meaningful, hairline borders, tight
+display tracking, monospace for data. Sells outcomes, authority and trust before
+technology. Everything respects `prefers-reduced-motion`.

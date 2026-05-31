@@ -13,7 +13,7 @@ export function Certifications() {
       <div className="grid gap-4 sm:grid-cols-2">
         {certifications.map((cat, i) => (
           <Reveal key={cat.group} delay={i * 0.05}>
-            <div className={`panel accent-${cat.accent} h-full rounded-lg p-5`}>
+            <div data-recruiter-highlight className={`panel accent-${cat.accent} h-full rounded-lg p-5`}>
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-medium text-[var(--color-fg)]">
                   {cat.group}

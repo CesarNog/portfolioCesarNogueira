@@ -1,5 +1,8 @@
+"use client";
+
 import type { ReactNode } from "react";
 import { Reveal } from "@/components/reveal";
+import { useI18n } from "@/lib/i18n";
 
 export function Section({
   id,
@@ -14,6 +17,12 @@ export function Section({
   intro?: string;
   children: ReactNode;
 }) {
+  const { t } = useI18n();
+  const tr = t.sections[id];
+  const heading = tr?.label ?? label;
+  const headline = tr?.title ?? title;
+  const lead = tr?.intro ?? intro;
+
   return (
     <section
       id={id}
@@ -22,13 +31,13 @@ export function Section({
       <div className="mx-auto max-w-5xl">
         <Reveal>
           <p className="mb-3 font-mono text-xs uppercase tracking-[0.22em] text-[var(--color-blue)]">
-            <span className="text-[var(--color-fg-subtle)]">//</span> {label}
+            <span className="text-[var(--color-fg-subtle)]">//</span> {heading}
           </p>
           <h2 className="font-display max-w-2xl text-3xl text-[var(--color-fg)] sm:text-4xl">
-            {title}
+            {headline}
           </h2>
-          {intro && (
-            <p className="mt-4 max-w-2xl text-[var(--color-fg-muted)]">{intro}</p>
+          {lead && (
+            <p className="mt-4 max-w-2xl text-[var(--color-fg-muted)]">{lead}</p>
           )}
         </Reveal>
         <div className="mt-10">{children}</div>

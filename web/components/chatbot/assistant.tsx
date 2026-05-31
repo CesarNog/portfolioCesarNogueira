@@ -2,19 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { faq, siteConfig } from "@/lib/site-config";
+import { faq, recruiterPrompts, siteConfig } from "@/lib/site-config";
+import { useI18n } from "@/lib/i18n";
+import { AVATAR_SRC } from "@/lib/images";
 
 type Msg = { role: "user" | "assistant"; text: string };
 
-const GREETING: Msg = {
-  role: "assistant",
-  text: `Hi — I'm ${siteConfig.firstName}'s Mission Control assistant. Tap a question below, or ask me anything about his cloud, DevOps, FinOps or AI work.`,
-};
-
 export function Assistant() {
   const reduce = useReducedMotion();
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Msg[]>([GREETING]);
+  const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
@@ -24,7 +22,7 @@ export function Assistant() {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading]);
 
-  // Close on Escape and trap initial focus.
+  // Close on Escape.
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
@@ -32,8 +30,23 @@ export function Assistant() {
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const pushFaq = (q: string, a: string) => {
-    setMessages((m) => [...m, { role: "user", text: q }, { role: "assistant", text: a }]);
+  // Allow other UI (command palette, recruiter mode) to open the assistant.
+  useEffect(() => {
+    const openIt = () => setOpen(true);
+    document.addEventListener("open-smart-faq", openIt);
+    return () => document.removeEventListener("open-smart-faq", openIt);
+  }, []);
+
+  // Match a free-text question to the best curated answer.
+  const matchFaq = (q: string) => {
+    const lower = q.toLowerCase();
+    let best: { score: number; a: string } | null = null;
+    for (const f of faq) {
+      const words = f.q.toLowerCase().split(/\W+/).filter((w) => w.length > 3);
+      const score = words.reduce((n, w) => (lower.includes(w) ? n + 1 : n), 0);
+      if (score > 0 && (!best || score > best.score)) best = { score, a: f.a };
+    }
+    return best?.a;
   };
 
   async function ask(question: string) {
@@ -43,17 +56,9 @@ export function Assistant() {
     setInput("");
     setLoading(true);
 
-    // Local fallback: best-matching curated answer.
-    const fallback = () => {
-      const lower = q.toLowerCase();
-      const hit = faq.find((f) =>
-        f.q.toLowerCase().split(" ").some((w) => w.length > 4 && lower.includes(w)),
-      );
-      return (
-        hit?.a ??
-        `I can't reach the live AI right now, but here's what I can tell you: ${siteConfig.name} is a Principal Cloud Architect & FinOps consultant (GCP/AWS/Azure, 10+ years), available for international projects. Email ${siteConfig.links.email}.`
-      );
-    };
+    const fallback = () =>
+      matchFaq(q) ??
+      `Here's the short version: ${siteConfig.name} is a Principal Cloud Architect & FinOps consultant (GCP/AWS/Azure, 10+ years) available for international projects. Email ${siteConfig.links.email}.`;
 
     try {
       const res = await fetch("/.netlify/functions/ask", {
@@ -79,13 +84,13 @@ export function Assistant() {
       {/* Launcher */}
       <button
         type="button"
-        aria-label={open ? "Close assistant" : "Open AI assistant"}
+        aria-label={open ? "Close Smart AI FAQ" : "Open Smart AI FAQ"}
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
         className="fixed bottom-5 right-5 z-[90] flex items-center gap-2 rounded-full border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] px-4 py-3 text-sm text-[var(--color-fg)] shadow-2xl transition-colors hover:border-[var(--color-blue)]"
       >
         <span className="status-dot" />
-        <span className="font-medium">{open ? "Close" : "Ask AI"}</span>
+        <span className="font-medium">{open ? t.assistant.close : t.assistant.launch}</span>
       </button>
 
       <AnimatePresence>
@@ -93,24 +98,31 @@ export function Assistant() {
           <motion.div
             ref={panelRef}
             role="dialog"
-            aria-label="AI assistant"
+            aria-label="Smart AI FAQ — AI Career Assistant"
             initial={reduce ? false : { opacity: 0, y: 16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="panel fixed bottom-20 right-5 z-[90] flex h-[70vh] max-h-[560px] w-[92vw] max-w-sm flex-col overflow-hidden rounded-xl shadow-2xl"
+            className="panel fixed bottom-20 right-5 z-[90] flex h-[72vh] max-h-[600px] w-[92vw] max-w-sm flex-col overflow-hidden rounded-xl shadow-2xl"
           >
             {/* Header */}
             <div className="flex items-center gap-3 border-b border-[var(--color-hairline)] px-4 py-3">
-              <span className="status-dot" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={AVATAR_SRC}
+                alt={siteConfig.name}
+                width={32}
+                height={32}
+                className="h-8 w-8 shrink-0 rounded-full border border-[var(--color-hairline-strong)] object-cover"
+              />
               <div className="flex-1">
-                <p className="text-sm text-[var(--color-fg)]">Mission Control Assistant</p>
+                <p className="text-sm text-[var(--color-fg)]">{t.assistant.header}</p>
                 <p className="font-mono text-[10px] text-[var(--color-fg-subtle)]">
-                  AI · Llama 3.3 (free)
+                  {t.assistant.subtitle}
                 </p>
               </div>
               <button
-                aria-label="Close"
+                aria-label={t.assistant.close}
                 onClick={() => setOpen(false)}
                 className="text-[var(--color-fg-subtle)] hover:text-[var(--color-fg)]"
               >
@@ -120,6 +132,12 @@ export function Assistant() {
 
             {/* Messages */}
             <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto p-4">
+              {/* Localized greeting always leads the thread */}
+              <div className="flex justify-start">
+                <p className="panel-2 max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed text-[var(--color-fg)]">
+                  {t.assistant.greeting}
+                </p>
+              </div>
               {messages.map((m, i) => (
                 <div
                   key={i}
@@ -142,18 +160,24 @@ export function Assistant() {
                 </p>
               )}
 
-              {/* FAQ quick buttons */}
-              <div className="flex flex-wrap gap-2 pt-1">
-                {faq.map((f) => (
-                  <button
-                    key={f.q}
-                    type="button"
-                    onClick={() => pushFaq(f.q, f.a)}
-                    className="rounded-full border border-[var(--color-hairline)] px-3 py-1.5 text-left text-xs text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-blue)] hover:text-[var(--color-fg)]"
-                  >
-                    {f.q}
-                  </button>
-                ))}
+              {/* Recruiter-focused suggested prompts */}
+              <div className="pt-1">
+                <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
+                  {t.assistant.suggested}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {recruiterPrompts.map((q) => (
+                    <button
+                      key={q}
+                      type="button"
+                      onClick={() => ask(q)}
+                      disabled={loading}
+                      className="rounded-full border border-[var(--color-hairline)] px-3 py-1.5 text-left text-xs text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-blue)] hover:text-[var(--color-fg)] disabled:opacity-40"
+                    >
+                      {q}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -168,8 +192,8 @@ export function Assistant() {
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask anything about Cesar…"
-                aria-label="Ask the assistant"
+                placeholder={t.assistant.placeholder}
+                aria-label={t.assistant.header}
                 className="flex-1 rounded-md border border-[var(--color-hairline)] bg-transparent px-3 py-2 text-sm text-[var(--color-fg)] outline-none placeholder:text-[var(--color-fg-subtle)] focus:border-[var(--color-blue)]"
               />
               <button
