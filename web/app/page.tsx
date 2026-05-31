@@ -1,16 +1,21 @@
 import { SiteHeader } from "@/components/site-header";
 import { JsonLd } from "@/components/json-ld";
 import { IdentityConsole } from "@/components/hero/identity-console";
+import { ExecutiveSummary } from "@/components/sections/executive-summary";
 import { ExperienceTimeline } from "@/components/sections/experience-timeline";
-import { Certifications } from "@/components/sections/certifications";
-import { CloudGalaxy } from "@/components/sections/cloud-galaxy";
 import { Projects } from "@/components/sections/projects";
+import { CapabilityMatrix } from "@/components/sections/capability-matrix";
+import { Trust } from "@/components/sections/trust";
+import { GlobalMap } from "@/components/sections/global-map";
+import { Certifications } from "@/components/sections/certifications";
 import { FinOps } from "@/components/sections/finops";
 import { AiInfra } from "@/components/sections/ai-infra";
+import { CloudGalaxy } from "@/components/sections/cloud-galaxy";
 import { Testimonials } from "@/components/sections/testimonials";
 import { ContactConsole } from "@/components/sections/contact-console";
 import { CommandPalette } from "@/components/command-palette";
 import { Assistant } from "@/components/chatbot/assistant";
+import { RecruiterMode } from "@/components/recruiter-mode";
 import { MotionToggle } from "@/components/motion-toggle";
 import { siteConfig } from "@/lib/site-config";
 
@@ -21,12 +26,16 @@ export default function Home() {
       <SiteHeader />
       <main>
         <IdentityConsole />
+        <ExecutiveSummary />
         <ExperienceTimeline />
-        <Certifications />
-        <CloudGalaxy />
         <Projects />
+        <CapabilityMatrix />
+        <Trust />
+        <GlobalMap />
+        <Certifications />
         <FinOps />
         <AiInfra />
+        <CloudGalaxy />
         <Testimonials />
         <ContactConsole />
       </main>
@@ -54,6 +63,7 @@ export default function Home() {
       </footer>
 
       <CommandPalette />
+      <RecruiterMode />
       <Assistant />
     </>
   );

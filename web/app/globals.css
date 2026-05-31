@@ -10,20 +10,20 @@
   --font-display: var(--font-inter-tight), var(--font-geist), sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
 
-  /* Surface ramp. */
-  --color-surface-0: #05070a;
-  --color-surface-1: #0b1118;
-  --color-surface-2: #121a23;
-  --color-surface-3: #1a2530;
+  /* Surface ramp — neutral near-black (Linear / Vercel enterprise tone). */
+  --color-surface-0: #08090c;
+  --color-surface-1: #0e1014;
+  --color-surface-2: #16191f;
+  --color-surface-3: #20242c;
 
-  --color-fg: #e8edf2;
-  --color-fg-muted: #8a97a6;
-  --color-fg-subtle: #5a6675;
+  --color-fg: #edf0f3;
+  --color-fg-muted: #97a1ad;
+  --color-fg-subtle: #626c78;
 
   /* Accents — used sparingly, only when meaningful. */
-  --color-blue: #2e8bff;
-  --color-cyan: #25d6e0;
-  --color-orange: #ff8a3d;
+  --color-blue: #3b82f6;
+  --color-cyan: #22b8c4;
+  --color-orange: #f59e5b;
   --color-accent: var(--color-blue);
 
   --color-hairline: rgba(255, 255, 255, 0.07);
@@ -100,7 +100,7 @@ body {
 }
 .glow {
   box-shadow: 0 0 0 1px var(--color-hairline),
-    0 0 40px -12px color-mix(in oklab, var(--accent, var(--color-accent)) 50%, transparent);
+    0 0 32px -16px color-mix(in oklab, var(--accent, var(--color-accent)) 38%, transparent);
 }
 .grid-bg {
   background-image:
@@ -179,4 +179,25 @@ body {
 /* View Transitions — cross-section navigation. */
 @view-transition {
   navigation: auto;
+}
+
+/*
+  Recruiter Mode — a focused reading mode that emphasizes business impact,
+  leadership, certifications, availability and contact while de-emphasizing
+  purely decorative visuals.
+*/
+[data-recruiter="1"] [data-recruiter-dim] {
+  opacity: 0.32;
+  filter: saturate(0.6);
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+[data-recruiter="1"] [data-recruiter-highlight] {
+  border-color: color-mix(in oklab, var(--color-blue) 45%, var(--color-hairline-strong));
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-blue) 30%, transparent),
+    0 0 28px -18px color-mix(in oklab, var(--color-blue) 60%, transparent);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+/* Push content below the fixed header + recruiter banner. */
+[data-recruiter="1"] {
+  scroll-padding-top: 6.5rem;
 }

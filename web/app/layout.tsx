@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, Inter_Tight } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { I18nProvider } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-export const viewport = { themeColor: "#05070a" };
+export const viewport = { themeColor: "#08090c" };
 
 export default function RootLayout({
   children,
@@ -46,7 +47,9 @@ export default function RootLayout({
       <body
         className={`${geist.variable} ${geistMono.variable} ${inter.variable} ${interTight.variable} tracking-tight-body antialiased`}
       >
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <I18nProvider>{children}</I18nProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
