@@ -8,7 +8,7 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
     <div
       role="group"
       aria-label="Language"
-      className={`flex items-center rounded-md border border-[var(--color-hairline)] p-0.5 ${className}`}
+      className={`flex flex-wrap items-center rounded-md border border-[var(--color-hairline)] p-0.5 ${className}`}
     >
       {LANGS.map((l) => {
         const active = l.code === lang;

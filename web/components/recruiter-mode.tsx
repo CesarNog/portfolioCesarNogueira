@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useI18n } from "@/lib/i18n";
 
 const KEY = "recruiter-mode";
 
 export function RecruiterMode() {
   const [on, setOn] = useState(false);
   const reduce = useReducedMotion();
+  const { t } = useI18n();
 
   useEffect(() => {
     if (localStorage.getItem(KEY) === "1") {
@@ -44,15 +46,14 @@ export function RecruiterMode() {
           >
             <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-2">
               <p className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg)]">
-                <span className="text-[var(--color-blue)]">●</span> Recruiter Mode — impact,
-                leadership, certifications & availability emphasized
+                <span className="text-[var(--color-blue)]">●</span> {t.recruiter.banner}
               </p>
               <button
                 type="button"
                 onClick={toggle}
                 className="shrink-0 font-mono text-[11px] text-[var(--color-fg-muted)] underline-offset-2 hover:text-[var(--color-fg)] hover:underline"
               >
-                exit
+                {t.recruiter.exit}
               </button>
             </div>
           </motion.div>
@@ -87,7 +88,7 @@ export function RecruiterMode() {
           <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
           <path d="M16 3.13a4 4 0 0 1 0 7.75" />
         </svg>
-        <span className="font-medium">{on ? "Recruiter Mode: On" : "Recruiter Mode"}</span>
+        <span className="font-medium">{on ? t.recruiter.on : t.recruiter.off}</span>
       </button>
     </>
   );
