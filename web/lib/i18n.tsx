@@ -10,11 +10,13 @@ import {
   type ReactNode,
 } from "react";
 
-export type Lang = "en" | "pt" | "es";
+export type Lang = "en" | "pt" | "es" | "fr" | "zh";
 export const LANGS: { code: Lang; label: string; name: string }[] = [
   { code: "en", label: "EN", name: "English" },
   { code: "pt", label: "PT", name: "Português" },
   { code: "es", label: "ES", name: "Español" },
+  { code: "fr", label: "FR", name: "Français" },
+  { code: "zh", label: "中文", name: "中文" },
 ];
 
 type SectionCopy = { label: string; title: string; intro?: string };
@@ -458,7 +460,283 @@ const es: Dict = {
   portraitCaption: "Madrid · Gran Vía",
 };
 
-const DICT: Record<Lang, Dict> = { en, pt, es };
+const fr: Dict = {
+  nav: {
+    summary: "Résumé",
+    experience: "Impact",
+    work: "Projets",
+    capabilities: "Expertise",
+    trust: "Confiance",
+    global: "Global",
+    contact: "Contact",
+  },
+  hero: {
+    available: "Disponible pour des missions de conseil à distance",
+    roleLine:
+      "Principal Cloud Architect · Ingénierie de Plateformes · DevOps · FinOps · Infrastructure IA",
+    desc: "Plus de 10 ans à construire, automatiser et optimiser des plateformes multi-cloud à l'échelle entreprise.",
+    chips: [
+      "10+ Ans d'expérience",
+      "Spécialiste Multi-Cloud",
+      "Conseil International",
+      "Systèmes à Échelle Entreprise",
+      "Certifié GCP · AWS · Azure",
+    ],
+    ctaPrimary: "Réserver une consultation",
+    ctaSecondary: "Voir les résultats",
+  },
+  sections: {
+    summary: {
+      label: "Résumé Exécutif",
+      title: "Un consultant cloud senior, résumé pour les décideurs",
+      intro:
+        "Le résumé en 30 secondes : qui est Cesar, pourquoi il est différent, ce qu'il résout et comment l'engager.",
+    },
+    experience: {
+      label: "Impact Carrière",
+      title: "Résultats livrés au cours d'une décennie de leadership cloud",
+      intro:
+        "Chaque rôle présenté comme Défi → Action → Résultat. Développez une carte pour voir l'impact business, l'échelle et la stack.",
+    },
+    work: {
+      label: "Études de cas sélectionnées",
+      title: "Cas pratiques niveau conseil, axés sur les résultats",
+      intro:
+        "Missions réelles comme Problème → Architecture → Résultat. Le résultat business est en premier ; le comment suit.",
+    },
+    capabilities: {
+      label: "Matrice de Compétences",
+      title: "Profondeur là où ça compte — sans métriques de vanité",
+      intro:
+        "Chaque compétence présentée par niveau et par les outils qui la soutiennent. Périmètre et preuves, pas des barres de progression.",
+    },
+    trust: {
+      label: "Validation Entreprise",
+      title: "Approuvé pour des systèmes réglementés et critiques",
+      intro:
+        "Banques, compagnies aériennes et multinationales — sur quatre fournisseurs cloud et six secteurs.",
+    },
+    global: {
+      label: "Carte de Livraison Mondiale",
+      title: "Expertise cloud senior, où que vous opériez",
+      intro:
+        "Une décennie de travail en Europe et dans les Amériques — livré sur site et entièrement à distance.",
+    },
+    certifications: {
+      label: "Centre de Certifications",
+      title: "Certifications multi-cloud vérifiées",
+      intro: "Expertise validée sur les trois grands clouds et la pratique FinOps.",
+    },
+    stack: {
+      label: "Carte d'Architecture Multi-Cloud",
+      title: "Une galaxie d'ingénierie, pas une liste de badges",
+      intro:
+        "Un graphe dynamique de la stack complète — clouds, orchestration, CI/CD, données et FinOps. Faites glisser, zoomez et explorez les connexions.",
+    },
+    finops: {
+      label: "Centre d'Opérations FinOps",
+      title: "Transformer les dépenses cloud en actif stratégique",
+      intro:
+        "Optimisation des coûts, redimensionnement, gouvernance, prévision, refacturation et automatisation — mesuré, pas deviné.",
+    },
+    ai: {
+      label: "Infrastructure IA & Automatisation",
+      title: "Préparé pour l'avenir : plateformes conçues pour GenAI",
+      intro:
+        "Des intégrations LLM à l'ingénierie de plateformes GPU — infrastructure qui rend l'IA fiable, observable et économe.",
+    },
+    testimonials: {
+      label: "Références",
+      title: "Reconnu par les ingénieurs et les dirigeants",
+    },
+    contact: {
+      label: "Console de Briefing",
+      title: "Construisons votre prochaine plateforme",
+      intro:
+        "L'un des consultants Cloud, Plateformes, DevOps & FinOps les plus solides disponibles à distance en Europe.",
+    },
+  },
+  exec: [
+    {
+      title: "Qui",
+      headline: "Leadership cloud au niveau Principal",
+      body: "Un Principal Cloud Architect et ingénieur de plateformes avec 10+ ans sur GCP, AWS, Azure et OCI — du Kubernetes et Terraform pratiques à l'architecture et au management d'équipes.",
+    },
+    {
+      title: "Pourquoi différent",
+      headline: "Profondeur technique + FinOps + sens des affaires",
+      body: "La plupart des ingénieurs construisent ; peu réduisent aussi les coûts et traduisent le cloud en résultats au niveau direction. Cesar fait les trois — supprimant ~30% de gaspillage tout en maintenant la résilience et l'observabilité.",
+    },
+    {
+      title: "Ce qu'il résout",
+      headline: "Échelle, coûts, fiabilité et vitesse de livraison",
+      body: "Architecture multi-cloud, modernisation plateformes/DevOps, optimisation des coûts, plateformes de données et infrastructure IA — pour les environnements réglementés à l'échelle entreprise.",
+    },
+    {
+      title: "Comment engager",
+      headline: "Disponible maintenant, à distance, partout",
+      body: "Conseil indépendant via UP2CLOUD pour des projets internationaux. Architecture fractionnée, construction de plateformes ou missions FinOps. Répond généralement sous 24h.",
+    },
+  ],
+  recruiter: {
+    banner:
+      "Mode Recruteur — impact, leadership, certifications & disponibilité mis en avant",
+    exit: "quitter",
+    on: "Mode Recruteur : Actif",
+    off: "Mode Recruteur",
+  },
+  assistant: {
+    launch: "FAQ IA",
+    close: "Fermer",
+    header: "Assistant Carrière IA",
+    subtitle: "Connaît tout sur Cesar · répond depuis son vrai profil",
+    greeting:
+      "Je suis l'Assistant Carrière IA de Cesar — je connais tout son parcours. Posez tout ce qu'une décision de recrutement nécessite : séniorité, échelle, leadership, impact financier, certifications ou disponibilité. Essayez une question ci-dessous.",
+    suggested: "Questions suggérées pour les recruteurs",
+    placeholder: "Posez une question sur l'adéquation de Cesar à votre poste…",
+  },
+  portraitCaption: "Madrid · Gran Vía",
+};
+
+const zh: Dict = {
+  nav: {
+    summary: "摘要",
+    experience: "成就",
+    work: "案例",
+    capabilities: "专长",
+    trust: "信任",
+    global: "全球",
+    contact: "联系",
+  },
+  hero: {
+    available: "可提供全球远程咨询服务",
+    roleLine:
+      "首席云架构师 · 平台工程 · DevOps · FinOps · AI基础设施",
+    desc: "10余年构建、自动化和优化企业级多云平台的丰富经验。",
+    chips: [
+      "10年以上经验",
+      "多云专家",
+      "国际咨询",
+      "企业级系统",
+      "GCP · AWS · Azure认证",
+    ],
+    ctaPrimary: "预约咨询",
+    ctaSecondary: "查看成功案例",
+  },
+  sections: {
+    summary: {
+      label: "执行摘要",
+      title: "面向决策者的高级云顾问简介",
+      intro:
+        "30秒简介：Cesar是谁、为何与众不同、解决什么问题，以及如何合作。",
+    },
+    experience: {
+      label: "职业成就",
+      title: "十年云领导力交付的成果",
+      intro:
+        "每个职位按挑战→行动→结果呈现。展开卡片查看业务成果、规模和技术栈。",
+    },
+    work: {
+      label: "精选影响力案例",
+      title: "咨询级案例研究，以成果为先",
+      intro:
+        "真实项目按问题→架构→结果呈现。业务结果优先，实现方式随后。",
+    },
+    capabilities: {
+      label: "工程能力矩阵",
+      title: "深度聚焦关键领域——拒绝虚荣指标",
+      intro:
+        "每项能力按级别和支撑工具展示。范围与证明，而非进度条。",
+    },
+    trust: {
+      label: "企业认可",
+      title: "受托于受监管的关键业务系统",
+      intro:
+        "银行、航空公司和全球企业——跨越四大云服务商和六个行业。",
+    },
+    global: {
+      label: "全球交付地图",
+      title: "高级云交付，无论您在哪里运营",
+      intro:
+        "十年间在欧洲和美洲的工作经历——现场和完全远程交付。",
+    },
+    certifications: {
+      label: "认证中心",
+      title: "已验证的多云认证",
+      intro: "三大主流云及FinOps实践的验证专业知识。",
+    },
+    stack: {
+      label: "多云架构图",
+      title: "工程星系，而非徽章列表",
+      intro:
+        "全栈实时力导向图——云、编排、CI/CD、数据和FinOps。拖拽、缩放，探索连接关系。",
+    },
+    finops: {
+      label: "FinOps运营中心",
+      title: "将云支出转化为战略资产",
+      intro:
+        "成本优化、合理配置、治理、预测、成本分摊和自动化——精准测量，而非猜测。",
+    },
+    ai: {
+      label: "AI基础设施与自动化",
+      title: "面向未来：为GenAI打造的平台",
+      intro:
+        "从LLM集成到GPU感知的平台工程——让AI可靠、可观测且成本可控的基础设施。",
+    },
+    testimonials: {
+      label: "认可",
+      title: "获工程师和领导者认可",
+    },
+    contact: {
+      label: "任务简报台",
+      title: "让我们共同架构您的下一个平台",
+      intro:
+        "欧洲最优秀的云、平台、DevOps和FinOps顾问之一，可远程提供服务。",
+    },
+  },
+  exec: [
+    {
+      title: "关于",
+      headline: "首席级云领导力",
+      body: "Principal云架构师和平台工程师，在GCP、AWS、Azure和OCI拥有10年以上经验——从Kubernetes和Terraform实践到架构设计和团队领导。",
+    },
+    {
+      title: "与众不同",
+      headline: "技术深度 + FinOps + 商业洞察",
+      body: "大多数工程师只负责构建；能同时削减成本并将云翻译为董事会级成果的人凤毛麟角。Cesar三者兼备——在保持平台弹性和可观测性的同时消除约30%的浪费。",
+    },
+    {
+      title: "解决方案",
+      headline: "规模、成本、可靠性和交付速度",
+      body: "多云架构、平台/DevOps现代化、成本优化、数据平台和AI基础设施——面向受监管的企业级环境。",
+    },
+    {
+      title: "合作方式",
+      headline: "现在可用，远程，全球",
+      body: "通过UP2CLOUD为国际项目提供独立咨询服务。分散式架构、平台构建或FinOps项目。通常24小时内回复。",
+    },
+  ],
+  recruiter: {
+    banner:
+      "招聘模式 — 突出展示成就、领导力、认证和可用性",
+    exit: "退出",
+    on: "招聘模式：开启",
+    off: "招聘模式",
+  },
+  assistant: {
+    launch: "智能FAQ",
+    close: "关闭",
+    header: "AI职业助手",
+    subtitle: "全面了解Cesar · 基于真实资料回答",
+    greeting:
+      "我是Cesar的AI职业助手——我了解他的全部背景。请提问招聘决策所需的任何内容：资历、规模、领导力、成本影响、认证或可用性。请在下方尝试提问。",
+    suggested: "为招聘者推荐的问题",
+    placeholder: "询问Cesar是否适合您的职位…",
+  },
+  portraitCaption: "马德里 · 格兰大道",
+};
+
+const DICT: Record<Lang, Dict> = { en, pt, es, fr, zh };
 
 type I18nValue = { lang: Lang; setLang: (l: Lang) => void; t: Dict };
 const I18nContext = createContext<I18nValue | null>(null);
