@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "motion/react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useI18n } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site-config";
 
 const NAV = [
@@ -16,6 +18,7 @@ const NAV = [
 ];
 
 export function SiteHeader() {
+  const { t } = useI18n();
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
   const [active, setActive] = useState("");
@@ -99,7 +102,7 @@ export function SiteHeader() {
                     : "text-[var(--color-fg-subtle)] hover:text-[var(--color-fg-muted)]"
                 }`}
               >
-                {item.label}
+                {t.nav[item.href] ?? item.label}
               </a>
             ))}
           </nav>
@@ -113,6 +116,7 @@ export function SiteHeader() {
             >
               Search <kbd className="text-[var(--color-fg-muted)]">⌘K</kbd>
             </button>
+            <LanguageSwitcher className="hidden sm:flex" />
             <ThemeToggle />
             {/* Mobile hamburger */}
             <button
@@ -195,13 +199,14 @@ export function SiteHeader() {
                             : "text-[var(--color-fg-muted)] hover:bg-[var(--color-surface-2)] hover:text-[var(--color-fg)]"
                         }`}
                       >
-                        {item.label}
+                        {t.nav[item.href] ?? item.label}
                       </button>
                     </li>
                   ))}
                 </ul>
               </nav>
-              <div className="border-t border-[var(--color-hairline)] p-4">
+              <div className="space-y-3 border-t border-[var(--color-hairline)] p-4">
+                <LanguageSwitcher className="w-fit" />
                 <button
                   type="button"
                   onClick={() => { setMobileOpen(false); openPalette(); }}

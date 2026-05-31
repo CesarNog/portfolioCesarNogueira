@@ -3,18 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { faq, recruiterPrompts, siteConfig } from "@/lib/site-config";
+import { useI18n } from "@/lib/i18n";
+import { AVATAR_SRC } from "@/lib/images";
 
 type Msg = { role: "user" | "assistant"; text: string };
 
-const GREETING: Msg = {
-  role: "assistant",
-  text: `I'm ${siteConfig.firstName}'s AI Career Assistant — I know his entire background. Ask anything a hiring decision needs: seniority, scale, leadership, cost impact, certifications or availability. Try a question below.`,
-};
-
 export function Assistant() {
   const reduce = useReducedMotion();
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Msg[]>([GREETING]);
+  const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
@@ -92,7 +90,7 @@ export function Assistant() {
         className="fixed bottom-5 right-5 z-[90] flex items-center gap-2 rounded-full border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] px-4 py-3 text-sm text-[var(--color-fg)] shadow-2xl transition-colors hover:border-[var(--color-blue)]"
       >
         <span className="status-dot" />
-        <span className="font-medium">{open ? "Close" : "Smart AI FAQ"}</span>
+        <span className="font-medium">{open ? t.assistant.close : t.assistant.launch}</span>
       </button>
 
       <AnimatePresence>
@@ -109,15 +107,22 @@ export function Assistant() {
           >
             {/* Header */}
             <div className="flex items-center gap-3 border-b border-[var(--color-hairline)] px-4 py-3">
-              <span className="status-dot" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={AVATAR_SRC}
+                alt={siteConfig.name}
+                width={32}
+                height={32}
+                className="h-8 w-8 shrink-0 rounded-full border border-[var(--color-hairline-strong)] object-cover"
+              />
               <div className="flex-1">
-                <p className="text-sm text-[var(--color-fg)]">AI Career Assistant</p>
+                <p className="text-sm text-[var(--color-fg)]">{t.assistant.header}</p>
                 <p className="font-mono text-[10px] text-[var(--color-fg-subtle)]">
-                  Knows everything about Cesar · answers from his real profile
+                  {t.assistant.subtitle}
                 </p>
               </div>
               <button
-                aria-label="Close"
+                aria-label={t.assistant.close}
                 onClick={() => setOpen(false)}
                 className="text-[var(--color-fg-subtle)] hover:text-[var(--color-fg)]"
               >
@@ -127,6 +132,12 @@ export function Assistant() {
 
             {/* Messages */}
             <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto p-4">
+              {/* Localized greeting always leads the thread */}
+              <div className="flex justify-start">
+                <p className="panel-2 max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed text-[var(--color-fg)]">
+                  {t.assistant.greeting}
+                </p>
+              </div>
               {messages.map((m, i) => (
                 <div
                   key={i}
@@ -152,7 +163,7 @@ export function Assistant() {
               {/* Recruiter-focused suggested prompts */}
               <div className="pt-1">
                 <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-                  Suggested for recruiters
+                  {t.assistant.suggested}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {recruiterPrompts.map((q) => (
@@ -181,8 +192,8 @@ export function Assistant() {
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about Cesar's fit for your role…"
-                aria-label="Ask the AI Career Assistant"
+                placeholder={t.assistant.placeholder}
+                aria-label={t.assistant.header}
                 className="flex-1 rounded-md border border-[var(--color-hairline)] bg-transparent px-3 py-2 text-sm text-[var(--color-fg)] outline-none placeholder:text-[var(--color-fg-subtle)] focus:border-[var(--color-blue)]"
               />
               <button
