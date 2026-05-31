@@ -1,8 +1,12 @@
+"use client";
+
 import { Section } from "@/components/sections/section";
 import { Reveal } from "@/components/reveal";
 import { trust } from "@/lib/site-config";
+import { useI18n } from "@/lib/i18n";
 
 export function Trust() {
+  const { t } = useI18n();
   return (
     <Section
       id="trust"
@@ -27,13 +31,13 @@ export function Trust() {
 
       <div className="mt-4 grid gap-4 lg:grid-cols-3">
         <Reveal>
-          <TrustCard title="Companies worked with" items={trust.companies} />
+          <TrustCard title={t.labels.trustCompanies} items={trust.companies} />
         </Reveal>
         <Reveal delay={0.05}>
-          <TrustCard title="Industries served" items={trust.industries} />
+          <TrustCard title={t.labels.trustIndustries} items={trust.industries} />
         </Reveal>
         <Reveal delay={0.1}>
-          <TrustCard title="Cloud providers" items={trust.clouds} />
+          <TrustCard title={t.labels.trustClouds} items={trust.clouds} />
         </Reveal>
       </div>
     </Section>

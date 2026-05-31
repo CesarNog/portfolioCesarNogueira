@@ -1,8 +1,12 @@
+"use client";
+
 import { Section } from "@/components/sections/section";
 import { Reveal } from "@/components/reveal";
 import { aiCapabilities } from "@/lib/site-config";
+import { useI18n } from "@/lib/i18n";
 
 export function AiInfra() {
+  const { t } = useI18n();
   return (
     <Section
       id="ai"
@@ -28,8 +32,7 @@ export function AiInfra() {
         ))}
       </div>
       <p className="mt-6 font-mono text-xs text-[var(--color-fg-subtle)]">
-        // The Smart AI FAQ in the corner of this site is itself an AI integration —
-        ask it anything about Cesar&apos;s fit for your role.
+        {t.labels.aiFaqNote}
       </p>
     </Section>
   );
