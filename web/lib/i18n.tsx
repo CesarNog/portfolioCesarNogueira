@@ -246,7 +246,7 @@ const pt: Dict = {
       label: "Casos de Impacto Selecionados",
       title: "Estudos de caso ao nível de consultoria, focados no resultado",
       intro:
-        "Projetos reais como Problema → Arquitetura → Resultado. O resultado de negócio vem primeiro; o "como" segue-se.",
+        "Projetos reais como Problema → Arquitetura → Resultado. O resultado de negócio vem primeiro; o \"como\" segue-se.",
     },
     capabilities: {
       label: "Matriz de Competências de Engenharia",
@@ -395,7 +395,7 @@ const es: Dict = {
       label: "Casos de Impacto Seleccionados",
       title: "Casos de estudio de nivel consultoría, centrados en el resultado",
       intro:
-        "Proyectos reales como Problema → Arquitectura → Resultado. El resultado de negocio va primero; el "cómo" después.",
+        "Proyectos reales como Problema → Arquitectura → Resultado. El resultado de negocio va primero; el \"cómo\" después.",
     },
     capabilities: {
       label: "Matriz de Competencias de Ingeniería",
