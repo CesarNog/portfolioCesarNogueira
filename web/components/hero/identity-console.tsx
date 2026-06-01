@@ -51,8 +51,6 @@ export function IdentityConsole() {
     return () => timers.forEach(clearTimeout);
   }, [reduce]);
 
-  const revealed = phase === "done";
-
   return (
     <section
       id="top"
@@ -125,11 +123,11 @@ export function IdentityConsole() {
           </div>
         </div>
 
-        {/* Identity reveal */}
+        {/* Identity reveal — starts visible so LCP isn't gated by the boot sequence */}
         <motion.div
-          initial={reduce ? false : { opacity: 0, y: 18 }}
-          animate={revealed ? { opacity: 1, y: 0 } : reduce ? { opacity: 1 } : {}}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          initial={reduce ? false : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
           {/* Avatar + availability */}
           <div className="flex items-center gap-4">
