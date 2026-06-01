@@ -1,8 +1,12 @@
+"use client";
+
 import { Section } from "@/components/sections/section";
 import { Reveal } from "@/components/reveal";
 import { projects } from "@/lib/site-config";
+import { useI18n } from "@/lib/i18n";
 
 export function Projects() {
+  const { t } = useI18n();
   return (
     <Section
       id="work"
@@ -36,11 +40,11 @@ export function Projects() {
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
-                <Field label="Problem" value={p.problem} />
-                <Field label="Architecture" value={p.architecture} />
+                <Field label={t.labels.problem} value={p.problem} />
+                <Field label={t.labels.architecture} value={p.architecture} />
                 <div className="sm:col-span-2 rounded-md border border-[var(--color-hairline)] bg-[var(--color-surface-2)] p-4">
                   <p className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-ok)]">
-                    Business result
+                    {t.labels.businessResult}
                   </p>
                   <p className="mt-1.5 text-sm leading-relaxed text-[var(--color-fg)]">
                     {p.outcome}
