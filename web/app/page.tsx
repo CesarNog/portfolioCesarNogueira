@@ -11,11 +11,7 @@ import { GlobalMap } from "@/components/sections/global-map";
 import { Certifications } from "@/components/sections/certifications";
 import { FinOps } from "@/components/sections/finops";
 import { AiInfra } from "@/components/sections/ai-infra";
-import dynamic from "next/dynamic";
-const CloudGalaxy = dynamic(
-  () => import("@/components/sections/cloud-galaxy").then((m) => m.CloudGalaxy),
-  { ssr: false },
-);
+import { CloudGalaxy } from "@/components/sections/cloud-galaxy";
 import { Testimonials } from "@/components/sections/testimonials";
 import { ContactConsole } from "@/components/sections/contact-console";
 import { CommandPalette } from "@/components/command-palette";
