@@ -60,8 +60,17 @@ export function Assistant() {
       matchFaq(q) ??
       `Here's the short version: ${siteConfig.name} is a Principal Cloud Architect & FinOps consultant (GCP/AWS/Azure, 10+ years) available for international projects. Email ${siteConfig.links.email}.`;
 
+    const origin = window.location.origin;
+    const canCall = origin !== "null" && /^https?:/.test(origin);
+
+    if (!canCall) {
+      setMessages((m) => [...m, { role: "assistant", text: fallback() }]);
+      setLoading(false);
+      return;
+    }
+
     try {
-      const res = await fetch("/.netlify/functions/ask", {
+      const res = await fetch(`${origin}/.netlify/functions/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: q }),
