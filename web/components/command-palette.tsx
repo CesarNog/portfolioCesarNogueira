@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { Command } from "cmdk";
 import { useTheme } from "next-themes";
 import { siteConfig } from "@/lib/site-config";
+import { useI18n } from "@/lib/i18n";
 
 type Item = { label: string; hint?: string; run: () => void; group: string };
 
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
   const { setTheme } = useTheme();
+  const { t } = useI18n();
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -31,20 +33,21 @@ export function CommandPalette() {
     window.open(url, "_blank", "noopener");
   };
 
+  const s = t.sections;
   const items: Item[] = [
     { group: "Navigate", label: "Home", run: go("top") },
-    { group: "Navigate", label: "Executive Summary", run: go("summary") },
-    { group: "Navigate", label: "Career Impact", run: go("experience") },
-    { group: "Navigate", label: "Selected Impact Stories", run: go("work") },
-    { group: "Navigate", label: "Engineering Capability Matrix", run: go("capabilities") },
-    { group: "Navigate", label: "Enterprise Validation (Trust)", run: go("trust") },
-    { group: "Navigate", label: "Global Delivery Map", run: go("global") },
-    { group: "Navigate", label: "Certifications", run: go("certifications") },
-    { group: "Navigate", label: "Cloud Expertise Galaxy", run: go("stack") },
-    { group: "Navigate", label: "FinOps", run: go("finops") },
-    { group: "Navigate", label: "AI Infrastructure", run: go("ai") },
-    { group: "Navigate", label: "Testimonials", run: go("testimonials") },
-    { group: "Navigate", label: "Contact", run: go("contact") },
+    { group: "Navigate", label: s.summary?.label ?? "Executive Summary", run: go("summary") },
+    { group: "Navigate", label: s.experience?.label ?? "Career Impact", run: go("experience") },
+    { group: "Navigate", label: s.work?.label ?? "Selected Impact Stories", run: go("work") },
+    { group: "Navigate", label: s.capabilities?.label ?? "Engineering Capability Matrix", run: go("capabilities") },
+    { group: "Navigate", label: s.trust?.label ?? "Enterprise Validation", run: go("trust") },
+    { group: "Navigate", label: s.global?.label ?? "Global Delivery Map", run: go("global") },
+    { group: "Navigate", label: s.certifications?.label ?? "Certifications", run: go("certifications") },
+    { group: "Navigate", label: s.stack?.label ?? "Cloud Expertise Galaxy", run: go("stack") },
+    { group: "Navigate", label: s.finops?.label ?? "FinOps", run: go("finops") },
+    { group: "Navigate", label: s.ai?.label ?? "AI Infrastructure", run: go("ai") },
+    { group: "Navigate", label: s.testimonials?.label ?? "Testimonials", run: go("testimonials") },
+    { group: "Navigate", label: s.contact?.label ?? "Contact", run: go("contact") },
     { group: "Actions", label: "Toggle dark theme", run: () => { setTheme("dark"); setOpen(false); } },
     { group: "Actions", label: "Toggle light theme", run: () => { setTheme("light"); setOpen(false); } },
     { group: "Actions", label: "Open Smart AI FAQ", run: () => { setOpen(false); document.dispatchEvent(new CustomEvent("open-smart-faq")); } },
