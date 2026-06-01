@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { JsonLd } from "@/components/json-ld";
 import { IdentityConsole } from "@/components/hero/identity-console";
@@ -10,7 +11,11 @@ import { GlobalMap } from "@/components/sections/global-map";
 import { Certifications } from "@/components/sections/certifications";
 import { FinOps } from "@/components/sections/finops";
 import { AiInfra } from "@/components/sections/ai-infra";
-import { CloudGalaxy } from "@/components/sections/cloud-galaxy";
+import dynamic from "next/dynamic";
+const CloudGalaxy = dynamic(
+  () => import("@/components/sections/cloud-galaxy").then((m) => m.CloudGalaxy),
+  { ssr: false },
+);
 import { Testimonials } from "@/components/sections/testimonials";
 import { ContactConsole } from "@/components/sections/contact-console";
 import { CommandPalette } from "@/components/command-palette";
