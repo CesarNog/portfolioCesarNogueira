@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { JsonLd } from "@/components/json-ld";
 import { IdentityConsole } from "@/components/hero/identity-console";
