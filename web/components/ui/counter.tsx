@@ -17,10 +17,13 @@ export function Counter({
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLSpanElement>(null);
-  const [display, setDisplay] = useState(reduce ? value : 0);
+  const [mounted, setMounted] = useState(false);
+  const [display, setDisplay] = useState(value);
+
+  useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
-    if (reduce) {
+    if (!mounted || reduce) {
       setDisplay(value);
       return;
     }
@@ -54,7 +57,7 @@ export function Counter({
       cancelAnimationFrame(raf);
       io.disconnect();
     };
-  }, [value, reduce]);
+  }, [value, reduce, mounted]);
 
   return (
     <span ref={ref}>
