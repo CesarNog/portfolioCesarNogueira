@@ -123,10 +123,10 @@ export function IdentityConsole() {
           </div>
         </div>
 
-        {/* Identity reveal — starts visible so LCP isn't gated by the boot sequence */}
+        {/* Identity panel — always visible in SSR HTML so LCP isn't blocked by JS */}
         <motion.div
-          initial={reduce ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={reduce ? false : { y: 16 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
           {/* Avatar + availability */}
