@@ -33,7 +33,7 @@ type Dict = {
   };
   sections: Record<string, SectionCopy>;
   exec: { title: string; headline: string; body: string }[];
-  recruiter: { banner: string; exit: string; on: string; off: string; ariaEnter: string; ariaExit: string };
+  recruiter: { banner: string; exit: string; on: string; off: string };
   assistant: {
     launch: string;
     close: string;
@@ -44,15 +44,22 @@ type Dict = {
     placeholder: string;
   };
   portraitCaption: string;
-  labels: {
-    problem: string;
-    architecture: string;
-    businessResult: string;
-    trustCompanies: string;
-    trustIndustries: string;
-    trustClouds: string;
-    aiFaqNote: string;
+  contact: {
+    briefingTitle: string;
+    briefingDesc: string;
+    emailCta: string;
+    downloadCv: string;
+    availability: string;
+    responseTime: string;
+    rowLabels: {
+      email: string;
+      linkedin: string;
+      github: string;
+      location: string;
+      responseTime: string;
+    };
   };
+  statsLabels: string[];
 };
 
 const en: Dict = {
@@ -179,8 +186,6 @@ const en: Dict = {
     exit: "exit",
     on: "Recruiter Mode: On",
     off: "Recruiter Mode",
-    ariaEnter: "Enter recruiter mode",
-    ariaExit: "Exit recruiter mode",
   },
   assistant: {
     launch: "Smart AI FAQ",
@@ -193,15 +198,22 @@ const en: Dict = {
     placeholder: "Ask about Cesar's fit for your role…",
   },
   portraitCaption: "Madrid · Gran Vía",
-  labels: {
-    problem: "Problem",
-    architecture: "Architecture",
-    businessResult: "Business result",
-    trustCompanies: "Companies worked with",
-    trustIndustries: "Industries served",
-    trustClouds: "Cloud providers",
-    aiFaqNote: "// The Smart AI FAQ in the corner of this site is itself an AI integration — ask it anything about Cesar's fit for your role.",
+  contact: {
+    briefingTitle: "Open a briefing",
+    briefingDesc: "Cloud architecture, platform engineering, DevOps, FinOps or AI infrastructure — tell me what you're building.",
+    emailCta: "Email Cesar",
+    downloadCv: "Download CV",
+    availability: "Available for international projects",
+    responseTime: "Usually replies within 24h",
+    rowLabels: {
+      email: "Email",
+      linkedin: "LinkedIn",
+      github: "GitHub",
+      location: "Location",
+      responseTime: "Response time",
+    },
   },
+  statsLabels: ["Years in Tech", "Cloud Projects", "Certifications", "Cost Savings Generated"],
 };
 
 const pt: Dict = {
@@ -328,8 +340,6 @@ const pt: Dict = {
     exit: "sair",
     on: "Modo Recrutador: Ativo",
     off: "Modo Recrutador",
-    ariaEnter: "Ativar modo recrutador",
-    ariaExit: "Sair do modo recrutador",
   },
   assistant: {
     launch: "FAQ Inteligente",
@@ -342,15 +352,22 @@ const pt: Dict = {
     placeholder: "Pergunte sobre a adequação do Cesar ao seu cargo…",
   },
   portraitCaption: "Madrid · Gran Vía",
-  labels: {
-    problem: "Problema",
-    architecture: "Arquitetura",
-    businessResult: "Resultado de negócio",
-    trustCompanies: "Empresas com que trabalhou",
-    trustIndustries: "Indústrias servidas",
-    trustClouds: "Fornecedores cloud",
-    aiFaqNote: "// O FAQ IA no canto deste site é em si uma integração de IA — pergunte-lhe tudo sobre a adequação do Cesar ao seu cargo.",
+  contact: {
+    briefingTitle: "Iniciar um briefing",
+    briefingDesc: "Arquitetura cloud, engenharia de plataformas, DevOps, FinOps ou infraestrutura de IA — diga-me o que está a construir.",
+    emailCta: "Enviar email ao Cesar",
+    downloadCv: "Descarregar CV",
+    availability: "Disponível para projetos internacionais",
+    responseTime: "Responde normalmente em 24h",
+    rowLabels: {
+      email: "Email",
+      linkedin: "LinkedIn",
+      github: "GitHub",
+      location: "Localização",
+      responseTime: "Tempo de resposta",
+    },
   },
+  statsLabels: ["Anos em Tecnologia", "Projetos Cloud", "Certificações", "Poupança em Custos"],
 };
 
 const es: Dict = {
@@ -477,8 +494,6 @@ const es: Dict = {
     exit: "salir",
     on: "Modo Reclutador: Activo",
     off: "Modo Reclutador",
-    ariaEnter: "Activar modo reclutador",
-    ariaExit: "Salir del modo reclutador",
   },
   assistant: {
     launch: "FAQ Inteligente",
@@ -491,15 +506,22 @@ const es: Dict = {
     placeholder: "Pregunta por el encaje de Cesar en tu puesto…",
   },
   portraitCaption: "Madrid · Gran Vía",
-  labels: {
-    problem: "Problema",
-    architecture: "Arquitectura",
-    businessResult: "Resultado de negocio",
-    trustCompanies: "Empresas con las que ha trabajado",
-    trustIndustries: "Industrias atendidas",
-    trustClouds: "Proveedores cloud",
-    aiFaqNote: "// El FAQ IA en la esquina de este sitio es en sí una integración de IA — pregúntale sobre la idoneidad de Cesar para tu puesto.",
+  contact: {
+    briefingTitle: "Abrir un briefing",
+    briefingDesc: "Arquitectura cloud, ingeniería de plataformas, DevOps, FinOps o infraestructura de IA — cuéntame qué estás construyendo.",
+    emailCta: "Enviar email a Cesar",
+    downloadCv: "Descargar CV",
+    availability: "Disponible para proyectos internacionales",
+    responseTime: "Suele responder en 24h",
+    rowLabels: {
+      email: "Email",
+      linkedin: "LinkedIn",
+      github: "GitHub",
+      location: "Ubicación",
+      responseTime: "Tiempo de respuesta",
+    },
   },
+  statsLabels: ["Años en Tecnología", "Proyectos Cloud", "Certificaciones", "Ahorro en Costes"],
 };
 
 const fr: Dict = {
@@ -626,8 +648,6 @@ const fr: Dict = {
     exit: "quitter",
     on: "Mode Recruteur : Actif",
     off: "Mode Recruteur",
-    ariaEnter: "Activer le mode recruteur",
-    ariaExit: "Quitter le mode recruteur",
   },
   assistant: {
     launch: "FAQ IA",
@@ -640,15 +660,22 @@ const fr: Dict = {
     placeholder: "Posez une question sur l'adéquation de Cesar à votre poste…",
   },
   portraitCaption: "Madrid · Gran Vía",
-  labels: {
-    problem: "Problème",
-    architecture: "Architecture",
-    businessResult: "Résultat business",
-    trustCompanies: "Entreprises avec lesquelles il a travaillé",
-    trustIndustries: "Secteurs desservis",
-    trustClouds: "Fournisseurs cloud",
-    aiFaqNote: "// Le FAQ IA dans le coin de ce site est lui-même une intégration IA — posez-lui toutes vos questions sur l'adéquation de Cesar à votre poste.",
+  contact: {
+    briefingTitle: "Ouvrir un briefing",
+    briefingDesc: "Architecture cloud, ingénierie de plateformes, DevOps, FinOps ou infrastructure IA — dites-moi ce que vous construisez.",
+    emailCta: "Écrire à Cesar",
+    downloadCv: "Télécharger le CV",
+    availability: "Disponible pour des projets internationaux",
+    responseTime: "Répond généralement sous 24h",
+    rowLabels: {
+      email: "Email",
+      linkedin: "LinkedIn",
+      github: "GitHub",
+      location: "Localisation",
+      responseTime: "Délai de réponse",
+    },
   },
+  statsLabels: ["Ans dans la Tech", "Projets Cloud", "Certifications", "Économies Générées"],
 };
 
 const zh: Dict = {
@@ -775,8 +802,6 @@ const zh: Dict = {
     exit: "退出",
     on: "招聘模式：开启",
     off: "招聘模式",
-    ariaEnter: "进入招聘模式",
-    ariaExit: "退出招聘模式",
   },
   assistant: {
     launch: "智能FAQ",
@@ -789,15 +814,22 @@ const zh: Dict = {
     placeholder: "询问Cesar是否适合您的职位…",
   },
   portraitCaption: "马德里 · 格兰大道",
-  labels: {
-    problem: "问题",
-    architecture: "架构",
-    businessResult: "业务成果",
-    trustCompanies: "合作公司",
-    trustIndustries: "服务行业",
-    trustClouds: "云服务商",
-    aiFaqNote: "// 本站右下角的智能FAQ本身就是一个AI集成——可以询问Cesar是否适合您的职位。",
+  contact: {
+    briefingTitle: "发起项目咨询",
+    briefingDesc: "云架构、平台工程、DevOps、FinOps或AI基础设施——告诉我您正在构建什么。",
+    emailCta: "发邮件给Cesar",
+    downloadCv: "下载简历",
+    availability: "可承接国际项目",
+    responseTime: "通常24小时内回复",
+    rowLabels: {
+      email: "邮箱",
+      linkedin: "LinkedIn",
+      github: "GitHub",
+      location: "地点",
+      responseTime: "回复时间",
+    },
   },
+  statsLabels: ["技术年限", "云项目", "认证", "节省成本"],
 };
 
 const DICT: Record<Lang, Dict> = { en, pt, es, fr, zh };
@@ -811,10 +843,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const stored = localStorage.getItem(KEY) as Lang | null;
-    if (stored && stored in DICT) {
-      setLangState(stored);
-      document.documentElement.lang = stored;
-    }
+    if (stored && stored in DICT) setLangState(stored);
   }, []);
 
   const setLang = useCallback((l: Lang) => {
