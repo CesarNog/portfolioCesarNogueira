@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, m, useReducedMotion } from "motion/react";
 import { useI18n } from "@/lib/i18n";
 
 const KEY = "recruiter-mode";
@@ -36,7 +36,7 @@ export function RecruiterMode() {
       {/* Banner */}
       <AnimatePresence>
         {on && (
-          <motion.div
+          <m.div
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -40 }}
@@ -56,7 +56,7 @@ export function RecruiterMode() {
                 {t.recruiter.exit}
               </button>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 

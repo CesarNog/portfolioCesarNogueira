@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { Section } from "@/components/sections/section";
 import { experience } from "@/lib/site-config";
 
@@ -66,7 +66,7 @@ export function ExperienceTimeline() {
 
                   <AnimatePresence initial={false}>
                     {isOpen && (
-                      <motion.div
+                      <m.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
@@ -91,7 +91,7 @@ export function ExperienceTimeline() {
                             ))}
                           </div>
                         </div>
-                      </motion.div>
+                      </m.div>
                     )}
                   </AnimatePresence>
                 </div>

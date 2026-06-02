@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { m, useReducedMotion } from "motion/react";
 import { Section } from "@/components/sections/section";
 import { globalPresence } from "@/lib/site-config";
 
@@ -17,7 +17,7 @@ function project(lat: number, lon: number) {
 
 export function GlobalMap() {
   const reduce = useReducedMotion();
-  const hub = globalPresence.markers.find((m) => m.hub)!;
+  const hub = globalPresence.markers.find((marker) => marker.hub)!;
   const hubPt = project(hub.lat, hub.lon);
 
   return (
@@ -56,15 +56,15 @@ export function GlobalMap() {
 
             {/* Arcs from hub to every region */}
             {globalPresence.markers
-              .filter((m) => !m.hub)
-              .map((m, i) => {
-                const p = project(m.lat, m.lon);
+              .filter((marker) => !marker.hub)
+              .map((marker, i) => {
+                const p = project(marker.lat, marker.lon);
                 const mx = (hubPt.x + p.x) / 2;
                 const my = (hubPt.y + p.y) / 2 - Math.hypot(p.x - hubPt.x, p.y - hubPt.y) * 0.28;
                 const d = `M ${hubPt.x} ${hubPt.y} Q ${mx} ${my} ${p.x} ${p.y}`;
                 return (
-                  <motion.path
-                    key={m.id}
+                  <m.path
+                    key={marker.id}
                     d={d}
                     fill="none"
                     stroke="var(--color-blue)"
@@ -79,12 +79,12 @@ export function GlobalMap() {
               })}
 
             {/* Markers */}
-            {globalPresence.markers.map((m, i) => {
-              const p = project(m.lat, m.lon);
+            {globalPresence.markers.map((marker, i) => {
+              const p = project(marker.lat, marker.lon);
               return (
-                <g key={m.id}>
-                  {m.hub && (
-                    <motion.circle
+                <g key={marker.id}>
+                  {marker.hub && (
+                    <m.circle
                       cx={p.x}
                       cy={p.y}
                       r={1.6}
@@ -97,11 +97,11 @@ export function GlobalMap() {
                       style={{ transformOrigin: `${p.x}px ${p.y}px` }}
                     />
                   )}
-                  <motion.circle
+                  <m.circle
                     cx={p.x}
                     cy={p.y}
-                    r={m.hub ? 1.3 : 1}
-                    fill={m.hub ? "var(--color-ok)" : "var(--color-blue)"}
+                    r={marker.hub ? 1.3 : 1}
+                    fill={marker.hub ? "var(--color-ok)" : "var(--color-blue)"}
                     initial={reduce ? false : { scale: 0, opacity: 0 }}
                     whileInView={reduce ? undefined : { scale: 1, opacity: 1 }}
                     viewport={{ once: true }}
@@ -115,7 +115,7 @@ export function GlobalMap() {
                     className="fill-[var(--color-fg-muted)] font-mono"
                     style={{ fontSize: 2 }}
                   >
-                    {m.label}
+                    {marker.label}
                   </text>
                 </g>
               );
@@ -124,17 +124,17 @@ export function GlobalMap() {
         </div>
 
         <ul className="flex flex-col justify-center gap-2.5">
-          {globalPresence.markers.map((m) => (
-            <li key={m.id} className="flex items-start gap-3 panel rounded-md px-4 py-2.5">
+          {globalPresence.markers.map((marker) => (
+            <li key={marker.id} className="flex items-start gap-3 panel rounded-md px-4 py-2.5">
               <span
                 className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${
-                  m.hub ? "bg-[var(--color-ok)]" : "bg-[var(--color-blue)]"
+                  marker.hub ? "bg-[var(--color-ok)]" : "bg-[var(--color-blue)]"
                 }`}
                 aria-hidden
               />
               <div>
-                <p className="text-sm text-[var(--color-fg)]">{m.label}</p>
-                <p className="font-mono text-[11px] text-[var(--color-fg-subtle)]">{m.city}</p>
+                <p className="text-sm text-[var(--color-fg)]">{marker.label}</p>
+                <p className="font-mono text-[11px] text-[var(--color-fg-subtle)]">{marker.city}</p>
               </div>
             </li>
           ))}
