@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { Section } from "@/components/sections/section";
 import { galaxy, galaxyGroups } from "@/lib/site-config";
@@ -25,6 +25,19 @@ const ACCENT: Record<string, string> = {
 
 export function CloudGalaxy() {
   const [active, setActive] = useState<string | null>(null);
+  const [inView, setInView] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = panelRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setInView(true); },
+      { rootMargin: "400px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <Section
@@ -35,10 +48,11 @@ export function CloudGalaxy() {
     >
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <div
+          ref={panelRef}
           data-recruiter-dim
           className="panel relative min-h-[360px] overflow-hidden rounded-lg lg:min-h-[420px]"
         >
-          <ForceGalaxy className="absolute inset-0" activeGroup={active} />
+          {inView && <ForceGalaxy className="absolute inset-0" activeGroup={active} />}
         </div>
 
         <div className="flex flex-col justify-center gap-2">
