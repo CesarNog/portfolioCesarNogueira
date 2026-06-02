@@ -44,6 +44,22 @@ type Dict = {
     placeholder: string;
   };
   portraitCaption: string;
+  contact: {
+    briefingTitle: string;
+    briefingDesc: string;
+    emailCta: string;
+    downloadCv: string;
+    availability: string;
+    responseTime: string;
+    rowLabels: {
+      email: string;
+      linkedin: string;
+      github: string;
+      location: string;
+      responseTime: string;
+    };
+  };
+  statsLabels: string[];
 };
 
 const en: Dict = {
@@ -182,6 +198,22 @@ const en: Dict = {
     placeholder: "Ask about Cesar's fit for your role…",
   },
   portraitCaption: "Madrid · Gran Vía",
+  contact: {
+    briefingTitle: "Open a briefing",
+    briefingDesc: "Cloud architecture, platform engineering, DevOps, FinOps or AI infrastructure — tell me what you're building.",
+    emailCta: "Email Cesar",
+    downloadCv: "Download CV",
+    availability: "Available for international projects",
+    responseTime: "Usually replies within 24h",
+    rowLabels: {
+      email: "Email",
+      linkedin: "LinkedIn",
+      github: "GitHub",
+      location: "Location",
+      responseTime: "Response time",
+    },
+  },
+  statsLabels: ["Years in Tech", "Cloud Projects", "Certifications", "Cost Savings Generated"],
 };
 
 const pt: Dict = {
@@ -320,6 +352,22 @@ const pt: Dict = {
     placeholder: "Pergunte sobre a adequação do Cesar ao seu cargo…",
   },
   portraitCaption: "Madrid · Gran Vía",
+  contact: {
+    briefingTitle: "Iniciar um briefing",
+    briefingDesc: "Arquitetura cloud, engenharia de plataformas, DevOps, FinOps ou infraestrutura de IA — diga-me o que está a construir.",
+    emailCta: "Enviar email ao Cesar",
+    downloadCv: "Descarregar CV",
+    availability: "Disponível para projetos internacionais",
+    responseTime: "Responde normalmente em 24h",
+    rowLabels: {
+      email: "Email",
+      linkedin: "LinkedIn",
+      github: "GitHub",
+      location: "Localização",
+      responseTime: "Tempo de resposta",
+    },
+  },
+  statsLabels: ["Anos em Tecnologia", "Projetos Cloud", "Certificações", "Poupança em Custos"],
 };
 
 const es: Dict = {
@@ -458,6 +506,22 @@ const es: Dict = {
     placeholder: "Pregunta por el encaje de Cesar en tu puesto…",
   },
   portraitCaption: "Madrid · Gran Vía",
+  contact: {
+    briefingTitle: "Abrir un briefing",
+    briefingDesc: "Arquitectura cloud, ingeniería de plataformas, DevOps, FinOps o infraestructura de IA — cuéntame qué estás construyendo.",
+    emailCta: "Enviar email a Cesar",
+    downloadCv: "Descargar CV",
+    availability: "Disponible para proyectos internacionales",
+    responseTime: "Suele responder en 24h",
+    rowLabels: {
+      email: "Email",
+      linkedin: "LinkedIn",
+      github: "GitHub",
+      location: "Ubicación",
+      responseTime: "Tiempo de respuesta",
+    },
+  },
+  statsLabels: ["Años en Tecnología", "Proyectos Cloud", "Certificaciones", "Ahorro en Costes"],
 };
 
 const fr: Dict = {
@@ -596,6 +660,22 @@ const fr: Dict = {
     placeholder: "Posez une question sur l'adéquation de Cesar à votre poste…",
   },
   portraitCaption: "Madrid · Gran Vía",
+  contact: {
+    briefingTitle: "Ouvrir un briefing",
+    briefingDesc: "Architecture cloud, ingénierie de plateformes, DevOps, FinOps ou infrastructure IA — dites-moi ce que vous construisez.",
+    emailCta: "Écrire à Cesar",
+    downloadCv: "Télécharger le CV",
+    availability: "Disponible pour des projets internationaux",
+    responseTime: "Répond généralement sous 24h",
+    rowLabels: {
+      email: "Email",
+      linkedin: "LinkedIn",
+      github: "GitHub",
+      location: "Localisation",
+      responseTime: "Délai de réponse",
+    },
+  },
+  statsLabels: ["Ans dans la Tech", "Projets Cloud", "Certifications", "Économies Générées"],
 };
 
 const zh: Dict = {
@@ -734,6 +814,22 @@ const zh: Dict = {
     placeholder: "询问Cesar是否适合您的职位…",
   },
   portraitCaption: "马德里 · 格兰大道",
+  contact: {
+    briefingTitle: "发起项目咨询",
+    briefingDesc: "云架构、平台工程、DevOps、FinOps或AI基础设施——告诉我您正在构建什么。",
+    emailCta: "发邮件给Cesar",
+    downloadCv: "下载简历",
+    availability: "可承接国际项目",
+    responseTime: "通常24小时内回复",
+    rowLabels: {
+      email: "邮箱",
+      linkedin: "LinkedIn",
+      github: "GitHub",
+      location: "地点",
+      responseTime: "回复时间",
+    },
+  },
+  statsLabels: ["技术年限", "云项目", "认证", "节省成本"],
 };
 
 const DICT: Record<Lang, Dict> = { en, pt, es, fr, zh };

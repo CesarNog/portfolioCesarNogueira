@@ -113,7 +113,7 @@ export function IdentityConsole() {
               >
                 <span className="status-dot" />
                 <span className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-ok)]">
-                  Status: {siteConfig.availability}
+                  Status: {t.contact.availability}
                 </span>
               </m.div>
             )}
@@ -195,7 +195,7 @@ export function IdentityConsole() {
 
       {/* Stats strip */}
       <div className="relative mx-auto mt-16 grid w-full max-w-5xl grid-cols-2 gap-px overflow-hidden rounded-lg border border-[var(--color-hairline)] sm:grid-cols-4">
-        {stats.map((s) => (
+        {stats.map((s, i) => (
           <div key={s.label} className="bg-[var(--color-surface-1)] p-5">
             <p className="font-display text-3xl text-[var(--color-fg)] sm:text-4xl">
               <Counter
@@ -206,7 +206,7 @@ export function IdentityConsole() {
               />
             </p>
             <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-              {s.label}
+              {t.statsLabels[i]}
             </p>
           </div>
         ))}
