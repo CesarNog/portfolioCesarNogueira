@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { m, useReducedMotion } from "motion/react";
 import {
   bootSequence,
   expertiseMatrix,
@@ -91,22 +91,22 @@ export function IdentityConsole() {
               <div className="mt-3 grid grid-cols-2 gap-x-6 gap-y-1.5 sm:grid-cols-3">
                 {expertiseMatrix
                   .slice(0, reduce ? expertiseMatrix.length : matrixCount)
-                  .map((m) => (
-                    <motion.p
-                      key={m}
+                  .map((skill) => (
+                    <m.p
+                      key={skill}
                       initial={reduce ? false : { opacity: 0, x: -6 }}
                       animate={{ opacity: 1, x: 0 }}
                       className="flex items-center gap-2 text-[var(--color-fg)]"
                     >
                       <span className="text-[var(--color-ok)]">✓</span>
-                      <span className="truncate">{m}</span>
-                    </motion.p>
+                      <span className="truncate">{skill}</span>
+                    </m.p>
                   ))}
               </div>
             )}
 
             {(reduce || phase === "status" || phase === "done") && (
-              <motion.div
+              <m.div
                 initial={reduce ? false : { opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="mt-5 flex items-center gap-3 border-t border-[var(--color-hairline)] pt-4"
@@ -115,7 +115,7 @@ export function IdentityConsole() {
                 <span className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-ok)]">
                   Status: {siteConfig.availability}
                 </span>
-              </motion.div>
+              </m.div>
             )}
             {!reduce && phase !== "done" && (
               <span className="cursor-blink inline-block" aria-hidden />
@@ -124,7 +124,7 @@ export function IdentityConsole() {
         </div>
 
         {/* Identity panel — always visible in SSR HTML so LCP isn't blocked by JS */}
-        <motion.div
+        <m.div
           initial={reduce ? false : { y: 16 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
@@ -190,7 +190,7 @@ export function IdentityConsole() {
               ⌘K to search
             </kbd>
           </div>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* Stats strip */}

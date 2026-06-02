@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
+import { m, useMotionValue, useSpring, useReducedMotion } from "motion/react";
 
 /** Wrap a button/link to give it a subtle magnetic pull toward the cursor. */
 export function Magnetic({
@@ -32,7 +32,7 @@ export function Magnetic({
   };
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={reset}
@@ -40,6 +40,6 @@ export function Magnetic({
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
