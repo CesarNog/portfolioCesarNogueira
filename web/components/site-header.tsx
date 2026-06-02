@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "motion/react";
+import { AnimatePresence, m, useReducedMotion, useScroll, useSpring } from "motion/react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useI18n } from "@/lib/i18n";
@@ -127,17 +127,17 @@ export function SiteHeader() {
               onClick={() => setMobileOpen((o) => !o)}
               className="flex h-9 w-9 flex-col items-center justify-center gap-[5px] rounded-md border border-[var(--color-hairline)] transition-colors hover:border-[var(--color-hairline-strong)] md:hidden"
             >
-              <motion.span
+              <m.span
                 animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
                 transition={{ duration: 0.2 }}
                 className="block h-px w-4 bg-[var(--color-fg)]"
               />
-              <motion.span
+              <m.span
                 animate={mobileOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
                 transition={{ duration: 0.15 }}
                 className="block h-px w-4 bg-[var(--color-fg)]"
               />
-              <motion.span
+              <m.span
                 animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
                 transition={{ duration: 0.2 }}
                 className="block h-px w-4 bg-[var(--color-fg)]"
@@ -146,7 +146,7 @@ export function SiteHeader() {
           </div>
         </div>
 
-        <motion.div
+        <m.div
           className="h-px origin-left bg-[var(--color-blue)]"
           style={{ scaleX }}
         />
@@ -156,7 +156,7 @@ export function SiteHeader() {
       <AnimatePresence>
         {mobileOpen && (
           <>
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -165,7 +165,7 @@ export function SiteHeader() {
               onClick={() => setMobileOpen(false)}
               aria-hidden
             />
-            <motion.div
+            <m.div
               ref={menuRef}
               id="mobile-nav"
               role="dialog"
@@ -216,7 +216,7 @@ export function SiteHeader() {
                   <kbd className="font-mono text-[11px] text-[var(--color-fg-subtle)]">⌘K</kbd>
                 </button>
               </div>
-            </motion.div>
+            </m.div>
           </>
         )}
       </AnimatePresence>
