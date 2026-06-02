@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, m, useReducedMotion } from "motion/react";
 import { faq, recruiterPrompts, siteConfig } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
 import { AVATAR_SRC } from "@/lib/images";
@@ -52,7 +52,7 @@ export function Assistant() {
   async function ask(question: string) {
     const q = question.trim();
     if (!q || loading) return;
-    setMessages((m) => [...m, { role: "user", text: q }]);
+    setMessages((prev) => [...prev, { role: "user", text: q }]);
     setInput("");
     setLoading(true);
 
@@ -68,12 +68,12 @@ export function Assistant() {
       });
       if (!res.ok) throw new Error(String(res.status));
       const data = (await res.json()) as { answer?: string };
-      setMessages((m) => [
-        ...m,
+      setMessages((prev) => [
+        ...prev,
         { role: "assistant", text: data.answer?.trim() || fallback() },
       ]);
     } catch {
-      setMessages((m) => [...m, { role: "assistant", text: fallback() }]);
+      setMessages((prev) => [...prev, { role: "assistant", text: fallback() }]);
     } finally {
       setLoading(false);
     }
@@ -95,7 +95,7 @@ export function Assistant() {
 
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             ref={panelRef}
             role="dialog"
             aria-label="Smart AI FAQ — AI Career Assistant"
@@ -138,19 +138,19 @@ export function Assistant() {
                   {t.assistant.greeting}
                 </p>
               </div>
-              {messages.map((m, i) => (
+              {messages.map((msg, i) => (
                 <div
                   key={i}
-                  className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
+                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <p
                     className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed ${
-                      m.role === "user"
+                      msg.role === "user"
                         ? "bg-accent accent-blue text-white"
                         : "panel-2 text-[var(--color-fg)]"
                     }`}
                   >
-                    {m.text}
+                    {msg.text}
                   </p>
                 </div>
               ))}
@@ -204,7 +204,7 @@ export function Assistant() {
                 ↑
               </button>
             </form>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>
