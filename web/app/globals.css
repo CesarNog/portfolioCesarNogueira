@@ -6,7 +6,7 @@
   infrastructure orange), hairline borders, tight display tracking, mono for data.
 */
 @theme inline {
-  --font-sans: var(--font-geist), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-inter-tight), var(--font-geist), sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
 
