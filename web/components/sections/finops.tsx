@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { m, useReducedMotion } from "motion/react";
 import { Section } from "@/components/sections/section";
 import { finops } from "@/lib/site-config";
 
@@ -48,7 +48,7 @@ export function FinOps() {
                 </linearGradient>
               </defs>
               <polygon points={`0,100 ${pts} 100,100`} fill="url(#fill)" />
-              <motion.polyline
+              <m.polyline
                 points={pts}
                 fill="none"
                 stroke="var(--color-orange)"
@@ -62,16 +62,16 @@ export function FinOps() {
             </svg>
           </div>
           <div className="mt-4 grid grid-cols-3 gap-3">
-            {finops.metrics.slice(0, 3).map((m) => (
-              <div key={m.label} className="panel-2 rounded-md p-3">
+            {finops.metrics.slice(0, 3).map((metric) => (
+              <div key={metric.label} className="panel-2 rounded-md p-3">
                 <p
                   className="font-display text-xl"
-                  style={{ color: ACCENT[m.accent] }}
+                  style={{ color: ACCENT[metric.accent] }}
                 >
-                  {m.value}
+                  {metric.value}
                 </p>
                 <p className="mt-1 font-mono text-[10px] uppercase tracking-wide text-[var(--color-fg-subtle)]">
-                  {m.label}
+                  {metric.label}
                 </p>
               </div>
             ))}
