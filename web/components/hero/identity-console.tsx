@@ -31,12 +31,10 @@ export function IdentityConsole() {
   useEffect(() => {
     if (reduce) return;
     const timers: ReturnType<typeof setTimeout>[] = [];
-    // Boot lines.
     bootSequence.forEach((_, i) => {
       timers.push(setTimeout(() => setBootLine(i + 1), 450 + i * 650));
     });
     timers.push(setTimeout(() => setPhase("matrix"), 450 + bootSequence.length * 650));
-    // Expertise matrix checks.
     expertiseMatrix.forEach((_, i) => {
       timers.push(
         setTimeout(
@@ -70,7 +68,6 @@ export function IdentityConsole() {
       </div>
 
       <div className="relative mx-auto grid w-full max-w-5xl gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-        {/* Terminal console */}
         <div className="panel rounded-lg p-1 accent-cyan shadow-2xl">
           <div className="flex items-center gap-2 border-b border-[var(--color-hairline)] px-4 py-2.5">
             <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-orange)]/80" />
@@ -113,7 +110,7 @@ export function IdentityConsole() {
               >
                 <span className="status-dot" />
                 <span className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-ok)]">
-                  Status: {siteConfig.availability}
+                  Status: {t.contact.availability}
                 </span>
               </m.div>
             )}
@@ -123,13 +120,11 @@ export function IdentityConsole() {
           </div>
         </div>
 
-        {/* Identity panel — always visible in SSR HTML so LCP isn't blocked by JS */}
         <m.div
           initial={reduce ? false : { y: 16 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* Avatar + availability */}
           <div className="flex items-center gap-4">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -157,7 +152,6 @@ export function IdentityConsole() {
             {t.hero.desc}
           </p>
 
-          {/* Credibility chips — value proposition in <5s */}
           <ul className="mt-6 flex flex-wrap gap-2">
             {t.hero.chips.map((h) => (
               <li
@@ -193,9 +187,8 @@ export function IdentityConsole() {
         </m.div>
       </div>
 
-      {/* Stats strip */}
       <div className="relative mx-auto mt-16 grid w-full max-w-5xl grid-cols-2 gap-px overflow-hidden rounded-lg border border-[var(--color-hairline)] sm:grid-cols-4">
-        {stats.map((s) => (
+        {stats.map((s, i) => (
           <div key={s.label} className="bg-[var(--color-surface-1)] p-5">
             <p className="font-display text-3xl text-[var(--color-fg)] sm:text-4xl">
               <Counter
@@ -206,7 +199,7 @@ export function IdentityConsole() {
               />
             </p>
             <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-              {s.label}
+              {t.statsLabels[i]}
             </p>
           </div>
         ))}
