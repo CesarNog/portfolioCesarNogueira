@@ -60,6 +60,12 @@ type Dict = {
     };
   };
   statsLabels: string[];
+  labels: {
+    problem: string;
+    architecture: string;
+    businessResult: string;
+    aiFaqNote: string;
+  };
 };
 
 const en: Dict = {
@@ -214,6 +220,12 @@ const en: Dict = {
     },
   },
   statsLabels: ["Years in Tech", "Cloud Projects", "Certifications", "Cost Savings Generated"],
+  labels: {
+    problem: "Problem",
+    architecture: "Architecture",
+    businessResult: "Business result",
+    aiFaqNote: "// The Smart AI FAQ on this site is an AI integration — ask it anything about Cesar's fit for your role.",
+  },
 };
 
 const pt: Dict = {
@@ -368,6 +380,12 @@ const pt: Dict = {
     },
   },
   statsLabels: ["Anos em Tecnologia", "Projetos Cloud", "Certificações", "Poupança em Custos"],
+  labels: {
+    problem: "Problema",
+    architecture: "Arquitetura",
+    businessResult: "Resultado de negócio",
+    aiFaqNote: "// O Smart AI FAQ neste site é uma integração de IA — pergunte-lhe tudo sobre a adequação do Cesar ao seu cargo.",
+  },
 };
 
 const es: Dict = {
@@ -522,6 +540,12 @@ const es: Dict = {
     },
   },
   statsLabels: ["Años en Tecnología", "Proyectos Cloud", "Certificaciones", "Ahorro en Costes"],
+  labels: {
+    problem: "Problema",
+    architecture: "Arquitectura",
+    businessResult: "Resultado de negocio",
+    aiFaqNote: "// El Smart AI FAQ de este sitio es una integración de IA — pregúntale lo que necesites sobre la idoneidad de Cesar para tu puesto.",
+  },
 };
 
 const fr: Dict = {
@@ -676,6 +700,12 @@ const fr: Dict = {
     },
   },
   statsLabels: ["Ans dans la Tech", "Projets Cloud", "Certifications", "Économies Générées"],
+  labels: {
+    problem: "Problème",
+    architecture: "Architecture",
+    businessResult: "Résultat business",
+    aiFaqNote: "// Le Smart AI FAQ de ce site est une intégration IA — posez-lui toutes vos questions sur l'adéquation de Cesar à votre poste.",
+  },
 };
 
 const zh: Dict = {
@@ -830,6 +860,12 @@ const zh: Dict = {
     },
   },
   statsLabels: ["技术年限", "云项目", "认证", "节省成本"],
+  labels: {
+    problem: "问题",
+    architecture: "架构",
+    businessResult: "业务成果",
+    aiFaqNote: "// 本网站的智能AI FAQ本身是一个AI集成——询问任何关于Cesar是否适合您职位的问题。",
+  },
 };
 
 const DICT: Record<Lang, Dict> = { en, pt, es, fr, zh };
