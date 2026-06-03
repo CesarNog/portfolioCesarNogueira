@@ -2,15 +2,13 @@ import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { JsonLd } from "@/components/json-ld";
 import { IdentityConsole } from "@/components/hero/identity-console";
-import { ExecutiveSummary } from "@/components/sections/executive-summary";
+import { Story } from "@/components/sections/story";
 import { ExperienceTimeline } from "@/components/sections/experience-timeline";
 import { Projects } from "@/components/sections/projects";
-import { CapabilityMatrix } from "@/components/sections/capability-matrix";
 import { Trust } from "@/components/sections/trust";
 import { GlobalMap } from "@/components/sections/global-map";
+import { CapabilityMatrix } from "@/components/sections/capability-matrix";
 import { Certifications } from "@/components/sections/certifications";
-import { FinOps } from "@/components/sections/finops";
-import { AiInfra } from "@/components/sections/ai-infra";
 import { CloudGalaxy } from "@/components/sections/cloud-galaxy";
 import { Testimonials } from "@/components/sections/testimonials";
 import { ContactConsole } from "@/components/sections/contact-console";
@@ -27,15 +25,13 @@ export default function Home() {
       <SiteHeader />
       <main>
         <IdentityConsole />
-        <ExecutiveSummary />
+        <Story />
         <ExperienceTimeline />
         <Projects />
-        <CapabilityMatrix />
         <Trust />
         <GlobalMap />
+        <CapabilityMatrix />
         <Certifications />
-        <FinOps />
-        <AiInfra />
         <CloudGalaxy />
         <Testimonials />
         <ContactConsole />

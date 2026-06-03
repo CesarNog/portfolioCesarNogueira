@@ -1,24 +1,28 @@
 "use client";
 
+import { m, useReducedMotion } from "motion/react";
 import { Section } from "@/components/sections/section";
 import { Reveal } from "@/components/reveal";
 import { projects } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
+import { cardHover } from "@/lib/motion";
 
 export function Projects() {
   const { t } = useI18n();
+  const reduce = useReducedMotion();
   return (
     <Section
       id="work"
-      label="Selected Impact Stories"
-      title="Consulting-grade case studies, outcome-first"
-      intro="Real engagements as Problem → Architecture → Result. The business outcome leads; the how follows."
+      label={t.sections.work.label}
+      title={t.sections.work.title}
+      intro={t.sections.work.intro}
     >
       <div className="space-y-4">
         {projects.map((p, i) => (
           <Reveal key={p.id} delay={i * 0.05}>
-            <article
+            <m.article
               data-recruiter-highlight
+              whileHover={reduce ? undefined : cardHover}
               className="panel grid gap-6 rounded-lg p-6 transition-colors hover:border-[var(--color-hairline-strong)] md:grid-cols-[1fr_2fr]"
             >
               <div className="flex flex-col justify-between gap-4">
@@ -39,19 +43,19 @@ export function Projects() {
                 </div>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2">
-                <Field label={t.labels.problem} value={p.problem} />
-                <Field label={t.labels.architecture} value={p.architecture} />
-                <div className="sm:col-span-2 rounded-md border border-[var(--color-hairline)] bg-[var(--color-surface-2)] p-4">
+              <div className="space-y-4">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Field label={t.labels.problem} value={p.problem} />
+                  <Field label={t.labels.architecture} value={p.architecture} />
+                </div>
+                <div className="rounded-md border border-[var(--color-hairline)] bg-[var(--color-surface-2)] p-4">
                   <p className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-ok)]">
                     {t.labels.businessResult}
                   </p>
                   <p className="mt-1.5 text-sm leading-relaxed text-[var(--color-fg)]">
                     {p.outcome}
                   </p>
-                </div>
-                <div className="sm:col-span-2">
-                  <ul className="flex flex-wrap gap-x-5 gap-y-1.5">
+                  <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1">
                     {p.impact.map((it) => (
                       <li
                         key={it}
@@ -63,18 +67,28 @@ export function Projects() {
                     ))}
                   </ul>
                 </div>
-                <div className="sm:col-span-2 flex flex-wrap gap-1.5">
-                  {p.tech.map((t) => (
+                {"lessons" in p && p.lessons && (
+                  <div className="border-l-2 border-[var(--color-blue)] pl-4">
+                    <p className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-blue)]">
+                      {t.labels.lessons}
+                    </p>
+                    <p className="mt-1.5 text-sm leading-relaxed text-[var(--color-fg-muted)] italic">
+                      {p.lessons}
+                    </p>
+                  </div>
+                )}
+                <div className="flex flex-wrap gap-1.5">
+                  {p.tech.map((tech) => (
                     <span
-                      key={t}
+                      key={tech}
                       className="rounded border border-[var(--color-hairline)] px-2 py-0.5 font-mono text-[11px] text-[var(--color-fg-muted)]"
                     >
-                      {t}
+                      {tech}
                     </span>
                   ))}
                 </div>
               </div>
-            </article>
+            </m.article>
           </Reveal>
         ))}
       </div>

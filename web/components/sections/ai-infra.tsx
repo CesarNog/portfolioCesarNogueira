@@ -10,9 +10,9 @@ export function AiInfra() {
   return (
     <Section
       id="ai"
-      label="AI Infrastructure & Automation"
-      title="Future-ready: platforms built for GenAI"
-      intro="From LLM integrations to GPU-aware platform engineering — infrastructure that makes AI reliable, observable and cost-aware."
+      label={t.sections.ai.label}
+      title={t.sections.ai.title}
+      intro={t.sections.ai.intro}
     >
       <div className="grid gap-4 sm:grid-cols-2">
         {aiCapabilities.map((c, i) => (

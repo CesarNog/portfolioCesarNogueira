@@ -4,16 +4,22 @@ import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { Section } from "@/components/sections/section";
 import { galaxy, galaxyGroups } from "@/lib/site-config";
+import { useI18n } from "@/lib/i18n";
+
+function GalaxyLoading() {
+  const { t } = useI18n();
+  return (
+    <div className="flex h-full items-center justify-center font-mono text-xs text-[var(--color-fg-subtle)]">
+      {t.labels.loadingGalaxy}
+    </div>
+  );
+}
 
 const ForceGalaxy = dynamic(
   () => import("@/components/background/force-graph").then((m) => m.ForceGalaxy),
   {
     ssr: false,
-    loading: () => (
-      <div className="flex h-full items-center justify-center font-mono text-xs text-[var(--color-fg-subtle)]">
-        loading galaxy…
-      </div>
-    ),
+    loading: () => <GalaxyLoading />,
   },
 );
 
@@ -24,6 +30,7 @@ const ACCENT: Record<string, string> = {
 };
 
 export function CloudGalaxy() {
+  const { t } = useI18n();
   const [active, setActive] = useState<string | null>(null);
   const [inView, setInView] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -42,9 +49,9 @@ export function CloudGalaxy() {
   return (
     <Section
       id="stack"
-      label="Multi-Cloud Architecture Map"
-      title="An engineering galaxy, not a list of badges"
-      intro="A live force-directed graph of the full stack — clouds, orchestration, CI/CD, data and FinOps. Drag, zoom and explore the connections."
+      label={t.sections.stack.label}
+      title={t.sections.stack.title}
+      intro={t.sections.stack.intro}
     >
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <div

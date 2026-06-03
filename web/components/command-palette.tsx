@@ -34,27 +34,29 @@ export function CommandPalette() {
   };
 
   const s = t.sections;
+  const p = t.palette;
+  const NAV = p.groups.navigate;
+  const ACT = p.groups.actions;
+  const CON = p.groups.contact;
   const items: Item[] = [
-    { group: "Navigate", label: "Home", run: go("top") },
-    { group: "Navigate", label: s.summary?.label ?? "Executive Summary", run: go("summary") },
-    { group: "Navigate", label: s.experience?.label ?? "Career Impact", run: go("experience") },
-    { group: "Navigate", label: s.work?.label ?? "Selected Impact Stories", run: go("work") },
-    { group: "Navigate", label: s.capabilities?.label ?? "Engineering Capability Matrix", run: go("capabilities") },
-    { group: "Navigate", label: s.trust?.label ?? "Enterprise Validation", run: go("trust") },
-    { group: "Navigate", label: s.global?.label ?? "Global Delivery Map", run: go("global") },
-    { group: "Navigate", label: s.certifications?.label ?? "Certifications", run: go("certifications") },
-    { group: "Navigate", label: s.stack?.label ?? "Cloud Expertise Galaxy", run: go("stack") },
-    { group: "Navigate", label: s.finops?.label ?? "FinOps", run: go("finops") },
-    { group: "Navigate", label: s.ai?.label ?? "AI Infrastructure", run: go("ai") },
-    { group: "Navigate", label: s.testimonials?.label ?? "Testimonials", run: go("testimonials") },
-    { group: "Navigate", label: s.contact?.label ?? "Contact", run: go("contact") },
-    { group: "Actions", label: "Toggle dark theme", run: () => { setTheme("dark"); setOpen(false); } },
-    { group: "Actions", label: "Toggle light theme", run: () => { setTheme("light"); setOpen(false); } },
-    { group: "Actions", label: "Open Smart AI FAQ", run: () => { setOpen(false); document.dispatchEvent(new CustomEvent("open-smart-faq")); } },
-    { group: "Contact", label: "Email Cesar", hint: siteConfig.links.email, run: ext(`mailto:${siteConfig.links.email}`) },
-    { group: "Contact", label: "LinkedIn", run: ext(siteConfig.links.linkedin) },
-    { group: "Contact", label: "GitHub", run: ext(siteConfig.links.github) },
-    { group: "Contact", label: "Download CV", run: ext(siteConfig.links.cv) },
+    { group: NAV, label: p.home, run: go("top") },
+    { group: NAV, label: s.summary?.label ?? "Who I Am", run: go("summary") },
+    { group: NAV, label: s.experience?.label ?? "Career", run: go("experience") },
+    { group: NAV, label: s.work?.label ?? "Impact Stories", run: go("work") },
+    { group: NAV, label: s.capabilities?.label ?? "Technical Depth", run: go("capabilities") },
+    { group: NAV, label: s.trust?.label ?? "Enterprise Trust", run: go("trust") },
+    { group: NAV, label: s.global?.label ?? "Global Delivery", run: go("global") },
+    { group: NAV, label: s.certifications?.label ?? "Certifications", run: go("certifications") },
+    { group: NAV, label: s.stack?.label ?? "Technology", run: go("stack") },
+    { group: NAV, label: s.testimonials?.label ?? "Testimonials", run: go("testimonials") },
+    { group: NAV, label: s.contact?.label ?? "Contact", run: go("contact") },
+    { group: ACT, label: p.darkTheme, run: () => { setTheme("dark"); setOpen(false); } },
+    { group: ACT, label: p.lightTheme, run: () => { setTheme("light"); setOpen(false); } },
+    { group: ACT, label: p.openFaq, run: () => { setOpen(false); document.dispatchEvent(new CustomEvent("open-smart-faq")); } },
+    { group: CON, label: p.emailCesar, hint: siteConfig.links.email, run: ext(`mailto:${siteConfig.links.email}`) },
+    { group: CON, label: "LinkedIn", run: ext(siteConfig.links.linkedin) },
+    { group: CON, label: "GitHub", run: ext(siteConfig.links.github) },
+    { group: CON, label: p.downloadCv, run: ext(siteConfig.links.cv) },
   ];
 
   const groups = Array.from(new Set(items.map((i) => i.group)));
@@ -63,22 +65,22 @@ export function CommandPalette() {
     <Command.Dialog
       open={open}
       onOpenChange={setOpen}
-      label="Command palette"
+      label={t.palette.ariaClose}
       className="fixed inset-0 z-[100] flex items-start justify-center"
     >
       <button
-        aria-label="Close"
+        aria-label={t.palette.ariaClose}
         onClick={() => setOpen(false)}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
       <div className="panel relative mt-[12vh] w-[92vw] max-w-lg overflow-hidden rounded-xl shadow-2xl">
         <Command.Input
-          placeholder="Search projects, skills, sections, contact…"
+          placeholder={t.palette.placeholder}
           className="w-full border-b border-[var(--color-hairline)] bg-transparent px-4 py-3.5 text-sm text-[var(--color-fg)] outline-none placeholder:text-[var(--color-fg-subtle)]"
         />
         <Command.List className="max-h-[50vh] overflow-y-auto p-2">
           <Command.Empty className="px-3 py-6 text-center text-sm text-[var(--color-fg-subtle)]">
-            No results.
+            {t.palette.noResults}
           </Command.Empty>
           {groups.map((g) => (
             <Command.Group

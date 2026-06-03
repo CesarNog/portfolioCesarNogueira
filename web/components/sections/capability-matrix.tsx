@@ -1,6 +1,9 @@
+"use client";
+
 import { Section } from "@/components/sections/section";
 import { Reveal } from "@/components/reveal";
 import { capabilities } from "@/lib/site-config";
+import { useI18n } from "@/lib/i18n";
 
 const ACCENT: Record<string, string> = {
   blue: "var(--color-blue)",
@@ -9,14 +12,15 @@ const ACCENT: Record<string, string> = {
 };
 
 export function CapabilityMatrix() {
+  const { t } = useI18n();
   return (
     <Section
       id="capabilities"
-      label="Engineering Capability Matrix"
-      title="Depth where it counts — no vanity metrics"
-      intro="Each capability shown by level and the tools behind it. Scope and proof, not progress bars."
+      label={t.sections.capabilities.label}
+      title={t.sections.capabilities.title}
+      intro={t.sections.capabilities.intro}
     >
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {capabilities.map((c, i) => (
           <Reveal key={c.area} delay={(i % 4) * 0.04}>
             <article className="panel flex h-full flex-col rounded-lg p-5 transition-colors hover:border-[var(--color-hairline-strong)]">
@@ -38,12 +42,12 @@ export function CapabilityMatrix() {
                 {c.note}
               </p>
               <div className="mt-4 flex flex-wrap gap-1.5 border-t border-[var(--color-hairline)] pt-3">
-                {c.tools.map((t) => (
+                {c.tools.map((tool) => (
                   <span
-                    key={t}
+                    key={tool}
                     className="font-mono text-[10px] text-[var(--color-fg-subtle)]"
                   >
-                    {t}
+                    {tool}
                   </span>
                 ))}
               </div>

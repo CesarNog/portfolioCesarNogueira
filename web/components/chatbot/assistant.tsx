@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, m, useReducedMotion } from "motion/react";
-import { faq, recruiterPrompts, siteConfig } from "@/lib/site-config";
+import { faq, siteConfig } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
 import { AVATAR_SRC } from "@/lib/images";
 
@@ -166,7 +166,7 @@ export function Assistant() {
                   {t.assistant.suggested}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {recruiterPrompts.map((q) => (
+                  {t.recruiterPrompts.map((q) => (
                     <button
                       key={q}
                       type="button"

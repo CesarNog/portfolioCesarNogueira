@@ -1,14 +1,18 @@
+"use client";
+
 import { Section } from "@/components/sections/section";
 import { Reveal } from "@/components/reveal";
 import { certifications } from "@/lib/site-config";
+import { useI18n } from "@/lib/i18n";
 
 export function Certifications() {
+  const { t } = useI18n();
   return (
     <Section
       id="certifications"
-      label="Certification Command Center"
-      title="Verified, multi-cloud credentials"
-      intro="Validated expertise across the three major clouds plus FinOps practice."
+      label={t.sections.certifications.label}
+      title={t.sections.certifications.title}
+      intro={t.sections.certifications.intro}
     >
       <div className="grid gap-4 sm:grid-cols-2">
         {certifications.map((cat, i) => (
@@ -19,7 +23,7 @@ export function Certifications() {
                   {cat.group}
                 </h3>
                 <span className="text-accent font-mono text-[11px] uppercase tracking-wider">
-                  {cat.items.length} verified
+                  {cat.items.length} {t.labels.verified}
                 </span>
               </div>
               <ul className="mt-4 space-y-2.5">
