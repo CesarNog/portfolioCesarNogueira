@@ -166,9 +166,9 @@ const en: Dict = {
     },
     global: {
       label: "Global Delivery",
-      title: "A decade of delivery, across borders and time zones",
+      title: "Based in Portugal. Delivering globally.",
       intro:
-        "From fintech in London to banking in Madrid, data platforms in the US, and remote delivery worldwide.",
+        "From Brazil to Europe and across the Americas — cloud, DevOps, platform engineering and FinOps delivered wherever the work is.",
     },
     certifications: {
       label: "Certifications",
@@ -377,9 +377,9 @@ const pt: Dict = {
     },
     global: {
       label: "Entrega Global",
-      title: "Uma década de entrega, entre fronteiras e fusos horários",
+      title: "Baseado em Portugal. Entrega global.",
       intro:
-        "De fintech em Londres a banca em Madrid, plataformas de dados nos EUA, e entrega remota em todo o mundo.",
+        "Do Brasil à Europa e por toda a América — cloud, DevOps, engenharia de plataformas e FinOps entregues onde o trabalho existe.",
     },
     certifications: {
       label: "Certificações",
@@ -588,9 +588,9 @@ const es: Dict = {
     },
     global: {
       label: "Entrega Global",
-      title: "Una década de entrega, entre fronteras y husos horarios",
+      title: "Basado en Portugal. Entrega global.",
       intro:
-        "De fintech en Londres a banca en Madrid, plataformas de datos en EE.UU., y entrega remota en todo el mundo.",
+        "De Brasil a Europa y por toda América — cloud, DevOps, ingeniería de plataformas y FinOps entregados donde está el trabajo.",
     },
     certifications: {
       label: "Certificaciones",
@@ -799,9 +799,9 @@ const fr: Dict = {
     },
     global: {
       label: "Livraison Mondiale",
-      title: "Une décennie de livraison, entre frontières et fuseaux horaires",
+      title: "Basé au Portugal. Livraison mondiale.",
       intro:
-        "De la fintech à Londres à la banque à Madrid, des plateformes de données aux États-Unis, et livraison à distance dans le monde entier.",
+        "Du Brésil à l'Europe et à travers les Amériques — cloud, DevOps, ingénierie de plateformes et FinOps, livrés où le travail se trouve.",
     },
     certifications: {
       label: "Certifications",
@@ -1010,9 +1010,9 @@ const zh: Dict = {
     },
     global: {
       label: "全球交付",
-      title: "十年交付，跨越国界与时区",
+      title: "立足葡萄牙，交付全球。",
       intro:
-        "从伦敦金融科技到马德里银行业，从美国数据平台到全球远程交付。",
+        "从巴西到欧洲，遍及美洲——云计算、DevOps、平台工程和FinOps，交付于工作所在之处。",
     },
     certifications: {
       label: "认证",

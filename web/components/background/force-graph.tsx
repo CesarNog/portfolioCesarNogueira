@@ -8,11 +8,20 @@ import { galaxy, galaxyGroups } from "@/lib/site-config";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), { ssr: false }) as any;
 
-const ACCENT: Record<string, string> = {
-  blue: "#2e8bff",
-  cyan: "#25d6e0",
-  orange: "#ff8a3d",
-};
+// Read CSS custom properties at runtime so colors adapt to dark/light mode
+function getCssVar(name: string): string {
+  if (typeof window === "undefined") return "#3b82f6";
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || "#3b82f6";
+}
+
+function getAccent(key: string): string {
+  const map: Record<string, string> = {
+    blue: "--color-blue",
+    cyan: "--color-cyan",
+    orange: "--color-orange",
+  };
+  return getCssVar(map[key] ?? "--color-blue");
+}
 
 const LINK_PAIRS: [string, string][] = [
   ["gcp", "k8s"], ["aws", "k8s"], ["azure", "k8s"],
@@ -70,7 +79,7 @@ export function ForceGalaxy({
       id: n.id,
       label: n.label,
       group: n.group,
-      color: ACCENT[galaxyGroups[n.group].accent],
+      color: getAccent(galaxyGroups[n.group].accent),
     })),
     links: LINK_PAIRS.map(([s, t]) => ({ source: s, target: t })),
   };
@@ -98,7 +107,9 @@ export function ForceGalaxy({
 
       const fontSize = Math.max(9 / globalScale, 7);
       ctx.font = `${fontSize}px monospace`;
-      ctx.fillStyle = highlight ? "#e8edf2" : "#8a97a6";
+      ctx.fillStyle = highlight
+        ? getCssVar("--color-fg")
+        : getCssVar("--color-fg-subtle");
       ctx.textAlign = "center";
       ctx.textBaseline = "top";
       ctx.fillText(node.label, node.x ?? 0, (node.y ?? 0) + r + 3);
@@ -122,7 +133,7 @@ export function ForceGalaxy({
       const src = typeof link.source === "object"
         ? (link.source as GNode).group ?? "cloud"
         : "cloud";
-      const color = ACCENT[galaxyGroups[src]?.accent ?? "blue"] ?? "#2e8bff";
+      const color = getAccent(galaxyGroups[src]?.accent ?? "blue");
       return color + "22";
     },
     [],
@@ -148,7 +159,7 @@ export function ForceGalaxy({
             const src = typeof link.source === "object"
               ? (link.source as GNode).group ?? "cloud"
               : "cloud";
-            return ACCENT[galaxyGroups[src]?.accent ?? "blue"] ?? "#2e8bff";
+            return getAccent(galaxyGroups[src]?.accent ?? "blue");
           }}
           cooldownTicks={reduce ? 0 : 100}
           onNodeHover={(node: GNode | null) => setHovered(node ? node.id : null)}
