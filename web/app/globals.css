@@ -285,3 +285,82 @@ body {
 [data-recruiter="1"] {
   scroll-padding-top: 6.5rem;
 }
+
+/* ─── Print stylesheet — clean CV output ─────────────────────────────────── */
+@media print {
+  /* Force light mode colors */
+  :root {
+    --color-surface-0: #ffffff;
+    --color-surface-1: #f8f9fa;
+    --color-surface-2: #f0f2f5;
+    --color-fg: #0b1118;
+    --color-fg-muted: #3a4452;
+    --color-fg-subtle: #5c6672;
+    --color-blue: #1a5fb4;
+    --color-hairline: rgba(0,0,0,0.12);
+    --background: #ffffff;
+    --foreground: #0b1118;
+  }
+
+  /* Hide interactive / decorative chrome */
+  header,
+  .aurora-bg,
+  footer,
+  [data-recruiter-dim],
+  [aria-label="Open command palette"],
+  [aria-label="Close command palette"],
+  button[aria-label*="menu"],
+  button[aria-label*="navigation"] {
+    display: none !important;
+  }
+
+  /* Reveal all animated content */
+  * {
+    animation: none !important;
+    transition: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  body {
+    background: white;
+    color: #0b1118;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  /* Section spacing tighter for print */
+  section {
+    padding-top: 24pt !important;
+    padding-bottom: 24pt !important;
+    break-inside: avoid;
+  }
+
+  h1 { font-size: 28pt !important; }
+  h2 { font-size: 18pt !important; }
+  h3 { font-size: 13pt !important; }
+
+  /* Remove card borders in print — rely on spacing */
+  .panel {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Keep section dividers */
+  .divide-y > * + * {
+    border-top: 0.5pt solid #dde1e7 !important;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 8pt; color: #888; }
+
+  /* Page breaks */
+  #experience, #work, #capabilities { break-before: page; }
+
+  @page {
+    margin: 18mm 16mm;
+    size: A4 portrait;
+  }
+}
