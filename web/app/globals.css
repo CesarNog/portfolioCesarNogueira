@@ -286,6 +286,19 @@ body {
   scroll-padding-top: 6.5rem;
 }
 
+/* ─── Map route packet animations ────────────────────────────────────────── */
+/* Generic keyframe — each packet line gets a unique animation name via JS.
+   Since stroke-dasharray "4 200" the dash is short; offset sweeps it along. */
+@keyframes packet-travel {
+  from { stroke-dashoffset: 204; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* ComposableMap SVG background — subtle ocean tint */
+.rsm-svg {
+  background: color-mix(in oklab, var(--color-blue) 3%, var(--color-surface-1));
+}
+
 /* ─── Print stylesheet — clean CV output ─────────────────────────────────── */
 @media print {
   /* Force light mode colors */
@@ -314,8 +327,8 @@ body {
     display: none !important;
   }
 
-  /* Reveal all animated content */
-  * {
+  /* Reveal all animated content — exclude sr-only/aria-hidden which should stay invisible */
+  *:not([aria-hidden="true"]):not(.sr-only) {
     animation: none !important;
     transition: none !important;
     filter: none !important;
