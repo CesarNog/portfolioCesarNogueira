@@ -95,7 +95,7 @@ export function SiteHeader() {
               <a
                 key={item.href}
                 href={`#${item.href}`}
-                className={`font-mono text-xs uppercase tracking-wider transition-colors ${
+                className={`font-ui text-[13px] font-medium tracking-wide transition-colors ${
                   active === item.href
                     ? "text-[var(--color-fg)]"
                     : "text-[var(--color-fg-subtle)] hover:text-[var(--color-fg-muted)]"
@@ -111,7 +111,7 @@ export function SiteHeader() {
               type="button"
               onClick={openPalette}
               aria-label="Open command palette"
-              className="hidden items-center gap-2 rounded-md border border-[var(--color-hairline)] px-2.5 py-1.5 font-mono text-[11px] text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] sm:flex"
+              className="hidden items-center gap-2 rounded-md border border-[var(--color-hairline)] px-2.5 py-1.5 font-ui text-xs text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] sm:flex"
             >
               {t.palette.search} <kbd className="text-[var(--color-fg-muted)]">⌘K</kbd>
             </button>
@@ -176,7 +176,7 @@ export function SiteHeader() {
               className="fixed inset-y-0 right-0 z-50 flex w-72 flex-col bg-[var(--color-surface-1)] shadow-2xl md:hidden"
             >
               <div className="flex h-14 items-center justify-between border-b border-[var(--color-hairline)] px-6">
-                <span className="font-mono text-sm text-[var(--color-fg-muted)]">{t.palette.navigate}</span>
+                <span className="font-ui text-sm font-medium text-[var(--color-fg-muted)]">{t.palette.navigate}</span>
                 <button
                   onClick={() => setMobileOpen(false)}
                   aria-label="Close navigation"

@@ -9,6 +9,7 @@
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-inter-tight), var(--font-geist), sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-ui: var(--font-hanken), var(--font-geist), ui-sans-serif, sans-serif;
 
   /* Surface ramp — neutral near-black (Linear / Vercel enterprise tone). */
   --color-surface-0: #08090c;
@@ -73,6 +74,12 @@ body {
 .font-display {
   font-family: var(--font-display);
   letter-spacing: -0.04em;
+}
+
+/* UI font — header nav, footer links. Hanken Grotesk: clean grotesque, not an AI default. */
+.font-ui {
+  font-family: var(--font-ui);
+  letter-spacing: -0.01em;
 }
 
 .tracking-tight-body {
