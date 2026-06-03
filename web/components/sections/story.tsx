@@ -35,7 +35,7 @@ export function Story() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-base leading-[1.85] text-[var(--color-fg-muted)] sm:text-[17px]"
+              className="text-base leading-[1.85] text-[var(--color-fg-muted)] sm:text-[17px] [text-wrap:pretty]"
             >
               {t.story.p1}
             </m.p>
@@ -44,7 +44,7 @@ export function Story() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-base leading-[1.85] text-[var(--color-fg-muted)] sm:text-[17px]"
+              className="text-base leading-[1.85] text-[var(--color-fg-muted)] sm:text-[17px] [text-wrap:pretty]"
             >
               {t.story.p2}
             </m.p>
