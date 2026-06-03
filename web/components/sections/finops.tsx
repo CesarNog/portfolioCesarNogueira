@@ -3,6 +3,7 @@
 import { m, useReducedMotion } from "motion/react";
 import { Section } from "@/components/sections/section";
 import { finops } from "@/lib/site-config";
+import { useI18n } from "@/lib/i18n";
 
 const ACCENT: Record<string, string> = {
   blue: "var(--color-blue)",
@@ -14,6 +15,7 @@ const ACCENT: Record<string, string> = {
 const TREND = [62, 58, 60, 51, 47, 44, 40, 36, 33, 30, 28];
 
 export function FinOps() {
+  const { t } = useI18n();
   const reduce = useReducedMotion();
   const max = Math.max(...TREND);
   const min = Math.min(...TREND);
@@ -26,16 +28,16 @@ export function FinOps() {
   return (
     <Section
       id="finops"
-      label="FinOps Operations Center"
-      title="Turning cloud spend into a strategic asset"
-      intro="Cost optimization, rightsizing, governance, forecasting, chargeback and automation — measured, not guessed."
+      label={t.sections.finops.label}
+      title={t.sections.finops.title}
+      intro={t.sections.finops.intro}
     >
       <div className="grid gap-4 lg:grid-cols-[1.3fr_1fr]">
         {/* Cost dashboard */}
         <div className="panel accent-orange rounded-lg p-6">
           <div className="flex items-center justify-between">
             <p className="font-mono text-xs uppercase tracking-wider text-[var(--color-fg-subtle)]">
-              Monthly cloud spend · optimized
+              {t.labels.monthlyCostLabel}
             </p>
             <span className="text-accent font-mono text-xs">▼ 28% YoY</span>
           </div>
@@ -81,7 +83,7 @@ export function FinOps() {
         {/* Pillars */}
         <div className="panel rounded-lg p-6">
           <p className="font-mono text-xs uppercase tracking-wider text-[var(--color-fg-subtle)]">
-            Operating model
+            {t.labels.operatingModel}
           </p>
           <ul className="mt-4 grid gap-2.5">
             {finops.pillars.map((p, i) => (

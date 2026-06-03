@@ -12,23 +12,23 @@ export function ExecutiveSummary() {
   return (
     <Section
       id="summary"
-      label="Executive Summary"
-      title="A senior cloud consultant, summarized for decision-makers"
-      intro="The 30-second brief: who Cesar is, why he's different, what he solves, and how to engage."
+      label={t.sections.summary.label}
+      title={t.sections.summary.title}
+      intro={t.sections.summary.intro}
     >
       <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
         {/* Portrait */}
         <Reveal>
           <figure
             data-recruiter-highlight
-            className="panel overflow-hidden rounded-xl"
+            className="panel overflow-hidden rounded-xl lg:max-w-[340px] mx-auto"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={PORTRAIT_SRC}
               alt={`${siteConfig.name} — ${siteConfig.shortRole}`}
-              width={620}
-              height={827}
+              width={340}
+              height={453}
               loading="lazy"
               className="aspect-[3/4] w-full object-cover object-top"
             />
@@ -52,16 +52,11 @@ export function ExecutiveSummary() {
             <Reveal key={i} delay={i * 0.05}>
               <article
                 data-recruiter-highlight
-                className="panel h-full rounded-lg p-6 transition-colors hover:border-[var(--color-hairline-strong)]"
+                className="panel h-full rounded-lg p-6 transition-all duration-200 hover:border-[var(--color-blue)]/40 hover:shadow-[0_0_0_1px_color-mix(in_oklab,var(--color-blue)_12%,transparent)]"
               >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-blue)]">
-                    {c.title}
-                  </span>
-                  <span className="font-mono text-xs text-[var(--color-fg-subtle)]">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                </div>
+                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-blue)]">
+                  {c.title}
+                </span>
                 <h3 className="font-display mt-3 text-xl leading-snug text-[var(--color-fg)]">
                   {c.headline}
                 </h3>
