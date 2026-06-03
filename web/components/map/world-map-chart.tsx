@@ -17,12 +17,12 @@ import { m } from "motion/react";
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
-// Slightly south-east of center so Portugal sits at visual center,
-// Europe fills left ~60%, Americas visible on right.
+// Atlantic corridor — Europe upper-right, Brazil lower-left, USA upper-left.
+// scale 280 shows the full transatlantic delivery network without clipping.
 const PROJECTION_CONFIG = {
-  rotate: [16, -14, 0] as [number, number, number],
-  scale: 440,
-  center: [-4, 42] as [number, number],
+  rotate: [22, -5, 0] as [number, number, number],
+  scale: 280,
+  center: [-10, 25] as [number, number],
 };
 
 const HIGHLIGHT_COUNTRIES = new Set([
@@ -42,7 +42,7 @@ const C = {
   cyan:   "var(--color-cyan)",
 };
 
-// Manual offsets tuned to avoid overlap at this projection + scale
+// Offsets in projected SVG units — tuned for scale 280 Atlantic-corridor view
 const MARKER_CONFIG: Record<string, {
   color: string;
   r: number;
@@ -50,12 +50,12 @@ const MARKER_CONFIG: Record<string, {
   offset: [number, number];
   anchor: "start" | "end" | "middle";
 }> = {
-  pt: { color: C.ok,     r: 8,  label: "Portugal",      offset: [11, -5],   anchor: "start" },
-  es: { color: C.orange, r: 5,  label: "Spain",          offset: [10, 8],    anchor: "start" },
-  nl: { color: C.blue,   r: 5,  label: "Netherlands",    offset: [10, -3],   anchor: "start" },
-  uk: { color: C.blue,   r: 5,  label: "UK",             offset: [-10, -10], anchor: "end" },
-  br: { color: C.cyan,   r: 5,  label: "Brazil",         offset: [10, 4],    anchor: "start" },
-  us: { color: C.blue,   r: 5,  label: "United States",  offset: [0, -10],   anchor: "middle" },
+  pt: { color: C.ok,     r: 8,  label: "Portugal",      offset: [12, -6],   anchor: "start" },
+  es: { color: C.orange, r: 5,  label: "Spain",          offset: [9, 10],    anchor: "start" },
+  nl: { color: C.blue,   r: 5,  label: "Netherlands",    offset: [9, -4],    anchor: "start" },
+  uk: { color: C.blue,   r: 5,  label: "UK",             offset: [-9, -11],  anchor: "end"   },
+  br: { color: C.cyan,   r: 5,  label: "Brazil",         offset: [9, 5],     anchor: "start" },
+  us: { color: C.blue,   r: 5,  label: "United States",  offset: [0, -11],   anchor: "middle"},
 };
 
 interface Marker {

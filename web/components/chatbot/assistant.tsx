@@ -290,7 +290,7 @@ export function Assistant() {
                         >
                           {msg.role === "assistant" && (
                             <p className="mb-1.5 font-mono text-[10px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-                              Based on portfolio evidence
+                              {t.assistant.sourceLabel}
                             </p>
                           )}
                           <p className="whitespace-pre-wrap">{msg.text}</p>
@@ -306,7 +306,7 @@ export function Assistant() {
                           className="ml-1 flex flex-col gap-1.5"
                         >
                           <p className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-                            Follow up
+                            {t.assistant.followUp}
                           </p>
                           {msg.followUps.map((fu) => (
                             <button
@@ -335,7 +335,7 @@ export function Assistant() {
                     <div className="panel-2 flex items-center gap-2 rounded-xl px-4 py-3">
                       <ThinkingDots />
                       <span className="font-mono text-xs text-[var(--color-fg-muted)]">
-                        Thinking…
+                        {t.assistant.thinking}
                       </span>
                     </div>
                   </m.div>
