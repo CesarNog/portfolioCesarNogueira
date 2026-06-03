@@ -113,7 +113,7 @@ export function SiteHeader() {
               aria-label="Open command palette"
               className="hidden items-center gap-2 rounded-md border border-[var(--color-hairline)] px-2.5 py-1.5 font-mono text-[11px] text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] sm:flex"
             >
-              Search <kbd className="text-[var(--color-fg-muted)]">⌘K</kbd>
+              {t.palette.search} <kbd className="text-[var(--color-fg-muted)]">⌘K</kbd>
             </button>
             <LanguageSwitcher className="hidden sm:flex" />
             <ThemeToggle />
@@ -176,7 +176,7 @@ export function SiteHeader() {
               className="fixed inset-y-0 right-0 z-50 flex w-72 flex-col bg-[var(--color-surface-1)] shadow-2xl md:hidden"
             >
               <div className="flex h-14 items-center justify-between border-b border-[var(--color-hairline)] px-6">
-                <span className="font-mono text-sm text-[var(--color-fg-muted)]">Navigate</span>
+                <span className="font-mono text-sm text-[var(--color-fg-muted)]">{t.palette.navigate}</span>
                 <button
                   onClick={() => setMobileOpen(false)}
                   aria-label="Close navigation"
@@ -187,7 +187,7 @@ export function SiteHeader() {
               </div>
               <nav aria-label="Mobile navigation" className="flex-1 overflow-y-auto p-4">
                 <ul className="space-y-1">
-                  {[{ href: "top", label: "Home" }, ...NAV].map((item) => (
+                  {[{ href: "top", label: t.palette.home }, ...NAV].map((item) => (
                     <li key={item.href}>
                       <button
                         type="button"
@@ -211,7 +211,7 @@ export function SiteHeader() {
                   onClick={() => { setMobileOpen(false); openPalette(); }}
                   className="flex w-full items-center justify-between rounded-md border border-[var(--color-hairline)] px-4 py-2.5 text-sm text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-hairline-strong)]"
                 >
-                  Command palette
+                  {t.palette.commandPalette}
                   <kbd className="font-mono text-[11px] text-[var(--color-fg-subtle)]">⌘K</kbd>
                 </button>
               </div>

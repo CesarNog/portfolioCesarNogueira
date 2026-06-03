@@ -42,6 +42,9 @@ type Dict = {
     greeting: string;
     suggested: string;
     placeholder: string;
+    thinking: string;
+    followUp: string;
+    sourceLabel: string;
   };
   portraitCaption: string;
   contact: {
@@ -52,6 +55,22 @@ type Dict = {
     availability: string;
     responseTime: string;
     contactQuote: string;
+    formTitle: string;
+    formSubtitle: string;
+    formName: string;
+    formEmail: string;
+    formSubject: string;
+    formMessage: string;
+    formNamePlaceholder: string;
+    formEmailPlaceholder: string;
+    formSubjectPlaceholder: string;
+    formMessagePlaceholder: string;
+    formSend: string;
+    formSending: string;
+    formCancel: string;
+    formSuccess: string;
+    formSuccessDesc: string;
+    formError: string;
     rowLabels: {
       email: string;
       linkedin: string;
@@ -98,6 +117,7 @@ type Dict = {
     placeholder: string;
     noResults: string;
     ariaClose: string;
+    search: string;
     groups: { navigate: string; actions: string; contact: string };
     home: string;
     darkTheme: string;
@@ -105,6 +125,8 @@ type Dict = {
     openFaq: string;
     emailCesar: string;
     downloadCv: string;
+    navigate: string;
+    commandPalette: string;
   };
   recruiterPrompts: string[];
 };
@@ -242,6 +264,9 @@ const en: Dict = {
       "I'm Cesar's AI Career Assistant — I know his entire background. Ask anything a hiring decision needs: seniority, scale, leadership, cost impact, certifications or availability. Try a question below.",
     suggested: "Suggested for recruiters",
     placeholder: "Ask about Cesar's fit for your role…",
+    thinking: "Thinking…",
+    followUp: "Follow up",
+    sourceLabel: "Based on portfolio evidence",
   },
   portraitCaption: "Madrid · Gran Vía",
   contact: {
@@ -252,6 +277,22 @@ const en: Dict = {
     availability: "Available for international projects",
     responseTime: "Usually replies within 24h",
     contactQuote: "Every project I've worked on has been someone's critical infrastructure — a bank's payment platform, an airline's operations system, a media company's data backbone. I take that responsibility seriously. If you're building something that matters, I'd genuinely like to hear about it.",
+    formTitle: "Send Cesar a message",
+    formSubtitle: "Replies within 24h",
+    formName: "Name",
+    formEmail: "Email",
+    formSubject: "Subject",
+    formMessage: "Message",
+    formNamePlaceholder: "Your name",
+    formEmailPlaceholder: "you@company.com",
+    formSubjectPlaceholder: "Project enquiry, role opportunity…",
+    formMessagePlaceholder: "Tell Cesar what you're building and how he can help…",
+    formSend: "Send message",
+    formSending: "Sending…",
+    formCancel: "Cancel",
+    formSuccess: "Message sent",
+    formSuccessDesc: "Cesar will be in touch within 24 hours.",
+    formError: "Something went wrong. Email directly:",
     rowLabels: {
       email: "Email",
       linkedin: "LinkedIn",
@@ -299,6 +340,9 @@ const en: Dict = {
     openFaq: "Open Smart AI FAQ",
     emailCesar: "Email Cesar",
     downloadCv: "Download CV",
+    search: "Search",
+    navigate: "Navigate",
+    commandPalette: "Command palette",
   },
   recruiterPrompts: [
     "Why is Cesar a strong candidate for senior cloud roles?",
@@ -453,6 +497,9 @@ const pt: Dict = {
       "Sou o Assistente de Carreira IA do Cesar — conheço todo o seu percurso. Pergunte o que uma decisão de contratação precisa: senioridade, escala, liderança, impacto em custos, certificações ou disponibilidade. Experimente uma pergunta abaixo.",
     suggested: "Sugestões para recrutadores",
     placeholder: "Pergunte sobre a adequação do Cesar ao seu cargo…",
+    thinking: "A pensar…",
+    followUp: "Continuar",
+    sourceLabel: "Com base no perfil",
   },
   portraitCaption: "Madrid · Gran Vía",
   contact: {
@@ -463,6 +510,22 @@ const pt: Dict = {
     availability: "Disponível para projetos internacionais",
     responseTime: "Responde normalmente em 24h",
     contactQuote: "Cada projeto em que trabalhei foi a infraestrutura crítica de alguém — a plataforma de pagamentos de um banco, o sistema de operações de uma companhia aérea, a espinha dorsal de dados de uma empresa de media. Tomo essa responsabilidade a sério. Se está a construir algo que importa, adorava ouvir falar sobre isso.",
+    formTitle: "Enviar mensagem ao Cesar",
+    formSubtitle: "Responde em 24h",
+    formName: "Nome",
+    formEmail: "Email",
+    formSubject: "Assunto",
+    formMessage: "Mensagem",
+    formNamePlaceholder: "O seu nome",
+    formEmailPlaceholder: "voce@empresa.com",
+    formSubjectPlaceholder: "Proposta de projeto, oportunidade…",
+    formMessagePlaceholder: "Diga ao Cesar o que está a construir e como ele pode ajudar…",
+    formSend: "Enviar mensagem",
+    formSending: "A enviar…",
+    formCancel: "Cancelar",
+    formSuccess: "Mensagem enviada",
+    formSuccessDesc: "O Cesar responderá em 24 horas.",
+    formError: "Algo correu mal. Envie diretamente para:",
     rowLabels: {
       email: "Email",
       linkedin: "LinkedIn",
@@ -510,6 +573,9 @@ const pt: Dict = {
     openFaq: "Abrir Smart AI FAQ",
     emailCesar: "Enviar email ao Cesar",
     downloadCv: "Descarregar CV",
+    search: "Pesquisar",
+    navigate: "Navegar",
+    commandPalette: "Paleta de comandos",
   },
   recruiterPrompts: [
     "Por que o Cesar é forte candidato para funções sénior em cloud?",
@@ -664,6 +730,9 @@ const es: Dict = {
       "Soy el Asistente de Carrera IA de Cesar — conozco todo su recorrido. Pregunta lo que necesita una decisión de contratación: seniority, escala, liderazgo, impacto en costes, certificaciones o disponibilidad. Prueba una pregunta abajo.",
     suggested: "Sugerencias para reclutadores",
     placeholder: "Pregunta por el encaje de Cesar en tu puesto…",
+    thinking: "Pensando…",
+    followUp: "Seguir",
+    sourceLabel: "Basado en el perfil",
   },
   portraitCaption: "Madrid · Gran Vía",
   contact: {
@@ -674,6 +743,22 @@ const es: Dict = {
     availability: "Disponible para proyectos internacionales",
     responseTime: "Suele responder en 24h",
     contactQuote: "Cada proyecto en el que he trabajado ha sido la infraestructura crítica de alguien — la plataforma de pagos de un banco, el sistema de operaciones de una aerolínea, la columna vertebral de datos de una empresa de medios. Me tomo esa responsabilidad en serio. Si estás construyendo algo que importa, me encantaría escuchar al respecto.",
+    formTitle: "Enviar un mensaje a Cesar",
+    formSubtitle: "Responde en 24h",
+    formName: "Nombre",
+    formEmail: "Email",
+    formSubject: "Asunto",
+    formMessage: "Mensaje",
+    formNamePlaceholder: "Tu nombre",
+    formEmailPlaceholder: "tu@empresa.com",
+    formSubjectPlaceholder: "Propuesta de proyecto, oportunidad…",
+    formMessagePlaceholder: "Dile a Cesar qué estás construyendo y cómo puede ayudarte…",
+    formSend: "Enviar mensaje",
+    formSending: "Enviando…",
+    formCancel: "Cancelar",
+    formSuccess: "Mensaje enviado",
+    formSuccessDesc: "Cesar te responderá en 24 horas.",
+    formError: "Algo salió mal. Escribe directamente a:",
     rowLabels: {
       email: "Email",
       linkedin: "LinkedIn",
@@ -721,6 +806,9 @@ const es: Dict = {
     openFaq: "Abrir Smart AI FAQ",
     emailCesar: "Enviar email a Cesar",
     downloadCv: "Descargar CV",
+    search: "Buscar",
+    navigate: "Navegar",
+    commandPalette: "Paleta de comandos",
   },
   recruiterPrompts: [
     "¿Por qué es Cesar un candidato sólido para roles cloud senior?",
@@ -875,6 +963,9 @@ const fr: Dict = {
       "Je suis l'Assistant Carrière IA de Cesar — je connais tout son parcours. Posez tout ce qu'une décision de recrutement nécessite : séniorité, échelle, leadership, impact financier, certifications ou disponibilité. Essayez une question ci-dessous.",
     suggested: "Questions suggérées pour les recruteurs",
     placeholder: "Posez une question sur l'adéquation de Cesar à votre poste…",
+    thinking: "Réflexion…",
+    followUp: "Continuer",
+    sourceLabel: "Basé sur le profil",
   },
   portraitCaption: "Madrid · Gran Vía",
   contact: {
@@ -885,6 +976,22 @@ const fr: Dict = {
     availability: "Disponible pour des projets internationaux",
     responseTime: "Répond généralement sous 24h",
     contactQuote: "Chaque projet sur lequel j'ai travaillé a été l'infrastructure critique de quelqu'un — la plateforme de paiement d'une banque, le système d'opérations d'une compagnie aérienne, la colonne vertébrale des données d'une entreprise de médias. Je prends cette responsabilité au sérieux. Si vous construisez quelque chose qui compte, j'aimerais vraiment en entendre parler.",
+    formTitle: "Envoyer un message à Cesar",
+    formSubtitle: "Répond sous 24h",
+    formName: "Nom",
+    formEmail: "Email",
+    formSubject: "Sujet",
+    formMessage: "Message",
+    formNamePlaceholder: "Votre nom",
+    formEmailPlaceholder: "vous@entreprise.com",
+    formSubjectPlaceholder: "Proposition de projet, opportunité…",
+    formMessagePlaceholder: "Dites à Cesar ce que vous construisez et comment il peut vous aider…",
+    formSend: "Envoyer le message",
+    formSending: "Envoi…",
+    formCancel: "Annuler",
+    formSuccess: "Message envoyé",
+    formSuccessDesc: "Cesar vous répondra dans les 24 heures.",
+    formError: "Une erreur s'est produite. Écrivez directement à :",
     rowLabels: {
       email: "Email",
       linkedin: "LinkedIn",
@@ -932,6 +1039,9 @@ const fr: Dict = {
     openFaq: "Ouvrir le Smart AI FAQ",
     emailCesar: "Envoyer un email à Cesar",
     downloadCv: "Télécharger le CV",
+    search: "Rechercher",
+    navigate: "Navigation",
+    commandPalette: "Palette de commandes",
   },
   recruiterPrompts: [
     "Pourquoi Cesar est-il un candidat solide pour des rôles cloud senior ?",
@@ -1086,6 +1196,9 @@ const zh: Dict = {
       "我是Cesar的AI职业助手——我了解他的全部背景。请提问招聘决策所需的任何内容：资历、规模、领导力、成本影响、认证或可用性。请在下方尝试提问。",
     suggested: "为招聘者推荐的问题",
     placeholder: "询问Cesar是否适合您的职位…",
+    thinking: "思考中…",
+    followUp: "继续提问",
+    sourceLabel: "基于个人资料",
   },
   portraitCaption: "马德里 · 格兰大道",
   contact: {
@@ -1096,6 +1209,22 @@ const zh: Dict = {
     availability: "可承接国际项目",
     responseTime: "通常24小时内回复",
     contactQuote: "我参与的每个项目都是某人的关键基础设施——银行的支付平台、航空公司的运营系统、媒体公司的数据骨干。我认真对待这份责任。如果您正在构建重要的东西，我真诚地想听您讲述。",
+    formTitle: "给Cesar发消息",
+    formSubtitle: "24小时内回复",
+    formName: "姓名",
+    formEmail: "邮箱",
+    formSubject: "主题",
+    formMessage: "消息",
+    formNamePlaceholder: "您的姓名",
+    formEmailPlaceholder: "您@公司.com",
+    formSubjectPlaceholder: "项目咨询、职位机会…",
+    formMessagePlaceholder: "告诉Cesar您在构建什么以及他如何提供帮助…",
+    formSend: "发送消息",
+    formSending: "发送中…",
+    formCancel: "取消",
+    formSuccess: "消息已发送",
+    formSuccessDesc: "Cesar将在24小时内与您联系。",
+    formError: "出现错误。请直接发邮件至：",
     rowLabels: {
       email: "邮箱",
       linkedin: "LinkedIn",
@@ -1143,6 +1272,9 @@ const zh: Dict = {
     openFaq: "打开智能AI FAQ",
     emailCesar: "发送邮件给Cesar",
     downloadCv: "下载简历",
+    search: "搜索",
+    navigate: "导航",
+    commandPalette: "命令面板",
   },
   recruiterPrompts: [
     "为何Cesar是高级云计算职位的有力候选人？",
