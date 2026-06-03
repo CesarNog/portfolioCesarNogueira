@@ -26,18 +26,18 @@ export function Section({
   return (
     <section
       id={id}
-      className="scroll-mt-20 border-t border-[var(--color-hairline)] px-6 py-24"
+      className="scroll-mt-20 border-t border-[var(--color-hairline)] px-6 py-20 lg:py-32"
     >
       <div className="mx-auto max-w-5xl">
         <Reveal>
-          <p className="mb-3 font-mono text-xs uppercase tracking-[0.22em] text-[var(--color-blue)]">
-            <span className="text-[var(--color-fg-subtle)]">//</span> {heading}
+          <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-fg-subtle)]">
+            {heading}
           </p>
-          <h2 className="font-display max-w-2xl text-3xl text-[var(--color-fg)] sm:text-4xl">
+          <h2 className="font-display max-w-3xl text-3xl text-[var(--color-fg)] sm:text-4xl lg:text-6xl">
             {headline}
           </h2>
           {lead && (
-            <p className="mt-4 max-w-2xl text-[var(--color-fg-muted)]">{lead}</p>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-[var(--color-fg-muted)] sm:text-[17px]">{lead}</p>
           )}
         </Reveal>
         <div className="mt-10">{children}</div>

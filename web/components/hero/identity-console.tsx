@@ -1,208 +1,145 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
 import { m, useReducedMotion } from "motion/react";
-import {
-  bootSequence,
-  expertiseMatrix,
-  siteConfig,
-  stats,
-} from "@/lib/site-config";
+import { siteConfig, stats } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
-import { AVATAR_SRC } from "@/lib/images";
+import { PORTRAIT_SRC } from "@/lib/images";
 import { Counter } from "@/components/ui/counter";
 import { Magnetic } from "@/components/ui/magnetic";
+import { EASE, DUR, buttonPress } from "@/lib/motion";
 
-const InfraBackground = dynamic(
-  () => import("@/components/background/infra-background"),
-  { ssr: false },
-);
-
-type Phase = "boot" | "matrix" | "status" | "done";
+// Staggered hero entrance — each layer reveals 120ms after the previous
+const DELAYS = { badge: 0.1, name: 0.2, desc: 0.38, ctas: 0.52, stats: 0.68, photo: 0.15 };
 
 export function IdentityConsole() {
   const reduce = useReducedMotion();
   const { t } = useI18n();
-  const [phase, setPhase] = useState<Phase>(reduce ? "done" : "boot");
-  const [bootLine, setBootLine] = useState(0);
-  const [matrixCount, setMatrixCount] = useState(0);
 
-  useEffect(() => {
-    if (reduce) return;
-    const timers: ReturnType<typeof setTimeout>[] = [];
-    bootSequence.forEach((_, i) => {
-      timers.push(setTimeout(() => setBootLine(i + 1), 450 + i * 650));
-    });
-    timers.push(setTimeout(() => setPhase("matrix"), 450 + bootSequence.length * 650));
-    expertiseMatrix.forEach((_, i) => {
-      timers.push(
-        setTimeout(
-          () => setMatrixCount(i + 1),
-          450 + bootSequence.length * 650 + 220 + i * 180,
-        ),
-      );
-    });
-    const statusAt = 450 + bootSequence.length * 650 + 220 + expertiseMatrix.length * 180 + 250;
-    timers.push(setTimeout(() => setPhase("status"), statusAt));
-    timers.push(setTimeout(() => setPhase("done"), statusAt + 900));
-    return () => timers.forEach(clearTimeout);
-  }, [reduce]);
+  const enter = (delay: number) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 16, filter: "blur(6px)" },
+          animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+          transition: { duration: DUR.section, delay, ease: EASE.out },
+        };
 
   return (
-    <section
-      id="top"
-      className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden px-6 pt-24 pb-16"
-    >
-      <div data-recruiter-dim className="pointer-events-none absolute inset-0">
-        <InfraBackground />
-        <div className="absolute inset-0 grid-bg opacity-30" aria-hidden />
-        <div
-          className="absolute inset-0"
-          aria-hidden
-          style={{
-            background:
-              "radial-gradient(55% 45% at 50% 0%, color-mix(in oklab, var(--color-blue) 7%, transparent), transparent 70%)",
-          }}
+    <section id="top" className="relative overflow-hidden">
+      {/* Mobile: portrait as background, content on top */}
+      <div className="absolute inset-0 -z-10 lg:hidden" aria-hidden>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={PORTRAIT_SRC}
+          alt=""
+          width={800}
+          height={1067}
+          className="h-full w-full object-cover object-top"
+          style={{ opacity: 0.15 }}
         />
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-surface-0)]/20 via-[var(--color-surface-0)]/80 to-[var(--color-surface-0)]" />
       </div>
 
-      <div className="relative mx-auto grid w-full max-w-5xl gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-        <div className="panel rounded-lg p-1 accent-cyan shadow-2xl">
-          <div className="flex items-center gap-2 border-b border-[var(--color-hairline)] px-4 py-2.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-orange)]/80" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-cyan)]/70" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-blue)]/70" />
-            <span className="ml-3 font-mono text-xs text-[var(--color-fg-subtle)]">
-              identity://cesar-nogueira ~ control-center
-            </span>
-          </div>
-          <div className="min-h-[300px] p-5 font-mono text-sm leading-relaxed sm:min-h-[330px]">
-            {bootSequence.slice(0, reduce ? bootSequence.length : bootLine).map((l) => (
-              <p key={l} className="text-[var(--color-fg-muted)]">
-                <span className="text-[var(--color-cyan)]">▸</span> {l}
-              </p>
-            ))}
-
-            {(reduce || phase !== "boot") && (
-              <div className="mt-3 grid grid-cols-2 gap-x-6 gap-y-1.5 sm:grid-cols-3">
-                {expertiseMatrix
-                  .slice(0, reduce ? expertiseMatrix.length : matrixCount)
-                  .map((skill) => (
-                    <m.p
-                      key={skill}
-                      initial={reduce ? false : { opacity: 0, x: -6 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className="flex items-center gap-2 text-[var(--color-fg)]"
-                    >
-                      <span className="text-[var(--color-ok)]">✓</span>
-                      <span className="truncate">{skill}</span>
-                    </m.p>
-                  ))}
-              </div>
-            )}
-
-            {(reduce || phase === "status" || phase === "done") && (
-              <m.div
-                initial={reduce ? false : { opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="mt-5 flex items-center gap-3 border-t border-[var(--color-hairline)] pt-4"
-              >
-                <span className="status-dot" />
-                <span className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-ok)]">
-                  Status: {t.contact.availability}
+      {/* Desktop: side-by-side grid. Mobile: single column. */}
+      <div className="mx-auto max-w-[1600px] lg:grid lg:min-h-[100svh] lg:grid-cols-[48%_52%]">
+        {/* Content column */}
+        <div className="flex min-h-[100svh] flex-col justify-end pb-12 pt-20 sm:justify-end sm:pt-24 lg:justify-center lg:pb-16 lg:pt-28">
+          <div className="px-6 lg:pl-8 xl:pl-16">
+            <div className="max-w-[520px]">
+              {/* Availability badge */}
+              <m.div {...enter(DELAYS.badge)} className="mb-7 flex items-center gap-2.5">
+                <span className="status-dot" aria-hidden />
+                <span className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--color-ok)]">
+                  {t.hero.available}
                 </span>
               </m.div>
-            )}
-            {!reduce && phase !== "done" && (
-              <span className="cursor-blink inline-block" aria-hidden />
-            )}
+
+              {/* Name */}
+              <m.h1
+                {...enter(DELAYS.name)}
+                className="font-display text-[2.5rem] leading-[0.9] tracking-tight text-[var(--color-fg)] sm:text-[clamp(3rem,5.5vw,5.5rem)] lg:text-[clamp(4rem,5.5vw,6.5rem)]"
+              >
+                {siteConfig.firstName}
+                <br />
+                Nogueira.
+              </m.h1>
+
+              {/* One-liner */}
+              <m.p
+                {...enter(DELAYS.desc)}
+                className="mt-6 text-base leading-relaxed text-[var(--color-fg-muted)] sm:text-lg"
+              >
+                {t.hero.desc}
+              </m.p>
+
+              {/* CTAs */}
+              <m.div {...enter(DELAYS.ctas)} className="mt-8 flex flex-wrap gap-3">
+                <Magnetic>
+                  <m.a
+                    href="#contact"
+                    whileTap={buttonPress}
+                    className="bg-accent accent-blue inline-flex items-center rounded-md px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+                  >
+                    {t.hero.ctaPrimary}
+                  </m.a>
+                </Magnetic>
+                <Magnetic>
+                  <m.a
+                    href="#work"
+                    whileTap={buttonPress}
+                    className="inline-flex items-center rounded-md border border-[var(--color-hairline-strong)] px-6 py-3 text-sm font-medium text-[var(--color-fg)] transition-colors hover:border-[var(--color-fg-muted)]"
+                  >
+                    {t.hero.ctaSecondary}
+                  </m.a>
+                </Magnetic>
+              </m.div>
+
+              {/* Stats — 2×2 on mobile, 4 columns on sm+ */}
+              <m.div
+                {...enter(DELAYS.stats)}
+                className="mt-12 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-[var(--color-hairline)] pt-7 sm:grid-cols-4 lg:mt-16"
+              >
+                {stats.map((s, i) => (
+                  <div key={s.label}>
+                    <p className="font-display text-2xl text-[var(--color-fg)] sm:text-3xl">
+                      <Counter
+                        value={s.value}
+                        prefix={"prefix" in s ? (s.prefix as string) : ""}
+                        suffix={s.suffix}
+                        decimals={"decimals" in s ? (s.decimals as number) : 0}
+                      />
+                    </p>
+                    <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
+                      {t.statsLabels[i]}
+                    </p>
+                  </div>
+                ))}
+              </m.div>
+            </div>
           </div>
         </div>
 
+        {/* Photo column — desktop only, fades in with slight scale */}
         <m.div
-          initial={reduce ? false : { y: 16 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="relative hidden lg:block"
+          aria-hidden
+          {...(reduce ? {} : {
+            initial: { opacity: 0, scale: 1.03 },
+            animate: { opacity: 1, scale: 1 },
+            transition: { duration: 1.1, delay: DELAYS.photo, ease: EASE.out },
+          })}
         >
-          <div className="flex items-center gap-4">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={AVATAR_SRC}
-              alt={`Portrait of ${siteConfig.name}`}
-              width={56}
-              height={56}
-              loading="eager"
-              className="h-14 w-14 shrink-0 rounded-full border border-[var(--color-hairline-strong)] object-cover shadow-lg"
-            />
-            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] px-3 py-1">
-              <span className="status-dot" />
-              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-ok)]">
-                {t.hero.available}
-              </span>
-            </span>
-          </div>
-          <h1 className="font-display mt-5 text-5xl leading-[0.98] text-[var(--color-fg)] sm:text-6xl">
-            {siteConfig.name}
-          </h1>
-          <p className="mt-4 font-mono text-sm uppercase tracking-[0.14em] text-[var(--color-blue)]">
-            {t.hero.roleLine}
-          </p>
-          <p className="mt-5 max-w-md text-base text-[var(--color-fg-muted)]">
-            {t.hero.desc}
-          </p>
-
-          <ul className="mt-6 flex flex-wrap gap-2">
-            {t.hero.chips.map((h) => (
-              <li
-                key={h}
-                className="rounded-md border border-[var(--color-hairline)] bg-[var(--color-surface-1)] px-2.5 py-1 font-mono text-[11px] text-[var(--color-fg-muted)]"
-              >
-                {h}
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-7 flex flex-wrap items-center gap-3">
-            <Magnetic>
-              <a
-                href="#contact"
-                className="bg-accent accent-blue inline-flex items-center rounded-md px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
-              >
-                {t.hero.ctaPrimary}
-              </a>
-            </Magnetic>
-            <Magnetic>
-              <a
-                href="#work"
-                className="inline-flex items-center rounded-md border border-[var(--color-hairline-strong)] px-5 py-2.5 text-sm font-medium text-[var(--color-fg)] transition-colors hover:border-[var(--color-fg-muted)]"
-              >
-                {t.hero.ctaSecondary}
-              </a>
-            </Magnetic>
-            <kbd className="hidden rounded border border-[var(--color-hairline)] px-2 py-1 font-mono text-[10px] text-[var(--color-fg-subtle)] sm:inline-block">
-              ⌘K to search
-            </kbd>
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={PORTRAIT_SRC}
+            alt=""
+            width={780}
+            height={1040}
+            className="h-full w-full object-cover object-top"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-surface-0)] via-[var(--color-surface-0)]/40 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[var(--color-surface-0)] to-transparent" />
         </m.div>
-      </div>
-
-      <div className="relative mx-auto mt-16 grid w-full max-w-5xl grid-cols-2 gap-px overflow-hidden rounded-lg border border-[var(--color-hairline)] sm:grid-cols-4">
-        {stats.map((s, i) => (
-          <div key={s.label} className="bg-[var(--color-surface-1)] p-5">
-            <p className="font-display text-3xl text-[var(--color-fg)] sm:text-4xl">
-              <Counter
-                value={s.value}
-                prefix={"prefix" in s ? (s.prefix as string) : ""}
-                suffix={s.suffix}
-                decimals={"decimals" in s ? (s.decimals as number) : 0}
-              />
-            </p>
-            <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-              {t.statsLabels[i]}
-            </p>
-          </div>
-        ))}
       </div>
     </section>
   );
