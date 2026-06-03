@@ -6,6 +6,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useI18n } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site-config";
+import { Logo } from "@/components/logo";
 
 const NAV = [
   { href: "summary", label: "Summary" },
@@ -85,8 +86,11 @@ export function SiteHeader() {
 
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--color-hairline)] bg-[var(--color-surface-0)]/80 backdrop-blur-md">
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
-          <a href="#top" className="font-mono text-sm text-[var(--color-fg)]">
-            {siteConfig.firstName}<span className="text-[var(--color-blue)]">N</span>og
+          <a href="#top" className="flex items-center gap-2.5 text-[var(--color-fg)] transition-opacity hover:opacity-80" aria-label={siteConfig.name}>
+            <Logo size={26} className="text-[var(--color-fg)] shrink-0" />
+            <span className="font-ui text-[13px] font-semibold tracking-tight hidden sm:block">
+              César<span className="text-[var(--color-blue)]"> A.</span> Nogueira
+            </span>
           </a>
 
           {/* Desktop nav */}

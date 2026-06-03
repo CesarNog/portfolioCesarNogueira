@@ -152,6 +152,7 @@ type Dict = {
     lessons: string;
     metricLabel: string;
   }>;
+  capabilities: Array<{ area: string; level: string; note: string }>;
 };
 
 const en: Dict = {
@@ -479,6 +480,16 @@ const en: Dict = {
       metricLabel: "availability",
     },
   },
+  capabilities: [
+    { area: "Cloud Architecture",       level: "Principal",      note: "Multi-cloud across GCP, AWS, Azure & OCI for regulated enterprise." },
+    { area: "Platform Engineering",     level: "Expert",         note: "Golden paths, self-service platforms and Kubernetes at scale." },
+    { area: "DevOps & CI/CD",           level: "Expert",         note: "Pipeline design and delivery automation end to end." },
+    { area: "FinOps",                   level: "Specialist",     note: "Cost optimization, tagging, chargeback and forecasting that removes real waste." },
+    { area: "Infrastructure as Code",   level: "Expert",         note: "Reproducible, reviewable infrastructure across clouds." },
+    { area: "Observability",            level: "Expert",         note: "24/7 monitoring, on-call and incident tooling for critical systems." },
+    { area: "Data Platforms",           level: "Advanced",       note: "Real-time pipelines and warehousing on Google Cloud." },
+    { area: "AI Infrastructure",        level: "Growing focus",  note: "Scalable, observable, cost-aware platforms for GenAI workloads." },
+  ],
 };
 
 const pt: Dict = {
@@ -806,6 +817,16 @@ const pt: Dict = {
       metricLabel: "disponibilidade",
     },
   },
+  capabilities: [
+    { area: "Arquitetura Cloud",        level: "Principal",         note: "Multi-cloud em GCP, AWS, Azure & OCI para empresas reguladas." },
+    { area: "Engenharia de Plataformas",level: "Expert",            note: "Golden paths, plataformas self-service e Kubernetes à escala." },
+    { area: "DevOps & CI/CD",           level: "Expert",            note: "Design de pipelines e automação de entrega do início ao fim." },
+    { area: "FinOps",                   level: "Especialista",      note: "Otimização de custos, etiquetagem, chargeback e previsão que remove desperdício real." },
+    { area: "Infraestrutura como Código",level: "Expert",           note: "Infraestrutura reproduzível e revisável em múltiplas clouds." },
+    { area: "Observabilidade",          level: "Expert",            note: "Monitorização 24/7, on-call e ferramentas de incidente para sistemas críticos." },
+    { area: "Plataformas de Dados",     level: "Avançado",          note: "Pipelines em tempo real e armazenamento no Google Cloud." },
+    { area: "Infraestrutura de IA",     level: "Foco crescente",    note: "Plataformas escaláveis, observáveis e conscientes de custos para workloads GenAI." },
+  ],
 };
 
 const es: Dict = {
@@ -1133,6 +1154,16 @@ const es: Dict = {
       metricLabel: "disponibilidad",
     },
   },
+  capabilities: [
+    { area: "Arquitectura Cloud",        level: "Principal",          note: "Multi-cloud en GCP, AWS, Azure y OCI para empresas reguladas." },
+    { area: "Ingeniería de Plataformas", level: "Experto",            note: "Golden paths, plataformas self-service y Kubernetes a escala." },
+    { area: "DevOps & CI/CD",            level: "Experto",            note: "Diseño de pipelines y automatización de entrega de principio a fin." },
+    { area: "FinOps",                    level: "Especialista",       note: "Optimización de costes, etiquetado, chargeback y previsión que elimina desperdicio real." },
+    { area: "Infraestructura como Código",level: "Experto",           note: "Infraestructura reproducible y revisable en múltiples clouds." },
+    { area: "Observabilidad",            level: "Experto",            note: "Monitorización 24/7, on-call y herramientas de incidentes para sistemas críticos." },
+    { area: "Plataformas de Datos",      level: "Avanzado",           note: "Pipelines en tiempo real y almacenamiento en Google Cloud." },
+    { area: "Infraestructura de IA",     level: "Foco creciente",     note: "Plataformas escalables, observables y conscientes del coste para cargas GenAI." },
+  ],
 };
 
 const fr: Dict = {
@@ -1460,6 +1491,16 @@ const fr: Dict = {
       metricLabel: "disponibilité",
     },
   },
+  capabilities: [
+    { area: "Architecture Cloud",         level: "Principal",        note: "Multi-cloud sur GCP, AWS, Azure et OCI pour les entreprises réglementées." },
+    { area: "Ingénierie de Plateformes",  level: "Expert",           note: "Golden paths, plateformes self-service et Kubernetes à grande échelle." },
+    { area: "DevOps & CI/CD",             level: "Expert",           note: "Conception de pipelines et automatisation de la livraison de bout en bout." },
+    { area: "FinOps",                     level: "Spécialiste",      note: "Optimisation des coûts, étiquetage, refacturation et prévisions éliminant les vrais gaspillages." },
+    { area: "Infrastructure as Code",     level: "Expert",           note: "Infrastructure reproductible et révisable sur tous les clouds." },
+    { area: "Observabilité",              level: "Expert",           note: "Monitoring 24/7, on-call et outillage incidents pour les systèmes critiques." },
+    { area: "Plateformes de Données",     level: "Avancé",           note: "Pipelines temps réel et entreposage sur Google Cloud." },
+    { area: "Infrastructure IA",          level: "Focus croissant",  note: "Plateformes scalables, observables et économes pour les workloads GenAI." },
+  ],
 };
 
 const zh: Dict = {
@@ -1787,6 +1828,16 @@ const zh: Dict = {
       metricLabel: "可用性",
     },
   },
+  capabilities: [
+    { area: "云架构",         level: "首席级",    note: "在GCP、AWS、Azure和OCI上为受监管企业提供多云架构。" },
+    { area: "平台工程",       level: "专家",      note: "黄金路径、自助服务平台与大规模Kubernetes。" },
+    { area: "DevOps & CI/CD", level: "专家",      note: "端到端流水线设计与交付自动化。" },
+    { area: "FinOps",         level: "专家级",    note: "成本优化、标签管理、成本分摊与预测——消除真实浪费。" },
+    { area: "基础设施即代码", level: "专家",      note: "跨云平台可复现、可审查的基础设施。" },
+    { area: "可观测性",       level: "专家",      note: "关键系统的24/7监控、值班与事件响应工具。" },
+    { area: "数据平台",       level: "高级",      note: "Google Cloud上的实时管道与数据仓储。" },
+    { area: "AI基础设施",     level: "重点发展",  note: "为GenAI工作负载构建可扩展、可观测、成本可控的平台。" },
+  ],
 };
 
 const DICT: Record<Lang, Dict> = { en, pt, es, fr, zh };
