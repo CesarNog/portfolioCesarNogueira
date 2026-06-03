@@ -59,7 +59,7 @@ export default async (req) => {
     ? "https://api.x.ai/v1/chat/completions"
     : "https://api.groq.com/openai/v1/chat/completions";
   const model = grokKey
-    ? (process.env.GROK_MODEL || "grok-3-mini")
+    ? (process.env.GROK_MODEL || "grok-2-1212")
     : (process.env.GROQ_MODEL || "llama-3.3-70b-versatile");
 
   if (!key) {
@@ -90,7 +90,9 @@ export default async (req) => {
 
     if (!r.ok) {
       const detail = await r.text().catch(() => "");
-      return json({ fallback: true, error: `groq ${r.status}`, detail }, 200);
+      const provider = grokKey ? "xai" : "groq";
+      console.error(`[ask] ${provider} error ${r.status}:`, detail);
+      return json({ fallback: true, error: `${provider} ${r.status}`, detail }, 200);
     }
 
     const data = await r.json();

@@ -133,7 +133,7 @@ export function Assistant() {
 
       const fallback = () =>
         matchFaq(q) ??
-        `Cesar is a Principal Cloud Architect with 11+ years across GCP, AWS, Azure and OCI — available now for international consulting via UP2CLOUD. For specific questions email ${siteConfig.links.email}.`;
+        `Cesar is a Principal Cloud Architect with 10+ years across GCP, AWS, Azure and OCI — available now for international consulting via UP2CLOUD. For specific questions email ${siteConfig.links.email}.`;
 
       try {
         const res = await fetch("/.netlify/functions/ask", {
