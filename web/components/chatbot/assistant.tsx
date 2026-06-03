@@ -1,12 +1,99 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, m, useReducedMotion } from "motion/react";
 import { faq, siteConfig } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
 import { AVATAR_SRC } from "@/lib/images";
 
-type Msg = { role: "user" | "assistant"; text: string };
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+type Msg = {
+  role: "user" | "assistant";
+  text: string;
+  followUps?: string[];
+};
+
+// ─── Follow-up suggestions keyed by topic keyword ────────────────────────────
+
+const FOLLOW_UP_MAP: Record<string, string[]> = {
+  kubernetes: [
+    "Show production GKE experience",
+    "Show platform engineering projects",
+    "Show Terraform infrastructure examples",
+    "Show Argo CD and GitOps work",
+  ],
+  finops: [
+    "What cloud cost savings has Cesar delivered?",
+    "Show FinOps automation tooling used",
+    "Show multi-cloud billing experience",
+    "How does Cesar approach cloud governance?",
+  ],
+  leadership: [
+    "Show team leadership examples",
+    "Has Cesar founded or led a company?",
+    "Show technical pre-sales experience",
+    "Show cross-functional delivery examples",
+  ],
+  architecture: [
+    "Show banking cloud architecture work",
+    "Show platform engineering design",
+    "Show multi-cloud networking experience",
+    "What regulated industries has Cesar served?",
+  ],
+  gcp: [
+    "Show GCP Professional Cloud Architect credentials",
+    "Show BigQuery and data platform work",
+    "Show GKE production deployments",
+    "Show Google Cloud FinOps experience",
+  ],
+  cloud: [
+    "Show AWS experience",
+    "Show Azure experience",
+    "Show multi-cloud governance",
+    "Show cloud migration projects",
+  ],
+  enterprise: [
+    "Show banking and aviation clients",
+    "Show regulated industry experience",
+    "Show 99.9% availability delivery",
+    "Show on-site vs remote delivery",
+  ],
+  ai: [
+    "Show LLM integration work",
+    "Show AI infrastructure platforms",
+    "Show automation and agent work",
+    "How does Cesar approach GenAI?",
+  ],
+};
+
+function getFollowUps(answer: string): string[] {
+  const lower = answer.toLowerCase();
+  for (const [key, suggestions] of Object.entries(FOLLOW_UP_MAP)) {
+    if (lower.includes(key)) return suggestions.slice(0, 4);
+  }
+  return [
+    "What measurable cloud cost savings has Cesar delivered?",
+    "Show Kubernetes production experience",
+    "Has Cesar led teams or major initiatives?",
+    "Is Cesar available for international projects?",
+  ];
+}
+
+// ─── FAQ matcher ─────────────────────────────────────────────────────────────
+
+function matchFaq(q: string): string | null {
+  const lower = q.toLowerCase();
+  let best: { score: number; a: string } | null = null;
+  for (const f of faq) {
+    const words = f.q.toLowerCase().split(/\W+/).filter((w) => w.length > 3);
+    const score = words.reduce((n, w) => (lower.includes(w) ? n + 1 : n), 0);
+    if (score > 0 && (!best || score > best.score)) best = { score, a: f.a };
+  }
+  return best?.a ?? null;
+}
+
+// ─── Component ────────────────────────────────────────────────────────────────
 
 export function Assistant() {
   const reduce = useReducedMotion();
@@ -15,14 +102,44 @@ export function Assistant() {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Refs
   const listRef = useRef<HTMLDivElement>(null);
-  const panelRef = useRef<HTMLDivElement>(null);
+  const lastAnswerRef = useRef<HTMLDivElement>(null);
+  const userScrolledRef = useRef(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
+  // Track manual scroll — stop auto-scrolling if user scrolls up
   useEffect(() => {
-    listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
-  }, [messages, loading]);
+    const el = listRef.current;
+    if (!el) return;
+    let prevScrollTop = el.scrollTop;
+    const onScroll = () => {
+      if (el.scrollTop < prevScrollTop - 20) userScrolledRef.current = true;
+      else if (el.scrollTop >= el.scrollHeight - el.clientHeight - 40)
+        userScrolledRef.current = false;
+      prevScrollTop = el.scrollTop;
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, []);
 
-  // Close on Escape.
+  // Scroll to START of last answer when it arrives, unless user scrolled away
+  useEffect(() => {
+    if (loading) return;
+    if (userScrolledRef.current) return;
+    if (!lastAnswerRef.current) return;
+    // Small delay so text has rendered
+    const timer = setTimeout(() => {
+      lastAnswerRef.current?.scrollIntoView({
+        behavior: reduce ? "instant" : "smooth",
+        block: "start",
+      });
+    }, 60);
+    return () => clearTimeout(timer);
+  }, [messages, reduce]);
+
+  // Escape to close
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
@@ -30,61 +147,72 @@ export function Assistant() {
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
-  // Allow other UI (command palette, recruiter mode) to open the assistant.
+  // External open trigger (command palette, recruiter mode)
   useEffect(() => {
     const openIt = () => setOpen(true);
     document.addEventListener("open-smart-faq", openIt);
     return () => document.removeEventListener("open-smart-faq", openIt);
   }, []);
 
-  // Match a free-text question to the best curated answer.
-  const matchFaq = (q: string) => {
-    const lower = q.toLowerCase();
-    let best: { score: number; a: string } | null = null;
-    for (const f of faq) {
-      const words = f.q.toLowerCase().split(/\W+/).filter((w) => w.length > 3);
-      const score = words.reduce((n, w) => (lower.includes(w) ? n + 1 : n), 0);
-      if (score > 0 && (!best || score > best.score)) best = { score, a: f.a };
-    }
-    return best?.a;
-  };
+  // Focus input when panel opens
+  useEffect(() => {
+    if (open) setTimeout(() => inputRef.current?.focus(), 100);
+  }, [open]);
 
-  async function ask(question: string) {
-    const q = question.trim();
-    if (!q || loading) return;
-    setMessages((prev) => [...prev, { role: "user", text: q }]);
-    setInput("");
-    setLoading(true);
+  const ask = useCallback(
+    async (question: string) => {
+      const q = question.trim();
+      if (!q || loading) return;
 
-    const fallback = () =>
-      matchFaq(q) ??
-      `Here's the short version: ${siteConfig.name} is a Principal Cloud Architect & FinOps consultant (GCP/AWS/Azure, 10+ years) available for international projects. Email ${siteConfig.links.email}.`;
+      userScrolledRef.current = false;
+      setMessages((prev) => [...prev, { role: "user", text: q }]);
+      setInput("");
+      setLoading(true);
 
-    try {
-      const res = await fetch("/.netlify/functions/ask", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: q }),
-      });
-      if (!res.ok) throw new Error(String(res.status));
-      const data = (await res.json()) as { answer?: string };
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", text: data.answer?.trim() || fallback() },
-      ]);
-    } catch {
-      setMessages((prev) => [...prev, { role: "assistant", text: fallback() }]);
-    } finally {
-      setLoading(false);
-    }
-  }
+      // Scroll to show the "Thinking…" state immediately
+      setTimeout(() => {
+        listRef.current?.scrollTo({
+          top: listRef.current.scrollHeight,
+          behavior: reduce ? "instant" : "smooth",
+        });
+      }, 40);
+
+      const fallback = () =>
+        matchFaq(q) ??
+        `Cesar is a Principal Cloud Architect with 11+ years across GCP, AWS, Azure and OCI — available now for international consulting via UP2CLOUD. For specific questions email ${siteConfig.links.email}.`;
+
+      try {
+        const res = await fetch("/.netlify/functions/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: q }),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        const data = (await res.json()) as { answer?: string };
+        const answer = data.answer?.trim() || fallback();
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", text: answer, followUps: getFollowUps(answer) },
+        ]);
+      } catch {
+        const answer = fallback();
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", text: answer, followUps: getFollowUps(answer) },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [loading, reduce],
+  );
 
   return (
     <>
-      {/* Launcher */}
+      {/* Launcher button */}
       <button
         type="button"
-        aria-label={open ? "Close Smart AI FAQ" : "Open Smart AI FAQ"}
+        aria-label={open ? "Close AI Career Assistant" : "Open AI Career Assistant"}
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
         className="fixed bottom-5 right-5 z-[90] flex items-center gap-2 rounded-full border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] px-4 py-3 text-sm text-[var(--color-fg)] shadow-2xl transition-colors hover:border-[var(--color-blue)]"
@@ -96,14 +224,14 @@ export function Assistant() {
       <AnimatePresence>
         {open && (
           <m.div
-            ref={panelRef}
             role="dialog"
-            aria-label="Smart AI FAQ — AI Career Assistant"
+            aria-label="AI Career Assistant"
+            aria-modal="true"
             initial={reduce ? false : { opacity: 0, y: 16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="panel fixed bottom-20 right-5 z-[90] flex h-[72vh] max-h-[600px] w-[92vw] max-w-sm flex-col overflow-hidden rounded-xl shadow-2xl"
+            className="panel fixed bottom-20 right-5 z-[90] flex h-[76vh] max-h-[640px] w-[92vw] max-w-[400px] flex-col overflow-hidden rounded-xl shadow-2xl"
           >
             {/* Header */}
             <div className="flex items-center gap-3 border-b border-[var(--color-hairline)] px-4 py-3">
@@ -115,69 +243,125 @@ export function Assistant() {
                 height={32}
                 className="h-8 w-8 shrink-0 rounded-full border border-[var(--color-hairline-strong)] object-cover"
               />
-              <div className="flex-1">
-                <p className="text-sm text-[var(--color-fg)]">{t.assistant.header}</p>
-                <p className="font-mono text-[10px] text-[var(--color-fg-subtle)]">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-[var(--color-fg)]">{t.assistant.header}</p>
+                <p className="truncate font-mono text-[10px] text-[var(--color-fg-subtle)]">
                   {t.assistant.subtitle}
                 </p>
               </div>
               <button
                 aria-label={t.assistant.close}
                 onClick={() => setOpen(false)}
-                className="text-[var(--color-fg-subtle)] hover:text-[var(--color-fg)]"
+                className="flex h-8 w-8 items-center justify-center rounded-md text-[var(--color-fg-subtle)] transition-colors hover:bg-[var(--color-surface-2)] hover:text-[var(--color-fg)]"
               >
                 ✕
               </button>
             </div>
 
-            {/* Messages */}
-            <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto p-4">
-              {/* Localized greeting always leads the thread */}
-              <div className="flex justify-start">
-                <p className="panel-2 max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed text-[var(--color-fg)]">
-                  {t.assistant.greeting}
-                </p>
-              </div>
-              {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-                >
-                  <p
-                    className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed ${
-                      msg.role === "user"
-                        ? "bg-accent accent-blue text-white"
-                        : "panel-2 text-[var(--color-fg)]"
-                    }`}
-                  >
-                    {msg.text}
+            {/* Message thread */}
+            <div
+              ref={listRef}
+              className="flex-1 overflow-y-auto overscroll-contain scroll-pt-2 p-4"
+            >
+              <div className="space-y-4">
+                {/* Greeting */}
+                <div className="flex justify-start">
+                  <p className="panel-2 max-w-[88%] rounded-xl px-4 py-3 text-sm leading-relaxed text-[var(--color-fg)]">
+                    {t.assistant.greeting}
                   </p>
                 </div>
-              ))}
-              {loading && (
-                <p className="panel-2 inline-block rounded-lg px-3 py-2 font-mono text-xs text-[var(--color-fg-muted)]">
-                  analyzing…
-                </p>
-              )}
 
-              {/* Recruiter-focused suggested prompts */}
-              <div className="pt-1">
-                <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-                  {t.assistant.suggested}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {t.recruiterPrompts.map((q) => (
-                    <button
-                      key={q}
-                      type="button"
-                      onClick={() => ask(q)}
-                      disabled={loading}
-                      className="rounded-full border border-[var(--color-hairline)] px-3 py-1.5 text-left text-xs text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-blue)] hover:text-[var(--color-fg)] disabled:opacity-40"
-                    >
-                      {q}
-                    </button>
-                  ))}
-                </div>
+                {/* Message list */}
+                {messages.map((msg, i) => {
+                  const isLast = i === messages.length - 1;
+                  const isLastAssistant = msg.role === "assistant" && isLast;
+
+                  return (
+                    <div key={i} className="space-y-2">
+                      <div className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+                        {/* Attach ref to the START of the last assistant message */}
+                        <div
+                          ref={isLastAssistant ? lastAnswerRef : undefined}
+                          className={`max-w-[88%] rounded-xl px-4 py-3 text-sm leading-relaxed ${
+                            msg.role === "user"
+                              ? "bg-accent accent-blue text-white"
+                              : "panel-2 text-[var(--color-fg)]"
+                          }`}
+                        >
+                          {msg.role === "assistant" && (
+                            <p className="mb-1.5 font-mono text-[10px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
+                              Based on portfolio evidence
+                            </p>
+                          )}
+                          <p className="whitespace-pre-wrap">{msg.text}</p>
+                        </div>
+                      </div>
+
+                      {/* Smart follow-ups after assistant messages */}
+                      {msg.role === "assistant" && msg.followUps && msg.followUps.length > 0 && (
+                        <m.div
+                          initial={reduce ? false : { opacity: 0, y: 4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: 0.15 }}
+                          className="ml-1 flex flex-col gap-1.5"
+                        >
+                          <p className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
+                            Follow up
+                          </p>
+                          {msg.followUps.map((fu) => (
+                            <button
+                              key={fu}
+                              type="button"
+                              onClick={() => ask(fu)}
+                              disabled={loading}
+                              className="w-fit rounded-md border border-[var(--color-hairline)] bg-[var(--color-surface-1)] px-3 py-1.5 text-left text-xs text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-blue)] hover:text-[var(--color-fg)] disabled:opacity-40"
+                            >
+                              {fu}
+                            </button>
+                          ))}
+                        </m.div>
+                      )}
+                    </div>
+                  );
+                })}
+
+                {/* Thinking indicator */}
+                {loading && (
+                  <m.div
+                    initial={reduce ? false : { opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="flex justify-start"
+                  >
+                    <div className="panel-2 flex items-center gap-2 rounded-xl px-4 py-3">
+                      <ThinkingDots />
+                      <span className="font-mono text-xs text-[var(--color-fg-muted)]">
+                        Thinking…
+                      </span>
+                    </div>
+                  </m.div>
+                )}
+
+                {/* Suggested prompts — shown only when thread is empty */}
+                {messages.length === 0 && (
+                  <div className="pt-2">
+                    <p className="mb-3 font-mono text-[10px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
+                      {t.assistant.suggested}
+                    </p>
+                    <div className="flex flex-col gap-2">
+                      {t.recruiterPrompts.map((q) => (
+                        <button
+                          key={q}
+                          type="button"
+                          onClick={() => ask(q)}
+                          disabled={loading}
+                          className="w-fit rounded-md border border-[var(--color-hairline)] bg-[var(--color-surface-1)] px-3 py-2 text-left text-xs text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-blue)] hover:text-[var(--color-fg)] disabled:opacity-40"
+                        >
+                          {q}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -190,6 +374,7 @@ export function Assistant() {
               className="flex items-center gap-2 border-t border-[var(--color-hairline)] p-3"
             >
               <input
+                ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={t.assistant.placeholder}
@@ -199,7 +384,8 @@ export function Assistant() {
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
-                className="bg-accent accent-blue rounded-md px-3 py-2 text-sm font-medium text-white disabled:opacity-40"
+                aria-label="Send message"
+                className="bg-accent accent-blue flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium text-white disabled:opacity-40"
               >
                 ↑
               </button>
@@ -208,5 +394,21 @@ export function Assistant() {
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+// Animated thinking dots
+function ThinkingDots() {
+  return (
+    <div className="flex gap-1" aria-hidden>
+      {[0, 1, 2].map((i) => (
+        <m.span
+          key={i}
+          className="h-1.5 w-1.5 rounded-full bg-[var(--color-fg-subtle)]"
+          animate={{ opacity: [0.3, 1, 0.3] }}
+          transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.2, ease: "easeInOut" }}
+        />
+      ))}
+    </div>
   );
 }
