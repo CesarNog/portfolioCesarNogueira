@@ -27,11 +27,13 @@ export const metadata: Metadata = {
     title: `${siteConfig.name} — ${siteConfig.shortRole}`,
     description: siteConfig.description,
     siteName: siteConfig.name,
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: `${siteConfig.name} — ${siteConfig.shortRole}` }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${siteConfig.name} — ${siteConfig.shortRole}`,
     description: siteConfig.description,
+    images: ["/opengraph-image"],
   },
   robots: { index: true, follow: true },
   alternates: { canonical: "/" },
@@ -46,7 +48,14 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geist.variable} ${geistMono.variable} ${interTight.variable} tracking-tight-body antialiased`}
+        suppressHydrationWarning
       >
+        {/* Aurora mesh gradient — fixed, full page, GPU-only */}
+        <div aria-hidden className="aurora-bg">
+          <div className="aurora-blob aurora-blob-1" />
+          <div className="aurora-blob aurora-blob-2" />
+          <div className="aurora-blob aurora-blob-3" />
+        </div>
         <ThemeProvider>
           <I18nProvider>
             <MotionProvider>{children}</MotionProvider>

@@ -19,10 +19,14 @@ export function ContactConsole() {
   return (
     <Section
       id="contact"
-      label="Mission Briefing Console"
-      title="Let's architect your next platform"
-      intro={siteConfig.tagline}
+      label={t.sections.contact.label}
+      title={t.sections.contact.title}
+      intro={t.sections.contact.intro}
     >
+      <blockquote className="mb-8 border-l-2 border-[var(--color-blue)] pl-5 text-base leading-relaxed text-[var(--color-fg-muted)] italic">
+        {t.contact.contactQuote}
+      </blockquote>
+
       <div className="grid gap-4 lg:grid-cols-[1fr_1fr]">
         <div data-recruiter-highlight className="panel rounded-lg p-6">
           <div className="flex items-center gap-3">

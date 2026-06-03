@@ -2,12 +2,8 @@
 
 import { m, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
+import { EASE, DUR } from "@/lib/motion";
 
-/**
- * Declarative reveal-on-scroll wrapper.
- * Animates only transform + opacity (compositor-friendly) and collapses
- * to an instant render under prefers-reduced-motion.
- */
 export function Reveal({
   children,
   delay = 0,
@@ -19,8 +15,6 @@ export function Reveal({
 }) {
   const reduce = useReducedMotion();
 
-  // Under reduced motion, render plain content so it is always visible
-  // (no enter animation, nothing left at opacity 0).
   if (reduce) {
     return <div className={className}>{children}</div>;
   }
@@ -28,10 +22,12 @@ export function Reveal({
   return (
     <m.div
       className={className}
-      initial={{ y: 16 }}
-      whileInView={{ y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ y: 16, opacity: 0, filter: "blur(6px)" }}
+      whileInView={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: DUR.reveal, delay, ease: EASE.out }}
+      // Ensure content is visible if JS/motion never fires (SSR, crawlers)
+      style={{ willChange: "opacity, transform" }}
     >
       {children}
     </m.div>
