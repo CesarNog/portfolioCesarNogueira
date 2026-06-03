@@ -60,36 +60,33 @@ export function RecruiterMode() {
         )}
       </AnimatePresence>
 
-      {/* Floating toggle (bottom-left, opposite the Smart AI FAQ) */}
-      <button
+      {/* Floating toggle — bottom-left, attention-grabbing when off */}
+      <m.button
         type="button"
         onClick={toggle}
         aria-pressed={on}
         aria-label={on ? "Exit recruiter mode" : "Enter recruiter mode"}
-        className={`fixed bottom-5 left-5 z-[90] flex items-center gap-2 rounded-full border px-4 py-3 text-sm shadow-2xl transition-colors ${
+        initial={reduce ? false : { opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 1.8, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed bottom-5 left-5 z-[90] flex items-center gap-2.5 rounded-full border px-4 py-2.5 text-sm font-medium shadow-2xl transition-all duration-300 ${
           on
-            ? "border-[var(--color-blue)] bg-[var(--color-blue)] text-white"
-            : "border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] text-[var(--color-fg)] hover:border-[var(--color-blue)]"
+            ? "border-[var(--color-blue)] bg-[var(--color-blue)] text-white shadow-[0_0_24px_-6px_var(--color-blue)]"
+            : "border-[var(--color-blue)]/40 bg-[var(--color-surface-1)] text-[var(--color-fg)] hover:border-[var(--color-blue)] hover:shadow-[0_0_18px_-8px_var(--color-blue)]"
         }`}
       >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden
-        >
+        {/* Pulse ring — draws attention when recruiter mode is off */}
+        {!on && !reduce && (
+          <span className="absolute inset-0 rounded-full animate-ping opacity-20 bg-[var(--color-blue)]" style={{ animationDuration: "2.4s" }} aria-hidden />
+        )}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
           <circle cx="9" cy="7" r="4" />
           <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
           <path d="M16 3.13a4 4 0 0 1 0 7.75" />
         </svg>
-        <span className="font-medium">{on ? t.recruiter.on : t.recruiter.off}</span>
-      </button>
+        <span>{on ? t.recruiter.on : t.recruiter.off}</span>
+      </m.button>
     </>
   );
 }

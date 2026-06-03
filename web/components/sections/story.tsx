@@ -10,7 +10,7 @@ export function Story() {
   const { t } = useI18n();
 
   return (
-    <section className="scroll-mt-20 border-t border-[var(--color-hairline)] px-6 py-16 lg:py-28">
+    <section id="summary" className="scroll-mt-20 border-t border-[var(--color-hairline)] px-6 py-16 lg:py-28">
       <div className="mx-auto max-w-5xl">
         {/* Pull quote — large editorial statement */}
         <m.blockquote
