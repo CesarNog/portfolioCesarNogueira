@@ -57,7 +57,7 @@ export function IdentityConsole() {
               {/* Name */}
               <m.h1
                 {...enter(DELAYS.name)}
-                className="font-display text-[2.5rem] leading-[0.9] tracking-[-0.02em] text-[var(--color-fg)] sm:text-[clamp(3rem,5.5vw,5.5rem)] lg:text-[clamp(4rem,5.5vw,6.5rem)] [text-wrap:balance]"
+                className="font-display text-[2.5rem] leading-[0.9] tracking-[-0.02em] text-[var(--color-fg)] sm:text-[clamp(3rem,5vw,5rem)] lg:text-[clamp(3.5rem,5vw,5.5rem)] [text-wrap:balance]"
               >
                 {siteConfig.firstName}
                 <br />
@@ -152,7 +152,7 @@ export function IdentityConsole() {
           transition: { duration: 0.6, delay: 1.4, ease: EASE.out },
         })}
       >
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden className="animate-bounce">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden className="animate-float">
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </m.a>

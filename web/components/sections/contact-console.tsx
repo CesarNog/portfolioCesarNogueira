@@ -28,7 +28,7 @@ export function ContactConsole() {
         intro={t.sections.contact.intro}
         noEyebrow
       >
-        <blockquote className="mb-8 border-l-2 border-[var(--color-blue)] pl-5 text-base leading-relaxed text-[var(--color-fg-muted)] italic">
+        <blockquote className="mb-8 rounded-lg bg-[var(--color-blue)]/5 px-5 py-4 text-base leading-relaxed text-[var(--color-fg-muted)] italic ring-1 ring-[var(--color-blue)]/15">
           {t.contact.contactQuote}
         </blockquote>
 
