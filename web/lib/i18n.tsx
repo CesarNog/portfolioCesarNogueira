@@ -140,6 +140,18 @@ type Dict = {
     ai: string[];
     fallback: string[];
   };
+  projects: Record<string, {
+    category: string;
+    title: string;
+    client: string;
+    problem: string;
+    architecture: string;
+    scale: string;
+    impact: string[];
+    outcome: string;
+    lessons: string;
+    metricLabel: string;
+  }>;
 };
 
 const en: Dict = {
@@ -428,6 +440,44 @@ const en: Dict = {
     p1: "I started in São Paulo, building data platforms and software systems for large enterprises. Cloud infrastructure caught me early — the challenge of making distributed systems reliable, observable, and cost-efficient at scale. That became my career.",
     p2: "Moving to Europe in my mid-twenties changed how I think about this work. Working across time zones, languages, and cultures taught me what certifications don't: cloud problems are mostly people problems. Systems fail because teams don't talk. Costs spiral because nobody owns them. Platforms break because the incentives are misaligned.",
     p3: "Since then I've built platforms for banks in London and Madrid, airlines across Latin America, media companies in the US, and enterprises everywhere in between. I founded UP2CLOUD to do this work on my own terms — focused on outcomes, not headcount.",
+  },
+  projects: {
+    "finops-automation": {
+      category: "FinOps & Cost Optimization",
+      title: "Enterprise FinOps Automation Platform",
+      client: "Global staffing leader",
+      problem: "Cloud spend across GCP, AWS and Azure was fragmented, untagged and growing faster than visibility allowed.",
+      architecture: "Python automation against multi-cloud billing APIs, CloudHealth ingestion, CloudBees CI/CD, and scheduled cost-reporting + auto-tagging jobs feeding executive dashboards.",
+      scale: "Multi-account, multi-cloud estate",
+      impact: ["~30% reduction in waste", "Automated tagging & chargeback", "Executive cost visibility"],
+      outcome: "Cut ~30% of cloud waste and gave finance real-time, per-team cost accountability.",
+      lessons: "Governance before optimization. You can't cut what you can't see — and the hardest part was aligning 12 platform teams on a unified tagging taxonomy. Technical solutions are easy; organizational alignment is the real work.",
+      metricLabel: "cloud waste",
+    },
+    "bigdata-platform": {
+      category: "Data Platform Engineering",
+      title: "Big Data Analytics Platform",
+      client: "Mass-media corporation (US)",
+      problem: "A media corporation needed a scalable analytics platform to process and query massive event streams.",
+      architecture: "Apache Beam pipelines on Google DataFlow, App Engine services, and a BigQuery warehouse — built in Java/Node.js with a React front end.",
+      scale: "Mass-scale event ingestion",
+      impact: ["Real-time data pipelines", "Self-serve BigQuery analytics", "Elastic App Engine delivery"],
+      outcome: "Unlocked self-serve, real-time analytics over massive event streams on Google Cloud.",
+      lessons: "Design for schema evolution, not just throughput. Event schemas changed six times during the project. Building schema evolution into the pipeline from day one would have saved weeks of rework.",
+      metricLabel: "analytics throughput",
+    },
+    "banking-cloud": {
+      category: "Platform Modernization",
+      title: "Multi-Cloud for Banking & Aviation",
+      client: "AndBank · Santander · LATAM Airlines",
+      problem: "Regulated enterprises required resilient, secure, observable cloud infrastructure across GCP, AWS, Azure and OCI.",
+      architecture: "VPC network design, PII / sensitive-data security controls, and full observability via New Relic, PagerDuty and StackStorm with customizable dashboards.",
+      scale: "Regulated enterprise workloads",
+      impact: ["Hardened PII security", "24/7 observability & on-call", "Resilient multi-cloud networking"],
+      outcome: "Delivered secure, observable, regulator-ready cloud for banking and aviation at 99.9% availability.",
+      lessons: "In regulated industries, observability is proof — not just tooling. Audit-ready dashboards and automated alerting built from day one made the difference between passing and failing compliance reviews.",
+      metricLabel: "availability",
+    },
   },
 };
 
@@ -718,6 +768,44 @@ const pt: Dict = {
     p2: "Vim para a Europa com vinte e poucos anos, e isso mudou a forma como penso neste trabalho. Trabalhar em fusos horários, línguas e culturas diferentes ensinou-me o que as certificações não ensinam: os problemas de cloud são sobretudo problemas de pessoas. Os sistemas falham porque as equipas não comunicam. Os custos disparam porque ninguém é responsável. As plataformas avariam porque os incentivos estão errados.",
     p3: "Desde então construí plataformas para bancos em Londres e Madrid, companhias aéreas na América Latina, empresas de media nos EUA e empresas em todo o mundo. Fundei a UP2CLOUD para fazer este trabalho nos meus próprios termos — focado em resultados, não em recursos.",
   },
+  projects: {
+    "finops-automation": {
+      category: "FinOps & Otimização de Custos",
+      title: "Plataforma de Automação FinOps Empresarial",
+      client: "Líder global de staffing",
+      problem: "O gasto em cloud nas plataformas GCP, AWS e Azure estava fragmentado, sem etiquetas e crescia mais rápido do que a visibilidade permitia.",
+      architecture: "Automação em Python contra APIs de faturação multi-cloud, ingestão no CloudHealth, CI/CD com CloudBees e jobs agendados de relatórios de custos com auto-etiquetagem a alimentar dashboards executivos.",
+      scale: "Estate multi-conta e multi-cloud",
+      impact: ["~30% de redução de desperdício", "Etiquetagem e chargeback automatizados", "Visibilidade de custos para a gestão"],
+      outcome: "Eliminou ~30% de desperdício em cloud e deu às finanças visibilidade em tempo real por equipa.",
+      lessons: "Governação antes de otimização. Não se pode cortar o que não se vê — e a parte mais difícil foi alinhar 12 equipas de plataforma numa taxonomia de etiquetagem unificada. As soluções técnicas são fáceis; o alinhamento organizacional é o verdadeiro trabalho.",
+      metricLabel: "desperdício em cloud",
+    },
+    "bigdata-platform": {
+      category: "Engenharia de Plataformas de Dados",
+      title: "Plataforma de Analytics de Big Data",
+      client: "Corporação de media de massas (EUA)",
+      problem: "Uma empresa de media precisava de uma plataforma de analytics escalável para processar e consultar fluxos massivos de eventos.",
+      architecture: "Pipelines Apache Beam no Google DataFlow, serviços App Engine e um armazém BigQuery — construído em Java/Node.js com frontend React.",
+      scale: "Ingestão de eventos à escala massiva",
+      impact: ["Pipelines de dados em tempo real", "Analytics BigQuery self-service", "Entrega elástica com App Engine"],
+      outcome: "Desbloqueou analytics self-service em tempo real sobre fluxos massivos de eventos no Google Cloud.",
+      lessons: "Desenhado para evolução de schema, não apenas para throughput. Os schemas de eventos mudaram seis vezes durante o projeto. Incorporar a evolução de schema no pipeline desde o primeiro dia teria poupado semanas de retrabalho.",
+      metricLabel: "throughput analítico",
+    },
+    "banking-cloud": {
+      category: "Modernização de Plataformas",
+      title: "Multi-Cloud para Banca & Aviação",
+      client: "AndBank · Santander · LATAM Airlines",
+      problem: "Empresas reguladas exigiam infraestrutura cloud resiliente, segura e observável em GCP, AWS, Azure e OCI.",
+      architecture: "Design de redes VPC, controlos de segurança para dados PII e sensíveis, e observabilidade completa via New Relic, PagerDuty e StackStorm com dashboards configuráveis.",
+      scale: "Cargas de trabalho empresariais reguladas",
+      impact: ["Segurança PII reforçada", "Observabilidade 24/7 e on-call", "Redes multi-cloud resilientes"],
+      outcome: "Entregou cloud segura, observável e pronta para auditores na banca e aviação com 99,9% de disponibilidade.",
+      lessons: "Na indústria regulada, observabilidade é prova — não apenas ferramenta. Dashboards prontos para auditoria e alertas automatizados desde o primeiro dia fizeram a diferença entre passar e reprovar nas revisões de conformidade.",
+      metricLabel: "disponibilidade",
+    },
+  },
 };
 
 const es: Dict = {
@@ -1006,6 +1094,44 @@ const es: Dict = {
     p1: "Empecé en São Paulo, construyendo plataformas de datos y sistemas para grandes empresas. La infraestructura cloud me enganchó pronto — el reto de hacer sistemas distribuidos fiables, observables y eficientes en coste a escala. Eso se convirtió en mi carrera.",
     p2: "Mudarme a Europa a mediados de los veinte cambió cómo pienso sobre este trabajo. Trabajar en distintas zonas horarias, idiomas y culturas me enseñó lo que las certificaciones no enseñan: los problemas de cloud son sobre todo problemas de personas. Los sistemas fallan porque los equipos no se comunican. Los costes se disparan porque nadie los gestiona. Las plataformas fallan porque los incentivos están mal alineados.",
     p3: "Desde entonces he construido plataformas para bancos en Londres y Madrid, aerolíneas en América Latina, empresas de medios en EE.UU. y empresas de todo el mundo. Fundé UP2CLOUD para hacer este trabajo en mis propios términos — centrado en resultados, no en plantilla.",
+  },
+  projects: {
+    "finops-automation": {
+      category: "FinOps & Optimización de Costes",
+      title: "Plataforma de Automatización FinOps Empresarial",
+      client: "Líder global de staffing",
+      problem: "El gasto cloud en GCP, AWS y Azure estaba fragmentado, sin etiquetas y crecía más rápido de lo que la visibilidad permitía.",
+      architecture: "Automatización en Python contra APIs de facturación multi-cloud, ingesta en CloudHealth, CI/CD con CloudBees y trabajos programados de informes de costes con auto-etiquetado alimentando dashboards ejecutivos.",
+      scale: "Estate multi-cuenta y multi-cloud",
+      impact: ["~30% de reducción de desperdicio", "Etiquetado y chargeback automatizados", "Visibilidad de costes para dirección"],
+      outcome: "Eliminó ~30% de desperdicio cloud y dio a finanzas visibilidad en tiempo real por equipo.",
+      lessons: "Gobernanza antes de optimización. No puedes recortar lo que no ves — y la parte más difícil fue alinear 12 equipos de plataforma en una taxonomía de etiquetado unificada. Las soluciones técnicas son fáciles; el alineamiento organizacional es el trabajo real.",
+      metricLabel: "desperdicio cloud",
+    },
+    "bigdata-platform": {
+      category: "Ingeniería de Plataformas de Datos",
+      title: "Plataforma de Analytics de Big Data",
+      client: "Corporación de medios de masas (EE.UU.)",
+      problem: "Una empresa de medios necesitaba una plataforma de analytics escalable para procesar y consultar flujos masivos de eventos.",
+      architecture: "Pipelines Apache Beam en Google DataFlow, servicios App Engine y un almacén BigQuery — construido en Java/Node.js con frontend React.",
+      scale: "Ingesta de eventos a escala masiva",
+      impact: ["Pipelines de datos en tiempo real", "Analytics BigQuery self-service", "Entrega elástica con App Engine"],
+      outcome: "Desbloqueó analytics self-service en tiempo real sobre flujos masivos de eventos en Google Cloud.",
+      lessons: "Diseñado para evolución de esquema, no solo para throughput. Los esquemas de eventos cambiaron seis veces durante el proyecto. Incorporar la evolución de esquema en el pipeline desde el primer día habría ahorrado semanas de retrabajo.",
+      metricLabel: "throughput analítico",
+    },
+    "banking-cloud": {
+      category: "Modernización de Plataformas",
+      title: "Multi-Cloud para Banca y Aviación",
+      client: "AndBank · Santander · LATAM Airlines",
+      problem: "Las empresas reguladas requerían infraestructura cloud resiliente, segura y observable en GCP, AWS, Azure y OCI.",
+      architecture: "Diseño de redes VPC, controles de seguridad para datos PII y sensibles, y observabilidad completa mediante New Relic, PagerDuty y StackStorm con dashboards configurables.",
+      scale: "Cargas de trabajo empresariales reguladas",
+      impact: ["Seguridad PII reforzada", "Observabilidad 24/7 y on-call", "Redes multi-cloud resilientes"],
+      outcome: "Entregó cloud segura, observable y lista para reguladores en banca y aviación con 99,9% de disponibilidad.",
+      lessons: "En industrias reguladas, la observabilidad es prueba — no solo herramienta. Los dashboards listos para auditoría y las alertas automatizadas desde el primer día marcaron la diferencia entre pasar y reprobar las revisiones de cumplimiento.",
+      metricLabel: "disponibilidad",
+    },
   },
 };
 
@@ -1296,6 +1422,44 @@ const fr: Dict = {
     p2: "Partir en Europe dans la mi-vingtaine a changé ma façon de voir ce travail. Travailler dans différents fuseaux horaires, langues et cultures m'a appris ce que les certifications n'enseignent pas : les problèmes cloud sont avant tout des problèmes humains. Les systèmes tombent en panne parce que les équipes ne communiquent pas. Les coûts s'envolent parce que personne n'en est responsable. Les plateformes se brisent parce que les incitations sont mal alignées.",
     p3: "Depuis, j'ai construit des plateformes pour des banques à Londres et Madrid, des compagnies aériennes en Amérique latine, des entreprises de médias aux États-Unis et des entreprises partout dans le monde. J'ai fondé UP2CLOUD pour faire ce travail selon mes propres termes — axé sur les résultats, pas sur les effectifs.",
   },
+  projects: {
+    "finops-automation": {
+      category: "FinOps & Optimisation des Coûts",
+      title: "Plateforme d'Automatisation FinOps Entreprise",
+      client: "Leader mondial du staffing",
+      problem: "Les dépenses cloud sur GCP, AWS et Azure étaient fragmentées, non étiquetées et augmentaient plus vite que la visibilité ne le permettait.",
+      architecture: "Automatisation Python contre les API de facturation multi-cloud, ingestion CloudHealth, CI/CD CloudBees et jobs planifiés de reporting des coûts avec auto-étiquetage alimentant des tableaux de bord exécutifs.",
+      scale: "Estate multi-compte et multi-cloud",
+      impact: ["~30% de réduction des gaspillages", "Étiquetage et refacturation automatisés", "Visibilité des coûts pour la direction"],
+      outcome: "A éliminé ~30% de gaspillage cloud et donné aux finances une visibilité en temps réel par équipe.",
+      lessons: "La gouvernance avant l'optimisation. On ne peut pas couper ce qu'on ne voit pas — et la partie la plus difficile était d'aligner 12 équipes plateformes sur une taxonomie d'étiquetage unifiée. Les solutions techniques sont faciles ; l'alignement organisationnel est le vrai travail.",
+      metricLabel: "gaspillage cloud",
+    },
+    "bigdata-platform": {
+      category: "Ingénierie de Plateformes de Données",
+      title: "Plateforme d'Analytics Big Data",
+      client: "Corporation de médias de masse (États-Unis)",
+      problem: "Une entreprise médiatique avait besoin d'une plateforme d'analytics scalable pour traiter et interroger des flux d'événements massifs.",
+      architecture: "Pipelines Apache Beam sur Google DataFlow, services App Engine et un entrepôt BigQuery — développé en Java/Node.js avec un frontend React.",
+      scale: "Ingestion d'événements à grande échelle",
+      impact: ["Pipelines de données en temps réel", "Analytics BigQuery en libre-service", "Livraison élastique avec App Engine"],
+      outcome: "A débloqué des analytics en libre-service et en temps réel sur des flux d'événements massifs sur Google Cloud.",
+      lessons: "Concevoir pour l'évolution des schémas, pas seulement pour le débit. Les schémas d'événements ont changé six fois pendant le projet. Intégrer l'évolution des schémas dans le pipeline dès le premier jour aurait économisé des semaines de retraitement.",
+      metricLabel: "débit analytique",
+    },
+    "banking-cloud": {
+      category: "Modernisation de Plateformes",
+      title: "Multi-Cloud pour la Banque et l'Aviation",
+      client: "AndBank · Santander · LATAM Airlines",
+      problem: "Des entreprises réglementées exigeaient une infrastructure cloud résiliente, sécurisée et observable sur GCP, AWS, Azure et OCI.",
+      architecture: "Conception de réseaux VPC, contrôles de sécurité pour les données PII et sensibles, et observabilité complète via New Relic, PagerDuty et StackStorm avec des tableaux de bord personnalisables.",
+      scale: "Charges de travail d'entreprise réglementées",
+      impact: ["Sécurité PII renforcée", "Observabilité 24/7 et on-call", "Réseaux multi-cloud résilients"],
+      outcome: "A livré un cloud sécurisé, observable et prêt pour les régulateurs pour la banque et l'aviation à 99,9% de disponibilité.",
+      lessons: "Dans les secteurs réglementés, l'observabilité est une preuve — pas seulement un outil. Les tableaux de bord prêts pour audit et les alertes automatisées dès le premier jour ont fait la différence entre réussir et échouer les examens de conformité.",
+      metricLabel: "disponibilité",
+    },
+  },
 };
 
 const zh: Dict = {
@@ -1584,6 +1748,44 @@ const zh: Dict = {
     p1: "我在圣保罗起步，为大型企业构建数据平台和软件系统。云基础设施很快吸引了我——如何让分布式系统在大规模下保持可靠、可观测且成本高效。这成为了我的事业。",
     p2: "二十多岁移居欧洲改变了我对这份工作的认知。跨越时区、语言和文化的工作经历教会了我认证所不能教的东西：云问题在很大程度上是人的问题。系统故障是因为团队之间沟通不畅。成本失控是因为没有人对其负责。平台崩溃是因为激励机制错位。",
     p3: "此后，我为伦敦和马德里的银行、拉丁美洲的航空公司、美国的媒体企业以及全球各地的公司构建了平台。我创立了UP2CLOUD，以自己的方式从事这份工作——专注于成果，而非人员规模。",
+  },
+  projects: {
+    "finops-automation": {
+      category: "FinOps与成本优化",
+      title: "企业FinOps自动化平台",
+      client: "全球人才服务领导者",
+      problem: "GCP、AWS和Azure上的云支出分散、未打标签，增长速度超过了可见性所允许的范围。",
+      architecture: "针对多云计费API的Python自动化、CloudHealth数据摄入、CloudBees CI/CD，以及向管理层仪表板提供数据的定时成本报告和自动打标签作业。",
+      scale: "多账户、多云资产",
+      impact: ["减少约30%浪费", "自动化标签与成本分摊", "管理层成本可见性"],
+      outcome: "削减了约30%的云浪费，并为财务团队提供了按团队划分的实时成本可见性。",
+      lessons: "治理先于优化。看不见的东西无法削减——最难的部分是让12个平台团队在统一的标签分类法上达成一致。技术解决方案是容易的，组织对齐才是真正的工作。",
+      metricLabel: "云浪费",
+    },
+    "bigdata-platform": {
+      category: "数据平台工程",
+      title: "大数据分析平台",
+      client: "大众媒体集团（美国）",
+      problem: "一家媒体公司需要一个可扩展的分析平台来处理和查询海量事件流。",
+      architecture: "Google DataFlow上的Apache Beam管道、App Engine服务和BigQuery数据仓库——使用Java/Node.js构建，配合React前端。",
+      scale: "大规模事件摄入",
+      impact: ["实时数据管道", "BigQuery自助分析", "App Engine弹性交付"],
+      outcome: "在Google Cloud上解锁了对海量事件流的实时自助分析。",
+      lessons: "为schema演进而设计，而不仅仅是吞吐量。事件schema在项目期间更改了六次。从第一天起就将schema演进内置到管道中，本可以节省数周的返工时间。",
+      metricLabel: "分析吞吐量",
+    },
+    "banking-cloud": {
+      category: "平台现代化",
+      title: "银行业与航空业的多云方案",
+      client: "AndBank · Santander · LATAM Airlines",
+      problem: "受监管的企业需要在GCP、AWS、Azure和OCI上部署有弹性、安全且可观测的云基础设施。",
+      architecture: "VPC网络设计、PII/敏感数据安全控制，以及通过New Relic、PagerDuty和StackStorm实现的完整可观测性，配备可定制仪表板。",
+      scale: "受监管的企业级工作负载",
+      impact: ["强化的PII安全", "24/7可观测性与值班", "弹性多云网络"],
+      outcome: "以99.9%的可用性为银行业和航空业交付了安全、可观测、符合监管要求的云环境。",
+      lessons: "在受监管行业，可观测性是证明——不仅仅是工具。从第一天起构建的审计就绪仪表板和自动告警，决定了能否通过合规性审查。",
+      metricLabel: "可用性",
+    },
   },
 };
 
