@@ -1,8 +1,8 @@
 "use client";
 
 import { m, useReducedMotion } from "motion/react";
+import Image from "next/image";
 import { useI18n } from "@/lib/i18n";
-import { PORTRAIT_SRC } from "@/lib/images";
 import { siteConfig } from "@/lib/site-config";
 
 export function Story() {
@@ -56,13 +56,12 @@ export function Story() {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="mx-auto w-full max-w-sm sm:max-w-none"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={PORTRAIT_SRC}
+            <Image
+              src="/portrait.jpg"
               alt={siteConfig.name}
               width={480}
               height={640}
-              loading="lazy"
+              sizes="(min-width: 1024px) 40vw, 100vw"
               className="aspect-[3/4] w-full rounded-xl object-cover object-top"
             />
             <figcaption className="mt-3 font-mono text-[11px] text-[var(--color-fg-subtle)]">

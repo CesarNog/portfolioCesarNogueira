@@ -3,7 +3,7 @@
 import { m, useReducedMotion } from "motion/react";
 import { siteConfig, stats } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
-import { PORTRAIT_SRC } from "@/lib/images";
+import Image from "next/image";
 import { Counter } from "@/components/ui/counter";
 import { Magnetic } from "@/components/ui/magnetic";
 import { EASE, DUR, buttonPress } from "@/lib/motion";
@@ -28,14 +28,14 @@ export function IdentityConsole() {
     <section id="top" className="relative overflow-hidden">
       {/* Mobile: portrait as background, content on top */}
       <div className="absolute inset-0 -z-10 lg:hidden" aria-hidden>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={PORTRAIT_SRC}
+        <Image
+          src="/portrait.jpg"
           alt=""
-          width={800}
-          height={1067}
-          className="h-full w-full object-cover object-top"
+          fill
+          sizes="100vw"
+          className="object-cover object-top"
           style={{ opacity: 0.15 }}
+          priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-surface-0)]/20 via-[var(--color-surface-0)]/80 to-[var(--color-surface-0)]" />
       </div>
@@ -129,13 +129,13 @@ export function IdentityConsole() {
             transition: { duration: 1.1, delay: DELAYS.photo, ease: EASE.out },
           })}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={PORTRAIT_SRC}
+          <Image
+            src="/portrait.jpg"
             alt=""
-            width={780}
-            height={1040}
-            className="h-full w-full object-cover object-top"
+            fill
+            sizes="52vw"
+            className="object-cover object-top"
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-surface-0)] via-[var(--color-surface-0)]/40 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[var(--color-surface-0)] to-transparent" />
