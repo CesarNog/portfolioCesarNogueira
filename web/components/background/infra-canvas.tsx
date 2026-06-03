@@ -23,6 +23,7 @@ interface RouteTrace {
   holdTime: number;
   fadeSpeed: number;
   held: number;
+  pulseAge: number;   // seconds since arriving at destination
 }
 
 // ─── Route definitions (normalized 0–1 screen coords) ────────────────────────
@@ -124,6 +125,30 @@ export function InfraCanvas() {
 
       ctx.clearRect(0, 0, W, H);
 
+      // ── Layer 1.5: Subtle grid — hero zone only ───────────────────────────
+      if (!mobile) {
+        const GRID = 52;
+        const gridAlpha = isDark ? 0.022 : 0.016;
+        ctx.strokeStyle = isDark ? `rgba(96,165,250,${gridAlpha})` : `rgba(30,111,224,${gridAlpha})`;
+        ctx.lineWidth = 0.4;
+        ctx.setLineDash([]);
+        const gridH = H * 0.72;
+        // Vertical lines
+        for (let x = 0; x < W; x += GRID) {
+          const a = Math.max(0, 1 - x / (W * 0.6));
+          if (a < 0.01) continue;
+          ctx.globalAlpha = a;
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, gridH); ctx.stroke();
+        }
+        // Horizontal lines
+        for (let y = 0; y < gridH; y += GRID) {
+          const a = Math.max(0, 1 - y / gridH);
+          ctx.globalAlpha = a * 0.6;
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W * 0.55, y); ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      }
+
       // ── Layer 2: Topographic contour lines ──────────────────────────────────
       const steps = mobile ? 80 : 180;
 
@@ -175,6 +200,7 @@ export function InfraCanvas() {
           holdTime: 1.8 + Math.random() * 2.2,
           fadeSpeed: 0.32,
           held: 0,
+          pulseAge: 0,
         });
         state.nextRoute = 5 + Math.random() * 6;
       }
@@ -235,13 +261,27 @@ export function InfraCanvas() {
           ctx.fill();
         }
 
-        // Destination node (once fully drawn)
+        // Destination node + arrival pulse ring
         if (route.phase !== "drawing") {
           const [ex, ey] = route.pts[route.pts.length - 1];
           ctx.beginPath();
           ctx.arc(ex * W, ey * H, 1.8, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(96,165,250,${0.45 * route.alpha})`;
+          ctx.fillStyle = `rgba(96,165,250,${0.5 * route.alpha})`;
           ctx.fill();
+
+          // Expanding pulse ring — plays once on arrival, then stops
+          route.pulseAge += dt;
+          const PULSE_DUR = 1.4;
+          if (route.pulseAge < PULSE_DUR) {
+            const p = route.pulseAge / PULSE_DUR;
+            const pr = p * 18;
+            const pa = (1 - p) * 0.18 * route.alpha;
+            ctx.beginPath();
+            ctx.arc(ex * W, ey * H, pr, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(96,165,250,${pa})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
         }
       }
     };

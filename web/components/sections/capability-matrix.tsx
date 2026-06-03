@@ -42,19 +42,19 @@ export function CapabilityMatrix() {
                 aria-hidden
               />
               <div>
-                <p className="font-medium text-[var(--color-fg)]">{c.area}</p>
+                <p className="font-medium text-[var(--color-fg)]">{t.capabilities[i]?.area ?? c.area}</p>
                 <span
                   className="mt-1 inline-block font-mono text-[10px] uppercase tracking-wider"
                   style={{ color: ACCENT[c.accent] }}
                 >
-                  {c.level}
+                  {t.capabilities[i]?.level ?? c.level}
                 </span>
               </div>
             </div>
 
             {/* Note */}
             <p className="pl-5 text-[15px] leading-relaxed text-[var(--color-fg-muted)] sm:pl-0">
-              {c.note}
+              {t.capabilities[i]?.note ?? c.note}
             </p>
 
             {/* Tools */}
