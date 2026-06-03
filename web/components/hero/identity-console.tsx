@@ -141,6 +141,21 @@ export function IdentityConsole() {
           <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[var(--color-surface-0)] to-transparent" />
         </m.div>
       </div>
+      {/* Scroll-to-next chevron — bottom-center of hero, all viewports */}
+      <m.a
+        href="#summary"
+        aria-label="Scroll to next section"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center justify-center text-[var(--color-fg-subtle)] transition-colors hover:text-[var(--color-fg)]"
+        {...(reduce ? {} : {
+          initial: { opacity: 0 },
+          animate: { opacity: 1 },
+          transition: { duration: 0.6, delay: 1.4, ease: EASE.out },
+        })}
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden className="animate-bounce">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </m.a>
     </section>
   );
 }
