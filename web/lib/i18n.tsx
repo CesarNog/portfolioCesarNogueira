@@ -129,6 +129,17 @@ type Dict = {
     commandPalette: string;
   };
   recruiterPrompts: string[];
+  assistantFollowUps: {
+    kubernetes: string[];
+    finops: string[];
+    leadership: string[];
+    architecture: string[];
+    gcp: string[];
+    cloud: string[];
+    enterprise: string[];
+    ai: string[];
+    fallback: string[];
+  };
 };
 
 const en: Dict = {
@@ -356,6 +367,62 @@ const en: Dict = {
     "How does Cesar approach AI and automation infrastructure?",
     "Is Cesar available for international engagements?",
   ],
+  assistantFollowUps: {
+    kubernetes: [
+      "Show production GKE experience",
+      "Show platform engineering projects",
+      "Show Terraform infrastructure examples",
+      "Show Argo CD and GitOps work",
+    ],
+    finops: [
+      "What cloud cost savings has Cesar delivered?",
+      "Show FinOps automation tooling used",
+      "Show multi-cloud billing experience",
+      "How does Cesar approach cloud governance?",
+    ],
+    leadership: [
+      "Show team leadership examples",
+      "Has Cesar founded or led a company?",
+      "Show technical pre-sales experience",
+      "Show cross-functional delivery examples",
+    ],
+    architecture: [
+      "Show banking cloud architecture work",
+      "Show platform engineering design",
+      "Show multi-cloud networking experience",
+      "What regulated industries has Cesar served?",
+    ],
+    gcp: [
+      "Show GCP Professional Cloud Architect credentials",
+      "Show BigQuery and data platform work",
+      "Show GKE production deployments",
+      "Show Google Cloud FinOps experience",
+    ],
+    cloud: [
+      "Show AWS experience",
+      "Show Azure experience",
+      "Show multi-cloud governance",
+      "Show cloud migration projects",
+    ],
+    enterprise: [
+      "Show banking and aviation clients",
+      "Show regulated industry experience",
+      "Show 99.9% availability delivery",
+      "Show on-site vs remote delivery",
+    ],
+    ai: [
+      "Show LLM integration work",
+      "Show AI infrastructure platforms",
+      "Show automation and agent work",
+      "How does Cesar approach GenAI?",
+    ],
+    fallback: [
+      "What measurable cloud cost savings has Cesar delivered?",
+      "Show Kubernetes production experience",
+      "Has Cesar led teams or major initiatives?",
+      "Is Cesar available for international projects?",
+    ],
+  },
   story: {
     pullQuote: "I grew up in Brazil. Moved to Europe. Spent 11 years building infrastructure that doesn't fail — for banks, airlines, and enterprises that can't afford for it to.",
     p1: "I started in São Paulo, building data platforms and software systems for large enterprises. Cloud infrastructure caught me early — the challenge of making distributed systems reliable, observable, and cost-efficient at scale. That became my career.",
@@ -589,6 +656,62 @@ const pt: Dict = {
     "Como o Cesar aborda infraestrutura de IA e automação?",
     "O Cesar está disponível para projetos internacionais?",
   ],
+  assistantFollowUps: {
+    kubernetes: [
+      "Mostrar experiência de produção com GKE",
+      "Mostrar projetos de engenharia de plataformas",
+      "Mostrar exemplos de infraestrutura com Terraform",
+      "Mostrar trabalho com Argo CD e GitOps",
+    ],
+    finops: [
+      "Que poupanças em cloud o Cesar gerou?",
+      "Mostrar ferramentas de automação FinOps usadas",
+      "Mostrar experiência em faturação multi-cloud",
+      "Como o Cesar aborda a governação cloud?",
+    ],
+    leadership: [
+      "Mostrar exemplos de liderança de equipas",
+      "O Cesar fundou ou liderou uma empresa?",
+      "Mostrar experiência em pré-vendas técnicas",
+      "Mostrar exemplos de entrega multifuncional",
+    ],
+    architecture: [
+      "Mostrar trabalho de arquitetura cloud bancária",
+      "Mostrar design de engenharia de plataformas",
+      "Mostrar experiência em redes multi-cloud",
+      "Em que indústrias reguladas o Cesar trabalhou?",
+    ],
+    gcp: [
+      "Mostrar credenciais GCP Professional Cloud Architect",
+      "Mostrar trabalho com BigQuery e plataformas de dados",
+      "Mostrar deployments GKE em produção",
+      "Mostrar experiência FinOps no Google Cloud",
+    ],
+    cloud: [
+      "Mostrar experiência AWS",
+      "Mostrar experiência Azure",
+      "Mostrar governação multi-cloud",
+      "Mostrar projetos de migração cloud",
+    ],
+    enterprise: [
+      "Mostrar clientes bancários e de aviação",
+      "Mostrar experiência em indústrias reguladas",
+      "Mostrar entrega com 99,9% de disponibilidade",
+      "Mostrar entrega presencial vs remota",
+    ],
+    ai: [
+      "Mostrar trabalho de integração LLM",
+      "Mostrar plataformas de infraestrutura de IA",
+      "Mostrar trabalho de automação e agentes",
+      "Como o Cesar aborda GenAI?",
+    ],
+    fallback: [
+      "Que poupanças mensuráveis em cloud o Cesar gerou?",
+      "Mostrar experiência Kubernetes em produção",
+      "O Cesar liderou equipas ou grandes iniciativas?",
+      "O Cesar está disponível para projetos internacionais?",
+    ],
+  },
   story: {
     pullQuote: "Cresci no Brasil. Vim para a Europa. Passei 11 anos a construir infraestrutura que não falha — para bancos, companhias aéreas e empresas que não se podem dar ao luxo de falhar.",
     p1: "Comecei em São Paulo, a construir plataformas de dados e sistemas de software para grandes empresas. O cloud apanhou-me cedo — o desafio de tornar sistemas distribuídos fiáveis, observáveis e eficientes em custos a grande escala. Isso tornou-se a minha carreira.",
@@ -822,6 +945,62 @@ const es: Dict = {
     "¿Cómo aborda Cesar la infraestructura de IA y automatización?",
     "¿Está Cesar disponible para proyectos internacionales?",
   ],
+  assistantFollowUps: {
+    kubernetes: [
+      "Mostrar experiencia GKE en producción",
+      "Mostrar proyectos de ingeniería de plataformas",
+      "Mostrar ejemplos de infraestructura con Terraform",
+      "Mostrar trabajo con Argo CD y GitOps",
+    ],
+    finops: [
+      "¿Qué ahorro cloud ha generado Cesar?",
+      "Mostrar herramientas de automatización FinOps usadas",
+      "Mostrar experiencia en facturación multi-cloud",
+      "¿Cómo aborda Cesar la gobernanza cloud?",
+    ],
+    leadership: [
+      "Mostrar ejemplos de liderazgo de equipos",
+      "¿Cesar ha fundado o liderado una empresa?",
+      "Mostrar experiencia en preventa técnica",
+      "Mostrar ejemplos de entrega multifuncional",
+    ],
+    architecture: [
+      "Mostrar trabajo de arquitectura cloud bancaria",
+      "Mostrar diseño de ingeniería de plataformas",
+      "Mostrar experiencia en redes multi-cloud",
+      "¿En qué industrias reguladas ha trabajado Cesar?",
+    ],
+    gcp: [
+      "Mostrar credenciales GCP Professional Cloud Architect",
+      "Mostrar trabajo con BigQuery y plataformas de datos",
+      "Mostrar despliegues GKE en producción",
+      "Mostrar experiencia FinOps en Google Cloud",
+    ],
+    cloud: [
+      "Mostrar experiencia AWS",
+      "Mostrar experiencia Azure",
+      "Mostrar gobernanza multi-cloud",
+      "Mostrar proyectos de migración cloud",
+    ],
+    enterprise: [
+      "Mostrar clientes bancarios y de aviación",
+      "Mostrar experiencia en industrias reguladas",
+      "Mostrar entrega con 99,9% de disponibilidad",
+      "Mostrar entrega presencial vs remota",
+    ],
+    ai: [
+      "Mostrar trabajo de integración LLM",
+      "Mostrar plataformas de infraestructura IA",
+      "Mostrar trabajo de automatización y agentes",
+      "¿Cómo aborda Cesar GenAI?",
+    ],
+    fallback: [
+      "¿Qué ahorro cloud medible ha generado Cesar?",
+      "Mostrar experiencia Kubernetes en producción",
+      "¿Cesar ha liderado equipos o grandes iniciativas?",
+      "¿Cesar está disponible para proyectos internacionales?",
+    ],
+  },
   story: {
     pullQuote: "Crecí en Brasil. Me mudé a Europa. Llevo 11 años construyendo infraestructura que no falla — para bancos, aerolíneas y empresas que no pueden permitirse que falle.",
     p1: "Empecé en São Paulo, construyendo plataformas de datos y sistemas para grandes empresas. La infraestructura cloud me enganchó pronto — el reto de hacer sistemas distribuidos fiables, observables y eficientes en coste a escala. Eso se convirtió en mi carrera.",
@@ -1055,6 +1234,62 @@ const fr: Dict = {
     "Comment Cesar aborde-t-il l'infrastructure IA et l'automatisation ?",
     "Cesar est-il disponible pour des projets internationaux ?",
   ],
+  assistantFollowUps: {
+    kubernetes: [
+      "Voir l'expérience GKE en production",
+      "Voir les projets d'ingénierie de plateformes",
+      "Voir des exemples d'infrastructure Terraform",
+      "Voir le travail Argo CD et GitOps",
+    ],
+    finops: [
+      "Quelles économies cloud Cesar a-t-il générées ?",
+      "Voir les outils d'automatisation FinOps utilisés",
+      "Voir l'expérience en facturation multi-cloud",
+      "Comment Cesar aborde-t-il la gouvernance cloud ?",
+    ],
+    leadership: [
+      "Voir des exemples de leadership d'équipe",
+      "Cesar a-t-il fondé ou dirigé une entreprise ?",
+      "Voir l'expérience en avant-vente technique",
+      "Voir des exemples de livraison transverse",
+    ],
+    architecture: [
+      "Voir le travail d'architecture cloud bancaire",
+      "Voir la conception d'ingénierie de plateformes",
+      "Voir l'expérience en réseaux multi-cloud",
+      "Dans quelles industries réglementées Cesar a-t-il travaillé ?",
+    ],
+    gcp: [
+      "Voir les certifications GCP Professional Cloud Architect",
+      "Voir le travail BigQuery et plateformes de données",
+      "Voir les déploiements GKE en production",
+      "Voir l'expérience FinOps sur Google Cloud",
+    ],
+    cloud: [
+      "Voir l'expérience AWS",
+      "Voir l'expérience Azure",
+      "Voir la gouvernance multi-cloud",
+      "Voir les projets de migration cloud",
+    ],
+    enterprise: [
+      "Voir les clients bancaires et aviation",
+      "Voir l'expérience dans les industries réglementées",
+      "Voir la livraison à 99,9% de disponibilité",
+      "Voir la livraison sur site vs à distance",
+    ],
+    ai: [
+      "Voir le travail d'intégration LLM",
+      "Voir les plateformes d'infrastructure IA",
+      "Voir le travail d'automatisation et d'agents",
+      "Comment Cesar aborde-t-il GenAI ?",
+    ],
+    fallback: [
+      "Quelles économies cloud mesurables Cesar a-t-il générées ?",
+      "Voir l'expérience Kubernetes en production",
+      "Cesar a-t-il dirigé des équipes ou de grandes initiatives ?",
+      "Cesar est-il disponible pour des projets internationaux ?",
+    ],
+  },
   story: {
     pullQuote: "J'ai grandi au Brésil. Je suis parti en Europe. 11 ans à construire des infrastructures qui ne tombent pas en panne — pour des banques, des compagnies aériennes et des entreprises qui ne peuvent pas se le permettre.",
     p1: "J'ai commencé à São Paulo, en construisant des plateformes de données et des systèmes pour de grandes entreprises. L'infrastructure cloud m'a vite séduit — le défi de rendre les systèmes distribués fiables, observables et rentables à grande échelle. C'est devenu ma carrière.",
@@ -1288,6 +1523,62 @@ const zh: Dict = {
     "Cesar如何构建AI和自动化基础设施？",
     "Cesar是否可接受国际项目？",
   ],
+  assistantFollowUps: {
+    kubernetes: [
+      "展示GKE生产环境经验",
+      "展示平台工程项目",
+      "展示Terraform基础设施示例",
+      "展示Argo CD和GitOps工作",
+    ],
+    finops: [
+      "Cesar节省了哪些云成本？",
+      "展示使用的FinOps自动化工具",
+      "展示多云计费经验",
+      "Cesar如何处理云治理？",
+    ],
+    leadership: [
+      "展示团队领导力示例",
+      "Cesar是否创办或领导过公司？",
+      "展示技术售前经验",
+      "展示跨职能交付示例",
+    ],
+    architecture: [
+      "展示银行业云架构工作",
+      "展示平台工程设计",
+      "展示多云网络经验",
+      "Cesar在哪些受监管行业工作过？",
+    ],
+    gcp: [
+      "展示GCP专业云架构师认证",
+      "展示BigQuery和数据平台工作",
+      "展示GKE生产部署",
+      "展示Google Cloud FinOps经验",
+    ],
+    cloud: [
+      "展示AWS经验",
+      "展示Azure经验",
+      "展示多云治理",
+      "展示云迁移项目",
+    ],
+    enterprise: [
+      "展示银行和航空客户",
+      "展示受监管行业经验",
+      "展示99.9%可用性交付",
+      "展示现场与远程交付",
+    ],
+    ai: [
+      "展示LLM集成工作",
+      "展示AI基础设施平台",
+      "展示自动化和智能代理工作",
+      "Cesar如何处理GenAI？",
+    ],
+    fallback: [
+      "Cesar交付了哪些可量化的云成本节省？",
+      "展示Kubernetes生产环境经验",
+      "Cesar是否领导过团队或重大项目？",
+      "Cesar是否可接受国际项目？",
+    ],
+  },
   story: {
     pullQuote: "我在巴西长大，后来移居欧洲。11年来，我一直在构建不会故障的基础设施——为那些承受不起故障的银行、航空公司和企业。",
     p1: "我在圣保罗起步，为大型企业构建数据平台和软件系统。云基础设施很快吸引了我——如何让分布式系统在大规模下保持可靠、可观测且成本高效。这成为了我的事业。",
