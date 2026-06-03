@@ -535,11 +535,11 @@ export const globalPresence = {
   markers: [
     {
       id: "pt", label: "Portugal", city: "Vila Real", lat: 41.3, lon: -7.74, hub: true,
-      subtitle: "EU Remote Hub",
-      context: "Home base & primary delivery node. Full-stack cloud architecture delivered across Europe and Americas.",
+      subtitle: "EU Delivery Hub",
+      context: "Home base and primary delivery node. Since relocating to Portugal in 2023, delivering cloud, platform, DevOps and FinOps projects across Europe and internationally.",
       deliveryType: "Remote" as const,
       region: "europe" as const,
-      period: "2014 – present",
+      period: "Since 2023",
     },
     {
       id: "es", label: "Spain", city: "Madrid / Barcelona", lat: 40.42, lon: -3.7, hub: false,
