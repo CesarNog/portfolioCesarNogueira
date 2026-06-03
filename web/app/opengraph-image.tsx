@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { siteConfig } from "@/lib/site-config";
 
-// No runtime export — defaults to edge, compatible with output: "export"
+export const dynamic = "force-static";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -53,8 +53,9 @@ export default async function og() {
           </div>
 
           {/* Name */}
-          <div style={{ fontSize: 88, fontWeight: 700, color: "#edf0f3", lineHeight: 0.9, letterSpacing: "-0.03em", marginBottom: 28 }}>
-            Cesar<br />Nogueira.
+          <div style={{ display: "flex", flexDirection: "column", fontSize: 88, fontWeight: 700, color: "#edf0f3", lineHeight: 0.9, letterSpacing: "-0.03em", marginBottom: 28 }}>
+            <span>César A.</span>
+            <span>Nogueira.</span>
           </div>
 
           {/* Role */}
@@ -65,9 +66,9 @@ export default async function og() {
           {/* Stats */}
           <div style={{ display: "flex", gap: 48, borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 28 }}>
             {[
-              { v: "11+", l: "Years in cloud" },
+              { v: "10+", l: "Years in cloud" },
               { v: "40+", l: "Cloud projects" },
-              { v: "$2.5M+", l: "Cost savings" },
+              { v: "~30%", l: "Cloud waste cut" },
               { v: "4", l: "Cloud providers" },
             ].map((s) => (
               <div key={s.l} style={{ display: "flex", flexDirection: "column", gap: 4 }}>

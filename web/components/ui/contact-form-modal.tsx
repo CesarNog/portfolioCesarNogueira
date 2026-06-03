@@ -46,13 +46,10 @@ export function ContactFormModal({ open, onClose }: Props) {
     e.preventDefault();
     setState("sending");
     try {
-      const res = await fetch("/", {
+      const res = await fetch("/.netlify/functions/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          "form-name": "contact",
-          ...form,
-        }).toString(),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
       });
       setState(res.ok ? "success" : "error");
     } catch {

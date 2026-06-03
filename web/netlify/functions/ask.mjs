@@ -1,10 +1,8 @@
-// Netlify Function: proxy free-text questions to a FREE LLM (Groq).
+// Netlify Function: proxy free-text questions to xAI Grok (OpenAI-compatible).
 //
-// Groq (https://groq.com) offers a free, fast, OpenAI-compatible API serving
-// open models (Llama 3.3). Get a free key at https://console.groq.com (no
-// credit card) and set GROQ_API_KEY in Netlify > Site settings > Environment
-// variables. Without it (or on any error) this returns a 200 with a `fallback`
-// flag and the client shows a curated answer — so the chatbot never breaks.
+// Set GROK_API_KEY in Netlify > Site settings > Environment variables.
+// Falls back to GROQ_API_KEY if GROK_API_KEY is not set.
+// Without any key this returns a 200 with a `fallback` flag — the chatbot never breaks.
 
 const KNOWLEDGE_BASE = `
 Cesar Augusto Nogueira — Principal Cloud Architect, Platform Engineer, DevOps Leader, FinOps Consultant and AI Infrastructure specialist. 10+ years in tech. Based in Vila Real, Portugal; works remotely with international clients via his consultancy UP2CLOUD. Available now for global remote consulting; usually replies within 24h.
@@ -14,12 +12,12 @@ Business impact highlights:
 - Built a real-time Big Data analytics platform on Google Cloud for a US mass-media corporation.
 - Delivered secure, observable multi-cloud at 99.9% availability for AndBank, Santander and LATAM Airlines.
 - Led a cloud-enablement team running GKE in production at Accenture.
-- $2.5M+ in cumulative cloud cost savings generated; 40+ cloud projects; 6+ countries served.
+- ~30% cloud waste reduction documented; 40+ cloud projects; 6+ countries served.
 
 Certifications: 2x Google Cloud Professional Cloud Architect, Google Cloud Associate Cloud Engineer, AWS Cloud Practitioner, Microsoft Azure Fundamentals (AZ-900), applied FinOps.
 
 Experience:
-- UP2CLOUD (2025-now): Founder / Principal consultant — cloud architecture, automation, DevOps, FinOps, data engineering for global clients.
+- UP2CLOUD (2022-now): Founder / Principal consultant — cloud architecture, automation, DevOps, FinOps, data engineering for global clients.
 - Randstad Digital Portugal (2022-2025): Cloud FinOps Automation Engineer — Python, multi-cloud billing APIs, CloudBees CI/CD, CloudHealth. Automated cost reporting, tagging, chargeback; ~30% waste removed.
 - ZeroLight (2021-2022): DevOps Engineer — automotive, AWS/GCP, Kubernetes.
 - Accenture Interactive Brazil (2020-2021): Technology Architecture Manager — GKE, Jenkins, Spinnaker, technical pre-sales, team leadership.
@@ -53,25 +51,34 @@ export default async (req) => {
   }
   if (!question.trim()) return json({ error: "Empty question" }, 400);
 
-  // Free LLM via Groq (OpenAI-compatible). GROQ_API_KEY is free from console.groq.com.
-  const key = process.env.GROQ_API_KEY;
+  // xAI Grok (OpenAI-compatible). Falls back to Groq if GROK_API_KEY not set.
+  const grokKey = process.env.GROK_API_KEY;
+  const groqKey = process.env.GROQ_API_KEY;
+  const key = grokKey || groqKey;
+  const endpoint = grokKey
+    ? "https://api.x.ai/v1/chat/completions"
+    : "https://api.groq.com/openai/v1/chat/completions";
+  const model = grokKey
+    ? (process.env.GROK_MODEL || "grok-3-mini")
+    : (process.env.GROQ_MODEL || "llama-3.3-70b-versatile");
+
   if (!key) {
     return json({
       fallback: true,
       answer:
-        "Live AI is not configured yet. Add a free GROQ_API_KEY (from console.groq.com) in Netlify to enable it.",
+        "Live AI is not configured yet. Add GROK_API_KEY in Netlify environment variables to enable it.",
     });
   }
 
   try {
-    const r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    const r = await fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${key}`,
       },
       body: JSON.stringify({
-        model: process.env.GROQ_MODEL || "llama-3.3-70b-versatile",
+        model,
         temperature: 0.4,
         max_tokens: 320,
         messages: [
