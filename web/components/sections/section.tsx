@@ -26,7 +26,7 @@ export function Section({
   return (
     <section
       id={id}
-      className="scroll-mt-20 border-t border-[var(--color-hairline)] px-6 py-20 lg:py-32"
+      className="scroll-mt-20 border-t border-[var(--color-hairline)] px-6 py-24 lg:py-32"
     >
       <div className="mx-auto max-w-5xl">
         <Reveal>
@@ -40,7 +40,7 @@ export function Section({
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-[var(--color-fg-muted)] sm:text-[17px]">{lead}</p>
           )}
         </Reveal>
-        <div className="mt-10">{children}</div>
+        <div className="mt-12">{children}</div>
       </div>
     </section>
   );
