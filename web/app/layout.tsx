@@ -58,6 +58,14 @@ export default function RootLayout({
         </div>
         {/* Pause aurora animations when tab is hidden — saves battery */}
         <script dangerouslySetInnerHTML={{ __html: `(function(){var b=document.body;document.addEventListener('visibilitychange',function(){b.classList.toggle('tab-hidden',document.hidden);});})();` }} />
+        {/* Hidden Netlify form declaration — required for static export form detection */}
+        <form name="contact" data-netlify="true" hidden aria-hidden="true">
+          <input type="hidden" name="form-name" value="contact" />
+          <input name="name" type="text" />
+          <input name="email" type="email" />
+          <input name="subject" type="text" />
+          <textarea name="message" />
+        </form>
         <ThemeProvider>
           <I18nProvider>
             <MotionProvider>{children}</MotionProvider>
