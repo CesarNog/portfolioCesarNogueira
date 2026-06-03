@@ -14,72 +14,6 @@ type Msg = {
   followUps?: string[];
 };
 
-// ─── Follow-up suggestions keyed by topic keyword ────────────────────────────
-
-const FOLLOW_UP_MAP: Record<string, string[]> = {
-  kubernetes: [
-    "Show production GKE experience",
-    "Show platform engineering projects",
-    "Show Terraform infrastructure examples",
-    "Show Argo CD and GitOps work",
-  ],
-  finops: [
-    "What cloud cost savings has Cesar delivered?",
-    "Show FinOps automation tooling used",
-    "Show multi-cloud billing experience",
-    "How does Cesar approach cloud governance?",
-  ],
-  leadership: [
-    "Show team leadership examples",
-    "Has Cesar founded or led a company?",
-    "Show technical pre-sales experience",
-    "Show cross-functional delivery examples",
-  ],
-  architecture: [
-    "Show banking cloud architecture work",
-    "Show platform engineering design",
-    "Show multi-cloud networking experience",
-    "What regulated industries has Cesar served?",
-  ],
-  gcp: [
-    "Show GCP Professional Cloud Architect credentials",
-    "Show BigQuery and data platform work",
-    "Show GKE production deployments",
-    "Show Google Cloud FinOps experience",
-  ],
-  cloud: [
-    "Show AWS experience",
-    "Show Azure experience",
-    "Show multi-cloud governance",
-    "Show cloud migration projects",
-  ],
-  enterprise: [
-    "Show banking and aviation clients",
-    "Show regulated industry experience",
-    "Show 99.9% availability delivery",
-    "Show on-site vs remote delivery",
-  ],
-  ai: [
-    "Show LLM integration work",
-    "Show AI infrastructure platforms",
-    "Show automation and agent work",
-    "How does Cesar approach GenAI?",
-  ],
-};
-
-function getFollowUps(answer: string): string[] {
-  const lower = answer.toLowerCase();
-  for (const [key, suggestions] of Object.entries(FOLLOW_UP_MAP)) {
-    if (lower.includes(key)) return suggestions.slice(0, 4);
-  }
-  return [
-    "What measurable cloud cost savings has Cesar delivered?",
-    "Show Kubernetes production experience",
-    "Has Cesar led teams or major initiatives?",
-    "Is Cesar available for international projects?",
-  ];
-}
-
 // ─── FAQ matcher ─────────────────────────────────────────────────────────────
 
 function matchFaq(q: string): string | null {
@@ -98,6 +32,26 @@ function matchFaq(q: string): string | null {
 export function Assistant() {
   const reduce = useReducedMotion();
   const { t } = useI18n();
+
+  // Follow-up suggestions from i18n — fully translated per active language
+  const getFollowUps = (answer: string): string[] => {
+    const lower = answer.toLowerCase();
+    const fu = t.assistantFollowUps;
+    const map: Record<string, string[]> = {
+      kubernetes: fu.kubernetes,
+      finops: fu.finops,
+      leadership: fu.leadership,
+      architecture: fu.architecture,
+      gcp: fu.gcp,
+      cloud: fu.cloud,
+      enterprise: fu.enterprise,
+      ai: fu.ai,
+    };
+    for (const [key, suggestions] of Object.entries(map)) {
+      if (lower.includes(key)) return suggestions;
+    }
+    return fu.fallback;
+  };
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
