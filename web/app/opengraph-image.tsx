@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { siteConfig } from "@/lib/site-config";
 
-export const runtime = "edge";
+export const runtime = "nodejs"; // edge runtime lacks Buffer — nodejs needed for base64 encoding
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
