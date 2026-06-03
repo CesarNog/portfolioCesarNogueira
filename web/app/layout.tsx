@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { I18nProvider } from "@/lib/i18n";
 import { MotionProvider } from "@/components/motion-provider";
 import { siteConfig } from "@/lib/site-config";
+import { Analytics } from "@/components/analytics";
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
@@ -61,6 +62,7 @@ export default function RootLayout({
           <input name="subject" type="text" />
           <textarea name="message" />
         </form>
+        <Analytics />
         <ThemeProvider>
           <I18nProvider>
             <MotionProvider>{children}</MotionProvider>
