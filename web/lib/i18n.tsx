@@ -167,11 +167,11 @@ const en: Dict = {
   hero: {
     available: "Available for global consulting",
     roleLine: "Cloud · DevOps · FinOps · AI Infrastructure",
-    desc: "11 years building cloud infrastructure for banks, airlines, and enterprises. I make platforms reliable, observable, and worth every dollar spent on them.",
+    desc: "10+ years building cloud infrastructure for banks, airlines, and enterprises. I make platforms reliable, observable, and worth every dollar spent on them.",
     chips: [
-      "11+ years in cloud",
+      "10+ years in cloud",
       "GCP · AWS · Azure · OCI",
-      "Based in Madrid",
+      "Based in Portugal",
       "Remote-first, worldwide",
       "Available now",
     ],
@@ -253,7 +253,7 @@ const en: Dict = {
     {
       title: "The journey",
       headline: "Built from Portugal, delivered worldwide",
-      body: "Started engineering in Lisbon. Moved through London, Madrid, and across time zones. Built platforms for banks, airlines, and media companies. Learned what it means when production fails at 3am — and how to stop it happening again.",
+      body: "Started engineering in Brazil. Moved through São Paulo, London, Madrid, and across time zones. Built platforms for banks, airlines, and media companies. Learned what it means when production fails at 3am — and how to stop it happening again.",
     },
     {
       title: "The edge",
@@ -291,7 +291,7 @@ const en: Dict = {
     followUp: "Follow up",
     sourceLabel: "Based on portfolio evidence",
   },
-  portraitCaption: "Madrid · Gran Vía",
+  portraitCaption: "Vila Real, Portugal",
   contact: {
     briefingTitle: "Let's work together",
     briefingDesc: "Cloud architecture, platform engineering, DevOps, FinOps or AI infrastructure — tell me what you're building and let's explore how we can work together.",
@@ -324,7 +324,7 @@ const en: Dict = {
       responseTime: "Response time",
     },
   },
-  statsLabels: ["Years in Tech", "Cloud Projects", "Certifications", "Cost Savings Generated"],
+  statsLabels: ["Years in Tech", "Cloud Projects", "Certifications", "Cloud Waste Removed"],
   labels: {
     problem: "The Challenge",
     architecture: "The Approach",
@@ -436,7 +436,7 @@ const en: Dict = {
     ],
   },
   story: {
-    pullQuote: "I grew up in Brazil. Moved to Europe. Spent 11 years building infrastructure that doesn't fail — for banks, airlines, and enterprises that can't afford for it to.",
+    pullQuote: "I grew up in Brazil. Moved to Europe. Spent 10+ years building infrastructure that doesn't fail — for banks, airlines, and enterprises that can't afford for it to.",
     p1: "I started in São Paulo, building data platforms and software systems for large enterprises. Cloud infrastructure caught me early — the challenge of making distributed systems reliable, observable, and cost-efficient at scale. That became my career.",
     p2: "Moving to Europe in my mid-twenties changed how I think about this work. Working across time zones, languages, and cultures taught me what certifications don't: cloud problems are mostly people problems. Systems fail because teams don't talk. Costs spiral because nobody owns them. Platforms break because the incentives are misaligned.",
     p3: "Since then I've built platforms for banks in London and Madrid, airlines across Latin America, media companies in the US, and enterprises everywhere in between. I founded UP2CLOUD to do this work on my own terms — focused on outcomes, not headcount.",
@@ -494,11 +494,11 @@ const pt: Dict = {
   hero: {
     available: "Disponível para consultoria global",
     roleLine: "Cloud · DevOps · FinOps · Infraestrutura de IA",
-    desc: "11 anos a construir infraestrutura cloud para bancos, companhias aéreas e empresas. Faço plataformas fiáveis, observáveis e que valem cada euro investido.",
+    desc: "10+ anos a construir infraestrutura cloud para bancos, companhias aéreas e empresas. Faço plataformas fiáveis, observáveis e que valem cada euro investido.",
     chips: [
-      "11+ anos em cloud",
+      "10+ anos em cloud",
       "GCP · AWS · Azure · OCI",
-      "Baseado em Madrid",
+      "Baseado em Portugal",
       "Remoto, em todo o mundo",
       "Disponível agora",
     ],
@@ -579,8 +579,8 @@ const pt: Dict = {
   exec: [
     {
       title: "O percurso",
-      headline: "Nascido em Portugal, entregue ao mundo",
-      body: "Comecei em Lisboa. Passei por Londres, Madrid e vários fusos horários. Construí plataformas para bancos, companhias aéreas e empresas de media. Aprendi o que significa quando a produção falha às 3 da manhã — e como evitar que aconteça de novo.",
+      headline: "Nascido no Brasil, entregue ao mundo",
+      body: "Comecei no Brasil. Passei por São Paulo, Londres, Madrid e vários fusos horários. Construí plataformas para bancos, companhias aéreas e empresas de media. Aprendi o que significa quando a produção falha às 3 da manhã — e como evitar que aconteça de novo.",
     },
     {
       title: "O diferencial",
@@ -618,7 +618,7 @@ const pt: Dict = {
     followUp: "Continuar",
     sourceLabel: "Com base no perfil",
   },
-  portraitCaption: "Madrid · Gran Vía",
+  portraitCaption: "Vila Real, Portugal",
   contact: {
     briefingTitle: "Vamos trabalhar juntos",
     briefingDesc: "Arquitetura cloud, engenharia de plataformas, DevOps, FinOps ou infraestrutura de IA — diga-me o que está a construir e exploremos como trabalhar juntos.",
@@ -651,7 +651,7 @@ const pt: Dict = {
       responseTime: "Tempo de resposta",
     },
   },
-  statsLabels: ["Anos em Tecnologia", "Projetos Cloud", "Certificações", "Poupança em Custos"],
+  statsLabels: ["Anos em Tecnologia", "Projetos Cloud", "Certificações", "Desperdício Cloud Removido"],
   labels: {
     problem: "O Desafio",
     architecture: "A Abordagem",
@@ -763,7 +763,7 @@ const pt: Dict = {
     ],
   },
   story: {
-    pullQuote: "Cresci no Brasil. Vim para a Europa. Passei 11 anos a construir infraestrutura que não falha — para bancos, companhias aéreas e empresas que não se podem dar ao luxo de falhar.",
+    pullQuote: "Cresci no Brasil. Vim para a Europa. Passei mais de 10 anos a construir infraestrutura que não falha — para bancos, companhias aéreas e empresas que não se podem dar ao luxo de falhar.",
     p1: "Comecei em São Paulo, a construir plataformas de dados e sistemas de software para grandes empresas. O cloud apanhou-me cedo — o desafio de tornar sistemas distribuídos fiáveis, observáveis e eficientes em custos a grande escala. Isso tornou-se a minha carreira.",
     p2: "Vim para a Europa com vinte e poucos anos, e isso mudou a forma como penso neste trabalho. Trabalhar em fusos horários, línguas e culturas diferentes ensinou-me o que as certificações não ensinam: os problemas de cloud são sobretudo problemas de pessoas. Os sistemas falham porque as equipas não comunicam. Os custos disparam porque ninguém é responsável. As plataformas avariam porque os incentivos estão errados.",
     p3: "Desde então construí plataformas para bancos em Londres e Madrid, companhias aéreas na América Latina, empresas de media nos EUA e empresas em todo o mundo. Fundei a UP2CLOUD para fazer este trabalho nos meus próprios termos — focado em resultados, não em recursos.",
@@ -821,11 +821,11 @@ const es: Dict = {
   hero: {
     available: "Disponible para consultoría global",
     roleLine: "Cloud · DevOps · FinOps · Infraestructura de IA",
-    desc: "11 años construyendo infraestructura cloud para bancos, aerolíneas y empresas. Hago plataformas fiables, observables y que valen cada euro invertido.",
+    desc: "10+ años construyendo infraestructura cloud para bancos, aerolíneas y empresas. Hago plataformas fiables, observables y que valen cada euro invertido.",
     chips: [
-      "11+ años en cloud",
+      "10+ años en cloud",
       "GCP · AWS · Azure · OCI",
-      "Basado en Madrid",
+      "Basado en Portugal",
       "Remoto, en todo el mundo",
       "Disponible ahora",
     ],
@@ -907,7 +907,7 @@ const es: Dict = {
     {
       title: "El camino",
       headline: "Construido desde Portugal, entregado al mundo",
-      body: "Empecé en Lisboa. Pasé por Londres, Madrid y varios husos horarios. Construí plataformas para bancos, aerolíneas y empresas de medios. Aprendí lo que significa cuando la producción falla a las 3am — y cómo evitar que vuelva a ocurrir.",
+      body: "Empecé en Brasil. Pasé por São Paulo, Londres, Madrid y varios husos horarios. Construí plataformas para bancos, aerolíneas y empresas de medios. Aprendí lo que significa cuando la producción falla a las 3am — y cómo evitar que vuelva a ocurrir.",
     },
     {
       title: "La ventaja",
@@ -945,7 +945,7 @@ const es: Dict = {
     followUp: "Seguir",
     sourceLabel: "Basado en el perfil",
   },
-  portraitCaption: "Madrid · Gran Vía",
+  portraitCaption: "Vila Real, Portugal",
   contact: {
     briefingTitle: "Trabajemos juntos",
     briefingDesc: "Arquitectura cloud, ingeniería de plataformas, DevOps, FinOps o infraestructura de IA — cuéntame qué estás construyendo y exploremos cómo trabajar juntos.",
@@ -978,7 +978,7 @@ const es: Dict = {
       responseTime: "Tiempo de respuesta",
     },
   },
-  statsLabels: ["Años en Tecnología", "Proyectos Cloud", "Certificaciones", "Ahorro en Costes"],
+  statsLabels: ["Años en Tecnología", "Proyectos Cloud", "Certificaciones", "Residuos Cloud Eliminados"],
   labels: {
     problem: "El Desafío",
     architecture: "El Enfoque",
@@ -1090,7 +1090,7 @@ const es: Dict = {
     ],
   },
   story: {
-    pullQuote: "Crecí en Brasil. Me mudé a Europa. Llevo 11 años construyendo infraestructura que no falla — para bancos, aerolíneas y empresas que no pueden permitirse que falle.",
+    pullQuote: "Crecí en Brasil. Me mudé a Europa. Llevo 10+ años construyendo infraestructura que no falla — para bancos, aerolíneas y empresas que no pueden permitirse que falle.",
     p1: "Empecé en São Paulo, construyendo plataformas de datos y sistemas para grandes empresas. La infraestructura cloud me enganchó pronto — el reto de hacer sistemas distribuidos fiables, observables y eficientes en coste a escala. Eso se convirtió en mi carrera.",
     p2: "Mudarme a Europa a mediados de los veinte cambió cómo pienso sobre este trabajo. Trabajar en distintas zonas horarias, idiomas y culturas me enseñó lo que las certificaciones no enseñan: los problemas de cloud son sobre todo problemas de personas. Los sistemas fallan porque los equipos no se comunican. Los costes se disparan porque nadie los gestiona. Las plataformas fallan porque los incentivos están mal alineados.",
     p3: "Desde entonces he construido plataformas para bancos en Londres y Madrid, aerolíneas en América Latina, empresas de medios en EE.UU. y empresas de todo el mundo. Fundé UP2CLOUD para hacer este trabajo en mis propios términos — centrado en resultados, no en plantilla.",
@@ -1148,11 +1148,11 @@ const fr: Dict = {
   hero: {
     available: "Disponible pour des missions de conseil",
     roleLine: "Cloud · DevOps · FinOps · Infrastructure IA",
-    desc: "11 ans à construire l'infrastructure cloud pour des banques, des compagnies aériennes et des entreprises. Je construis des plateformes fiables, observables et qui valent chaque euro investi.",
+    desc: "10+ ans à construire l'infrastructure cloud pour des banques, des compagnies aériennes et des entreprises. Je construis des plateformes fiables, observables et qui valent chaque euro investi.",
     chips: [
-      "11+ ans en cloud",
+      "10+ ans en cloud",
       "GCP · AWS · Azure · OCI",
-      "Basé à Madrid",
+      "Basé au Portugal",
       "Remote-first, mondial",
       "Disponible maintenant",
     ],
@@ -1234,7 +1234,7 @@ const fr: Dict = {
     {
       title: "Le parcours",
       headline: "Construit depuis le Portugal, livré au monde entier",
-      body: "J'ai commencé à Lisbonne. Travaillé à Londres, Madrid et dans plusieurs fuseaux horaires. Construit des plateformes pour des banques, des compagnies aériennes et des médias. Appris ce que signifie une panne en production à 3h du matin — et comment l'éviter.",
+      body: "J'ai commencé au Brésil. Travaillé à São Paulo, Londres, Madrid et dans plusieurs fuseaux horaires. Construit des plateformes pour des banques, des compagnies aériennes et des médias. Appris ce que signifie une panne en production à 3h du matin — et comment l'éviter.",
     },
     {
       title: "L'avantage",
@@ -1272,7 +1272,7 @@ const fr: Dict = {
     followUp: "Continuer",
     sourceLabel: "Basé sur le profil",
   },
-  portraitCaption: "Madrid · Gran Vía",
+  portraitCaption: "Vila Real, Portugal",
   contact: {
     briefingTitle: "Travaillons ensemble",
     briefingDesc: "Architecture cloud, ingénierie de plateformes, DevOps, FinOps ou infrastructure IA — dites-moi ce que vous construisez et explorons comment collaborer.",
@@ -1305,7 +1305,7 @@ const fr: Dict = {
       responseTime: "Délai de réponse",
     },
   },
-  statsLabels: ["Ans dans la Tech", "Projets Cloud", "Certifications", "Économies Générées"],
+  statsLabels: ["Ans dans la Tech", "Projets Cloud", "Certifications", "Gaspillage Cloud Éliminé"],
   labels: {
     problem: "Le Défi",
     architecture: "L'Approche",
@@ -1417,7 +1417,7 @@ const fr: Dict = {
     ],
   },
   story: {
-    pullQuote: "J'ai grandi au Brésil. Je suis parti en Europe. 11 ans à construire des infrastructures qui ne tombent pas en panne — pour des banques, des compagnies aériennes et des entreprises qui ne peuvent pas se le permettre.",
+    pullQuote: "J'ai grandi au Brésil. Je suis parti en Europe. 10+ ans à construire des infrastructures qui ne tombent pas en panne — pour des banques, des compagnies aériennes et des entreprises qui ne peuvent pas se le permettre.",
     p1: "J'ai commencé à São Paulo, en construisant des plateformes de données et des systèmes pour de grandes entreprises. L'infrastructure cloud m'a vite séduit — le défi de rendre les systèmes distribués fiables, observables et rentables à grande échelle. C'est devenu ma carrière.",
     p2: "Partir en Europe dans la mi-vingtaine a changé ma façon de voir ce travail. Travailler dans différents fuseaux horaires, langues et cultures m'a appris ce que les certifications n'enseignent pas : les problèmes cloud sont avant tout des problèmes humains. Les systèmes tombent en panne parce que les équipes ne communiquent pas. Les coûts s'envolent parce que personne n'en est responsable. Les plateformes se brisent parce que les incitations sont mal alignées.",
     p3: "Depuis, j'ai construit des plateformes pour des banques à Londres et Madrid, des compagnies aériennes en Amérique latine, des entreprises de médias aux États-Unis et des entreprises partout dans le monde. J'ai fondé UP2CLOUD pour faire ce travail selon mes propres termes — axé sur les résultats, pas sur les effectifs.",
@@ -1475,11 +1475,11 @@ const zh: Dict = {
   hero: {
     available: "可提供全球咨询服务",
     roleLine: "Cloud · DevOps · FinOps · AI基础设施",
-    desc: "11年为银行、航空公司和企业构建云基础设施。我构建可靠、可观测、物有所值的平台。",
+    desc: "10年以上为银行、航空公司和企业构建云基础设施。我构建可靠、可观测、物有所值的平台。",
     chips: [
-      "11年以上云经验",
+      "10年以上云经验",
       "GCP · AWS · Azure · OCI",
-      "驻马德里",
+      "驻葡萄牙",
       "远程优先，服务全球",
       "现可接项目",
     ],
@@ -1561,7 +1561,7 @@ const zh: Dict = {
     {
       title: "成长历程",
       headline: "从葡萄牙出发，交付全球",
-      body: "从里斯本起步，辗转伦敦、马德里，跨越多个时区。为银行、航空公司和媒体企业构建平台。深刻理解生产环境在凌晨3点崩溃意味着什么——以及如何防止它再次发生。",
+      body: "从巴西起步，辗转圣保罗、伦敦、马德里，跨越多个时区。为银行、航空公司和媒体企业构建平台。深刻理解生产环境在凌晨3点崩溃意味着什么——以及如何防止它再次发生。",
     },
     {
       title: "独特优势",
@@ -1599,7 +1599,7 @@ const zh: Dict = {
     followUp: "继续提问",
     sourceLabel: "基于个人资料",
   },
-  portraitCaption: "马德里 · 格兰大道",
+  portraitCaption: "维拉雷亚尔，葡萄牙",
   contact: {
     briefingTitle: "携手合作",
     briefingDesc: "云架构、平台工程、DevOps、FinOps或AI基础设施——告诉我您正在构建什么，让我们探索合作的可能。",
@@ -1632,7 +1632,7 @@ const zh: Dict = {
       responseTime: "回复时间",
     },
   },
-  statsLabels: ["技术年限", "云项目", "认证", "节省成本"],
+  statsLabels: ["技术年限", "云项目", "认证", "云浪费削减"],
   labels: {
     problem: "挑战",
     architecture: "方法",
@@ -1744,7 +1744,7 @@ const zh: Dict = {
     ],
   },
   story: {
-    pullQuote: "我在巴西长大，后来移居欧洲。11年来，我一直在构建不会故障的基础设施——为那些承受不起故障的银行、航空公司和企业。",
+    pullQuote: "我在巴西长大，后来移居欧洲。10年以上，我一直在构建不会故障的基础设施——为那些承受不起故障的银行、航空公司和企业。",
     p1: "我在圣保罗起步，为大型企业构建数据平台和软件系统。云基础设施很快吸引了我——如何让分布式系统在大规模下保持可靠、可观测且成本高效。这成为了我的事业。",
     p2: "二十多岁移居欧洲改变了我对这份工作的认知。跨越时区、语言和文化的工作经历教会了我认证所不能教的东西：云问题在很大程度上是人的问题。系统故障是因为团队之间沟通不畅。成本失控是因为没有人对其负责。平台崩溃是因为激励机制错位。",
     p3: "此后，我为伦敦和马德里的银行、拉丁美洲的航空公司、美国的媒体企业以及全球各地的公司构建了平台。我创立了UP2CLOUD，以自己的方式从事这份工作——专注于成果，而非人员规模。",

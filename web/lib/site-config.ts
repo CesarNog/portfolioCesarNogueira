@@ -1,6 +1,6 @@
 export const siteConfig = {
-  name: "Cesar Augusto Nogueira",
-  firstName: "Cesar",
+  name: "César Augusto Nogueira",
+  firstName: "César A.",
   role: "Principal Cloud Architect · Platform Engineering · DevOps · FinOps · AI Infrastructure",
   shortRole: "Principal Cloud Architect & FinOps Consultant",
   tagline:
@@ -47,6 +47,7 @@ export const siteConfig = {
     phoneDisplay: "+351 937 471 554",
     cv: "https://cesarnogueira.tech/curriculum/CV_CesarANogueira_Cloud_EN_US.pdf",
     calendar: "mailto:cesarnogueira1210@gmail.com?subject=Project%20Briefing",
+    whatsapp: "https://wa.me/351937471554",
   },
 };
 
@@ -55,7 +56,7 @@ export const stats = [
   { label: "Years in Tech", value: 10, suffix: "+", accent: "blue" },
   { label: "Cloud Projects", value: 40, suffix: "+", accent: "cyan" },
   { label: "Certifications", value: 5, suffix: "", accent: "blue" },
-  { label: "Cost Savings Generated", value: 2.5, suffix: "M+", prefix: "$", decimals: 1, accent: "orange" },
+  { label: "Cloud Waste Removed", value: 30, suffix: "%", prefix: "~", accent: "orange" },
 ] as const;
 
 /** Terminal boot sequence for the Identity Console hero. */
@@ -82,7 +83,7 @@ export const experience = [
   {
     company: "UP2CLOUD",
     role: "Founder · Principal Cloud & FinOps Consultant",
-    period: "Aug 2025 — Present",
+    period: "Jan 2022 — Present",
     location: "Portugal · International",
     scale: "Multiple international B2B clients",
     challenge:
@@ -120,9 +121,9 @@ export const experience = [
     challenge:
       "Automotive-industry clients needed resilient, cost-efficient infrastructure to deliver real-time 3D visualization at scale.",
     action:
-      "Designed and operated scalable multi-cloud (AWS, GCP) infrastructure with Kubernetes and automated CI/CD delivery.",
+      "Designed and operated scalable multi-cloud (AWS, GCP) infrastructure with Kubernetes and automated CI/CD delivery. Integrated deployments for OEM clients including Volkswagen, Lucid, Vinfast, Mitsubishi and Cadillac.",
     result:
-      "Improved operational agility and reliability for automotive visualization workloads.",
+      "Improved operational agility and reliability for automotive visualization workloads across global OEM brands.",
     outcome: "Resilient multi-cloud delivery for automotive",
     tech: ["AWS", "GCP", "Kubernetes", "CI/CD"],
     leadership: false,
@@ -136,7 +137,7 @@ export const experience = [
     challenge:
       "Enterprise clients needed Kubernetes enablement and delivery automation, plus a team to lead it through technical pre-sales to production.",
     action:
-      "Led GKE cluster setup and administration, built automation with Jenkins and Spinnaker, and ran technical pre-sales while leading the cloud enablement team.",
+      "Led GKE cluster setup and administration, built automation with Jenkins and Spinnaker, and ran technical pre-sales while leading the cloud enablement team. Trained 120+ Accenture Interactive professionals to achieve Google Cloud certifications.",
     result:
       "Stood up production GKE platforms and CD automation; led the team and won technical engagements.",
     outcome: "Led a cloud enablement team · GKE in production",
@@ -411,7 +412,7 @@ Cesar Augusto Nogueira — Principal Cloud Architect, Platform Engineer, DevOps 
 Certifications: 2x Google Cloud Professional Cloud Architect, Google Cloud Associate Cloud Engineer, AWS Cloud Practitioner, Microsoft Azure Fundamentals (AZ-900).
 
 Experience:
-- UP2CLOUD (2025–now): Founder/consultant — cloud, automation, DevOps, data engineering for global clients.
+- UP2CLOUD (2022–now): Founder/consultant — cloud, automation, DevOps, data engineering for global clients.
 - Randstad Digital Portugal (2022–2025): Cloud FinOps Automation Engineer — Python, multi-cloud billing APIs, CloudBees CI/CD, CloudHealth. Automated cost reporting, tagging, chargeback.
 - ZeroLight (2021–2022): DevOps Engineer — automotive, AWS/GCP.
 - Accenture Interactive Brazil (2020–2021): Tech Arch Manager — GKE, Jenkins, Spinnaker, team leadership.
@@ -610,7 +611,7 @@ export const trust = {
     { value: "40+", label: "Cloud projects" },
     { value: "5", label: "Certifications" },
     { value: "4", label: "Cloud providers" },
-    { value: "$2.5M+", label: "Cost savings generated" },
+    { value: "~30%", label: "Cloud waste removed" },
     { value: "6+", label: "Countries served" },
   ],
 };
