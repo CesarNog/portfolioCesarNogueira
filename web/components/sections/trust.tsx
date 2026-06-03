@@ -14,10 +14,11 @@ export function Trust() {
       title={t.sections.trust.title}
       intro={t.sections.trust.intro}
     >
-      {/* Signal stats */}
+      {/* Signal stats — gap-px creates hairlines; no outer border needed */}
       <div
         data-recruiter-highlight
-        className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-[var(--color-hairline)] sm:grid-cols-3"
+        className="grid grid-cols-2 gap-px overflow-hidden rounded-lg sm:grid-cols-3"
+        style={{ background: "var(--color-hairline)" }}
       >
         {trust.signals.map((s) => (
           <div key={s.label} className="bg-[var(--color-surface-1)] px-6 py-7 text-center">
@@ -29,37 +30,31 @@ export function Trust() {
         ))}
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
+      {/* Companies, industries, cloud — flat editorial rows, no cards */}
+      <div className="mt-16 divide-y divide-[var(--color-hairline)]">
         <Reveal>
-          <TrustCard title={t.labels.trustCompanies} items={trust.companies} />
+          <TrustRow label={t.labels.trustCompanies} items={trust.companies} />
         </Reveal>
         <Reveal delay={0.05}>
-          <TrustCard title={t.labels.trustIndustries} items={trust.industries} />
+          <TrustRow label={t.labels.trustIndustries} items={trust.industries} />
         </Reveal>
         <Reveal delay={0.1}>
-          <TrustCard title={t.labels.trustClouds} items={trust.clouds} />
+          <TrustRow label={t.labels.trustClouds} items={trust.clouds} />
         </Reveal>
       </div>
     </Section>
   );
 }
 
-function TrustCard({ title, items }: { title: string; items: readonly string[] }) {
+function TrustRow({ label, items }: { label: string; items: readonly string[] }) {
   return (
-    <div className="panel h-full rounded-lg p-5">
-      <p className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-        {title}
+    <div className="flex flex-col gap-2 py-6 sm:flex-row sm:items-baseline sm:gap-10">
+      <p className="w-36 shrink-0 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
+        {label}
       </p>
-      <div className="mt-4 flex flex-wrap gap-2">
-        {items.map((it) => (
-          <span
-            key={it}
-            className="rounded-md border border-[var(--color-hairline)] bg-[var(--color-surface-2)] px-2.5 py-1 text-sm text-[var(--color-fg)]"
-          >
-            {it}
-          </span>
-        ))}
-      </div>
+      <p className="text-[15px] leading-relaxed text-[var(--color-fg-muted)]">
+        {items.join(" · ")}
+      </p>
     </div>
   );
 }
