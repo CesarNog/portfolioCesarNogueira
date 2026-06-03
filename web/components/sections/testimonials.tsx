@@ -15,6 +15,7 @@ export function Testimonials() {
       id="testimonials"
       label={t.sections.testimonials.label}
       title={t.sections.testimonials.title}
+      noEyebrow
     >
       {/* Editorial pull-quote layout — alternating indent, no card borders */}
       <div className="space-y-0 divide-y divide-[var(--color-hairline)]">

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "huashu-design": {
+      "source": "alchaincyf/huashu-design",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "1f865a019153a133a69fc7ab251e94fd3d07b6a74e0adaa19e58c1006af9b9cd"
+    },
+    "memory-bank": {
+      "source": "Nagendhra-web/memory-bank",
+      "sourceType": "github",
+      "skillPath": "skills/memory-bank/SKILL.md",
+      "computedHash": "e70ac3b1f6df95b57929120aefd3dcfdd0bc1ddeccb783da79b7c4f9d7ceca7c"
+    }
+  }
+}

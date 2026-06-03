@@ -57,7 +57,7 @@ export function IdentityConsole() {
               {/* Name */}
               <m.h1
                 {...enter(DELAYS.name)}
-                className="font-display text-[2.5rem] leading-[0.9] tracking-tight text-[var(--color-fg)] sm:text-[clamp(3rem,5.5vw,5.5rem)] lg:text-[clamp(4rem,5.5vw,6.5rem)]"
+                className="font-display text-[2.5rem] leading-[0.9] tracking-[-0.02em] text-[var(--color-fg)] sm:text-[clamp(3rem,5.5vw,5.5rem)] lg:text-[clamp(4rem,5.5vw,6.5rem)] [text-wrap:balance]"
               >
                 {siteConfig.firstName}
                 <br />
