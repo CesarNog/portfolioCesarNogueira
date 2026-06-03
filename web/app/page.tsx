@@ -16,12 +16,14 @@ import { CommandPalette } from "@/components/command-palette";
 import { Assistant } from "@/components/chatbot/assistant";
 import { RecruiterMode } from "@/components/recruiter-mode";
 import { MotionToggle } from "@/components/motion-toggle";
+import { InfraCanvas } from "@/components/background/infra-canvas";
 import { siteConfig } from "@/lib/site-config";
 
 export default function Home() {
   return (
     <>
       <JsonLd />
+      <InfraCanvas />
       <SiteHeader />
       <main>
         <IdentityConsole />

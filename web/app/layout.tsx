@@ -51,13 +51,7 @@ export default function RootLayout({
         className={`${geist.variable} ${geistMono.variable} ${interTight.variable} ${hanken.variable} tracking-tight-body antialiased`}
         suppressHydrationWarning
       >
-        {/* Aurora mesh gradient — fixed, full page, GPU-only */}
-        <div aria-hidden className="aurora-bg">
-          <div className="aurora-blob aurora-blob-1" />
-          <div className="aurora-blob aurora-blob-2" />
-          <div className="aurora-blob aurora-blob-3" />
-        </div>
-        {/* Pause aurora animations when tab is hidden — saves battery */}
+        {/* Tab visibility script — pauses canvas loop when tab hidden */}
         <script dangerouslySetInnerHTML={{ __html: `(function(){var b=document.body;document.addEventListener('visibilitychange',function(){b.classList.toggle('tab-hidden',document.hidden);});})();` }} />
         {/* Hidden Netlify form declaration — required for static export form detection */}
         <form name="contact" data-netlify="true" hidden aria-hidden="true">
