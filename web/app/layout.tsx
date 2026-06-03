@@ -56,6 +56,8 @@ export default function RootLayout({
           <div className="aurora-blob aurora-blob-2" />
           <div className="aurora-blob aurora-blob-3" />
         </div>
+        {/* Pause aurora animations when tab is hidden — saves battery */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(){var b=document.body;document.addEventListener('visibilitychange',function(){b.classList.toggle('tab-hidden',document.hidden);});})();` }} />
         <ThemeProvider>
           <I18nProvider>
             <MotionProvider>{children}</MotionProvider>

@@ -10,12 +10,14 @@ export function Section({
   title,
   intro,
   children,
+  noEyebrow,
 }: {
   id: string;
   label: string;
   title: string;
   intro?: string;
   children: ReactNode;
+  noEyebrow?: boolean;
 }) {
   const { t } = useI18n();
   const tr = t.sections[id];
@@ -30,10 +32,12 @@ export function Section({
     >
       <div className="mx-auto max-w-5xl">
         <Reveal>
-          <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-fg-subtle)]">
-            {heading}
-          </p>
-          <h2 className="font-display max-w-3xl text-3xl text-[var(--color-fg)] sm:text-4xl lg:text-6xl">
+          {!noEyebrow && (
+            <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-fg-subtle)]">
+              {heading}
+            </p>
+          )}
+          <h2 className="font-display max-w-3xl text-3xl text-[var(--color-fg)] sm:text-4xl lg:text-6xl [text-wrap:balance]">
             {headline}
           </h2>
           {lead && (
