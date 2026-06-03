@@ -22,7 +22,7 @@ export function Story() {
         >
           {/* Blue accent rule — editorial typographic marker */}
           <div className="mb-8 h-px w-16 bg-[var(--color-blue)]" />
-          <p className="font-display max-w-3xl text-2xl leading-[1.25] text-[var(--color-fg)] sm:text-3xl lg:text-[2.5rem]">
+          <p className="font-display max-w-3xl text-2xl leading-[1.25] text-[var(--color-fg)] sm:text-3xl lg:text-[2.5rem] [text-wrap:balance]">
             &ldquo;{t.story.pullQuote}&rdquo;
           </p>
         </m.blockquote>

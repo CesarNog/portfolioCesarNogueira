@@ -124,7 +124,7 @@ export function SiteHeader() {
               aria-expanded={mobileOpen}
               aria-controls="mobile-nav"
               onClick={() => setMobileOpen((o) => !o)}
-              className="flex h-9 w-9 flex-col items-center justify-center gap-[5px] rounded-md border border-[var(--color-hairline)] transition-colors hover:border-[var(--color-hairline-strong)] md:hidden"
+              className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] rounded-md border border-[var(--color-hairline)] transition-colors hover:border-[var(--color-hairline-strong)] md:hidden"
             >
               <m.span
                 animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
@@ -180,7 +180,7 @@ export function SiteHeader() {
                 <button
                   onClick={() => setMobileOpen(false)}
                   aria-label="Close navigation"
-                  className="text-lg leading-none text-[var(--color-fg-subtle)] hover:text-[var(--color-fg)]"
+                  className="flex h-11 w-11 items-center justify-center text-lg leading-none text-[var(--color-fg-subtle)] hover:text-[var(--color-fg)]"
                 >
                   ✕
                 </button>

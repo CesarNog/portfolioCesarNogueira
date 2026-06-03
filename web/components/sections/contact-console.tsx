@@ -22,6 +22,7 @@ export function ContactConsole() {
       label={t.sections.contact.label}
       title={t.sections.contact.title}
       intro={t.sections.contact.intro}
+      noEyebrow
     >
       <blockquote className="mb-8 border-l-2 border-[var(--color-blue)] pl-5 text-base leading-relaxed text-[var(--color-fg-muted)] italic">
         {t.contact.contactQuote}
