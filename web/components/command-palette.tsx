@@ -74,6 +74,8 @@ export function CommandPalette() {
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
       <div className="panel relative mt-[12vh] w-[92vw] max-w-lg overflow-hidden rounded-xl shadow-2xl">
+        {/* Radix Dialog requires an accessible title — visually hidden */}
+        <h2 className="sr-only">{t.palette.ariaClose}</h2>
         <Command.Input
           placeholder={t.palette.placeholder}
           className="w-full border-b border-[var(--color-hairline)] bg-transparent px-4 py-3.5 text-sm text-[var(--color-fg)] outline-none placeholder:text-[var(--color-fg-subtle)]"
