@@ -43,7 +43,15 @@ export default function Home() {
         <div className="mx-auto flex max-w-5xl flex-col gap-4">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <p className="font-ui text-[13px] text-[var(--color-fg-subtle)]">
-              &copy; {new Date().getFullYear()} {siteConfig.name} &middot; {siteConfig.company}
+              &copy; {new Date().getFullYear()} {siteConfig.name} &middot;{" "}
+              <a
+                href="https://up2cloud.tech"
+                target="_blank"
+                rel="noreferrer"
+                className="transition-colors hover:text-[var(--color-fg)]"
+              >
+                {siteConfig.company}
+              </a>
             </p>
             <div className="flex items-center gap-4">
               <a href={siteConfig.links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]">
