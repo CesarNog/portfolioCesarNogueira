@@ -78,20 +78,23 @@ export function Assistant() {
     return () => el.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Scroll to START of last answer when it arrives, unless user scrolled away
+  // Scroll to START of last answer when it arrives (explicit container scroll
+  // avoids viewport jump from scrollIntoView on nested scroll containers)
   useEffect(() => {
     if (loading) return;
     if (userScrolledRef.current) return;
-    if (!lastAnswerRef.current) return;
-    // Small delay so text has rendered
+    if (!lastAnswerRef.current || !listRef.current) return;
     const timer = setTimeout(() => {
-      lastAnswerRef.current?.scrollIntoView({
+      const container = listRef.current!;
+      const el = lastAnswerRef.current!;
+      const elTop = el.offsetTop - container.offsetTop;
+      container.scrollTo({
+        top: elTop - 12,
         behavior: reduce ? "instant" : "smooth",
-        block: "start",
       });
-    }, 60);
+    }, 80);
     return () => clearTimeout(timer);
-  }, [messages, reduce]);
+  }, [messages, reduce, loading]);
 
   // Escape to close
   useEffect(() => {
