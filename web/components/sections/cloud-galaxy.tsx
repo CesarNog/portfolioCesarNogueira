@@ -52,6 +52,7 @@ export function CloudGalaxy() {
       label={t.sections.stack.label}
       title={t.sections.stack.title}
       intro={t.sections.stack.intro}
+      noEyebrow
     >
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <div

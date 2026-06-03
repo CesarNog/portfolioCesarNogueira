@@ -13,6 +13,7 @@ export function Certifications() {
       label={t.sections.certifications.label}
       title={t.sections.certifications.title}
       intro={t.sections.certifications.intro}
+      noEyebrow
     >
       <div className="grid gap-6 sm:grid-cols-2">
         {certifications.map((cat, i) => (
