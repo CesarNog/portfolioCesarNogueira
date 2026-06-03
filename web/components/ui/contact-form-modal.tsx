@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, m, useReducedMotion } from "motion/react";
 import { siteConfig } from "@/lib/site-config";
+import { useI18n } from "@/lib/i18n";
 
 type State = "idle" | "sending" | "success" | "error";
 
@@ -13,6 +14,8 @@ interface Props {
 
 export function ContactFormModal({ open, onClose }: Props) {
   const reduce = useReducedMotion();
+  const { t } = useI18n();
+  const c = t.contact;
   const [state, setState] = useState<State>("idle");
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const firstInputRef = useRef<HTMLInputElement>(null);
@@ -96,15 +99,15 @@ export function ContactFormModal({ open, onClose }: Props) {
             <div className="flex items-center justify-between border-b border-[var(--color-hairline)] px-6 py-4">
               <div>
                 <h2 className="font-display text-lg text-[var(--color-fg)] [text-wrap:balance]">
-                  Send Cesar a message
+                  {c.formTitle}
                 </h2>
                 <p className="mt-0.5 font-mono text-[11px] text-[var(--color-fg-subtle)]">
-                  Replies within 24h · {siteConfig.links.email}
+                  {c.formSubtitle} · {siteConfig.links.email}
                 </p>
               </div>
               <button
                 onClick={onClose}
-                aria-label="Close"
+                aria-label={t.assistant.close}
                 className="flex h-9 w-9 items-center justify-center rounded-md text-[var(--color-fg-subtle)] transition-colors hover:bg-[var(--color-surface-2)] hover:text-[var(--color-fg)]"
               >
                 ✕
@@ -116,15 +119,13 @@ export function ContactFormModal({ open, onClose }: Props) {
               {state === "success" ? (
                 <div className="py-8 text-center">
                   <div className="mb-4 text-4xl">✓</div>
-                  <p className="font-display text-xl text-[var(--color-fg)]">Message sent</p>
-                  <p className="mt-2 text-sm text-[var(--color-fg-muted)]">
-                    Cesar will be in touch within 24 hours.
-                  </p>
+                  <p className="font-display text-xl text-[var(--color-fg)]">{c.formSuccess}</p>
+                  <p className="mt-2 text-sm text-[var(--color-fg-muted)]">{c.formSuccessDesc}</p>
                   <button
                     onClick={reset}
                     className="mt-6 rounded-md border border-[var(--color-hairline)] px-5 py-2.5 text-sm text-[var(--color-fg)] transition-colors hover:border-[var(--color-fg-muted)]"
                   >
-                    Close
+                    {t.assistant.close}
                   </button>
                 </div>
               ) : (
@@ -142,7 +143,7 @@ export function ContactFormModal({ open, onClose }: Props) {
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-1.5">
                       <label htmlFor="cf-name" className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-                        Name <span className="text-[var(--color-blue)]">*</span>
+                        {c.formName} <span className="text-[var(--color-blue)]">*</span>
                       </label>
                       <input
                         ref={firstInputRef}
@@ -152,13 +153,13 @@ export function ContactFormModal({ open, onClose }: Props) {
                         required
                         value={form.name}
                         onChange={set("name")}
-                        placeholder="Your name"
+                        placeholder={c.formNamePlaceholder}
                         className={inputClass}
                       />
                     </div>
                     <div className="space-y-1.5">
                       <label htmlFor="cf-email" className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-                        Email <span className="text-[var(--color-blue)]">*</span>
+                        {c.formEmail} <span className="text-[var(--color-blue)]">*</span>
                       </label>
                       <input
                         id="cf-email"
@@ -167,7 +168,7 @@ export function ContactFormModal({ open, onClose }: Props) {
                         required
                         value={form.email}
                         onChange={set("email")}
-                        placeholder="you@company.com"
+                        placeholder={c.formEmailPlaceholder}
                         className={inputClass}
                       />
                     </div>
@@ -175,7 +176,7 @@ export function ContactFormModal({ open, onClose }: Props) {
 
                   <div className="space-y-1.5">
                     <label htmlFor="cf-subject" className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-                      Subject
+                      {c.formSubject}
                     </label>
                     <input
                       id="cf-subject"
@@ -183,14 +184,14 @@ export function ContactFormModal({ open, onClose }: Props) {
                       type="text"
                       value={form.subject}
                       onChange={set("subject")}
-                      placeholder="Project enquiry, role opportunity…"
+                      placeholder={c.formSubjectPlaceholder}
                       className={inputClass}
                     />
                   </div>
 
                   <div className="space-y-1.5">
                     <label htmlFor="cf-message" className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-                      Message <span className="text-[var(--color-blue)]">*</span>
+                      {c.formMessage} <span className="text-[var(--color-blue)]">*</span>
                     </label>
                     <textarea
                       id="cf-message"
@@ -199,14 +200,14 @@ export function ContactFormModal({ open, onClose }: Props) {
                       rows={5}
                       value={form.message}
                       onChange={set("message")}
-                      placeholder="Tell Cesar what you're building and how he can help…"
+                      placeholder={c.formMessagePlaceholder}
                       className={`${inputClass} resize-none`}
                     />
                   </div>
 
                   {state === "error" && (
                     <p className="rounded-md bg-red-500/10 px-4 py-2.5 text-sm text-red-400">
-                      Something went wrong. Email directly: {siteConfig.links.email}
+                      {c.formError} {siteConfig.links.email}
                     </p>
                   )}
 
@@ -216,7 +217,7 @@ export function ContactFormModal({ open, onClose }: Props) {
                       onClick={onClose}
                       className="text-sm text-[var(--color-fg-subtle)] transition-colors hover:text-[var(--color-fg)]"
                     >
-                      Cancel
+                      {c.formCancel}
                     </button>
                     <button
                       type="submit"
@@ -226,10 +227,10 @@ export function ContactFormModal({ open, onClose }: Props) {
                       {state === "sending" ? (
                         <>
                           <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                          Sending…
+                          {c.formSending}
                         </>
                       ) : (
-                        "Send message →"
+                        `${c.formSend} →`
                       )}
                     </button>
                   </div>
