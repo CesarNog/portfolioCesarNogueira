@@ -81,7 +81,7 @@ export function IdentityConsole() {
                     <m.a
                       href="#contact"
                       whileTap={buttonPress}
-                      className="bg-accent accent-blue inline-flex items-center rounded-md px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+                      className="bg-accent accent-blue inline-flex items-center rounded-md px-6 py-3 text-sm font-medium text-white transition-all hover:opacity-90 hover:-translate-y-px active:translate-y-0"
                     >
                       {t.hero.ctaPrimary}
                     </m.a>
@@ -90,7 +90,7 @@ export function IdentityConsole() {
                     <m.a
                       href="#work"
                       whileTap={buttonPress}
-                      className="inline-flex items-center rounded-md border border-[var(--color-hairline-strong)] px-6 py-3 text-sm font-medium text-[var(--color-fg)] transition-colors hover:border-[var(--color-fg-muted)]"
+                      className="inline-flex items-center rounded-md border border-[var(--color-hairline-strong)] px-6 py-3 text-sm font-medium text-[var(--color-fg)] transition-all hover:border-[var(--color-fg-muted)] hover:-translate-y-px active:translate-y-0"
                     >
                       {t.hero.ctaSecondary}
                     </m.a>

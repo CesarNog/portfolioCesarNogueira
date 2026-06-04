@@ -123,6 +123,64 @@ body {
   to   { transform: translateX(400%); }
 }
 
+/* ─── Scanner verdict choreography ─────────────────────────────────────────── */
+
+/* Separator line draws from center outward */
+@keyframes line-draw {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+.verdict-line {
+  animation: line-draw 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: center;
+}
+
+/* Verdict card rises 12px with fade */
+@keyframes verdict-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.verdict-card {
+  animation: verdict-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+/* Role chips pop in staggered */
+@keyframes chip-pop {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.chip-pop {
+  animation: chip-pop 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Impact + CTA block fades up after chips */
+@keyframes block-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.block-rise {
+  animation: block-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ─── Form success checkmark draw ──────────────────────────────────────────── */
+@keyframes check-draw {
+  from { opacity: 0; transform: scale(0.4) rotate(-8deg); }
+  60%  { opacity: 1; transform: scale(1.15) rotate(2deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+.check-draw {
+  animation: check-draw 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Reduced-motion: disable all custom animations */
+@media (prefers-reduced-motion: reduce) {
+  .verdict-line, .verdict-card, .chip-pop, .block-rise, .check-draw {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Scroll chevron — smooth sinusoidal float, no bounce. */
 @keyframes float-down {
   0%, 100% { transform: translateY(0);   opacity: 0.6; }
