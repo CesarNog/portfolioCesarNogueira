@@ -117,6 +117,12 @@ body {
   mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
 }
 
+/* Skill bar completion shimmer — single sweep after bar fills. */
+@keyframes shimmer {
+  from { transform: translateX(-200%); }
+  to   { transform: translateX(400%); }
+}
+
 /* Scroll chevron — smooth sinusoidal float, no bounce. */
 @keyframes float-down {
   0%, 100% { transform: translateY(0);   opacity: 0.6; }
