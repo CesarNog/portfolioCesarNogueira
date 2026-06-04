@@ -86,6 +86,8 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
+  font-optical-sizing: auto;
+  font-kerning: normal;
 }
 
 .font-display {
@@ -198,10 +200,10 @@ body {
   }
 }
 
-/* Hero photo gradient: boundary drifts slowly — live variant 2 accepted. */
-@keyframes gradient-drift {
-  0%, 100% { background-position: 0% 50%; }
-  50%       { background-position: 40% 50%; }
+/* Hero photo gradient: sweeps left once on page open, stays. */
+@keyframes gradient-sweep-left {
+  from { background-position: 0% 50%; }
+  to   { background-position: 65% 50%; }
 }
 .hero-gradient-drift {
   position: absolute;
@@ -215,13 +217,13 @@ body {
     transparent 100%
   );
   background-size: 180% 100%;
-  animation: gradient-drift 9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  background-position: 0% 50%;
+  animation: gradient-sweep-left 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s 1 forwards;
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-gradient-drift {
     animation: none;
     background-position: 0% 50%;
-    background: linear-gradient(to right, var(--color-surface-0) 0%, var(--color-surface-0)/40 50%, transparent 100%);
   }
 }
 
