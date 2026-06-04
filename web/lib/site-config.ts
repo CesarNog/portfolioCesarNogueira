@@ -48,7 +48,7 @@ export const siteConfig = {
     cv: "https://cesarnogueira.tech/curriculum/CV_CesarANogueira_Cloud_EN_US.pdf",
     calendar: "mailto:cesarnogueira1210@gmail.com?subject=Project%20Briefing",
     whatsapp: "https://wa.me/351937471554",
-    calendly: "https://calendly.com/cesarnogueira1210",
+    calendly: "https://calendly.com/cesarnog/15min",
   },
 };
 

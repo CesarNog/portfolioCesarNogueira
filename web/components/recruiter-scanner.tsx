@@ -222,12 +222,18 @@ export function RecruiterScanner() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [skillsVisible, setSkillsVisible] = useState<boolean[]>(Array(SKILLS.length).fill(false));
   const [activeScoringIdx, setActiveScoringIdx] = useState(-1);
+  const [showResultsDialog, setShowResultsDialog] = useState(false);
   const reduce = useReducedMotion();
   const bodyRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
   const open = () => setPhase("scanning");
-  const close = () => { setPhase("idle"); setSkillsVisible(Array(SKILLS.length).fill(false)); setActiveScoringIdx(-1); };
+  const close = () => {
+    setPhase("idle");
+    setSkillsVisible(Array(SKILLS.length).fill(false));
+    setActiveScoringIdx(-1);
+    setShowResultsDialog(false);
+  };
 
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
@@ -250,12 +256,13 @@ export function RecruiterScanner() {
     }
 
     if (phase === "report") {
-      // Delay scroll until after React has painted the report DOM
       timers.push(setTimeout(() => {
         if (bodyRef.current) {
           bodyRef.current.scrollTo({ top: bodyRef.current.scrollHeight, behavior: "smooth" });
         }
       }, 120));
+      // Results dialog appears after verdict card has animated in
+      timers.push(setTimeout(() => setShowResultsDialog(true), reduce ? 200 : 1800));
     }
 
     return () => timers.forEach(clearTimeout);
@@ -311,6 +318,7 @@ export function RecruiterScanner() {
 
   // ── Overlay (always visible when phase !== idle — no AnimatePresence/opacity:0) ──
   return (
+    <>
     <div
       role="dialog"
       aria-label="Candidate Evaluation — César A. Nogueira"
@@ -327,7 +335,7 @@ export function RecruiterScanner() {
           <span className="truncate font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
             {phase === "scanning" && "Initializing candidate scan…"}
             {phase === "analyzing" && (currentSkill ? currentSkill.scoringLabel : "Analyzing candidate profile…")}
-            {phase === "report" && "Evaluation complete · Recommendation ready"}
+            {phase === "report" && "Strong match — cleared for interview · Available now"}
           </span>
         </div>
         <button ref={closeBtnRef} type="button" onClick={close} aria-label="Close"
@@ -522,7 +530,7 @@ export function RecruiterScanner() {
           <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
             {phase === "scanning" && "Scanning candidate record…"}
             {phase === "analyzing" && `Scoring ${skillsVisible.filter(Boolean).length} / ${SKILLS.length} competencies`}
-            {phase === "report" && `${SKILLS.length} / ${SKILLS.length} competencies scored · ${ROLES.length} roles matched`}
+            {phase === "report" && `${SKILLS.length}/${SKILLS.length} competencies verified · Hire signal: strong`}
           </p>
           <button type="button" onClick={close}
             className="font-mono text-[10px] text-[var(--color-fg-subtle)] transition-colors hover:text-[var(--color-fg)]">
@@ -531,5 +539,115 @@ export function RecruiterScanner() {
         </div>
       </div>
     </div>
+
+    {/* ── Results dialog — fixed sibling above scanner, avoids overflow:hidden clipping ── */}
+    {showResultsDialog && (
+      <div
+        role="dialog"
+        aria-label="Assessment results"
+        aria-modal="false"
+        className="fixed inset-0 flex items-end justify-center px-4 pb-6"
+        style={{ zIndex: "calc(var(--z-scanner) + 10)" }}
+        onClick={(e) => { if (e.target === e.currentTarget) setShowResultsDialog(false); }}
+      >
+        {/* Backdrop — blurs the scanner report behind */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[var(--color-surface-0)]/60 backdrop-blur-[2px]"
+          onClick={() => setShowResultsDialog(false)}
+        />
+
+        {/* Card */}
+        <div
+          className="relative w-full max-w-md overflow-hidden rounded-2xl border border-[var(--color-ok)]/25 bg-[var(--color-surface-1)]"
+          style={{
+            animation: reduce ? "none" : "slide-up-dialog 0.45s cubic-bezier(0.16,1,0.3,1) forwards",
+            boxShadow: "0 0 60px -16px color-mix(in oklab, var(--color-ok) 28%, transparent), 0 32px 64px -16px rgba(0,0,0,0.6)",
+          }}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between border-b border-[var(--color-hairline)] px-5 py-3.5">
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-[var(--color-ok)]" aria-hidden />
+              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-ok)]">
+                Assessment Complete
+              </span>
+            </div>
+            <button
+              type="button"
+              aria-label="Dismiss results — return to report"
+              onClick={() => setShowResultsDialog(false)}
+              className="font-mono text-[11px] text-[var(--color-fg-subtle)] transition-colors hover:text-[var(--color-fg)]"
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Candidate identity */}
+          <div className="border-b border-[var(--color-hairline)] px-5 pb-3 pt-4">
+            <p className="font-display text-xl text-[var(--color-fg)]">César A. Nogueira</p>
+            <p className="mt-0.5 font-mono text-[10px] text-[var(--color-blue)]">
+              Principal Cloud Architect · FinOps · Platform Engineering · Vila Real, PT
+            </p>
+          </div>
+
+          {/* Verdict banner */}
+          <div className="bg-[var(--color-ok)]/6 px-5 py-4 text-center border-b border-[var(--color-ok)]/12">
+            <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-[var(--color-ok)]/70 mb-1">Hire Recommendation</p>
+            <p className="font-display text-2xl font-bold text-[var(--color-ok)]">Proceed to Interview</p>
+          </div>
+
+          {/* Metrics row */}
+          <div className="grid grid-cols-4 divide-x divide-[var(--color-hairline)]">
+            {[
+              { label: "Fit",          value: "Strong",                         color: "var(--color-ok)" },
+              { label: "Risk",         value: "Low",                            color: "var(--color-ok)" },
+              { label: "Availability", value: "Now",                            color: "var(--color-cyan)" },
+              { label: "Verified",     value: `${SKILLS.length}/${SKILLS.length}`, color: "var(--color-blue)" },
+            ].map(({ label, value, color }) => (
+              <div key={label} className="flex flex-col items-center px-2 py-3 text-center">
+                <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]">{label}</span>
+                <span className="mt-1 font-mono text-sm font-bold tabular-nums" style={{ color }}>{value}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-col gap-2 px-5 pb-5 pt-4">
+            <button
+              type="button"
+              className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[var(--color-blue)] text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              onClick={() => { close(); setTimeout(() => document.dispatchEvent(new CustomEvent("open-contact-form")), 300); }}
+            >
+              Send a Message to César →
+            </button>
+            <a
+              href={siteConfig.links.calendly}
+              target="_blank"
+              rel="noreferrer"
+              className="flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-[var(--color-ok)]/40 bg-[var(--color-ok)]/6 text-sm font-semibold text-[var(--color-ok)] transition-colors hover:bg-[var(--color-ok)]/10"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
+                <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              Schedule Interview
+            </a>
+            <a
+              href={siteConfig.links.cv}
+              target="_blank"
+              rel="noreferrer"
+              className="flex h-9 w-full items-center justify-center gap-1.5 rounded-lg text-sm text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
+            >
+              Download CV ↓
+            </a>
+          </div>
+
+          <p className="px-5 pb-4 text-center font-mono text-[9px] text-[var(--color-fg-subtle)]">
+            Dismiss to review full competency breakdown
+          </p>
+        </div>
+      </div>
+    )}
+    </>
   );
 }

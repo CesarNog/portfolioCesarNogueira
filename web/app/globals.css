@@ -432,6 +432,12 @@ body.tab-hidden .aurora-blob {
   scroll-padding-top: 6.5rem;
 }
 
+/* ─── Scanner results dialog ─────────────────────────────────────────────── */
+@keyframes slide-up-dialog {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ─── Map route packet animations ────────────────────────────────────────── */
 /* Generic keyframe — each packet line gets a unique animation name via JS.
    Since stroke-dasharray "4 200" the dash is short; offset sweeps it along. */
