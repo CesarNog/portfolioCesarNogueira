@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Command } from "cmdk";
 import { useTheme } from "next-themes";
 import { siteConfig } from "@/lib/site-config";
@@ -12,7 +12,9 @@ export function CommandPalette() {
   const [open, setOpen] = useState(false);
   const { setTheme } = useTheme();
   const { t } = useI18n();
+  const inputRef = useRef<HTMLInputElement>(null);
 
+  // ⌘K / Ctrl+K toggle
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
@@ -23,6 +25,19 @@ export function CommandPalette() {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, []);
+
+  // Escape to close
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  // Focus input when opened
+  useEffect(() => {
+    if (open) requestAnimationFrame(() => inputRef.current?.focus());
+  }, [open]);
 
   const go = (id: string) => () => {
     setOpen(false);
@@ -61,27 +76,38 @@ export function CommandPalette() {
 
   const groups = Array.from(new Set(items.map((i) => i.group)));
 
+  if (!open) return null;
+
   return (
-    <Command.Dialog
-      open={open}
-      onOpenChange={setOpen}
-      label={t.palette.ariaClose}
+    // Native dialog avoids Radix context entirely — no DialogTitle requirement
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={p.commandPalette}
       className="fixed inset-0 z-[100] flex items-start justify-center"
     >
+      {/* Backdrop */}
       <button
-        aria-label={t.palette.ariaClose}
+        type="button"
+        aria-label={p.ariaClose}
         onClick={() => setOpen(false)}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
-      <div className="panel relative mt-[12vh] w-[92vw] max-w-lg overflow-hidden rounded-xl shadow-2xl" aria-labelledby="cmdk-title">
-        <h2 id="cmdk-title" className="sr-only">{t.palette.commandPalette}</h2>
+
+      {/* Panel */}
+      <Command
+        className="panel relative mt-[12vh] w-[92vw] max-w-lg overflow-hidden rounded-xl shadow-2xl"
+        shouldFilter
+        loop
+      >
         <Command.Input
-          placeholder={t.palette.placeholder}
+          ref={inputRef}
+          placeholder={p.placeholder}
           className="w-full border-b border-[var(--color-hairline)] bg-transparent px-4 py-3.5 text-sm text-[var(--color-fg)] outline-none placeholder:text-[var(--color-fg-subtle)]"
         />
         <Command.List className="max-h-[50vh] overflow-y-auto p-2">
           <Command.Empty className="px-3 py-6 text-center text-sm text-[var(--color-fg-subtle)]">
-            {t.palette.noResults}
+            {p.noResults}
           </Command.Empty>
           {groups.map((g) => (
             <Command.Group
@@ -108,7 +134,7 @@ export function CommandPalette() {
             </Command.Group>
           ))}
         </Command.List>
-      </div>
-    </Command.Dialog>
+      </Command>
+    </div>
   );
 }
