@@ -245,12 +245,7 @@ function scoreColor(s: number): string {
   return "var(--color-orange)";
 }
 
-function scoreLabel(s: number): string {
-  if (s >= 93) return "Excellent fit";
-  if (s >= 85) return "Strong fit";
-  if (s >= 75) return "Good fit";
-  return "Partial fit";
-}
+// scoreLabel is now computed via t.recruiterMode in the component
 
 let msgCounter = 0;
 const msgId = () => `m-${++msgCounter}`;
@@ -277,6 +272,13 @@ export function RecruiterMode() {
   const reportRef = useRef<HTMLDivElement>(null);
   const backBtnRef = useRef<HTMLButtonElement>(null);
   const lastMsgRef = useRef<HTMLDivElement>(null);
+
+  const scoreLabel = (s: number): string => {
+    if (s >= 93) return t.recruiterMode.scoreLabelExcellent;
+    if (s >= 85) return t.recruiterMode.scoreLabelStrong;
+    if (s >= 75) return t.recruiterMode.scoreLabelGood;
+    return t.recruiterMode.scoreLabelPartial;
+  };
 
   // Restore recruiter state
   useEffect(() => {
@@ -521,11 +523,14 @@ export function RecruiterMode() {
                       <div className="mb-5">
                         <div className="mb-2 flex items-center justify-between">
                           <p className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-blue)]">
-                            {QUICK_MODES.find((q) => q.id === quickResult.id)?.shortLabel}
+                            {quickResult.id === "exec" ? t.recruiterMode.quickExec
+                              : quickResult.id === "impact" ? t.recruiterMode.quickImpact
+                              : quickResult.id === "creds" ? t.recruiterMode.quickCredentials
+                              : t.recruiterMode.quickCareer}
                           </p>
                           <button type="button" onClick={() => setQuickResult(null)}
                             className="font-mono text-[10px] text-[var(--color-fg-subtle)] hover:text-[var(--color-fg)]">
-                            ← back
+                            ←
                           </button>
                         </div>
                         <div className="panel-2 rounded-lg p-4 text-sm leading-relaxed text-[var(--color-fg-muted)] whitespace-pre-wrap break-words">
@@ -543,7 +548,7 @@ export function RecruiterMode() {
                           onClick={clearReport}
                           className="mb-5 flex items-center gap-1.5 font-mono text-[11px] text-[var(--color-fg-subtle)] hover:text-[var(--color-fg)]"
                         >
-                          ← All roles
+                          {t.recruiterMode.backToRoles}
                         </button>
 
                         {/* Score card */}
@@ -554,7 +559,7 @@ export function RecruiterMode() {
                                 {selectedRole.label}
                               </p>
                               <p className="mt-0.5 font-mono text-[10px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-                                {selectedRole.level} · Fit Evaluation
+                                {selectedRole.level} · {t.recruiterMode.fitEvaluation}
                               </p>
                             </div>
                             {/* Score */}
@@ -588,20 +593,20 @@ export function RecruiterMode() {
                           </p>
                         </div>
 
-                        <ReportSection icon="✓" label="Strengths" accent="var(--color-ok)" items={selectedRole.strengths} />
-                        <ReportSection icon="○" label="Evidence" accent="var(--color-blue)" items={selectedRole.evidence} />
+                        <ReportSection icon="✓" label={t.recruiterMode.strengths} accent="var(--color-ok)" items={selectedRole.strengths} />
+                        <ReportSection icon="○" label={t.recruiterMode.evidence} accent="var(--color-blue)" items={selectedRole.evidence} />
 
                         {selectedRole.concerns.length > 0 ? (
-                          <ReportSection icon="△" label="Considerations" accent="var(--color-orange)" items={selectedRole.concerns} />
+                          <ReportSection icon="△" label={t.recruiterMode.considerations} accent="var(--color-orange)" items={selectedRole.concerns} />
                         ) : (
                           <div className="mb-4">
-                            <SectionHeading icon="△" label="Considerations" accent="var(--color-orange)" />
-                            <p className="pl-5 font-mono text-[11px] text-[var(--color-ok)]">No significant concerns identified.</p>
+                            <SectionHeading icon="△" label={t.recruiterMode.considerations} accent="var(--color-orange)" />
+                            <p className="pl-5 font-mono text-[11px] text-[var(--color-ok)]">{t.recruiterMode.noConcerns}</p>
                           </div>
                         )}
 
                         <div className="mb-4">
-                          <SectionHeading icon="?" label="Interview Topics" accent="var(--color-cyan)" />
+                          <SectionHeading icon="?" label={t.recruiterMode.interviewTopics} accent="var(--color-cyan)" />
                           <ol className="space-y-2 pl-5">
                             {selectedRole.interviewTopics.map((topic) => (
                               <li key={topic} className="flex gap-2 text-sm text-[var(--color-fg-muted)]">
@@ -615,7 +620,7 @@ export function RecruiterMode() {
                         {/* CTA */}
                         <div className="mt-6 rounded-lg border border-[var(--color-blue)]/30 bg-[var(--color-blue)]/5 p-4">
                           <p className="mb-3 text-sm text-[var(--color-fg-muted)]">
-                            Want to discuss this evaluation or explore a specific scenario?
+                            {t.recruiterMode.ctaText}
                           </p>
                           <button
                             type="button"
@@ -623,7 +628,7 @@ export function RecruiterMode() {
                             onClick={() => { setPanelOpen(false); setTimeout(() => document.dispatchEvent(new CustomEvent("open-contact-form")), 300); }}
                             className="inline-flex items-center gap-2 rounded-md bg-[var(--color-blue)] px-4 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-blue)]"
                           >
-                            Email César →
+                            {t.recruiterMode.ctaButton}
                           </button>
                         </div>
                       </div>
@@ -633,7 +638,7 @@ export function RecruiterMode() {
                     {!selectedRole && !quickResult && (
                       <>
                         <p className="mb-4 text-sm leading-relaxed text-[var(--color-fg-muted)]">
-                          Select a role to generate a structured fit evaluation — strengths, evidence, considerations and interview topics.
+                          {t.recruiterMode.roleGridIntro}
                         </p>
                         <div className="grid grid-cols-1 gap-2.5 xs:grid-cols-2 sm:grid-cols-2">
                           {ROLES.map((role) => (
@@ -753,26 +758,32 @@ export function RecruiterMode() {
                 className="shrink-0 border-t border-[var(--color-hairline)] bg-[var(--color-surface-1)] px-5 py-3"
               >
                 <p className="mb-2.5 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-                  Quick Insights
+                  {t.recruiterMode.quickInsights}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {QUICK_MODES.map((mode) => (
-                    <button
-                      key={mode.id}
-                      type="button"
-                      onClick={() => runQuick(mode)}
-                      disabled={!!quickLoading}
-                      aria-label={`Get ${mode.shortLabel} insight about César`}
-                      className={`flex items-center gap-1.5 rounded-md border px-3 py-2 font-mono text-[10px] uppercase tracking-wider transition-colors disabled:opacity-50 sm:py-1.5 ${
-                        quickLoading === mode.id
-                          ? "border-[var(--color-blue)] bg-[var(--color-blue)]/10 text-[var(--color-blue)]"
-                          : "border-[var(--color-hairline)] text-[var(--color-fg-subtle)] hover:border-[var(--color-blue)]/50 hover:text-[var(--color-fg)]"
-                      }`}
-                    >
-                      {quickLoading === mode.id ? <ThinkingDots /> : null}
-                      {mode.shortLabel}
-                    </button>
-                  ))}
+                  {QUICK_MODES.map((mode) => {
+                    const label = mode.id === "exec" ? t.recruiterMode.quickExec
+                      : mode.id === "impact" ? t.recruiterMode.quickImpact
+                      : mode.id === "creds" ? t.recruiterMode.quickCredentials
+                      : t.recruiterMode.quickCareer;
+                    return (
+                      <button
+                        key={mode.id}
+                        type="button"
+                        onClick={() => runQuick(mode)}
+                        disabled={!!quickLoading}
+                        aria-label={`Get ${label} insight about César`}
+                        className={`flex items-center gap-1.5 rounded-md border px-3 py-2 font-mono text-[10px] uppercase tracking-wider transition-colors disabled:opacity-50 sm:py-1.5 ${
+                          quickLoading === mode.id
+                            ? "border-[var(--color-blue)] bg-[var(--color-blue)]/10 text-[var(--color-blue)]"
+                            : "border-[var(--color-hairline)] text-[var(--color-fg-subtle)] hover:border-[var(--color-blue)]/50 hover:text-[var(--color-fg)]"
+                        }`}
+                      >
+                        {quickLoading === mode.id ? <ThinkingDots /> : null}
+                        {label}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
