@@ -73,12 +73,13 @@ export function IdentityConsole() {
       {/* Mobile: portrait as background, content on top */}
       <div className="absolute inset-0 -z-10 lg:hidden" aria-hidden>
         <Image
-          src="/portrait.webp"
+          src="/portrait-mobile.webp"
           alt=""
           fill
           sizes="100vw"
           priority
           loading="eager"
+          fetchPriority="high"
           className="object-cover object-top"
           style={{ opacity: 0.15 }}
         />
@@ -146,7 +147,8 @@ export function IdentityConsole() {
                     <m.a
                       href="#contact"
                       whileTap={buttonPress}
-                      className="bg-accent accent-blue inline-flex items-center rounded-md px-6 py-3 text-sm font-medium text-white transition-all hover:opacity-90 hover:-translate-y-px active:translate-y-0"
+                      className="inline-flex items-center rounded-md px-6 py-3 text-sm font-medium text-white transition-all hover:opacity-90 hover:-translate-y-px active:translate-y-0"
+                      style={{ backgroundColor: "var(--color-button-primary)" }}
                     >
                       {t.hero.ctaPrimary}
                     </m.a>

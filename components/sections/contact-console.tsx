@@ -96,7 +96,8 @@ export function ContactConsole() {
                 <button
                   type="button"
                   onClick={() => setFormOpen(true)}
-                  className="bg-accent inline-flex w-full items-center justify-center rounded-md px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+                  className="inline-flex w-full items-center justify-center rounded-md px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+                  style={{ backgroundColor: "var(--color-button-primary)" }}
                 >
                   {t.contact.emailCta}
                 </button>
