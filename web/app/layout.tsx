@@ -14,33 +14,72 @@ const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono"
 const interTight = Inter_Tight({ subsets: ["latin"], variable: "--font-inter-tight", display: "swap" });
 const hanken = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken", display: "swap", weight: ["400", "500", "600"] });
 
+const OG_TITLE = `${siteConfig.name} — ${siteConfig.shortRole}`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — ${siteConfig.shortRole}`,
+    default: OG_TITLE,
     template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: siteConfig.keywords,
+  keywords: [
+    ...siteConfig.keywords,
+    "Cloud Architect Portugal",
+    "FinOps Consultant Europe",
+    "Principal Cloud Engineer",
+    "GCP Certified Architect",
+    "Platform Engineering Remote",
+    "UP2CLOUD",
+    "César Nogueira",
+    "Cesar Augusto Nogueira",
+  ],
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
+  publisher: siteConfig.company,
+  category: "technology",
   openGraph: {
     type: "website",
     locale: "en_US",
+    alternateLocale: ["pt_BR", "es_ES", "fr_FR", "zh_CN"],
     url: siteConfig.url,
-    title: `${siteConfig.name} — ${siteConfig.shortRole}`,
+    title: OG_TITLE,
     description: siteConfig.description,
     siteName: siteConfig.name,
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: `${siteConfig.name} — ${siteConfig.shortRole}` }],
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: OG_TITLE,
+        type: "image/png",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — ${siteConfig.shortRole}`,
+    site: "@cesarnog_eu",
+    creator: "@cesarnog_eu",
+    title: OG_TITLE,
     description: siteConfig.description,
-    images: ["/opengraph-image"],
+    images: [{ url: "/opengraph-image", alt: OG_TITLE }],
   },
-  robots: { index: true, follow: true },
-  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
+  alternates: {
+    canonical: siteConfig.url,
+    languages: {
+      "en": siteConfig.url,
+      "pt-BR": siteConfig.url,
+      "es": siteConfig.url,
+      "fr": siteConfig.url,
+      "zh": siteConfig.url,
+      "x-default": siteConfig.url,
+    },
+  },
 };
 
 export const viewport = { themeColor: "#08090c" };
@@ -67,6 +106,40 @@ export default function RootLayout({
           <input name="subject" type="text" />
           <textarea name="message" />
         </form>
+
+        {/* JSON-LD structured data — Person schema for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: siteConfig.name,
+              url: siteConfig.url,
+              email: `mailto:${siteConfig.links.email}`,
+              telephone: siteConfig.links.phone,
+              jobTitle: "Principal Cloud Architect",
+              description: siteConfig.description,
+              image: `${siteConfig.url}/portrait.webp`,
+              sameAs: [
+                siteConfig.links.linkedin,
+                siteConfig.links.github,
+                siteConfig.links.x,
+              ],
+              worksFor: {
+                "@type": "Organization",
+                name: siteConfig.company,
+                url: siteConfig.url,
+              },
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Vila Real",
+                addressCountry: "PT",
+              },
+              knowsAbout: siteConfig.knowsAbout,
+            }),
+          }}
+        />
 
         <Analytics />
         <ConsoleGreeting />
