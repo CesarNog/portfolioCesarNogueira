@@ -36,7 +36,8 @@ export function IdentityConsole() {
           sizes="100vw"
           className="object-cover object-top"
           style={{ opacity: 0.15 }}
-          priority
+          loading="eager"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-surface-0)]/20 via-[var(--color-surface-0)]/80 to-[var(--color-surface-0)]" />
       </div>
