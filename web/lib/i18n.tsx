@@ -192,6 +192,27 @@ type Dict = {
     dialogAvailLabel: string;
     dialogVerifiedLabel: string;
   };
+  recruiterMode: {
+    backToRoles: string;
+    fitEvaluation: string;
+    strengths: string;
+    evidence: string;
+    considerations: string;
+    interviewTopics: string;
+    noConcerns: string;
+    ctaText: string;
+    ctaButton: string;
+    roleGridIntro: string;
+    quickInsights: string;
+    scoreLabelExcellent: string;
+    scoreLabelStrong: string;
+    scoreLabelGood: string;
+    scoreLabelPartial: string;
+    quickExec: string;
+    quickImpact: string;
+    quickCredentials: string;
+    quickCareer: string;
+  };
 };
 
 const en: Dict = {
@@ -567,6 +588,27 @@ const en: Dict = {
     dialogRiskLabel: "Risk",
     dialogAvailLabel: "Availability",
     dialogVerifiedLabel: "Verified",
+  },
+  recruiterMode: {
+    backToRoles: "← All roles",
+    fitEvaluation: "Fit Evaluation",
+    strengths: "Strengths",
+    evidence: "Evidence",
+    considerations: "Considerations",
+    interviewTopics: "Interview Topics",
+    noConcerns: "No significant concerns identified.",
+    ctaText: "Want to discuss this evaluation or explore a specific scenario?",
+    ctaButton: "Email César →",
+    roleGridIntro: "Select a role to generate a structured fit evaluation — strengths, evidence, considerations and interview topics.",
+    quickInsights: "Quick Insights",
+    scoreLabelExcellent: "Excellent fit",
+    scoreLabelStrong: "Strong fit",
+    scoreLabelGood: "Good fit",
+    scoreLabelPartial: "Partial fit",
+    quickExec: "Exec",
+    quickImpact: "Impact",
+    quickCredentials: "Credentials",
+    quickCareer: "Career",
   },
 };
 
@@ -944,6 +986,27 @@ const pt: Dict = {
     dialogAvailLabel: "Disponível",
     dialogVerifiedLabel: "Verificadas",
   },
+  recruiterMode: {
+    backToRoles: "← Todas as funções",
+    fitEvaluation: "Avaliação de Fit",
+    strengths: "Pontos Fortes",
+    evidence: "Evidências",
+    considerations: "Considerações",
+    interviewTopics: "Tópicos de Entrevista",
+    noConcerns: "Nenhuma preocupação significativa identificada.",
+    ctaText: "Quer discutir esta avaliação ou explorar um cenário específico?",
+    ctaButton: "Enviar mensagem ao César →",
+    roleGridIntro: "Selecione uma função para gerar uma avaliação de fit estruturada — pontos fortes, evidências, considerações e tópicos de entrevista.",
+    quickInsights: "Insights Rápidos",
+    scoreLabelExcellent: "Excelente fit",
+    scoreLabelStrong: "Forte fit",
+    scoreLabelGood: "Bom fit",
+    scoreLabelPartial: "Fit parcial",
+    quickExec: "Executivo",
+    quickImpact: "Impacto",
+    quickCredentials: "Credenciais",
+    quickCareer: "Carreira",
+  },
 };
 
 const es: Dict = {
@@ -1319,6 +1382,27 @@ const es: Dict = {
     dialogRiskLabel: "Riesgo",
     dialogAvailLabel: "Disponible",
     dialogVerifiedLabel: "Verificadas",
+  },
+  recruiterMode: {
+    backToRoles: "← Todos los roles",
+    fitEvaluation: "Evaluación de Fit",
+    strengths: "Fortalezas",
+    evidence: "Evidencia",
+    considerations: "Consideraciones",
+    interviewTopics: "Temas de Entrevista",
+    noConcerns: "No se identificaron preocupaciones significativas.",
+    ctaText: "¿Quiere discutir esta evaluación o explorar un escenario específico?",
+    ctaButton: "Escribir a César →",
+    roleGridIntro: "Seleccione un rol para generar una evaluación de fit estructurada — fortalezas, evidencia, consideraciones y temas de entrevista.",
+    quickInsights: "Insights Rápidos",
+    scoreLabelExcellent: "Excelente fit",
+    scoreLabelStrong: "Fuerte fit",
+    scoreLabelGood: "Buen fit",
+    scoreLabelPartial: "Fit parcial",
+    quickExec: "Ejecutivo",
+    quickImpact: "Impacto",
+    quickCredentials: "Credenciales",
+    quickCareer: "Carrera",
   },
 };
 
@@ -1696,6 +1780,27 @@ const fr: Dict = {
     dialogAvailLabel: "Disponible",
     dialogVerifiedLabel: "Vérifiées",
   },
+  recruiterMode: {
+    backToRoles: "← Tous les rôles",
+    fitEvaluation: "Évaluation Fit",
+    strengths: "Points Forts",
+    evidence: "Preuves",
+    considerations: "Considérations",
+    interviewTopics: "Sujets d'Entretien",
+    noConcerns: "Aucune préoccupation significative identifiée.",
+    ctaText: "Vous souhaitez discuter de cette évaluation ou explorer un scénario spécifique ?",
+    ctaButton: "Écrire à César →",
+    roleGridIntro: "Sélectionnez un rôle pour générer une évaluation fit structurée — points forts, preuves, considérations et sujets d'entretien.",
+    quickInsights: "Aperçus Rapides",
+    scoreLabelExcellent: "Excellent fit",
+    scoreLabelStrong: "Fort fit",
+    scoreLabelGood: "Bon fit",
+    scoreLabelPartial: "Fit partiel",
+    quickExec: "Exécutif",
+    quickImpact: "Impact",
+    quickCredentials: "Références",
+    quickCareer: "Carrière",
+  },
 };
 
 const zh: Dict = {
@@ -2071,6 +2176,27 @@ const zh: Dict = {
     dialogRiskLabel: "风险",
     dialogAvailLabel: "可用",
     dialogVerifiedLabel: "已验证",
+  },
+  recruiterMode: {
+    backToRoles: "← 所有职位",
+    fitEvaluation: "匹配度评估",
+    strengths: "优势",
+    evidence: "证明",
+    considerations: "注意事项",
+    interviewTopics: "面试话题",
+    noConcerns: "未发现重大顾虑。",
+    ctaText: "想讨论此评估或探讨特定场景？",
+    ctaButton: "发送消息给 César →",
+    roleGridIntro: "选择职位以生成结构化匹配度评估：优势、证明、注意事项及面试话题。",
+    quickInsights: "快速洞察",
+    scoreLabelExcellent: "优秀匹配",
+    scoreLabelStrong: "强力匹配",
+    scoreLabelGood: "良好匹配",
+    scoreLabelPartial: "部分匹配",
+    quickExec: "执行摘要",
+    quickImpact: "业务影响",
+    quickCredentials: "资质证书",
+    quickCareer: "职业历程",
   },
 };
 
