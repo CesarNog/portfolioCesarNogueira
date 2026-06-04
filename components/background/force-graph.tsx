@@ -88,6 +88,20 @@ export function ForceGalaxy({
   const W = 520;
   const H = 400;
 
+  // On mobile (≤768px) cap nodes to reduce DOM count below 1000
+  const visibleGalaxy = useMemo(() => {
+    if (typeof window !== "undefined" && window.innerWidth <= 768) {
+      // Keep one representative node per group — prioritise high-value nodes
+      const seen = new Set<string>();
+      return galaxy.filter(n => {
+        if (seen.has(n.group)) return false;
+        seen.add(n.group);
+        return true;
+      });
+    }
+    return galaxy;
+  }, []);
+
   const { positions, cx, cy } = useMemo(() => computeLayout(W, H), []);
   const links = LINK_PAIRS.filter(([s, t]) => positions[s] && positions[t]);
 
@@ -192,7 +206,7 @@ export function ForceGalaxy({
       })}
 
       {/* ── Nodes ──────────────────────────────────────────────────── */}
-      {galaxy.map((node, idx) => {
+      {visibleGalaxy.map((node, idx) => {
         const pos = positions[node.id];
         if (!pos) return null;
         const accent = ACCENT[galaxyGroups[node.group]?.accent ?? "blue"];
