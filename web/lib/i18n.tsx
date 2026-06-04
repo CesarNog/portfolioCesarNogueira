@@ -11,12 +11,12 @@ import {
 } from "react";
 
 export type Lang = "en" | "pt" | "es" | "fr" | "zh";
-export const LANGS: { code: Lang; label: string; name: string }[] = [
-  { code: "en", label: "EN", name: "English" },
-  { code: "pt", label: "PT", name: "Português (BR)" },
-  { code: "es", label: "ES", name: "Español" },
-  { code: "fr", label: "FR", name: "Français" },
-  { code: "zh", label: "中文", name: "中文" },
+export const LANGS: { code: Lang; label: string; name: string; flag: string }[] = [
+  { code: "en", label: "EN", name: "English",       flag: "🇬🇧" },
+  { code: "pt", label: "PT", name: "Português (BR)", flag: "🇧🇷" },
+  { code: "es", label: "ES", name: "Español",        flag: "🇪🇸" },
+  { code: "fr", label: "FR", name: "Français",       flag: "🇫🇷" },
+  { code: "zh", label: "中文", name: "中文",           flag: "🇨🇳" },
 ];
 
 type SectionCopy = { label: string; title: string; intro?: string };
@@ -500,7 +500,7 @@ const pt: Dict = {
     capabilities: "Competências",
     trust: "Confiança",
     global: "Global",
-    contact: "Contacto",
+    contact: "Contato",
   },
   hero: {
     available: "Disponível para consultoria global",
@@ -562,7 +562,7 @@ const pt: Dict = {
       label: "Paisagem Tecnológica",
       title: "Uma galáxia de engenharia, não uma lista de crachás",
       intro:
-        "Um grafo dinâmico de toda a stack: clouds, orquestração, CI/CD, dados e FinOps. Arraste, faça zoom e explore as ligações.",
+        "Um grafo dinâmico de toda a stack: clouds, orquestração, CI/CD, dados e FinOps. Arraste, use zoom e explore as conexões.",
     },
     finops: {
       label: "Engenharia de Custos Cloud",
@@ -582,7 +582,7 @@ const pt: Dict = {
     },
     contact: {
       label: "Iniciar Conversa",
-      title: "Diga-me o que está a construir",
+      title: "Diga-me o que está construindo",
       intro:
         "Arquitetura cloud, engenharia de plataformas, FinOps, infraestrutura de IA: se o trabalho é sério, quero saber.",
     },
@@ -600,8 +600,8 @@ const pt: Dict = {
     },
     {
       title: "O foco",
-      headline: "Plataformas que as equipas adoram. Custos que baixam.",
-      body: "Multi-cloud em GCP, AWS, Azure e OCI. Kubernetes, Terraform, CI/CD. Governação de custos. Infraestrutura preparada para IA. Ambientes regulados e à escala empresarial onde os riscos são reais.",
+      headline: "Plataformas que as equipes adoram. Custos que baixam.",
+      body: "Multi-cloud em GCP, AWS, Azure e OCI. Kubernetes, Terraform, CI/CD. Governação de custos. Infraestrutura preparada para IA. Ambientes regulados e em escala empresarial onde os riscos são reais.",
     },
     {
       title: "A parceria",
@@ -625,19 +625,19 @@ const pt: Dict = {
       "Sou o Assistente de Carreira IA do Cesar. Conheço todo o seu percurso. Pergunte o que uma decisão de contratação precisa: senioridade, escala, liderança, impacto em custos, certificações ou disponibilidade. Experimente uma pergunta abaixo.",
     suggested: "Sugestões para recrutadores",
     placeholder: "Pergunte sobre a adequação do Cesar ao seu cargo…",
-    thinking: "A pensar…",
+    thinking: "Pensando…",
     followUp: "Continuar",
     sourceLabel: "Com base no perfil",
   },
   portraitCaption: "São Paulo 🇧🇷 → Vila Real 🇵🇹",
   contact: {
     briefingTitle: "Vamos trabalhar juntos",
-    briefingDesc: "Arquitetura cloud, engenharia de plataformas, DevOps, FinOps ou infraestrutura de IA. Diga-me o que está a construir e exploremos como trabalhar juntos.",
+    briefingDesc: "Arquitetura cloud, engenharia de plataformas, DevOps, FinOps ou infraestrutura de IA. Diga-me o que está construindo e exploremos como trabalhar juntos.",
     emailCta: "Enviar mensagem ao Cesar",
-    downloadCv: "Descarregar CV",
+    downloadCv: "Baixar CV",
     availability: "Disponível para projetos internacionais",
     responseTime: "Responde normalmente em 24h",
-    contactQuote: "Cada projeto em que trabalhei foi a infraestrutura crítica de alguém: a plataforma de pagamentos de um banco, o sistema de operações de uma companhia aérea, a espinha dorsal de dados de uma empresa de media. Tomo essa responsabilidade a sério. Se está a construir algo que importa, gostaria de ouvir.",
+    contactQuote: "Cada projeto em que trabalhei foi a infraestrutura crítica de alguém: a plataforma de pagamentos de um banco, o sistema de operações de uma companhia aérea, a espinha dorsal de dados de uma empresa de media. Tomo essa responsabilidade a sério. Se está construindo algo que importa, gostaria de ouvir.",
     formTitle: "Enviar mensagem ao Cesar",
     formSubtitle: "Responde em 24h",
     formName: "Nome",
@@ -647,9 +647,9 @@ const pt: Dict = {
     formNamePlaceholder: "O seu nome",
     formEmailPlaceholder: "voce@empresa.com",
     formSubjectPlaceholder: "Proposta de projeto, oportunidade…",
-    formMessagePlaceholder: "Diga ao Cesar o que está a construir e como ele pode ajudar…",
+    formMessagePlaceholder: "Diga ao Cesar o que está construindo e como ele pode ajudar…",
     formSend: "Enviar mensagem",
-    formSending: "A enviar…",
+    formSending: "Enviando…",
     formCancel: "Cancelar",
     formSuccess: "Mensagem enviada",
     formSuccessDesc: "O Cesar responderá em 24 horas.",
@@ -670,7 +670,7 @@ const pt: Dict = {
     lessons: "O que aprendi",
     aiFaqNote: "// O Smart AI FAQ neste site é uma integração de IA. Pergunte-lhe tudo sobre a adequação do Cesar ao seu cargo.",
     trustCompanies: "Empresas",
-    trustIndustries: "Sectores",
+    trustIndustries: "Setores",
     trustClouds: "Plataformas Cloud",
     challenge: "Desafio",
     action: "Ação",
@@ -691,16 +691,16 @@ const pt: Dict = {
     deliveryType: "Tipo",
   },
   palette: {
-    placeholder: "Pesquisar secções, competências, contacto…",
+    placeholder: "Pesquisar seções, competências, contato…",
     noResults: "Sem resultados.",
     ariaClose: "Fechar",
-    groups: { navigate: "Navegar", actions: "Ações", contact: "Contacto" },
+    groups: { navigate: "Navegar", actions: "Ações", contact: "Contato" },
     home: "Início",
     darkTheme: "Tema escuro",
     lightTheme: "Tema claro",
     openFaq: "Abrir Smart AI FAQ",
     emailCesar: "Enviar email ao Cesar",
-    downloadCv: "Descarregar CV",
+    downloadCv: "Baixar CV",
     search: "Pesquisar",
     navigate: "Navegar",
     commandPalette: "Paleta de comandos",
@@ -709,9 +709,9 @@ const pt: Dict = {
     "Por que o Cesar é forte candidato para funções sénior em cloud?",
     "Que poupanças mensuráveis em cloud o Cesar já gerou?",
     "Mostrar experiência em produção com Kubernetes",
-    "Como o Cesar aborda FinOps à escala empresarial?",
+    "Como o Cesar aborda FinOps em escala empresarial?",
     "Que certificações GCP e experiência prática tem o Cesar?",
-    "O Cesar liderou equipas ou iniciativas cloud de grande escala?",
+    "O Cesar liderou equipes ou iniciativas cloud de grande escala?",
     "Em que indústrias reguladas o Cesar já entregou projetos?",
     "Mostrar arquitetura cloud para banca e aviação",
     "Como o Cesar aborda infraestrutura de IA e automação?",
@@ -731,7 +731,7 @@ const pt: Dict = {
       "Como o Cesar aborda a governação cloud?",
     ],
     leadership: [
-      "Mostrar exemplos de liderança de equipas",
+      "Mostrar exemplos de liderança de equipes",
       "O Cesar fundou ou liderou uma empresa?",
       "Mostrar experiência em pré-vendas técnicas",
       "Mostrar exemplos de entrega multifuncional",
@@ -769,7 +769,7 @@ const pt: Dict = {
     fallback: [
       "Que poupanças mensuráveis em cloud o Cesar gerou?",
       "Mostrar experiência Kubernetes em produção",
-      "O Cesar liderou equipas ou grandes iniciativas?",
+      "O Cesar liderou equipes ou grandes iniciativas?",
       "O Cesar está disponível para projetos internacionais?",
     ],
   },
@@ -789,7 +789,7 @@ const pt: Dict = {
       scale: "Estate multi-conta e multi-cloud",
       impact: ["~30% de redução de desperdício", "Etiquetagem e chargeback automatizados", "Visibilidade de custos para a gestão"],
       outcome: "Eliminou ~30% de desperdício em cloud e deu às finanças visibilidade em tempo real por equipa.",
-      lessons: "Governação antes de otimização. Não se pode cortar o que não se vê, e a parte mais difícil foi alinhar 12 equipas de plataforma numa taxonomia de etiquetagem unificada. As soluções técnicas são fáceis; o alinhamento organizacional é o verdadeiro trabalho.",
+      lessons: "Governança antes de otimização. Não se pode cortar o que não se vê, e a parte mais difícil foi alinhar 12 equipas de plataforma numa taxonomia de etiquetagem unificada. As soluções técnicas são fáceis; o alinhamento organizacional é o verdadeiro trabalho.",
       metricLabel: "desperdício em cloud",
     },
     "bigdata-platform": {
@@ -837,7 +837,7 @@ const es: Dict = {
     capabilities: "Competencias",
     trust: "Confianza",
     global: "Global",
-    contact: "Contacto",
+    contact: "Contato",
   },
   hero: {
     available: "Disponible para consultoría global",
@@ -1007,7 +1007,7 @@ const es: Dict = {
     lessons: "Lo que aprendí",
     aiFaqNote: "// El Smart AI FAQ de este sitio es una integración de IA. Pregúntale lo que necesites sobre la idoneidad de Cesar para tu puesto.",
     trustCompanies: "Empresas",
-    trustIndustries: "Sectores",
+    trustIndustries: "Setores",
     trustClouds: "Plataformas Cloud",
     challenge: "Desafío",
     action: "Acción",
@@ -1031,7 +1031,7 @@ const es: Dict = {
     placeholder: "Buscar secciones, habilidades, contacto…",
     noResults: "Sin resultados.",
     ariaClose: "Cerrar",
-    groups: { navigate: "Navegar", actions: "Acciones", contact: "Contacto" },
+    groups: { navigate: "Navegar", actions: "Acciones", contact: "Contato" },
     home: "Inicio",
     darkTheme: "Tema oscuro",
     lightTheme: "Tema claro",
