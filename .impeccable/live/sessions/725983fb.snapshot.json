@@ -1,0 +1,22 @@
+{
+  "id": "725983fb",
+  "phase": "completed",
+  "pageUrl": "/",
+  "sourceFile": "components/recruiter-mode.tsx",
+  "previewFile": null,
+  "previewMode": null,
+  "expectedVariants": 3,
+  "arrivedVariants": 3,
+  "visibleVariant": 3,
+  "paramValues": {},
+  "pendingEventSeq": null,
+  "pendingEvent": null,
+  "deliveryLease": null,
+  "checkpointRevision": 5,
+  "activeOwner": "456ac67c",
+  "sourceMarkers": {},
+  "fallbackMode": null,
+  "annotationArtifacts": [],
+  "diagnostics": [],
+  "updatedAt": "2026-06-04T03:26:44.727Z"
+}
