@@ -10,7 +10,6 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
 
   const current = LANGS.find((l) => l.code === lang) ?? LANGS[0];
 
-  // Close on outside click
   useEffect(() => {
     if (!open) return;
     const handler = (e: MouseEvent) => {
@@ -20,7 +19,6 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
     return () => document.removeEventListener("mousedown", handler);
   }, [open]);
 
-  // Close on Escape
   useEffect(() => {
     if (!open) return;
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
@@ -36,8 +34,9 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
         aria-expanded={open}
         aria-haspopup="listbox"
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-1 rounded-md border border-[var(--color-hairline)] px-2 py-1.5 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] hover:text-[var(--color-fg)]"
+        className="flex items-center gap-1.5 rounded-md border border-[var(--color-hairline)] px-2 py-1.5 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] hover:text-[var(--color-fg)]"
       >
+        <span aria-hidden className="text-[13px] leading-none">{current.flag}</span>
         {current.label}
         <svg
           width="10"
@@ -58,7 +57,7 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
         <div
           role="listbox"
           aria-label="Select language"
-          className="absolute right-0 top-full mt-1.5 min-w-[120px] overflow-hidden rounded-lg border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] py-1 shadow-xl"
+          className="absolute right-0 top-full mt-1.5 min-w-[148px] overflow-hidden rounded-lg border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] py-1 shadow-xl"
           style={{ zIndex: 200 }}
         >
           {LANGS.map((l) => {
@@ -70,15 +69,16 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
                 role="option"
                 aria-selected={active}
                 onClick={() => { setLang(l.code); setOpen(false); }}
-                className={`flex w-full items-center justify-between gap-3 px-3 py-2 text-left font-mono text-[11px] transition-colors ${
+                className={`flex w-full items-center gap-2.5 px-3 py-2 text-left font-mono text-[11px] transition-colors ${
                   active
                     ? "bg-[var(--color-surface-2)] text-[var(--color-fg)]"
                     : "text-[var(--color-fg-muted)] hover:bg-[var(--color-surface-2)] hover:text-[var(--color-fg)]"
                 }`}
               >
+                <span aria-hidden className="text-[14px] leading-none shrink-0">{l.flag}</span>
                 <span className="uppercase tracking-wider">{l.label}</span>
-                <span className="text-[10px] text-[var(--color-fg-subtle)] normal-case tracking-normal">{l.name}</span>
-                {active && <span className="ml-auto text-[var(--color-blue)]" aria-hidden>✓</span>}
+                <span className="ml-auto text-[10px] text-[var(--color-fg-subtle)] normal-case tracking-normal">{l.name}</span>
+                {active && <span className="text-[var(--color-blue)] shrink-0" aria-hidden>✓</span>}
               </button>
             );
           })}
