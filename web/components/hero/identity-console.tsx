@@ -43,39 +43,40 @@ export function IdentityConsole() {
       </div>
 
       {/* Desktop: side-by-side grid. Mobile: single column. */}
+      {/* Live variant 1 accepted: compressed hero — tighter vertical rhythm */}
       <div className="mx-auto max-w-[1600px] lg:grid lg:min-h-[100svh] lg:grid-cols-[48%_52%]">
         {/* Content column */}
         <div className="flex min-h-[100svh] flex-col justify-end pb-12 pt-20 sm:justify-end sm:pt-24 lg:justify-center lg:pb-16 lg:pt-28">
           <div className="px-6 lg:pl-8 xl:pl-16">
             <div className="max-w-[520px]">
-              {/* Availability badge */}
-              <m.div {...enter(DELAYS.badge)} className="mb-7 flex items-center gap-2.5">
+              {/* Availability badge — mb-5 (was mb-7) */}
+              <m.div {...enter(DELAYS.badge)} className="mb-5 flex items-center gap-2.5">
                 <span className="status-dot" aria-hidden />
-                <span className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--color-ok)]">
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-ok)]">
                   {t.hero.available}
                 </span>
               </m.div>
 
-              {/* Name */}
+              {/* Name — tighter size clamp, slightly tighter tracking */}
               <m.h1
                 {...enter(DELAYS.name)}
-                className="font-display text-[2.5rem] leading-[0.9] tracking-[-0.02em] text-[var(--color-fg)] sm:text-[clamp(3rem,5vw,5rem)] lg:text-[clamp(3.5rem,5vw,5.5rem)] [text-wrap:balance]"
+                className="font-display text-[clamp(3rem,5vw,5rem)] leading-[0.88] tracking-[-0.025em] text-[var(--color-fg)] [text-wrap:balance]"
               >
                 {siteConfig.firstName}
                 <br />
                 Nogueira.
               </m.h1>
 
-              {/* One-liner */}
+              {/* One-liner — mt-4 (was mt-6), slightly smaller + subtler */}
               <m.p
                 {...enter(DELAYS.desc)}
-                className="mt-6 text-base leading-relaxed text-[var(--color-fg-muted)] sm:text-lg"
+                className="mt-4 text-[0.9375rem] leading-[1.65] text-[var(--color-fg-subtle)]"
               >
                 {t.hero.desc}
               </m.p>
 
-              {/* CTAs — primary + scanner in same zone so recruiter sees evaluation option immediately */}
-              <m.div {...enter(DELAYS.ctas)} className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              {/* CTAs — mt-6 (was mt-8) */}
+              <m.div {...enter(DELAYS.ctas)} className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <div className="flex flex-wrap gap-3">
                   <Magnetic>
                     <m.a
@@ -96,20 +97,15 @@ export function IdentityConsole() {
                     </m.a>
                   </Magnetic>
                 </div>
-                {/* Scanner — same row on desktop, below on mobile.
-                    Must remain plain div (not m.div with filter) to avoid fixed-position containment bug. */}
+                {/* Scanner — plain div to avoid CSS filter fixed-position bug */}
                 <div>
                   <RecruiterScanner />
                 </div>
               </m.div>
 
-              {/* Stats — compact strip on mobile (above fold), full grid on sm+ */}
-              <m.div
-                {...enter(DELAYS.stats)}
-                className="mt-10 sm:mt-12"
-              >
-                {/* Mobile: compact inline strip so credibility numbers are above fold */}
-                <div className="flex flex-wrap gap-x-5 gap-y-1 border-t border-[var(--color-hairline)] pt-5 sm:hidden">
+              {/* Stats — mt-7 (was mt-10/12), tighter above-fold strip */}
+              <m.div {...enter(DELAYS.stats)} className="mt-7">
+                <div className="flex flex-wrap gap-x-5 gap-y-1 border-t border-[var(--color-hairline)] pt-4 sm:hidden">
                   {stats.map((s, i) => (
                     <span key={s.label} className="font-mono text-[11px] text-[var(--color-fg-muted)]">
                       <span className="font-semibold text-[var(--color-fg)]">
@@ -119,7 +115,6 @@ export function IdentityConsole() {
                     </span>
                   ))}
                 </div>
-                {/* sm+: full counter grid */}
                 <div className="hidden grid-cols-2 gap-x-6 gap-y-5 border-t border-[var(--color-hairline)] pt-7 sm:grid sm:grid-cols-4">
                   {stats.map((s, i) => (
                     <div key={s.label}>
@@ -142,7 +137,7 @@ export function IdentityConsole() {
           </div>
         </div>
 
-        {/* Photo column — desktop only, fades in with slight scale */}
+        {/* Photo column — desktop only */}
         <m.div
           className="relative hidden lg:block"
           aria-hidden
@@ -152,14 +147,7 @@ export function IdentityConsole() {
             transition: { duration: 1.1, delay: DELAYS.photo, ease: EASE.out },
           })}
         >
-          <Image
-            src="/portrait.jpg"
-            alt=""
-            fill
-            sizes="52vw"
-            className="object-cover object-top"
-            priority
-          />
+          <Image src="/portrait.jpg" alt="" fill sizes="52vw" className="object-cover object-top" priority />
           <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-surface-0)] via-[var(--color-surface-0)]/40 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[var(--color-surface-0)] to-transparent" />
         </m.div>
