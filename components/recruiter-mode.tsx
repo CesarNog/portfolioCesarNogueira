@@ -434,7 +434,7 @@ export function RecruiterMode() {
           <path d="M2 12h20" />
           <circle cx="12" cy="12" r="1" fill="currentColor" />
         </svg>
-        <span>Hiring Assistant</span>
+        <span>{t.recruiterMode.hiringAssistant}</span>
       </m.button>
 
       {/* ── Side panel ───────────────────────────────────────────────────── */}
@@ -467,7 +467,7 @@ export function RecruiterMode() {
               <div className="flex shrink-0 items-center justify-between border-b border-[var(--color-hairline)] px-5 py-4">
                 <div>
                   <p className="font-display text-[15px] font-semibold text-[var(--color-fg)]">
-                    AI Hiring Assistant
+                    {t.recruiterMode.hiringAssistant}
                   </p>
                   <p className="font-mono text-[10px] text-[var(--color-fg-subtle)]">
                     Evaluating César A. Nogueira · Principal Cloud &amp; FinOps
@@ -500,7 +500,7 @@ export function RecruiterMode() {
                         : "text-[var(--color-fg-subtle)] hover:text-[var(--color-fg-muted)]"
                     }`}
                   >
-                    {tid === "roles" ? "Role Fit" : "AI Chat"}
+                    {tid === "roles" ? t.recruiterMode.tabRoleFit : t.recruiterMode.tabAIChat}
                     {tab === tid && (
                       <m.span layoutId="tab-underline" className="absolute bottom-0 left-0 right-4 h-px bg-[var(--color-blue)]" />
                     )}
@@ -593,7 +593,7 @@ export function RecruiterMode() {
                           </p>
                         </div>
 
-                        <ReportSection icon="✓" label={t.recruiterMode.strengths} accent="var(--color-ok)" items={selectedRole.strengths} />
+                        <ReportSection icon="✓" label={t.recruiterMode.strengths} accent="var(--color-ok)" items={t.recruiterMode.roleStrengths[selectedRole.id] ?? selectedRole.strengths} />
                         <ReportSection icon="○" label={t.recruiterMode.evidence} accent="var(--color-blue)" items={selectedRole.evidence} />
 
                         {selectedRole.concerns.length > 0 ? (

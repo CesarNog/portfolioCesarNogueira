@@ -545,9 +545,9 @@ export const globalPresence = {
     },
     {
       id: "es", label: "Spain", city: "Madrid / Barcelona", lat: 40.42, lon: -3.7, hub: false,
-      subtitle: "Iberia Delivery",
-      context: "On-site engagements with Iberian banking and enterprise clients including Santander and AndBank.",
-      deliveryType: "On-site" as const,
+      subtitle: "Iberia — Remote",
+      context: "Remote advisory for Iberian banking and enterprise clients including Santander and AndBank.",
+      deliveryType: "Remote" as const,
       region: "europe" as const,
       period: "2016 – 2020",
     },
