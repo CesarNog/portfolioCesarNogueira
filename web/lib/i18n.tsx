@@ -280,10 +280,10 @@ const en: Dict = {
     off: "Recruiter Mode",
   },
   assistant: {
-    launch: "Smart AI FAQ",
+    launch: "Ask about César",
     close: "Close",
     header: "AI Career Assistant",
-    subtitle: "Knows everything about Cesar · answers from his real profile",
+    subtitle: "Knows everything about César · answers from his real profile",
     greeting:
       "I'm Cesar's AI Career Assistant. I know his entire background. Ask anything a hiring decision needs: seniority, scale, leadership, cost impact, certifications or availability. Try a question below.",
     suggested: "Suggested for recruiters",
@@ -361,7 +361,7 @@ const en: Dict = {
     home: "Home",
     darkTheme: "Toggle dark theme",
     lightTheme: "Toggle light theme",
-    openFaq: "Open Smart AI FAQ",
+    openFaq: "Ask about César (AI Career Assistant)",
     emailCesar: "Email Cesar",
     downloadCv: "Download CV",
     search: "Search",
