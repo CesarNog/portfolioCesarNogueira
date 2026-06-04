@@ -1,43 +1,55 @@
+# Cesar Augusto Nogueira — Portfolio
 
+**[cesarnogueira.tech](https://cesarnogueira.tech)**
 
-## **Cesar Augusto Nogueira - Professional Portfolio**
-Website: [https://cesarnogueira.tech](https://cesarnogueira.tech)
+Personal portfolio and consulting pitch for Cesar Augusto Nogueira — Principal Cloud Architect, FinOps specialist, DevOps leader.
 
+## Stack
 
-## Licensing
+- **Framework:** Next.js 16 (App Router), React 19, TypeScript
+- **Styling:** Tailwind CSS 4
+- **Animations:** Motion (Framer Motion)
+- **Output:** Static export (`next build` → `out/`)
+- **Hosting:** Netlify (with serverless functions)
+- **Domain:** cesarnogueira.tech
 
-CEEVEE theme is released under the Creative Commons Attribution 3.0 License
-(http://creativecommons.org/licenses/by/3.0/). 
+## Features
 
------------------------------------------------------------------------------------------------------
+- AI career assistant chatbot (Grok API via Netlify function)
+- Contact form (Resend API via Netlify function)
+- Command palette (`⌘K`)
+- Recruiter mode — tailored CV view
+- Language switcher — EN, PT, ES, FR, ZH
+- Dark/light theme toggle
+- Motion toggle (`prefers-reduced-motion` respected)
+- Fully static — no Next.js server runtime required
 
-## Theme
+## Sections
 
-To make sure that you have the latest version, 
-always download the template files directly at our website (http://www.styleshout.com/)
+Story · Experience Timeline · Trust / Clients · Projects · Certifications · FinOps · AI Infrastructure · Cloud Galaxy · Global Map · Testimonials · Contact Console · Capability Matrix
 
-------------------------------------------------------------------------------------------------------
+## Local Development
 
-## Fonts
- - Open Sans Font (http://www.google.com/fonts/specimen/Open+Sans)
- - Libre Baskerville Font (http://www.google.com/fonts/specimen/Libre+Baskerville) 
+```bash
+npm install --legacy-peer-deps
+npm run dev
+```
 
-## Icons
- - Font Awesome (http://fortawesome.github.io/Font-Awesome/)
- - Fontello (http://fontello.com/)
+## Build
 
-## Stock Photos and Graphics
- - UnSplash.com (http://unsplash.com/)
- - Morguefile.com (http://www.morguefile.com/)
+```bash
+npm run build   # outputs to out/
+```
 
-## Javascript Files
+## Environment Variables
 
- - JQuery (http://jquery.com/)
- - FlexSlider by Woothemes (http://www.woothemes.com/flexslider/)
- - Modernizr (http://modernizr.com/)
- - FitText (http://fittextjs.com/) 
- - Magnific Popup (http://dimsemenov.com/plugins/magnific-popup/)
- - jQuery Waypoints (http://imakewebthings.com/jquery-waypoints/)
+Set in Netlify dashboard (Site settings → Environment variables):
 
+| Variable | Purpose |
+|----------|---------|
+| `GROK_API_KEY` | AI career assistant (xai-...) |
+| `RESEND_API_KEY` | Contact form emails (re_...) |
 
---------------------------------------------------------------------------------------------------------- 
+## Deploy
+
+Netlify auto-deploys on push to `master`. Build command and publish directory are defined in `netlify.toml`.
