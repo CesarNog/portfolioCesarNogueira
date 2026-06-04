@@ -6,7 +6,7 @@
  * Nodes arranged by group in concentric sectors, edges drawn as curved paths.
  */
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState, useCallback } from "react";
 import { galaxy, galaxyGroups } from "@/lib/site-config";
 
 const LINK_PAIRS: [string, string][] = [
@@ -77,21 +77,82 @@ export function ForceGalaxy({
   activeGroup?: string | null;
 }) {
   const [hovered, setHovered] = useState<string | null>(null);
+  const [zoom, setZoom] = useState(1);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const dragging = useRef(false);
+  const lastPos = useRef({ x: 0, y: 0 });
+  const svgRef = useRef<SVGSVGElement>(null);
+
   const W = 520;
   const H = 400;
 
   const { positions, cx, cy } = useMemo(() => computeLayout(W, H), []);
-
   const links = LINK_PAIRS.filter(([s, t]) => positions[s] && positions[t]);
 
+  const MIN_ZOOM = 0.5;
+  const MAX_ZOOM = 3;
+
+  const handleWheel = useCallback((e: React.WheelEvent) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? 0.9 : 1.1;
+    setZoom(z => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, z * delta)));
+  }, []);
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    dragging.current = true;
+    lastPos.current = { x: e.clientX, y: e.clientY };
+    (e.target as Element).setPointerCapture(e.pointerId);
+  };
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!dragging.current) return;
+    const dx = (e.clientX - lastPos.current.x) / zoom;
+    const dy = (e.clientY - lastPos.current.y) / zoom;
+    lastPos.current = { x: e.clientX, y: e.clientY };
+    setPan(p => ({ x: p.x + dx, y: p.y + dy }));
+  };
+  const handlePointerUp = () => { dragging.current = false; };
+
+  const resetView = () => { setZoom(1); setPan({ x: 0, y: 0 }); };
+
   return (
-    <svg
-      viewBox={`0 0 ${W} ${H}`}
-      className={`h-full w-full ${className}`}
-      role="img"
-      aria-label="Technology stack graph"
-      style={{ overflow: "visible" }}
-    >
+    <div className={`relative h-full w-full ${className}`} style={{ overflow: "hidden" }}>
+      {/* Zoom controls */}
+      <div className="absolute bottom-3 right-3 z-10 flex flex-col gap-1" aria-label="Zoom controls">
+        <button
+          type="button"
+          onClick={() => setZoom(z => Math.min(MAX_ZOOM, z * 1.25))}
+          aria-label="Zoom in"
+          className="flex h-7 w-7 items-center justify-center rounded border border-[var(--color-hairline)] bg-[var(--color-surface-1)] font-mono text-[13px] text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] hover:text-[var(--color-fg)]"
+        >+</button>
+        <button
+          type="button"
+          onClick={() => setZoom(z => Math.max(MIN_ZOOM, z * 0.8))}
+          aria-label="Zoom out"
+          className="flex h-7 w-7 items-center justify-center rounded border border-[var(--color-hairline)] bg-[var(--color-surface-1)] font-mono text-[13px] text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] hover:text-[var(--color-fg)]"
+        >−</button>
+        {(zoom !== 1 || pan.x !== 0 || pan.y !== 0) && (
+          <button
+            type="button"
+            onClick={resetView}
+            aria-label="Reset view"
+            className="flex h-7 w-7 items-center justify-center rounded border border-[var(--color-hairline)] bg-[var(--color-surface-1)] font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] hover:text-[var(--color-fg)]"
+          >↺</button>
+        )}
+      </div>
+      <svg
+        ref={svgRef}
+        viewBox={`0 0 ${W} ${H}`}
+        className="h-full w-full"
+        role="img"
+        aria-label="Technology stack graph — scroll to zoom, drag to pan"
+        style={{ overflow: "visible", cursor: dragging.current ? "grabbing" : "grab", touchAction: "none" }}
+        onWheel={handleWheel}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerLeave={handlePointerUp}
+      >
+      <g transform={`scale(${zoom}) translate(${pan.x} ${pan.y})`}>
       {/* ── Edges ──────────────────────────────────────────────────── */}
       {links.map(([s, t]) => {
         const ps = positions[s];
@@ -152,6 +213,8 @@ export function ForceGalaxy({
           </g>
         );
       })}
+      </g>
     </svg>
+    </div>
   );
 }
