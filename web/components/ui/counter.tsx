@@ -60,7 +60,7 @@ export function Counter({
   }, [value, reduce, mounted]);
 
   return (
-    <span ref={ref}>
+    <span ref={ref} className="tabular-nums">
       {prefix}
       {display.toFixed(decimals)}
       {suffix}
