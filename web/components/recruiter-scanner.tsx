@@ -572,7 +572,14 @@ export function RecruiterScanner() {
           className="fixed inset-0 flex items-center justify-center pointer-events-none"
           style={{ zIndex: 211 }}
         >
-          {/* Draggable card — motion animate for entry so it doesn't conflict with drag transform */}
+          {/* Entry animation wrapper — separate from drag so they don't fight over transform */}
+          <m.div
+            initial={reduce ? false : { opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="pointer-events-auto"
+          >
+          {/* Drag target — no animate prop so drag owns the transform */}
           <m.div
             role="dialog"
             aria-label="Assessment results"
@@ -581,10 +588,8 @@ export function RecruiterScanner() {
             dragMomentum={false}
             dragElastic={0.05}
             dragConstraints={dialogBoundsRef}
-            initial={reduce ? { opacity: 1 } : { opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-auto overflow-hidden rounded-2xl border border-[var(--color-ok)]/25 bg-[var(--color-surface-1)] w-[min(100vw-32px,440px)]"
+            whileDrag={{ cursor: "grabbing" }}
+            className="overflow-hidden rounded-2xl border border-[var(--color-ok)]/25 bg-[var(--color-surface-1)] w-[min(100vw-32px,440px)]"
             style={{
               boxShadow: "0 0 60px -16px color-mix(in oklab, var(--color-ok) 28%, transparent), 0 32px 64px -16px rgba(0,0,0,0.6)",
             }}
@@ -673,6 +678,7 @@ export function RecruiterScanner() {
           <p className="px-5 pb-4 text-center font-mono text-[9px] text-[var(--color-fg-subtle)]">
             {s.dialogDismissHint}
           </p>
+          </m.div>
           </m.div>
         </div>
       </>
