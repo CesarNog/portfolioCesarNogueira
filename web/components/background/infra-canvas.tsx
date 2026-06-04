@@ -110,12 +110,16 @@ export function InfraCanvas() {
     };
     resize();
 
-    // ── Draw loop ─────────────────────────────────────────────────────────────
+    // ── Draw loop — throttled to ~24fps to reduce CPU/TBT ────────────────────
+    let frameCount = 0;
     const draw = (ts: number) => {
       state.raf = requestAnimationFrame(draw);
+      frameCount++;
+      // Skip every other frame (~24fps instead of 60fps), save CPU
+      if (frameCount % 2 !== 0) return;
 
       const now = ts / 1000;
-      const dt = state.last ? Math.min(now - state.last, 0.05) : 0;
+      const dt = state.last ? Math.min(now - state.last, 0.08) : 0;
       state.last = now;
 
       const W = window.innerWidth;
@@ -150,7 +154,7 @@ export function InfraCanvas() {
       }
 
       // ── Layer 2: Topographic contour lines ──────────────────────────────────
-      const steps = mobile ? 80 : 180;
+      const steps = mobile ? 40 : 80;
 
       for (const band of state.bands) {
         for (const w of band.waves) w.phase += w.speed * dt;
@@ -319,9 +323,17 @@ export function InfraCanvas() {
     document.documentElement.addEventListener("mouseleave", onMouseLeave);
     document.addEventListener("visibilitychange", onVisibility);
 
-    state.raf = requestAnimationFrame(draw);
+    // Defer start until page is idle — avoids blocking LCP/TTI
+    let idleCb: ReturnType<typeof requestIdleCallback> | undefined;
+    const startDraw = () => { state.raf = requestAnimationFrame(draw); };
+    if (typeof requestIdleCallback !== "undefined") {
+      idleCb = requestIdleCallback(startDraw, { timeout: 2000 });
+    } else {
+      setTimeout(startDraw, 200);
+    }
 
     return () => {
+      if (idleCb !== undefined) cancelIdleCallback(idleCb);
       cancelAnimationFrame(state.raf);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("scroll", onScroll);
