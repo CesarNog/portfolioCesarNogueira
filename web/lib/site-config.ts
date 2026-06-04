@@ -568,9 +568,9 @@ export const globalPresence = {
       period: "2021 – 2023",
     },
     {
-      id: "br", label: "Brazil", city: "São Paulo", lat: -23.55, lon: -46.63, hub: false,
-      subtitle: "Enterprise & Banking",
-      context: "Platform engineering for LATAM Airlines and major Brazilian banks. GCP, microservices, FinOps.",
+      id: "br", label: "Brazil 🇧🇷", city: "São Paulo", lat: -23.55, lon: -46.63, hub: false,
+      subtitle: "Home country · Enterprise & Banking",
+      context: "Born and started here. Platform engineering for LATAM Airlines and major Brazilian banks (everis/NTT Data, CI&T). GCP, microservices, FinOps.",
       deliveryType: "Hybrid" as const,
       region: "americas" as const,
       period: "2018 – 2021",
