@@ -87,11 +87,13 @@ export function SiteHeader() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--color-hairline)] bg-[var(--color-surface-0)]/80 backdrop-blur-md">
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
           <a href="#top" className="flex items-center gap-2.5 text-[var(--color-fg)] transition-opacity hover:opacity-80" aria-label={siteConfig.name}>
-            <Logo size={26} className="text-[var(--color-fg)] shrink-0" />
-            <span className="font-ui text-[13px] font-semibold tracking-tight hidden sm:block">
+            <Logo size={24} className="text-[var(--color-fg)] shrink-0" />
+            <span className="font-ui text-[13px] font-semibold tracking-tight hidden lg:block">
               César<span className="text-[var(--color-blue)]"> A.</span> Nogueira
             </span>
           </a>
+          {/* Vertical separator between logo and nav */}
+          <span className="hidden md:block h-4 w-px bg-[var(--color-hairline-strong)] mx-2" aria-hidden />
 
           {/* Desktop nav */}
           <nav aria-label="Main navigation" className="hidden items-center gap-6 md:flex">
@@ -110,14 +112,23 @@ export function SiteHeader() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
+            {/* Green availability dot */}
+            <span className="hidden lg:flex items-center gap-1.5 rounded-full border border-[var(--color-ok)]/30 bg-[var(--color-ok)]/8 px-2.5 py-1 mr-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-ok)] animate-pulse" aria-hidden />
+              <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-ok)]">Available</span>
+            </span>
+            {/* Compact search — icon + ⌘K */}
             <button
               type="button"
               onClick={openPalette}
               aria-label="Open command palette"
-              className="hidden items-center gap-2 rounded-md border border-[var(--color-hairline)] px-2.5 py-1.5 font-ui text-xs text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] sm:flex"
+              className="hidden items-center gap-1.5 rounded-md border border-[var(--color-hairline)] px-2 py-1.5 font-mono text-[11px] text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] hover:text-[var(--color-fg)] sm:flex"
             >
-              {t.palette.search} <kbd className="text-[var(--color-fg-muted)]">⌘K</kbd>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+              </svg>
+              <kbd className="text-[var(--color-fg-muted)]">⌘K</kbd>
             </button>
             <LanguageSwitcher className="hidden sm:flex" />
             <ThemeToggle />
