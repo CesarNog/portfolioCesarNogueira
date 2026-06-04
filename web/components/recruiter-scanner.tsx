@@ -444,12 +444,7 @@ export function RecruiterScanner() {
                 <div className="mx-auto max-w-2xl px-5 py-6 sm:px-8 sm:py-10">
 
                   {/* ── Candidate header ────────────────────────────── */}
-                  <m.div
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, ease: EASE.out }}
-                    className="mb-6 pb-5 border-b border-[var(--color-hairline)]"
-                  >
+                  <div className="mb-6 pb-5 border-b border-[var(--color-hairline)]">
                     <p className="mb-0.5 font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--color-fg-subtle)]">
                       Candidate Evaluation · {new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}
                     </p>
@@ -459,7 +454,7 @@ export function RecruiterScanner() {
                     <p className="font-mono text-[11px] text-[var(--color-blue)]">
                       Principal Cloud Architect · FinOps Specialist · UP2CLOUD · Vila Real, Portugal
                     </p>
-                  </m.div>
+                  </div>
 
                   {/* ── ACT 2: Competency scores ─────────────────────── */}
                   <div className="mb-6">
@@ -480,13 +475,7 @@ export function RecruiterScanner() {
 
                   {/* ── ACT 3: Verdict + impact + CTAs (below skills) ── */}
                   {phase === "report" && (
-                    <m.div
-                      key="report"
-                      initial={{ opacity: 0, y: 16 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: DUR.reveal, ease: EASE.spring }}
-                      className="mt-2"
-                    >
+                    <div className="mt-2">
                       {/* Separator */}
                       <div className="mb-6 flex items-center gap-3">
                         <div className="h-px flex-1 bg-[var(--color-hairline)]" />
@@ -522,30 +511,22 @@ export function RecruiterScanner() {
                       <div className="mb-5 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4">
                         <p className="mb-2.5 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Best-Fit Roles</p>
                         <div className="flex flex-wrap gap-2">
-                          {RECOMMENDED_ROLES.map((role, i) => (
-                            <m.span
+                          {RECOMMENDED_ROLES.map((role) => (
+                            <span
                               key={role}
-                              initial={{ opacity: 0, scale: 0.92 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{ duration: 0.25, delay: 0.1 + i * 0.06, ease: EASE.spring }}
                               className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-ok)]/25 bg-[var(--color-ok)]/8 px-3 py-1 font-mono text-[10px] text-[var(--color-ok)]"
                             >
                               <span aria-hidden>✓</span> {role}
-                            </m.span>
+                            </span>
                           ))}
                         </div>
                       </div>
-                    </m.div>
+                    </div>
                   )}
 
                   {/* ── Business impact + CTAs ───────── */}
                   {phase === "report" && (
-                    <m.div
-                      key="impact"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: DUR.reveal, delay: 0.2, ease: EASE.spring }}
-                    >
+                    <div>
                         {/* Business impact */}
                         <div className="mb-5 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4">
                           <p className="mb-3 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Business Impact</p>
@@ -598,7 +579,7 @@ export function RecruiterScanner() {
                         <p className="mt-5 text-center font-mono text-[10px] text-[var(--color-fg-subtle)]">
                           Expand any competency above to view projects, evidence and certifications
                         </p>
-                    </m.div>
+                    </div>
                   )}
 
                 </div>
