@@ -212,6 +212,10 @@ type Dict = {
     quickImpact: string;
     quickCredentials: string;
     quickCareer: string;
+    hiringAssistant: string;
+    tabRoleFit: string;
+    tabAIChat: string;
+    roleStrengths: Record<string, readonly string[]>;
   };
 };
 
@@ -609,6 +613,18 @@ const en: Dict = {
     quickImpact: "Impact",
     quickCredentials: "Credentials",
     quickCareer: "Career",
+    hiringAssistant: "Hiring Assistant",
+    tabRoleFit: "Role Fit",
+    tabAIChat: "AI Chat",
+    roleStrengths: {
+      "cloud-architect": ["2× Google Cloud Professional Architect (recertified)", "Multi-cloud at enterprise scale: GCP, AWS, Azure, OCI", "10+ years designing regulated cloud for banking and aviation", "Founded UP2CLOUD — delivers architecture as a service globally"],
+      "platform-engineer": ["Kubernetes (GKE) in production at Accenture, ZeroLight, everis", "Terraform for reproducible multi-cloud IaC", "Argo CD, GitHub Actions, GitLab CI — GitOps delivery pipelines", "Developer enablement: golden paths, self-service platforms"],
+      "devops-lead": ["CI/CD at scale: CloudBees, Jenkins, Spinnaker, GitHub Actions", "40% faster deployments via pipeline redesign at Randstad Digital", "Observability: New Relic, PagerDuty, StackStorm — 24/7 on-call", "Automated resource tagging, cost reporting, chargeback via Python"],
+      "finops-engineer": ["Dedicated FinOps Automation Engineer at Randstad Digital (3.5 years)", "~30% cloud waste reduction across GCP, AWS, Azure — documented", "Python automation against multi-cloud billing APIs", "CloudHealth, chargeback reporting, automated tagging at enterprise scale"],
+      "staff-engineer": ["Technology Architecture Manager at Accenture (technical + people leadership)", "Founder of UP2CLOUD — owns architecture decisions end-to-end", "Cross-functional: technical pre-sales, delivery, architecture, mentoring", "Trained 120+ Accenture engineers to Google Cloud certification"],
+      "ai-infrastructure": ["Infrastructure foundation for AI: GPU scheduling, cost-aware inference platforms", "LLM integrations and RAG over private knowledge bases (production)", "Platform engineering directly applicable to MLOps infrastructure", "AI automation: cost anomaly detection, ops automation agents"],
+      "consultant": ["Founder and principal of UP2CLOUD — B2B cloud consultancy (2022–present)", "International delivery: Portugal, Spain, Netherlands, UK, Brazil, US clients", "Enterprise track record: banking, aviation, media, staffing, automotive", "B2B model: fractional architecture, platform builds, FinOps engagements"],
+    },
   },
 };
 
@@ -1006,6 +1022,18 @@ const pt: Dict = {
     quickImpact: "Impacto",
     quickCredentials: "Credenciais",
     quickCareer: "Carreira",
+    hiringAssistant: "Assistente de Recrutamento",
+    tabRoleFit: "Fit do Cargo",
+    tabAIChat: "Chat IA",
+    roleStrengths: {
+      "cloud-architect": ["2× Google Cloud Professional Architect (recertificado)", "Multi-cloud em escala enterprise: GCP, AWS, Azure, OCI", "10+ anos projetando cloud regulada para bancos e aviação", "Fundador da UP2CLOUD — arquitetura como serviço globalmente"],
+      "platform-engineer": ["Kubernetes (GKE) em produção na Accenture, ZeroLight, everis", "Terraform para IaC multi-cloud reproduzível", "Argo CD, GitHub Actions, GitLab CI — pipelines GitOps", "Capacitação de desenvolvedores: golden paths, plataformas self-service"],
+      "devops-lead": ["CI/CD em escala: CloudBees, Jenkins, Spinnaker, GitHub Actions", "40% mais rápido em deploys com redesign de pipeline na Randstad Digital", "Observabilidade: New Relic, PagerDuty, StackStorm — on-call 24/7", "Tagging automático, relatórios de custo e chargeback em Python"],
+      "finops-engineer": ["Engenheiro de Automação FinOps dedicado na Randstad Digital (3,5 anos)", "~30% redução de desperdício cloud em GCP, AWS, Azure — documentado", "Automação Python contra APIs de faturação multi-cloud", "CloudHealth, relatórios de chargeback, tagging automatizado em escala enterprise"],
+      "staff-engineer": ["Gerente de Arquitetura de Tecnologia na Accenture (liderança técnica + pessoas)", "Fundador da UP2CLOUD — responsável por decisões de arquitetura ponta a ponta", "Multifuncional: pré-venda técnica, entrega, arquitetura, mentoria", "Treinou 120+ engenheiros da Accenture para certificação Google Cloud"],
+      "ai-infrastructure": ["Base de infraestrutura para IA: agendamento de GPU, plataformas de inferência com controlo de custos", "Integrações LLM e RAG sobre bases de conhecimento privadas (produção)", "Engenharia de plataforma diretamente aplicável a infraestrutura MLOps", "Automação IA: deteção de anomalias de custo, agentes de automação de operações"],
+      "consultant": ["Fundador e principal da UP2CLOUD — consultoria cloud B2B (2022–presente)", "Entrega internacional: Portugal, Espanha, Holanda, UK, Brasil, clientes dos EUA", "Histórico enterprise: banca, aviação, media, staffing, automóvel", "Modelo B2B: arquitetura fracionada, construção de plataformas, projetos FinOps"],
+    },
   },
 };
 
@@ -1403,6 +1431,18 @@ const es: Dict = {
     quickImpact: "Impacto",
     quickCredentials: "Credenciales",
     quickCareer: "Carrera",
+    hiringAssistant: "Asistente de Contratación",
+    tabRoleFit: "Ajuste al Rol",
+    tabAIChat: "Chat IA",
+    roleStrengths: {
+      "cloud-architect": ["2× Google Cloud Professional Architect (recertificado)", "Multi-cloud a escala enterprise: GCP, AWS, Azure, OCI", "10+ años diseñando cloud regulado para banca y aviación", "Fundador de UP2CLOUD — arquitectura como servicio globalmente"],
+      "platform-engineer": ["Kubernetes (GKE) en producción en Accenture, ZeroLight, everis", "Terraform para IaC multi-cloud reproducible", "Argo CD, GitHub Actions, GitLab CI — pipelines GitOps", "Habilitación de desarrolladores: golden paths, plataformas self-service"],
+      "devops-lead": ["CI/CD a escala: CloudBees, Jenkins, Spinnaker, GitHub Actions", "40% más rápido en deploys con rediseño de pipeline en Randstad Digital", "Observabilidad: New Relic, PagerDuty, StackStorm — on-call 24/7", "Etiquetado automático, reporting de costes y chargeback en Python"],
+      "finops-engineer": ["Ingeniero de Automatización FinOps dedicado en Randstad Digital (3,5 años)", "~30% reducción de residuos cloud en GCP, AWS, Azure — documentado", "Automatización Python contra APIs de facturación multi-cloud", "CloudHealth, reporting de chargeback, etiquetado automatizado a escala enterprise"],
+      "staff-engineer": ["Gerente de Arquitectura de Tecnología en Accenture (liderazgo técnico + personas)", "Fundador de UP2CLOUD — responsable de decisiones de arquitectura de punta a punta", "Multifuncional: preventa técnica, entrega, arquitectura, mentoría", "Formó a 120+ ingenieros de Accenture para certificación Google Cloud"],
+      "ai-infrastructure": ["Base de infraestructura para IA: programación de GPU, plataformas de inferencia conscientes del coste", "Integraciones LLM y RAG sobre bases de conocimiento privadas (producción)", "Ingeniería de plataforma directamente aplicable a infraestructura MLOps", "Automatización IA: detección de anomalías de coste, agentes de automatización de operaciones"],
+      "consultant": ["Fundador y principal de UP2CLOUD — consultoría cloud B2B (2022–presente)", "Entrega internacional: Portugal, España, Países Bajos, UK, Brasil, clientes de EE.UU.", "Historial enterprise: banca, aviación, medios, staffing, automoción", "Modelo B2B: arquitectura fraccionada, construcción de plataformas, proyectos FinOps"],
+    },
   },
 };
 
@@ -1800,6 +1840,18 @@ const fr: Dict = {
     quickImpact: "Impact",
     quickCredentials: "Références",
     quickCareer: "Carrière",
+    hiringAssistant: "Assistant Recrutement",
+    tabRoleFit: "Adéquation Poste",
+    tabAIChat: "Chat IA",
+    roleStrengths: {
+      "cloud-architect": ["2× Google Cloud Professional Architect (recertifié)", "Multi-cloud à l'échelle entreprise : GCP, AWS, Azure, OCI", "10+ ans de conception de cloud réglementé pour la banque et l'aviation", "Fondateur d'UP2CLOUD — architecture en tant que service mondial"],
+      "platform-engineer": ["Kubernetes (GKE) en production chez Accenture, ZeroLight, everis", "Terraform pour IaC multi-cloud reproductible", "Argo CD, GitHub Actions, GitLab CI — pipelines GitOps", "Autonomie des développeurs : golden paths, plateformes self-service"],
+      "devops-lead": ["CI/CD à l'échelle : CloudBees, Jenkins, Spinnaker, GitHub Actions", "40 % de déploiements plus rapides via la refonte de pipeline chez Randstad Digital", "Observabilité : New Relic, PagerDuty, StackStorm — astreinte 24/7", "Étiquetage automatique, reporting de coûts et chargeback en Python"],
+      "finops-engineer": ["Ingénieur FinOps Automation dédié chez Randstad Digital (3,5 ans)", "~30 % de réduction des gaspillages cloud sur GCP, AWS, Azure — documenté", "Automatisation Python sur les APIs de facturation multi-cloud", "CloudHealth, reporting de chargeback, étiquetage automatisé à l'échelle entreprise"],
+      "staff-engineer": ["Responsable Architecture Technologique chez Accenture (leadership technique + humain)", "Fondateur d'UP2CLOUD — pilote les décisions d'architecture de bout en bout", "Polyvalent : avant-vente technique, livraison, architecture, mentorat", "A formé 120+ ingénieurs Accenture à la certification Google Cloud"],
+      "ai-infrastructure": ["Base d'infrastructure pour l'IA : ordonnancement GPU, plateformes d'inférence optimisées en coûts", "Intégrations LLM et RAG sur des bases de connaissances privées (production)", "Ingénierie de plateforme directement applicable à l'infrastructure MLOps", "Automatisation IA : détection d'anomalies de coûts, agents d'automatisation des opérations"],
+      "consultant": ["Fondateur et principal d'UP2CLOUD — conseil cloud B2B (2022–présent)", "Livraison internationale : Portugal, Espagne, Pays-Bas, Royaume-Uni, Brésil, clients US", "Références entreprise : banque, aviation, médias, staffing, automobile", "Modèle B2B : architecture fractionnée, construction de plateformes, missions FinOps"],
+    },
   },
 };
 
@@ -2197,6 +2249,18 @@ const zh: Dict = {
     quickImpact: "业务影响",
     quickCredentials: "资质证书",
     quickCareer: "职业历程",
+    hiringAssistant: "招聘助手",
+    tabRoleFit: "岗位匹配",
+    tabAIChat: "AI 对话",
+    roleStrengths: {
+      "cloud-architect": ["双重 Google Cloud 专业架构师（已再认证）", "企业级多云：GCP、AWS、Azure、OCI", "10+ 年为银行和航空设计合规云", "UP2CLOUD 创始人——全球架构即服务"],
+      "platform-engineer": ["Accenture、ZeroLight、everis 生产 Kubernetes (GKE)", "Terraform 可重现多云 IaC", "Argo CD、GitHub Actions、GitLab CI — GitOps 交付管道", "开发者赋能：黄金路径、自助平台"],
+      "devops-lead": ["规模化 CI/CD：CloudBees、Jenkins、Spinnaker、GitHub Actions", "Randstad Digital 流水线重设计加速部署 40%", "可观测性：New Relic、PagerDuty、StackStorm — 24/7 值班", "Python 自动资源标记、成本报告与分摊"],
+      "finops-engineer": ["Randstad Digital 专职 FinOps 自动化工程师（3.5 年）", "~30% 云浪费减少（GCP、AWS、Azure——有记录）", "Python 自动化多云计费 API", "CloudHealth、分摊报告、企业级自动标记"],
+      "staff-engineer": ["Accenture 技术架构经理（技术与团队双重领导力）", "UP2CLOUD 创始人——端到端架构决策", "跨职能：技术售前、交付、架构、导师", "培训 120+ Accenture 工程师通过 Google Cloud 认证"],
+      "ai-infrastructure": ["AI 基础设施：GPU 调度、成本感知推理平台", "生产环境 LLM 集成与私有知识库 RAG", "平台工程直接适用于 MLOps 基础设施", "AI 自动化：成本异常检测、运维自动化代理"],
+      "consultant": ["UP2CLOUD 创始人兼主理人——B2B 云咨询（2022–至今）", "国际交付：葡萄牙、西班牙、荷兰、英国、巴西、美国客户", "企业履历：银行、航空、媒体、人力资源、汽车", "B2B 模式：部分架构服务、平台构建、FinOps 项目"],
+    },
   },
 };
 
