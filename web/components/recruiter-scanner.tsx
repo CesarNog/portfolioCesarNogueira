@@ -263,25 +263,33 @@ export function RecruiterScanner() {
     setSkillsVisible(Array(SKILLS.length).fill(false));
   };
 
-  // Phase machine
+  // Phase machine — all timers collected so cleanup removes every one of them
   useEffect(() => {
+    const timers: ReturnType<typeof setTimeout>[] = [];
+
     if (phase === "scanning") {
-      const t = setTimeout(() => setPhase("analyzing"), reduce ? 100 : 1600);
-      return () => clearTimeout(t);
+      timers.push(setTimeout(() => setPhase("analyzing"), reduce ? 50 : 1600));
     }
+
     if (phase === "analyzing") {
-      // Reveal skills one by one
       SKILLS.forEach((_, i) => {
-        const t = setTimeout(
-          () => setSkillsVisible((prev) => { const next = [...prev]; next[i] = true; return next; }),
+        timers.push(setTimeout(
+          () => setSkillsVisible((prev) => {
+            const next = [...prev];
+            next[i] = true;
+            return next;
+          }),
           reduce ? 0 : i * 220 + 200,
-        );
-        return () => clearTimeout(t);
+        ));
       });
-      // Transition to report after all skills revealed
-      const t = setTimeout(() => setPhase("report"), reduce ? 100 : SKILLS.length * 220 + 600);
-      return () => clearTimeout(t);
+      // Transition to report 600ms after last skill reveals
+      timers.push(setTimeout(
+        () => setPhase("report"),
+        reduce ? 50 : SKILLS.length * 220 + 600,
+      ));
     }
+
+    return () => timers.forEach(clearTimeout);
   }, [phase, reduce]);
 
   // Focus management

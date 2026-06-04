@@ -432,8 +432,8 @@ export function RecruiterMode() {
       {/* ── Floating trigger ─────────────────────────────────────────────── */}
       <m.button
         type="button"
-        onClick={openPanel}
-        aria-label="Open AI Hiring Assistant"
+        onClick={panelOpen ? closePanel : openPanel}
+        aria-label={panelOpen ? "Close AI Hiring Assistant" : "Open AI Hiring Assistant"}
         aria-haspopup="dialog"
         aria-expanded={panelOpen}
         aria-controls={PANEL_ID}
