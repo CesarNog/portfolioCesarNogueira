@@ -37,11 +37,11 @@ export function Section({
               {heading}
             </p>
           )}
-          <h2 className="font-display max-w-3xl text-3xl text-[var(--color-fg)] sm:text-4xl lg:text-6xl [text-wrap:balance]">
+          <h2 className="font-display max-w-3xl text-[clamp(1.875rem,4vw+0.5rem,3.75rem)] leading-[1.1] text-[var(--color-fg)] [text-wrap:balance]">
             {headline}
           </h2>
           {lead && (
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-[var(--color-fg-muted)] sm:text-[17px]">{lead}</p>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-[var(--color-fg-muted)] sm:text-[17px] [text-wrap:pretty]">{lead}</p>
           )}
         </Reveal>
         <div className="mt-12">{children}</div>

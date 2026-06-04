@@ -21,7 +21,7 @@ export function AiInfra() {
               <div className="flex items-start gap-3">
                 <span className="text-accent mt-0.5 font-mono text-sm">◇</span>
                 <div>
-                  <h3 className="text-base text-[var(--color-fg)]">{c.title}</h3>
+                  <h3 className="text-base text-[var(--color-fg)] [text-wrap:balance]">{c.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-[var(--color-fg-muted)]">
                     {c.desc}
                   </p>

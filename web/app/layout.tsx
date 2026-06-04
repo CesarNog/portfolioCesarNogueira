@@ -6,6 +6,7 @@ import { I18nProvider } from "@/lib/i18n";
 import { MotionProvider } from "@/components/motion-provider";
 import { siteConfig } from "@/lib/site-config";
 import { Analytics } from "@/components/analytics";
+import { ConsoleGreeting } from "@/components/ui/console-greeting";
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
@@ -68,6 +69,7 @@ export default function RootLayout({
         </form>
 
         <Analytics />
+        <ConsoleGreeting />
 
         <ThemeProvider>
           <I18nProvider>

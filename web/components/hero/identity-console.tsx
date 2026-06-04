@@ -1,6 +1,6 @@
 "use client";
 
-import { m, useReducedMotion } from "motion/react";
+import { m, useMotionTemplate, useMotionValue, useReducedMotion } from "motion/react";
 import { siteConfig, stats } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
 import Image from "next/image";
@@ -15,6 +15,9 @@ const DELAYS = { badge: 0.1, name: 0.2, desc: 0.38, ctas: 0.52, stats: 0.68, pho
 export function IdentityConsole() {
   const reduce = useReducedMotion();
   const { t } = useI18n();
+  const mouseX = useMotionValue(-1000);
+  const mouseY = useMotionValue(-1000);
+  const spotlight = useMotionTemplate`radial-gradient(520px at ${mouseX}px ${mouseY}px, color-mix(in oklab, var(--color-blue) 5%, transparent) 0%, transparent 70%)`;
 
   const enter = (delay: number) =>
     reduce
@@ -26,7 +29,19 @@ export function IdentityConsole() {
         };
 
   return (
-    <section id="top" className="relative overflow-hidden">
+    <section
+      id="top"
+      className="relative overflow-hidden"
+      onMouseMove={reduce ? undefined : (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        mouseX.set(e.clientX - rect.left);
+        mouseY.set(e.clientY - rect.top);
+      }}
+      onMouseLeave={reduce ? undefined : () => {
+        mouseX.set(-1000);
+        mouseY.set(-1000);
+      }}
+    >
       {/* Mobile: portrait as background, content on top */}
       <div className="absolute inset-0 -z-10 lg:hidden" aria-hidden>
         <Image
@@ -35,11 +50,21 @@ export function IdentityConsole() {
           fill
           sizes="100vw"
           priority
+          loading="eager"
           className="object-cover object-top"
           style={{ opacity: 0.15 }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-surface-0)]/20 via-[var(--color-surface-0)]/80 to-[var(--color-surface-0)]" />
       </div>
+
+      {/* Cursor spotlight — follows mouse, GPU-only via motion values */}
+      {!reduce && (
+        <m.div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-10 lg:block hidden"
+          style={{ background: spotlight }}
+        />
+      )}
 
       {/* Desktop: side-by-side grid. Mobile: single column. */}
       {/* Live variant 1 accepted: compressed hero — tighter vertical rhythm */}
@@ -146,7 +171,7 @@ export function IdentityConsole() {
             transition: { duration: 1.1, delay: DELAYS.photo, ease: EASE.out },
           })}
         >
-          <Image src="/portrait.webp" alt="" fill sizes="52vw" className="object-cover object-top" priority />
+          <Image src="/portrait.webp" alt="" fill sizes="52vw" className="object-cover object-top" priority loading="eager" />
           {/* Live variant 2 accepted: gradient drift — boundary slowly oscillates */}
           <div className="hero-gradient-drift absolute inset-0" />
           <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[var(--color-surface-0)] to-transparent" />

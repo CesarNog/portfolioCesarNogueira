@@ -154,7 +154,7 @@ export function GlobalMap() {
               </span>
             </div>
 
-            <h3 className="font-display text-2xl text-[var(--color-fg)]">
+            <h3 className="font-display text-2xl text-[var(--color-fg)] [text-wrap:balance]">
               {activeMarker.label}
             </h3>
             <p className="mt-0.5 font-mono text-[11px] text-[var(--color-fg-subtle)]">

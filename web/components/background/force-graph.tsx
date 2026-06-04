@@ -6,7 +6,7 @@
  * Nodes arranged by group in concentric sectors, edges drawn as curved paths.
  */
 
-import { useMemo, useRef, useState, useCallback } from "react";
+import { useMemo, useRef, useState, useCallback, useEffect } from "react";
 import { galaxy, galaxyGroups } from "@/lib/site-config";
 
 const LINK_PAIRS: [string, string][] = [
@@ -79,6 +79,8 @@ export function ForceGalaxy({
   const [hovered, setHovered] = useState<string | null>(null);
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [revealed, setRevealed] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
   const lastPos = useRef({ x: 0, y: 0 });
   const svgRef = useRef<SVGSVGElement>(null);
@@ -88,6 +90,18 @@ export function ForceGalaxy({
 
   const { positions, cx, cy } = useMemo(() => computeLayout(W, H), []);
   const links = LINK_PAIRS.filter(([s, t]) => positions[s] && positions[t]);
+
+  // Trigger stagger reveal once on first viewport entry
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setRevealed(true); io.disconnect(); } },
+      { threshold: 0.15 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const MIN_ZOOM = 0.5;
   const MAX_ZOOM = 3;
@@ -115,7 +129,7 @@ export function ForceGalaxy({
   const resetView = () => { setZoom(1); setPan({ x: 0, y: 0 }); };
 
   return (
-    <div className={`relative h-full w-full ${className}`} style={{ overflow: "hidden" }}>
+    <div ref={containerRef} className={`relative h-full w-full ${className}`} style={{ overflow: "hidden" }}>
       {/* Zoom controls */}
       <div className="absolute bottom-3 right-3 z-10 flex flex-col gap-1" aria-label="Zoom controls">
         <button
@@ -154,41 +168,53 @@ export function ForceGalaxy({
       >
       <g transform={`scale(${zoom}) translate(${pan.x} ${pan.y})`}>
       {/* ── Edges ──────────────────────────────────────────────────── */}
-      {links.map(([s, t]) => {
+      {links.map(([s, t], idx) => {
         const ps = positions[s];
         const pt = positions[t];
         const sGroup = ps.group;
         const accent = ACCENT[galaxyGroups[sGroup]?.accent ?? "blue"];
         const dim = Boolean((activeGroup || hovered) &&
           activeGroup !== sGroup && hovered !== s && hovered !== t);
+        const delay = `${300 + idx * 12}ms`;
         return (
           <path
             key={`${s}-${t}`}
             d={quadraticPath(ps.x, ps.y, pt.x, pt.y, cx, cy)}
             stroke={accent}
             strokeWidth={0.8}
-            strokeOpacity={dim ? 0.04 : 0.18}
+            strokeOpacity={revealed ? (dim ? 0.04 : 0.18) : 0}
             fill="none"
+            style={{
+              transition: revealed ? `stroke-opacity 0.5s ease-out ${delay}` : "none",
+            }}
           />
         );
       })}
 
       {/* ── Nodes ──────────────────────────────────────────────────── */}
-      {galaxy.map((node) => {
+      {galaxy.map((node, idx) => {
         const pos = positions[node.id];
         if (!pos) return null;
         const accent = ACCENT[galaxyGroups[node.group]?.accent ?? "blue"];
         const isActive = hovered === node.id || activeGroup === node.group;
         const dim = Boolean((activeGroup || hovered) && !isActive);
         const r = isActive ? 5.5 : 3.5;
+        const delay = `${(idx * 22)}ms`;
 
         return (
           <g
             key={node.id}
-            style={{ cursor: "default" }}
+            style={{
+              cursor: "default",
+              opacity: revealed ? (dim ? 0.18 : 1) : 0,
+              transform: revealed ? "scale(1)" : "scale(0.4)",
+              transformOrigin: `${pos.x}px ${pos.y}px`,
+              transition: revealed
+                ? `opacity 0.45s cubic-bezier(0.16,1,0.3,1) ${delay}, transform 0.45s cubic-bezier(0.16,1,0.3,1) ${delay}`
+                : "none",
+            }}
             onMouseEnter={() => setHovered(node.id)}
             onMouseLeave={() => setHovered(null)}
-            opacity={dim ? 0.18 : 1}
           >
             {/* Halo */}
             {isActive && (

@@ -2,8 +2,18 @@
 
 import { Section } from "@/components/sections/section";
 import { Reveal } from "@/components/reveal";
+import { Counter } from "@/components/ui/counter";
 import { trust } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
+
+/** Parse "10+", "~30%", "4" into Counter props. */
+function parseSignal(val: string): { prefix: string; value: number; suffix: string } {
+  const prefix = val.startsWith("~") ? "~" : "";
+  const rest = prefix ? val.slice(1) : val;
+  const suffix = rest.endsWith("+") ? "+" : rest.endsWith("%") ? "%" : "";
+  const value = parseFloat(rest) || 0;
+  return { prefix, value, suffix };
+}
 
 export function Trust() {
   const { t } = useI18n();
@@ -20,14 +30,19 @@ export function Trust() {
         className="grid grid-cols-2 gap-px overflow-hidden rounded-lg sm:grid-cols-3"
         style={{ background: "var(--color-hairline)" }}
       >
-        {trust.signals.map((s) => (
-          <div key={s.label} className="bg-[var(--color-surface-1)] px-6 py-7 text-center">
-            <p className="font-display text-4xl text-[var(--color-fg)] sm:text-5xl">{s.value}</p>
-            <p className="mt-2 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-              {s.label}
-            </p>
-          </div>
-        ))}
+        {trust.signals.map((s) => {
+          const { prefix, value, suffix } = parseSignal(s.value);
+          return (
+            <div key={s.label} className="bg-[var(--color-surface-1)] px-6 py-7 text-center">
+              <p className="font-display text-4xl text-[var(--color-fg)] sm:text-5xl">
+                <Counter value={value} prefix={prefix} suffix={suffix} />
+              </p>
+              <p className="mt-2 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
+                {s.label}
+              </p>
+            </div>
+          );
+        })}
       </div>
 
       {/* Companies, industries, cloud — flat editorial rows, no cards */}
