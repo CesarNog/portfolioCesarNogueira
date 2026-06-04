@@ -15,8 +15,8 @@ const hanken = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken", d
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — ${siteConfig.shortRole}`,
-    template: `%s — ${siteConfig.name}`,
+    default: `${siteConfig.name},${siteConfig.shortRole}`,
+    template: `%s,${siteConfig.name}`,
   },
   description: siteConfig.description,
   keywords: siteConfig.keywords,
@@ -26,14 +26,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: `${siteConfig.name} — ${siteConfig.shortRole}`,
+    title: `${siteConfig.name},${siteConfig.shortRole}`,
     description: siteConfig.description,
     siteName: siteConfig.name,
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: `${siteConfig.name} — ${siteConfig.shortRole}` }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: `${siteConfig.name},${siteConfig.shortRole}` }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — ${siteConfig.shortRole}`,
+    title: `${siteConfig.name},${siteConfig.shortRole}`,
     description: siteConfig.description,
     images: ["/opengraph-image"],
   },
@@ -52,9 +52,9 @@ export default function RootLayout({
         className={`${geist.variable} ${geistMono.variable} ${interTight.variable} ${hanken.variable} tracking-tight-body antialiased`}
         suppressHydrationWarning
       >
-        {/* Tab visibility script — pauses canvas loop when tab hidden */}
+        {/* Tab visibility script,pauses canvas loop when tab hidden */}
         <script dangerouslySetInnerHTML={{ __html: `(function(){var b=document.body;document.addEventListener('visibilitychange',function(){b.classList.toggle('tab-hidden',document.hidden);});})();` }} />
-        {/* Hidden Netlify form declaration — required for static export form detection */}
+        {/* Hidden Netlify form declaration,required for static export form detection */}
         <form name="contact" data-netlify="true" hidden aria-hidden="true">
           <input type="hidden" name="form-name" value="contact" />
           <input name="name" type="text" />
