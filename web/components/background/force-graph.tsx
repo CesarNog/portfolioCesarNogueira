@@ -1,27 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
-import { useReducedMotion } from "motion/react";
+/**
+ * ForceGalaxy — pure SVG radial node-link diagram.
+ * Zero dependencies beyond React. Replaces react-force-graph-2d (183KB).
+ * Nodes arranged by group in concentric sectors, edges drawn as curved paths.
+ */
+
+import { useMemo, useState } from "react";
 import { galaxy, galaxyGroups } from "@/lib/site-config";
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), { ssr: false }) as any;
-
-// Read CSS custom properties at runtime so colors adapt to dark/light mode
-function getCssVar(name: string): string {
-  if (typeof window === "undefined") return "#3b82f6";
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || "#3b82f6";
-}
-
-function getAccent(key: string): string {
-  const map: Record<string, string> = {
-    blue: "--color-blue",
-    cyan: "--color-cyan",
-    orange: "--color-orange",
-  };
-  return getCssVar(map[key] ?? "--color-blue");
-}
 
 const LINK_PAIRS: [string, string][] = [
   ["gcp", "k8s"], ["aws", "k8s"], ["azure", "k8s"],
@@ -37,19 +23,51 @@ const LINK_PAIRS: [string, string][] = [
   ["gha", "terraform"], ["gitlab", "terraform"],
 ];
 
-type GNode = {
-  id: string;
-  label: string;
-  group: string;
-  color: string;
-  x?: number;
-  y?: number;
+const ACCENT: Record<string, string> = {
+  blue:   "var(--color-blue)",
+  cyan:   "var(--color-cyan)",
+  orange: "var(--color-orange)",
 };
 
-type GLink = {
-  source: string | GNode;
-  target: string | GNode;
-};
+// Groups and their radial sector angles
+const GROUP_ORDER = ["cloud", "platform", "cicd", "data", "finops", "code"];
+
+function computeLayout(W: number, H: number) {
+  const cx = W / 2;
+  const cy = H / 2;
+  const R = Math.min(W, H) * 0.38;
+
+  const groups = GROUP_ORDER;
+  const sectorAngle = (2 * Math.PI) / groups.length;
+
+  const positions: Record<string, { x: number; y: number; group: string }> = {};
+
+  groups.forEach((group, gi) => {
+    const groupNodes = galaxy.filter(n => n.group === group);
+    const basAngle = gi * sectorAngle - Math.PI / 2;
+    groupNodes.forEach((node, ni) => {
+      const spread = (ni - (groupNodes.length - 1) / 2) * 0.22;
+      const angle = basAngle + spread;
+      const r = R + (ni % 2 === 0 ? 0 : 18);
+      positions[node.id] = {
+        x: cx + Math.cos(angle) * r,
+        y: cy + Math.sin(angle) * r,
+        group: node.group,
+      };
+    });
+  });
+
+  return { positions, cx, cy };
+}
+
+function quadraticPath(x1: number, y1: number, x2: number, y2: number, cx: number, cy: number): string {
+  // Control point pulled slightly toward center for a gentle curve
+  const mx = (x1 + x2) / 2;
+  const my = (y1 + y2) / 2;
+  const qx = mx + (cx - mx) * 0.15;
+  const qy = my + (cy - my) * 0.15;
+  return `M ${x1} ${y1} Q ${qx} ${qy} ${x2} ${y2}`;
+}
 
 export function ForceGalaxy({
   className = "",
@@ -58,115 +76,82 @@ export function ForceGalaxy({
   className?: string;
   activeGroup?: string | null;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [dims, setDims] = useState({ w: 0, h: 0 });
   const [hovered, setHovered] = useState<string | null>(null);
-  const reduce = useReducedMotion();
+  const W = 520;
+  const H = 400;
 
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver((entries) => {
-      const { width, height } = entries[0].contentRect;
-      setDims({ w: Math.floor(width), h: Math.floor(height) });
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
+  const { positions, cx, cy } = useMemo(() => computeLayout(W, H), []);
 
-  const graphData = {
-    nodes: galaxy.map((n) => ({
-      id: n.id,
-      label: n.label,
-      group: n.group,
-      color: getAccent(galaxyGroups[n.group].accent),
-    })),
-    links: LINK_PAIRS.map(([s, t]) => ({ source: s, target: t })),
-  };
-
-  const paintNode = useCallback(
-    (node: GNode, ctx: CanvasRenderingContext2D, globalScale: number) => {
-      const highlight = hovered === node.id || activeGroup === node.group;
-      const dim = Boolean((activeGroup || hovered) && !highlight);
-      const r = highlight ? 5.5 : 3.5;
-
-      ctx.globalAlpha = dim ? 0.2 : 1;
-
-      ctx.beginPath();
-      ctx.arc(node.x ?? 0, node.y ?? 0, r, 0, 2 * Math.PI);
-      ctx.fillStyle = node.color;
-      ctx.fill();
-
-      if (highlight) {
-        ctx.beginPath();
-        ctx.arc(node.x ?? 0, node.y ?? 0, r + 4, 0, 2 * Math.PI);
-        ctx.strokeStyle = node.color + "44";
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-      }
-
-      const fontSize = Math.max(9 / globalScale, 7);
-      ctx.font = `${fontSize}px monospace`;
-      ctx.fillStyle = highlight
-        ? getCssVar("--color-fg")
-        : getCssVar("--color-fg-subtle");
-      ctx.textAlign = "center";
-      ctx.textBaseline = "top";
-      ctx.fillText(node.label, node.x ?? 0, (node.y ?? 0) + r + 3);
-      ctx.globalAlpha = 1;
-    },
-    [hovered, activeGroup],
-  );
-
-  const paintPointer = useCallback(
-    (node: GNode, paintColor: string, ctx: CanvasRenderingContext2D) => {
-      ctx.fillStyle = paintColor;
-      ctx.beginPath();
-      ctx.arc(node.x ?? 0, node.y ?? 0, 12, 0, 2 * Math.PI);
-      ctx.fill();
-    },
-    [],
-  );
-
-  const getLinkColor = useCallback(
-    (link: GLink) => {
-      const src = typeof link.source === "object"
-        ? (link.source as GNode).group ?? "cloud"
-        : "cloud";
-      const color = getAccent(galaxyGroups[src]?.accent ?? "blue");
-      return color + "22";
-    },
-    [],
-  );
+  const links = LINK_PAIRS.filter(([s, t]) => positions[s] && positions[t]);
 
   return (
-    <div ref={containerRef} className={`h-full w-full ${className}`}>
-      {dims.w > 0 && (
-        <ForceGraph2D
-          graphData={graphData}
-          width={dims.w}
-          height={dims.h}
-          backgroundColor="transparent"
-          nodeCanvasObject={paintNode}
-          nodeCanvasObjectMode={() => "replace"}
-          nodePointerAreaPaint={paintPointer}
-          linkColor={getLinkColor}
-          linkWidth={0.8}
-          linkDirectionalParticles={reduce ? 0 : 2}
-          linkDirectionalParticleWidth={1.5}
-          linkDirectionalParticleSpeed={0.004}
-          linkDirectionalParticleColor={(link: GLink) => {
-            const src = typeof link.source === "object"
-              ? (link.source as GNode).group ?? "cloud"
-              : "cloud";
-            return getAccent(galaxyGroups[src]?.accent ?? "blue");
-          }}
-          cooldownTicks={reduce ? 0 : 100}
-          onNodeHover={(node: GNode | null) => setHovered(node ? node.id : null)}
-          enableZoomInteraction
-          enablePanInteraction
-        />
-      )}
-    </div>
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      className={`h-full w-full ${className}`}
+      role="img"
+      aria-label="Technology stack graph"
+      style={{ overflow: "visible" }}
+    >
+      {/* ── Edges ──────────────────────────────────────────────────── */}
+      {links.map(([s, t]) => {
+        const ps = positions[s];
+        const pt = positions[t];
+        const sGroup = ps.group;
+        const accent = ACCENT[galaxyGroups[sGroup]?.accent ?? "blue"];
+        const dim = Boolean((activeGroup || hovered) &&
+          activeGroup !== sGroup && hovered !== s && hovered !== t);
+        return (
+          <path
+            key={`${s}-${t}`}
+            d={quadraticPath(ps.x, ps.y, pt.x, pt.y, cx, cy)}
+            stroke={accent}
+            strokeWidth={0.8}
+            strokeOpacity={dim ? 0.04 : 0.18}
+            fill="none"
+          />
+        );
+      })}
+
+      {/* ── Nodes ──────────────────────────────────────────────────── */}
+      {galaxy.map((node) => {
+        const pos = positions[node.id];
+        if (!pos) return null;
+        const accent = ACCENT[galaxyGroups[node.group]?.accent ?? "blue"];
+        const isActive = hovered === node.id || activeGroup === node.group;
+        const dim = Boolean((activeGroup || hovered) && !isActive);
+        const r = isActive ? 5.5 : 3.5;
+
+        return (
+          <g
+            key={node.id}
+            style={{ cursor: "default" }}
+            onMouseEnter={() => setHovered(node.id)}
+            onMouseLeave={() => setHovered(null)}
+            opacity={dim ? 0.18 : 1}
+          >
+            {/* Halo */}
+            {isActive && (
+              <circle cx={pos.x} cy={pos.y} r={r + 5} fill={accent} opacity={0.15} />
+            )}
+            {/* Main dot */}
+            <circle cx={pos.x} cy={pos.y} r={r} fill={accent} />
+            {/* Label */}
+            <text
+              x={pos.x}
+              y={pos.y + r + 11}
+              textAnchor="middle"
+              style={{
+                fontSize: isActive ? 9 : 8,
+                fill: isActive ? "var(--color-fg)" : "var(--color-fg-subtle)",
+                fontFamily: "monospace",
+                pointerEvents: "none",
+              }}
+            >
+              {node.label}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
   );
 }
