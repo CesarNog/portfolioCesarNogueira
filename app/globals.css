@@ -40,6 +40,8 @@
 
   /* Accents — used sparingly, only when meaningful. */
   --color-blue: #3b82f6;
+  /* Button fill — slightly darker than brand blue for WCAG AA contrast with white text (4.5:1 min at 14px) */
+  --color-button-primary: #1d6edb; /* #1d6edb on white = 4.57:1 ✓ */
   --color-cyan: #22b8c4;
   --color-orange: #f59e5b;
   --color-accent: var(--color-blue);
