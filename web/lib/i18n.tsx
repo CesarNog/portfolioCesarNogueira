@@ -153,6 +153,45 @@ type Dict = {
     metricLabel: string;
   }>;
   capabilities: Array<{ area: string; level: string; note: string }>;
+  scanner: {
+    triggerLabel: string;
+    triggerTitle: string;
+    phaseScanning: string;
+    phaseAnalyzing: string;
+    phaseReport: string;
+    statusScanning: string;
+    statusAnalyzing: string;
+    statusReport: string;
+    closeLabel: string;
+    candidateEvalLabel: string;
+    competencyScores: string;
+    evidenceProjects: string;
+    evidenceTech: string;
+    evidenceProduction: string;
+    evidenceImpact: string;
+    evidenceCerts: string;
+    assessmentComplete: string;
+    hireRecommendation: string;
+    verdict: string;
+    overallFit: string;
+    fitValue: string;
+    riskLevel: string;
+    riskValue: string;
+    availability: string;
+    availabilityValue: string;
+    bestFitRoles: string;
+    businessImpact: string;
+    scheduleInterview: string;
+    emailCesar: string;
+    downloadCv: string;
+    expandHint: string;
+    dialogDismissHint: string;
+    dialogSendMessage: string;
+    dialogFitLabel: string;
+    dialogRiskLabel: string;
+    dialogAvailLabel: string;
+    dialogVerifiedLabel: string;
+  };
 };
 
 const en: Dict = {
@@ -490,6 +529,45 @@ const en: Dict = {
     { area: "Data Platforms",           level: "Advanced",       note: "Real-time pipelines and warehousing on Google Cloud." },
     { area: "AI Infrastructure",        level: "Growing focus",  note: "Scalable, observable, cost-aware platforms for GenAI workloads." },
   ],
+  scanner: {
+    triggerLabel: "Evaluate Cesar",
+    triggerTitle: "Evaluate Cesar for a role (⌘⇧E)",
+    phaseScanning: "Initializing candidate scan…",
+    phaseAnalyzing: "Analyzing candidate profile…",
+    phaseReport: "Strong match — cleared for interview · Available now",
+    statusScanning: "Scanning candidate record…",
+    statusAnalyzing: "Scoring {n} / {total} competencies",
+    statusReport: "{total}/{total} competencies verified · Hire signal: strong",
+    closeLabel: "Close",
+    candidateEvalLabel: "Candidate Evaluation",
+    competencyScores: "Competency Scores",
+    evidenceProjects: "Projects",
+    evidenceTech: "Technologies",
+    evidenceProduction: "Production",
+    evidenceImpact: "Impact",
+    evidenceCerts: "Certifications",
+    assessmentComplete: "Assessment Complete",
+    hireRecommendation: "Hire Recommendation",
+    verdict: "Proceed to Interview",
+    overallFit: "Overall Fit",
+    fitValue: "Strong Match",
+    riskLevel: "Risk Level",
+    riskValue: "Low",
+    availability: "Availability",
+    availabilityValue: "Now",
+    bestFitRoles: "Best-Fit Roles",
+    businessImpact: "Business Impact",
+    scheduleInterview: "Schedule Interview",
+    emailCesar: "Email César →",
+    downloadCv: "Download CV",
+    expandHint: "Expand any competency above to view projects, evidence and certifications",
+    dialogDismissHint: "Dismiss to review full competency breakdown",
+    dialogSendMessage: "Send a Message to César →",
+    dialogFitLabel: "Fit",
+    dialogRiskLabel: "Risk",
+    dialogAvailLabel: "Availability",
+    dialogVerifiedLabel: "Verified",
+  },
 };
 
 const pt: Dict = {
@@ -827,6 +905,45 @@ const pt: Dict = {
     { area: "Plataformas de Dados",     level: "Avançado",          note: "Pipelines em tempo real e armazenamento no Google Cloud." },
     { area: "Infraestrutura de IA",     level: "Foco crescente",    note: "Plataformas escaláveis, observáveis e conscientes de custos para workloads GenAI." },
   ],
+  scanner: {
+    triggerLabel: "Avaliar o Cesar",
+    triggerTitle: "Avaliar o Cesar para uma função (⌘⇧E)",
+    phaseScanning: "Iniciando análise do candidato…",
+    phaseAnalyzing: "Analisando perfil do candidato…",
+    phaseReport: "Forte compatibilidade — aprovado para entrevista · Disponível agora",
+    statusScanning: "Verificando registro do candidato…",
+    statusAnalyzing: "Avaliando {n} / {total} competências",
+    statusReport: "{total}/{total} competências verificadas · Sinal de contratação: forte",
+    closeLabel: "Fechar",
+    candidateEvalLabel: "Avaliação do Candidato",
+    competencyScores: "Pontuações por Competência",
+    evidenceProjects: "Projetos",
+    evidenceTech: "Tecnologias",
+    evidenceProduction: "Produção",
+    evidenceImpact: "Impacto",
+    evidenceCerts: "Certificações",
+    assessmentComplete: "Avaliação Concluída",
+    hireRecommendation: "Recomendação de Contratação",
+    verdict: "Avançar para Entrevista",
+    overallFit: "Compatibilidade Geral",
+    fitValue: "Alta Compatibilidade",
+    riskLevel: "Nível de Risco",
+    riskValue: "Baixo",
+    availability: "Disponibilidade",
+    availabilityValue: "Agora",
+    bestFitRoles: "Funções com Maior Compatibilidade",
+    businessImpact: "Impacto nos Negócios",
+    scheduleInterview: "Agendar Entrevista",
+    emailCesar: "Enviar mensagem ao César →",
+    downloadCv: "Baixar CV",
+    expandHint: "Expanda qualquer competência acima para ver projetos, evidências e certificações",
+    dialogDismissHint: "Fechar para revisar o detalhamento completo de competências",
+    dialogSendMessage: "Enviar uma Mensagem ao César →",
+    dialogFitLabel: "Fit",
+    dialogRiskLabel: "Risco",
+    dialogAvailLabel: "Disponível",
+    dialogVerifiedLabel: "Verificadas",
+  },
 };
 
 const es: Dict = {
@@ -1164,6 +1281,45 @@ const es: Dict = {
     { area: "Plataformas de Datos",      level: "Avanzado",           note: "Pipelines en tiempo real y almacenamiento en Google Cloud." },
     { area: "Infraestructura de IA",     level: "Foco creciente",     note: "Plataformas escalables, observables y conscientes del coste para cargas GenAI." },
   ],
+  scanner: {
+    triggerLabel: "Evaluar a Cesar",
+    triggerTitle: "Evaluar a Cesar para un puesto (⌘⇧E)",
+    phaseScanning: "Iniciando análisis del candidato…",
+    phaseAnalyzing: "Analizando perfil del candidato…",
+    phaseReport: "Fuerte compatibilidad — autorizado para entrevista · Disponible ahora",
+    statusScanning: "Verificando registro del candidato…",
+    statusAnalyzing: "Evaluando {n} / {total} competencias",
+    statusReport: "{total}/{total} competencias verificadas · Señal de contratación: fuerte",
+    closeLabel: "Cerrar",
+    candidateEvalLabel: "Evaluación del Candidato",
+    competencyScores: "Puntuaciones por Competencia",
+    evidenceProjects: "Proyectos",
+    evidenceTech: "Tecnologías",
+    evidenceProduction: "Producción",
+    evidenceImpact: "Impacto",
+    evidenceCerts: "Certificaciones",
+    assessmentComplete: "Evaluación Completada",
+    hireRecommendation: "Recomendación de Contratación",
+    verdict: "Proceder a Entrevista",
+    overallFit: "Compatibilidad General",
+    fitValue: "Alta Compatibilidad",
+    riskLevel: "Nivel de Riesgo",
+    riskValue: "Bajo",
+    availability: "Disponibilidad",
+    availabilityValue: "Ahora",
+    bestFitRoles: "Roles de Mayor Compatibilidad",
+    businessImpact: "Impacto en el Negocio",
+    scheduleInterview: "Programar Entrevista",
+    emailCesar: "Escribir a César →",
+    downloadCv: "Descargar CV",
+    expandHint: "Expanda cualquier competencia para ver proyectos, evidencia y certificaciones",
+    dialogDismissHint: "Cerrar para revisar el desglose completo de competencias",
+    dialogSendMessage: "Enviar un Mensaje a César →",
+    dialogFitLabel: "Fit",
+    dialogRiskLabel: "Riesgo",
+    dialogAvailLabel: "Disponible",
+    dialogVerifiedLabel: "Verificadas",
+  },
 };
 
 const fr: Dict = {
@@ -1501,6 +1657,45 @@ const fr: Dict = {
     { area: "Plateformes de Données",     level: "Avancé",           note: "Pipelines temps réel et entreposage sur Google Cloud." },
     { area: "Infrastructure IA",          level: "Focus croissant",  note: "Plateformes scalables, observables et économes pour les workloads GenAI." },
   ],
+  scanner: {
+    triggerLabel: "Évaluer César",
+    triggerTitle: "Évaluer César pour un poste (⌘⇧E)",
+    phaseScanning: "Initialisation de l'analyse du candidat…",
+    phaseAnalyzing: "Analyse du profil du candidat…",
+    phaseReport: "Forte adéquation — autorisé pour entretien · Disponible maintenant",
+    statusScanning: "Vérification du dossier candidat…",
+    statusAnalyzing: "Évaluation de {n} / {total} compétences",
+    statusReport: "{total}/{total} compétences vérifiées · Signal de recrutement : fort",
+    closeLabel: "Fermer",
+    candidateEvalLabel: "Évaluation du Candidat",
+    competencyScores: "Scores par Compétence",
+    evidenceProjects: "Projets",
+    evidenceTech: "Technologies",
+    evidenceProduction: "Production",
+    evidenceImpact: "Impact",
+    evidenceCerts: "Certifications",
+    assessmentComplete: "Évaluation Terminée",
+    hireRecommendation: "Recommandation de Recrutement",
+    verdict: "Procéder à l'Entretien",
+    overallFit: "Adéquation Globale",
+    fitValue: "Forte Adéquation",
+    riskLevel: "Niveau de Risque",
+    riskValue: "Faible",
+    availability: "Disponibilité",
+    availabilityValue: "Maintenant",
+    bestFitRoles: "Rôles les Plus Adaptés",
+    businessImpact: "Impact Business",
+    scheduleInterview: "Planifier l'Entretien",
+    emailCesar: "Écrire à César →",
+    downloadCv: "Télécharger le CV",
+    expandHint: "Développez n'importe quelle compétence pour voir projets, preuves et certifications",
+    dialogDismissHint: "Fermer pour consulter l'évaluation détaillée des compétences",
+    dialogSendMessage: "Envoyer un Message à César →",
+    dialogFitLabel: "Fit",
+    dialogRiskLabel: "Risque",
+    dialogAvailLabel: "Disponible",
+    dialogVerifiedLabel: "Vérifiées",
+  },
 };
 
 const zh: Dict = {
@@ -1838,6 +2033,45 @@ const zh: Dict = {
     { area: "数据平台",       level: "高级",      note: "Google Cloud上的实时管道与数据仓储。" },
     { area: "AI基础设施",     level: "重点发展",  note: "为GenAI工作负载构建可扩展、可观测、成本可控的平台。" },
   ],
+  scanner: {
+    triggerLabel: "评估 Cesar",
+    triggerTitle: "为职位评估 Cesar (⌘⇧E)",
+    phaseScanning: "正在初始化候选人扫描…",
+    phaseAnalyzing: "正在分析候选人档案…",
+    phaseReport: "高度匹配 — 已通过面试审核 · 现在可用",
+    statusScanning: "正在验证候选人记录…",
+    statusAnalyzing: "正在评估 {n} / {total} 项能力",
+    statusReport: "{total}/{total} 项能力已验证 · 招聘信号：强",
+    closeLabel: "关闭",
+    candidateEvalLabel: "候选人评估",
+    competencyScores: "能力评分",
+    evidenceProjects: "项目",
+    evidenceTech: "技术",
+    evidenceProduction: "生产环境",
+    evidenceImpact: "影响",
+    evidenceCerts: "认证",
+    assessmentComplete: "评估完成",
+    hireRecommendation: "招聘建议",
+    verdict: "进入面试环节",
+    overallFit: "总体匹配度",
+    fitValue: "高度匹配",
+    riskLevel: "风险等级",
+    riskValue: "低",
+    availability: "可用性",
+    availabilityValue: "立即可用",
+    bestFitRoles: "最佳匹配职位",
+    businessImpact: "业务影响",
+    scheduleInterview: "安排面试",
+    emailCesar: "发送消息给 César →",
+    downloadCv: "下载简历",
+    expandHint: "展开任意能力项以查看项目、证明和认证",
+    dialogDismissHint: "关闭以查看完整能力评估详情",
+    dialogSendMessage: "向 César 发送消息 →",
+    dialogFitLabel: "匹配",
+    dialogRiskLabel: "风险",
+    dialogAvailLabel: "可用",
+    dialogVerifiedLabel: "已验证",
+  },
 };
 
 const DICT: Record<Lang, Dict> = { en, pt, es, fr, zh };
