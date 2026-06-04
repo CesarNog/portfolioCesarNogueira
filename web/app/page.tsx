@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { SiteHeader } from "@/components/site-header";
 import { JsonLd } from "@/components/json-ld";
 import { IdentityConsole } from "@/components/hero/identity-console";
@@ -16,8 +17,12 @@ import { CommandPalette } from "@/components/command-palette";
 import { Assistant } from "@/components/chatbot/assistant";
 import { RecruiterMode } from "@/components/recruiter-mode";
 import { MotionToggle } from "@/components/motion-toggle";
-import { InfraCanvas } from "@/components/background/infra-canvas";
 import { siteConfig } from "@/lib/site-config";
+
+// Canvas background — ssr:false + deferred internally via requestIdleCallback
+const InfraCanvas = dynamic(
+  () => import("@/components/background/infra-canvas").then(m => m.InfraCanvas)
+);
 
 export default function Home() {
   return (
