@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: "/opengraph-image",
+        url: "/opengraph-image.png",
         width: 1200,
         height: 630,
         alt: OG_TITLE,
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     creator: "@cesarnog_eu",
     title: OG_TITLE,
     description: siteConfig.description,
-    images: [{ url: "/opengraph-image", alt: OG_TITLE }],
+    images: [{ url: "/opengraph-image.png", alt: OG_TITLE }],
   },
   robots: {
     index: true,
