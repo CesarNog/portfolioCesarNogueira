@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { m, useReducedMotion } from "motion/react";
 import { siteConfig } from "@/lib/site-config";
 import { EASE } from "@/lib/motion";
+import { useI18n } from "@/lib/i18n";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -141,7 +142,12 @@ function scoreColor(s: number) {
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
-function SkillBar({ skill, visible }: { skill: typeof SKILLS[number]; visible: boolean }) {
+type ScannerLabels = {
+  projects: string; technologies: string; production: string;
+  impact: string; certifications: string;
+};
+
+function SkillBar({ skill, visible, labels }: { skill: typeof SKILLS[number]; visible: boolean; labels: ScannerLabels }) {
   const [expanded, setExpanded] = useState(false);
   return (
     <div>
@@ -165,7 +171,6 @@ function SkillBar({ skill, visible }: { skill: typeof SKILLS[number]; visible: b
             animate={{ scaleX: visible ? skill.score / 100 : 0 }}
             transition={{ duration: 0.85, ease: EASE.out }}
           />
-          {/* Flash shimmer on completion */}
           {visible && (
             <span className="pointer-events-none absolute inset-0 translate-x-full animate-[shimmer_0.6s_0.85s_ease-out_forwards] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
           )}
@@ -174,17 +179,17 @@ function SkillBar({ skill, visible }: { skill: typeof SKILLS[number]; visible: b
 
       {expanded && (
         <div className="my-2 space-y-2.5 rounded-lg bg-[var(--color-surface-2)] p-4 text-left">
-          <EvidenceRow label="Projects" items={skill.evidence.projects} />
-          <EvidenceRow label="Technologies" items={skill.evidence.technologies} />
+          <EvidenceRow label={labels.projects} items={skill.evidence.projects} />
+          <EvidenceRow label={labels.technologies} items={skill.evidence.technologies} />
           <div>
-            <p className="mb-1 font-mono text-[9px] uppercase tracking-wider text-[var(--color-blue)]">Production</p>
+            <p className="mb-1 font-mono text-[9px] uppercase tracking-wider text-[var(--color-blue)]">{labels.production}</p>
             <p className="text-[12px] leading-relaxed text-[var(--color-fg-muted)]">{skill.evidence.production}</p>
           </div>
           <div>
-            <p className="mb-1 font-mono text-[9px] uppercase tracking-wider text-[var(--color-ok)]">Impact</p>
+            <p className="mb-1 font-mono text-[9px] uppercase tracking-wider text-[var(--color-ok)]">{labels.impact}</p>
             <p className="text-[12px] leading-relaxed text-[var(--color-fg-muted)]">{skill.evidence.impact}</p>
           </div>
-          <EvidenceRow label="Certifications" items={skill.evidence.certifications} accent="var(--color-orange)" />
+          <EvidenceRow label={labels.certifications} items={skill.evidence.certifications} accent="var(--color-orange)" />
         </div>
       )}
     </div>
@@ -226,6 +231,15 @@ export function RecruiterScanner() {
   const reduce = useReducedMotion();
   const bodyRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const { t } = useI18n();
+  const s = t.scanner;
+  const evidenceLabels: ScannerLabels = {
+    projects: s.evidenceProjects,
+    technologies: s.evidenceTech,
+    production: s.evidenceProduction,
+    impact: s.evidenceImpact,
+    certifications: s.evidenceCerts,
+  };
 
   const open = () => setPhase("scanning");
   const close = () => {
@@ -302,13 +316,13 @@ export function RecruiterScanner() {
         onClick={open}
         className="group relative inline-flex min-h-[44px] items-center gap-2.5 rounded-md border border-[var(--color-ok)]/40 bg-[var(--color-ok)]/5 px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-ok)] transition-all hover:border-[var(--color-ok)]/70 hover:bg-[var(--color-ok)]/10 hover:shadow-[0_0_16px_-6px_var(--color-ok)]"
         aria-haspopup="dialog"
-        title="Evaluate Cesar for a role (⌘⇧E)"
+        title={s.triggerTitle}
       >
         <span className="relative flex h-2 w-2 shrink-0" aria-hidden>
           <span className="absolute inset-0 animate-ping rounded-full bg-[var(--color-ok)] opacity-50" style={{ animationDuration: "1.8s" }} />
           <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-ok)]" />
         </span>
-        Evaluate Cesar
+        {s.triggerLabel}
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden className="opacity-60 transition-transform group-hover:translate-x-0.5">
           <polyline points="9 18 15 12 9 6" />
         </svg>
@@ -333,12 +347,12 @@ export function RecruiterScanner() {
             <span className="relative h-2 w-2 rounded-full bg-[var(--color-ok)]" />
           </span>
           <span className="truncate font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
-            {phase === "scanning" && "Initializing candidate scan…"}
-            {phase === "analyzing" && (currentSkill ? currentSkill.scoringLabel : "Analyzing candidate profile…")}
-            {phase === "report" && "Strong match — cleared for interview · Available now"}
+            {phase === "scanning" && s.phaseScanning}
+            {phase === "analyzing" && (currentSkill ? currentSkill.scoringLabel : s.phaseAnalyzing)}
+            {phase === "report" && s.phaseReport}
           </span>
         </div>
-        <button ref={closeBtnRef} type="button" onClick={close} aria-label="Close"
+        <button ref={closeBtnRef} type="button" onClick={close} aria-label={s.closeLabel}
           className="ml-4 flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-[var(--color-fg-subtle)] transition-colors hover:bg-[var(--color-surface-2)] hover:text-[var(--color-fg)]">
           ✕
         </button>
@@ -410,7 +424,7 @@ export function RecruiterScanner() {
             {/* Candidate header */}
             <div className="mb-6 pb-5 border-b border-[var(--color-hairline)]">
               <p className="mb-0.5 font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--color-fg-subtle)]">
-                Candidate Evaluation · {new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}
+                {s.candidateEvalLabel} · {new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}
               </p>
               <p className="font-display text-xl text-[var(--color-fg)] sm:text-2xl">César Augusto Nogueira</p>
               <p className="font-mono text-[11px] text-[var(--color-blue)]">Principal Cloud Architect · FinOps Specialist · UP2CLOUD · Vila Real, Portugal</p>
@@ -419,13 +433,13 @@ export function RecruiterScanner() {
             {/* Skills */}
             <div className="mb-6">
               <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--color-fg-subtle)]">
-                Competency Scores
+                {s.competencyScores}
                 {phase === "analyzing" && (
                   <span className="ml-2 text-[var(--color-blue)]">· {skillsVisible.filter(Boolean).length} / {SKILLS.length}</span>
                 )}
               </p>
               <div className="divide-y divide-[var(--color-hairline)]">
-                {SKILLS.map((skill, i) => <SkillBar key={skill.id} skill={skill} visible={skillsVisible[i]} />)}
+                {SKILLS.map((skill, i) => <SkillBar key={skill.id} skill={skill} visible={skillsVisible[i]} labels={evidenceLabels} />)}
               </div>
             </div>
 
@@ -435,31 +449,31 @@ export function RecruiterScanner() {
                 {/* Separator — line draws from center out */}
                 <div className="mb-8 flex items-center gap-3">
                   <div className="verdict-line h-px flex-1 bg-[var(--color-ok)]/40" />
-                  <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--color-ok)]" style={{ animationDelay: "0.15s" }}>Assessment Complete</span>
+                  <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--color-ok)]" style={{ animationDelay: "0.15s" }}>{s.assessmentComplete}</span>
                   <div className="verdict-line h-px flex-1 bg-[var(--color-ok)]/40" />
                 </div>
 
                 {/* Verdict card — rises 300ms after separator */}
                 <div className="verdict-card mb-5 rounded-xl bg-[var(--color-ok)]/6 p-7 text-center"
                   style={{ boxShadow: "0 0 40px -12px color-mix(in oklab, var(--color-ok) 30%, transparent)" }}>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--color-ok)]/70">Hire Recommendation</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--color-ok)]/70">{s.hireRecommendation}</p>
                   <p className="mt-2 font-display text-4xl font-bold leading-tight text-[var(--color-ok)] sm:text-5xl">
-                    Proceed to Interview
+                    {s.verdict}
                   </p>
                   <div className="mt-5 flex items-center justify-center gap-6 border-t border-[var(--color-ok)]/15 pt-4">
                     <div>
-                      <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Overall Fit</p>
-                      <p className="mt-0.5 font-mono text-base font-bold text-[var(--color-ok)]">Strong Match</p>
+                      <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">{s.overallFit}</p>
+                      <p className="mt-0.5 font-mono text-base font-bold text-[var(--color-ok)]">{s.fitValue}</p>
                     </div>
                     <div className="h-8 w-px bg-[var(--color-ok)]/20" />
                     <div>
-                      <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Risk Level</p>
-                      <p className="mt-0.5 font-mono text-base font-bold text-[var(--color-ok)]">Low</p>
+                      <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">{s.riskLevel}</p>
+                      <p className="mt-0.5 font-mono text-base font-bold text-[var(--color-ok)]">{s.riskValue}</p>
                     </div>
                     <div className="h-8 w-px bg-[var(--color-ok)]/20" />
                     <div>
-                      <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Availability</p>
-                      <p className="mt-0.5 font-mono text-base font-bold text-[var(--color-cyan)]">Now</p>
+                      <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">{s.availability}</p>
+                      <p className="mt-0.5 font-mono text-base font-bold text-[var(--color-cyan)]">{s.availabilityValue}</p>
                     </div>
                   </div>
                 </div>
@@ -467,7 +481,7 @@ export function RecruiterScanner() {
                 {/* Best-fit roles — chips pop in staggered */}
                 <div className="block-rise mb-5 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4"
                   style={{ animationDelay: "0.55s" }}>
-                  <p className="mb-2.5 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Best-Fit Roles</p>
+                  <p className="mb-2.5 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">{s.bestFitRoles}</p>
                   <div className="flex flex-wrap gap-2">
                     {ROLES.map((role, i) => (
                       <span key={role}
@@ -482,7 +496,7 @@ export function RecruiterScanner() {
                 {/* Business impact */}
                 <div className="block-rise mb-5 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4"
                   style={{ animationDelay: "0.8s" }}>
-                  <p className="mb-3 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Business Impact</p>
+                  <p className="mb-3 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">{s.businessImpact}</p>
                   <div className="grid grid-cols-4 gap-2 text-center">
                     {IMPACT.map(s => (
                       <div key={s.label}>
@@ -500,23 +514,23 @@ export function RecruiterScanner() {
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
                       <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
                     </svg>
-                    Schedule Interview
+                    {s.scheduleInterview}
                   </a>
                   <div className="grid grid-cols-2 gap-2">
                     <button type="button"
                       onClick={() => { close(); setTimeout(() => document.dispatchEvent(new CustomEvent("open-contact-form")), 300); }}
                       className="inline-flex items-center justify-center rounded-md border border-[var(--color-hairline-strong)] px-4 py-2.5 text-sm text-[var(--color-fg)] transition-colors hover:border-[var(--color-fg-muted)]">
-                      Email César →
+                      {s.emailCesar}
                     </button>
                     <a href={siteConfig.links.cv} target="_blank" rel="noreferrer"
                       className="inline-flex items-center justify-center rounded-md border border-[var(--color-hairline-strong)] px-4 py-2.5 text-sm text-[var(--color-fg)] transition-colors hover:border-[var(--color-fg-muted)]">
-                      Download CV ↓
+                      {s.downloadCv} ↓
                     </a>
                   </div>
                 </div>
 
                 <p className="mt-5 text-center font-mono text-[10px] text-[var(--color-fg-subtle)]">
-                  Expand any competency above to view projects, evidence and certifications
+                  {s.expandHint}
                 </p>
               </div>
             )}
@@ -528,13 +542,13 @@ export function RecruiterScanner() {
       <div className="shrink-0 border-t border-[var(--color-hairline)] px-6 py-3">
         <div className="flex items-center justify-between gap-4">
           <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-            {phase === "scanning" && "Scanning candidate record…"}
-            {phase === "analyzing" && `Scoring ${skillsVisible.filter(Boolean).length} / ${SKILLS.length} competencies`}
-            {phase === "report" && `${SKILLS.length}/${SKILLS.length} competencies verified · Hire signal: strong`}
+            {phase === "scanning" && s.statusScanning}
+            {phase === "analyzing" && `${s.statusAnalyzing.replace("{n}", String(skillsVisible.filter(Boolean).length)).replace("{total}", String(SKILLS.length))}`}
+            {phase === "report" && s.statusReport.replace("{total}", String(SKILLS.length))}
           </p>
           <button type="button" onClick={close}
             className="font-mono text-[10px] text-[var(--color-fg-subtle)] transition-colors hover:text-[var(--color-fg)]">
-            Close ✕
+            {s.closeLabel} ✕
           </button>
         </div>
       </div>
@@ -570,12 +584,12 @@ export function RecruiterScanner() {
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-[var(--color-ok)]" aria-hidden />
               <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-ok)]">
-                Assessment Complete
+                {s.assessmentComplete}
               </span>
             </div>
             <button
               type="button"
-              aria-label="Dismiss results — return to report"
+              aria-label={s.dialogDismissHint}
               onClick={() => setShowResultsDialog(false)}
               className="font-mono text-[11px] text-[var(--color-fg-subtle)] transition-colors hover:text-[var(--color-fg)]"
             >
@@ -593,17 +607,17 @@ export function RecruiterScanner() {
 
           {/* Verdict banner */}
           <div className="bg-[var(--color-ok)]/6 px-5 py-4 text-center border-b border-[var(--color-ok)]/12">
-            <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-[var(--color-ok)]/70 mb-1">Hire Recommendation</p>
-            <p className="font-display text-2xl font-bold text-[var(--color-ok)]">Proceed to Interview</p>
+            <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-[var(--color-ok)]/70 mb-1">{s.hireRecommendation}</p>
+            <p className="font-display text-2xl font-bold text-[var(--color-ok)]">{s.verdict}</p>
           </div>
 
           {/* Metrics row */}
           <div className="grid grid-cols-4 divide-x divide-[var(--color-hairline)]">
             {[
-              { label: "Fit",          value: "Strong",                         color: "var(--color-ok)" },
-              { label: "Risk",         value: "Low",                            color: "var(--color-ok)" },
-              { label: "Availability", value: "Now",                            color: "var(--color-cyan)" },
-              { label: "Verified",     value: `${SKILLS.length}/${SKILLS.length}`, color: "var(--color-blue)" },
+              { label: s.dialogFitLabel,          value: "Strong",                         color: "var(--color-ok)" },
+              { label: s.dialogRiskLabel,         value: s.riskValue,                      color: "var(--color-ok)" },
+              { label: s.dialogAvailLabel, value: s.availabilityValue,                            color: "var(--color-cyan)" },
+              { label: s.dialogVerifiedLabel,     value: `${SKILLS.length}/${SKILLS.length}`, color: "var(--color-blue)" },
             ].map(({ label, value, color }) => (
               <div key={label} className="flex flex-col items-center px-2 py-3 text-center">
                 <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]">{label}</span>
@@ -619,7 +633,7 @@ export function RecruiterScanner() {
               className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[var(--color-blue)] text-sm font-semibold text-white transition-opacity hover:opacity-90"
               onClick={() => { close(); setTimeout(() => document.dispatchEvent(new CustomEvent("open-contact-form")), 300); }}
             >
-              Send a Message to César →
+              {s.dialogSendMessage}
             </button>
             <a
               href={siteConfig.links.calendly}
@@ -630,7 +644,7 @@ export function RecruiterScanner() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
                 <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
               </svg>
-              Schedule Interview
+              {s.scheduleInterview}
             </a>
             <a
               href={siteConfig.links.cv}
@@ -638,12 +652,12 @@ export function RecruiterScanner() {
               rel="noreferrer"
               className="flex h-9 w-full items-center justify-center gap-1.5 rounded-lg text-sm text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
             >
-              Download CV ↓
+              {s.downloadCv} ↓
             </a>
           </div>
 
           <p className="px-5 pb-4 text-center font-mono text-[9px] text-[var(--color-fg-subtle)]">
-            Dismiss to review full competency breakdown
+            {s.dialogDismissHint}
           </p>
         </div>
       </div>
