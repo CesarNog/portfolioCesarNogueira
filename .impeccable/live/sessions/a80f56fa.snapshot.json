@@ -1,0 +1,28 @@
+{
+  "id": "a80f56fa",
+  "phase": "completed",
+  "pageUrl": "/",
+  "sourceFile": "components/hero/identity-console.tsx",
+  "previewFile": null,
+  "previewMode": null,
+  "expectedVariants": 3,
+  "arrivedVariants": 3,
+  "visibleVariant": 1,
+  "paramValues": {},
+  "pendingEventSeq": null,
+  "pendingEvent": null,
+  "deliveryLease": null,
+  "checkpointRevision": 16,
+  "activeOwner": "383fde71",
+  "sourceMarkers": {},
+  "fallbackMode": null,
+  "annotationArtifacts": [],
+  "diagnostics": [
+    {
+      "error": "carbonize_cleanup_required",
+      "file": "components/hero/identity-console.tsx",
+      "message": "Accepted variant still has carbonize markers that must be folded into source CSS."
+    }
+  ],
+  "updatedAt": "2026-06-04T03:17:37.824Z"
+}
