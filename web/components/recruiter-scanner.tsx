@@ -230,10 +230,12 @@ export function RecruiterScanner() {
   const [activeScoringIdx, setActiveScoringIdx] = useState(-1);
   const [showResultsDialog, setShowResultsDialog] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [dialogPos, setDialogPos] = useState({ x: 0, y: 0 });
   const reduce = useReducedMotion();
   const bodyRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const dialogBoundsRef = useRef<HTMLDivElement>(null);
+  const dragStart = useRef<{ px: number; py: number; ex: number; ey: number } | null>(null);
   const { t } = useI18n();
   const s = t.scanner;
   const evidenceLabels: ScannerLabels = {
@@ -252,6 +254,7 @@ export function RecruiterScanner() {
     setSkillsVisible(Array(SKILLS.length).fill(false));
     setActiveScoringIdx(-1);
     setShowResultsDialog(false);
+    setDialogPos({ x: 0, y: 0 });
   };
 
   useEffect(() => {
@@ -572,23 +575,16 @@ export function RecruiterScanner() {
           onClick={() => setShowResultsDialog(false)}
         />
 
-        {/* Drag bounds — truly viewport-relative now that we're outside the filter ancestor */}
+        {/* Centering container — portal ensures fixed is viewport-relative */}
         <div
-          ref={dialogBoundsRef}
           className="fixed inset-0 flex items-center justify-center pointer-events-none"
           style={{ zIndex: 211 }}
         >
-          {/* Single m.div: direct child of bounds container so dragConstraints calc is correct.
-              Opacity-only animation — no scale/y/x that would fight the drag transform. */}
+          {/* Drag card — native pointer capture; motion only for opacity fade-in */}
           <m.div
             role="dialog"
             aria-label="Assessment results"
             aria-modal="false"
-            drag
-            dragMomentum={false}
-            dragElastic={0.04}
-            dragConstraints={dialogBoundsRef}
-            whileDrag={{ cursor: "grabbing" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
@@ -596,10 +592,30 @@ export function RecruiterScanner() {
             style={{
               boxShadow: "0 0 60px -16px color-mix(in oklab, var(--color-ok) 28%, transparent), 0 32px 64px -16px rgba(0,0,0,0.6)",
               zIndex: 211,
+              transform: `translate(${dialogPos.x}px, ${dialogPos.y}px)`,
+              cursor: "default",
             }}
+            onPointerDown={(e) => {
+              if (reduce) return;
+              const target = e.target as HTMLElement;
+              // Only drag from header — not from CTAs or content
+              if (!target.closest('.dialog-drag-handle')) return;
+              dragStart.current = { px: e.clientX, py: e.clientY, ex: dialogPos.x, ey: dialogPos.y };
+              (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+            }}
+            onPointerMove={(e) => {
+              if (!dragStart.current) return;
+              const dx = e.clientX - dragStart.current.px;
+              const dy = e.clientY - dragStart.current.py;
+              const nx = Math.max(-480, Math.min(480, dragStart.current.ex + dx));
+              const ny = Math.max(-320, Math.min(320, dragStart.current.ey + dy));
+              setDialogPos({ x: nx, y: ny });
+            }}
+            onPointerUp={() => { dragStart.current = null; }}
+            onPointerCancel={() => { dragStart.current = null; }}
           >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-[var(--color-hairline)] px-5 py-3.5 cursor-grab active:cursor-grabbing select-none">
+          <div className="dialog-drag-handle flex items-center justify-between border-b border-[var(--color-hairline)] px-5 py-3.5 cursor-grab active:cursor-grabbing select-none">
             <div className="flex items-center gap-2.5">
               <span className="h-2 w-2 rounded-full bg-[var(--color-ok)]" aria-hidden />
               <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-ok)]">
