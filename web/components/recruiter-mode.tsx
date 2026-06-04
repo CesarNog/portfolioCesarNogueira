@@ -403,31 +403,7 @@ export function RecruiterMode() {
 
   return (
     <>
-      {/* ── Recruiter banner ────────────────────────────────────────────── */}
-      <AnimatePresence>
-        {recruiterOn && (
-          <m.div
-            initial={reduce ? { opacity: 0 } : { opacity: 0, y: -40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -40 }}
-            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-x-0 top-14 z-40 border-b border-[var(--color-blue)]/30 bg-[var(--color-surface-1)]/95 backdrop-blur-md"
-            role="status"
-            aria-label="Hiring Assistant mode is active"
-          >
-            <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-2">
-              <p className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg)]">
-                <span className="text-[var(--color-blue)]" aria-hidden>●</span>{" "}
-                Hiring Assistant — impact, credentials &amp; availability highlighted
-              </p>
-              <button type="button" onClick={disableRecruiter}
-                className="shrink-0 font-mono text-[11px] text-[var(--color-fg-muted)] underline-offset-2 hover:text-[var(--color-fg)] hover:underline">
-                exit
-              </button>
-            </div>
-          </m.div>
-        )}
-      </AnimatePresence>
+      {/* Banner removed — live variant 3 accepted (user: "we dont need it, delete") */}
 
       {/* ── Floating trigger ─────────────────────────────────────────────── */}
       <m.button
