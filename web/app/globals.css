@@ -181,6 +181,18 @@ body {
   }
 }
 
+/* Nav hover: dim siblings, brighten hovered — live variant 3 accepted. */
+.nav-hover-dim .nav-hover-link {
+  transition: opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1), color 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-hover-dim:hover .nav-hover-link { opacity: 0.4; }
+.nav-hover-dim:hover .nav-hover-link:hover { opacity: 1; color: var(--color-fg); }
+.nav-hover-link.active { color: var(--color-fg); }
+@media (prefers-reduced-motion: reduce) {
+  .nav-hover-dim .nav-hover-link,
+  .nav-hover-dim:hover .nav-hover-link { transition: none; opacity: 1; }
+}
+
 /* Scroll chevron — smooth sinusoidal float, no bounce. */
 @keyframes float-down {
   0%, 100% { transform: translateY(0);   opacity: 0.6; }
