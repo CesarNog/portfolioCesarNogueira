@@ -184,13 +184,13 @@ const en: Dict = {
       label: "Who I Am",
       title: "Architect, engineer, and strategist",
       intro:
-        "Ten years of cloud, three continents, one consistent goal: platforms that actually work in production.",
+        "Ten years of cloud, three continents, one consistent goal: platforms that work in production.",
     },
     experience: {
       label: "Career",
       title: "Outcomes delivered across a decade of cloud leadership",
       intro:
-        "The roles that shaped how I think about cloud, cost, and engineering leadership. Expand any card for the full story.",
+        "The roles that shaped how I think about cloud, cost, and engineering leadership.",
     },
     work: {
       label: "Impact Stories",
@@ -206,7 +206,7 @@ const en: Dict = {
     },
     trust: {
       label: "Enterprise Trust",
-      title: "Trusted with regulated, mission-critical systems",
+      title: "Trusted with regulated, high-stakes systems",
       intro:
         "Banks, airlines and global enterprises, across four cloud providers and six industries.",
     },
@@ -229,13 +229,13 @@ const en: Dict = {
     },
     finops: {
       label: "Cloud Cost Engineering",
-      title: "Turning cloud spend into a strategic asset",
+      title: "Cloud cost as an engineering discipline",
       intro:
         "Cost optimization, rightsizing, governance, forecasting, chargeback and automation, measured, not guessed.",
     },
     ai: {
       label: "AI & Automation",
-      title: "Future-ready: platforms built for GenAI",
+      title: "Platform engineering for AI: observable, reliable, cost-tracked",
       intro:
         "From LLM integrations to GPU-aware platform engineering: infrastructure that makes AI reliable, observable and cost-aware.",
     },
@@ -245,9 +245,9 @@ const en: Dict = {
     },
     contact: {
       label: "Start a Conversation",
-      title: "Let's build something meaningful",
+      title: "Tell me what you're building",
       intro:
-        "Whether you're tackling a cloud challenge, building a new platform, or exploring a long-term partnership. I'd love to hear what you're working on.",
+        "Cloud architecture, platform engineering, FinOps, AI infrastructure: if the work is serious, I want to hear about it.",
     },
   },
   exec: [
@@ -264,7 +264,7 @@ const en: Dict = {
     {
       title: "The focus",
       headline: "Platforms teams love. Costs that go down.",
-      body: "Multi-cloud on GCP, AWS, Azure and OCI. Kubernetes, Terraform, CI/CD. Cost governance. AI-ready infrastructure. Regulated, enterprise-grade environments where the stakes are real.",
+      body: "Multi-cloud on GCP, AWS, Azure and OCI. Kubernetes, Terraform, CI/CD. Cost governance. AI-ready infrastructure. Regulated, production-scale environments where the stakes are real.",
     },
     {
       title: "The partnership",
@@ -296,11 +296,11 @@ const en: Dict = {
   contact: {
     briefingTitle: "Let's work together",
     briefingDesc: "Cloud architecture, platform engineering, DevOps, FinOps or AI infrastructure. Tell me what you're building and let's explore how we can work together.",
-    emailCta: "Reach out to Cesar",
+    emailCta: "Send Cesar a message",
     downloadCv: "Download CV",
     availability: "Available for international projects",
     responseTime: "Usually replies within 24h",
-    contactQuote: "Every project I've worked on has been someone's critical infrastructure: a bank's payment platform, an airline's operations system, a media company's data backbone. I take that responsibility seriously. If you're building something that matters, I'd genuinely like to hear about it.",
+    contactQuote: "Every project I've worked on has been someone's critical infrastructure: a bank's payment platform, an airline's operations system, a media company's data backbone. I take that responsibility seriously. If you're building something that matters, I'd like to hear about it.",
     formTitle: "Send Cesar a message",
     formSubtitle: "Replies within 24h",
     formName: "Name",
@@ -543,7 +543,7 @@ const pt: Dict = {
     },
     trust: {
       label: "Confiança Empresarial",
-      title: "Confiado com sistemas regulados e críticos",
+      title: "Confiado com sistemas regulados de alto risco",
       intro:
         "Bancos, companhias aéreas e grandes empresas, em quatro fornecedores de cloud e seis indústrias.",
     },
@@ -572,7 +572,7 @@ const pt: Dict = {
     },
     ai: {
       label: "IA & Automação",
-      title: "Preparado para o futuro: plataformas para GenAI",
+      title: "Engenharia de plataformas para IA: observável, fiável, com custos controlados",
       intro:
         "De integrações com LLMs à engenharia de plataformas com GPUs: infraestrutura que torna a IA fiável, observável e consciente dos custos.",
     },
@@ -582,9 +582,9 @@ const pt: Dict = {
     },
     contact: {
       label: "Iniciar Conversa",
-      title: "Vamos construir algo com significado",
+      title: "Diga-me o que está a construir",
       intro:
-        "Seja um desafio cloud, uma nova plataforma ou uma parceria a longo prazo. Adorava saber o que está a construir.",
+        "Arquitetura cloud, engenharia de plataformas, FinOps, infraestrutura de IA: se o trabalho é sério, quero saber.",
     },
   },
   exec: [
@@ -633,11 +633,11 @@ const pt: Dict = {
   contact: {
     briefingTitle: "Vamos trabalhar juntos",
     briefingDesc: "Arquitetura cloud, engenharia de plataformas, DevOps, FinOps ou infraestrutura de IA. Diga-me o que está a construir e exploremos como trabalhar juntos.",
-    emailCta: "Contactar o Cesar",
+    emailCta: "Enviar mensagem ao Cesar",
     downloadCv: "Descarregar CV",
     availability: "Disponível para projetos internacionais",
     responseTime: "Responde normalmente em 24h",
-    contactQuote: "Cada projeto em que trabalhei foi a infraestrutura crítica de alguém: a plataforma de pagamentos de um banco, o sistema de operações de uma companhia aérea, a espinha dorsal de dados de uma empresa de media. Tomo essa responsabilidade a sério. Se está a construir algo que importa, adorava ouvir falar sobre isso.",
+    contactQuote: "Cada projeto em que trabalhei foi a infraestrutura crítica de alguém: a plataforma de pagamentos de um banco, o sistema de operações de uma companhia aérea, a espinha dorsal de dados de uma empresa de media. Tomo essa responsabilidade a sério. Se está a construir algo que importa, gostaria de ouvir.",
     formTitle: "Enviar mensagem ao Cesar",
     formSubtitle: "Responde em 24h",
     formName: "Nome",
@@ -880,7 +880,7 @@ const es: Dict = {
     },
     trust: {
       label: "Confianza Empresarial",
-      title: "De confianza para sistemas regulados y críticos",
+      title: "De confianza para sistemas regulados de alto riesgo",
       intro:
         "Bancos, aerolíneas y grandes empresas, en cuatro proveedores de cloud y seis industrias.",
     },
@@ -903,13 +903,13 @@ const es: Dict = {
     },
     finops: {
       label: "Ingeniería de Costes Cloud",
-      title: "Convertir el gasto cloud en un activo estratégico",
+      title: "El coste cloud como disciplina de ingeniería",
       intro:
         "Optimización de costes, dimensionamiento, gobierno, previsión, imputación y automatización, medido, no adivinado.",
     },
     ai: {
       label: "IA & Automatización",
-      title: "Preparado para el futuro: plataformas para GenAI",
+      title: "Ingeniería de plataformas para IA: observable, fiable, con costes controlados",
       intro:
         "De integraciones con LLMs a la ingeniería de plataformas con GPUs: infraestructura que hace la IA fiable, observable y consciente del coste.",
     },
@@ -919,9 +919,9 @@ const es: Dict = {
     },
     contact: {
       label: "Iniciar Conversación",
-      title: "Construyamos algo significativo",
+      title: "Dime qué estás construyendo",
       intro:
-        "Ya sea un reto cloud, una nueva plataforma o una colaboración a largo plazo. Me encantaría saber en qué estás trabajando.",
+        "Arquitectura cloud, ingeniería de plataformas, FinOps, infraestructura de IA: si el trabajo es serio, quiero escucharlo.",
     },
   },
   exec: [
@@ -970,7 +970,7 @@ const es: Dict = {
   contact: {
     briefingTitle: "Trabajemos juntos",
     briefingDesc: "Arquitectura cloud, ingeniería de plataformas, DevOps, FinOps o infraestructura de IA. Cuéntame qué estás construyendo y exploremos cómo trabajar juntos.",
-    emailCta: "Contactar a Cesar",
+    emailCta: "Enviar mensaje a Cesar",
     downloadCv: "Descargar CV",
     availability: "Disponible para proyectos internacionales",
     responseTime: "Suele responder en 24h",
@@ -1217,7 +1217,7 @@ const fr: Dict = {
     },
     trust: {
       label: "Confiance Entreprise",
-      title: "Approuvé pour des systèmes réglementés et critiques",
+      title: "De confiance pour des systèmes réglementés à forts enjeux",
       intro:
         "Banques, compagnies aériennes et multinationales, sur quatre fournisseurs cloud et six secteurs.",
     },
@@ -1240,13 +1240,13 @@ const fr: Dict = {
     },
     finops: {
       label: "Ingénierie des Coûts Cloud",
-      title: "Transformer les dépenses cloud en actif stratégique",
+      title: "Le coût cloud comme discipline d'ingénierie",
       intro:
         "Optimisation des coûts, redimensionnement, gouvernance, prévision, refacturation et automatisation, mesuré, pas deviné.",
     },
     ai: {
       label: "IA & Automatisation",
-      title: "Préparé pour l'avenir : plateformes conçues pour GenAI",
+      title: "Ingénierie de plateformes pour l'IA : observable, fiable, économe",
       intro:
         "Des intégrations LLM à l'ingénierie de plateformes GPU: infrastructure qui rend l'IA fiable, observable et économe.",
     },
@@ -1256,9 +1256,9 @@ const fr: Dict = {
     },
     contact: {
       label: "Prenons Contact",
-      title: "Construisons quelque chose de grand ensemble",
+      title: "Dites-moi ce que vous construisez",
       intro:
-        "Que ce soit un défi cloud, une nouvelle plateforme ou un partenariat à long terme. J'adorerais entendre ce sur quoi vous travaillez.",
+        "Architecture cloud, ingénierie de plateformes, FinOps, infrastructure IA : si le travail est sérieux, je veux en entendre parler.",
     },
   },
   exec: [
@@ -1307,7 +1307,7 @@ const fr: Dict = {
   contact: {
     briefingTitle: "Travaillons ensemble",
     briefingDesc: "Architecture cloud, ingénierie de plateformes, DevOps, FinOps ou infrastructure IA. Dites-moi ce que vous construisez et explorons comment collaborer.",
-    emailCta: "Contacter Cesar",
+    emailCta: "Envoyer un message à Cesar",
     downloadCv: "Télécharger le CV",
     availability: "Disponible pour des projets internationaux",
     responseTime: "Répond généralement sous 24h",
@@ -1554,7 +1554,7 @@ const zh: Dict = {
     },
     trust: {
       label: "企业信任",
-      title: "受托于受监管的关键业务系统",
+      title: "受托于受监管的高风险系统",
       intro:
         "银行、航空公司和全球企业，跨越四大云服务商和六个行业。",
     },
@@ -1577,13 +1577,13 @@ const zh: Dict = {
     },
     finops: {
       label: "云成本工程",
-      title: "将云支出转化为战略资产",
+      title: "将云成本作为工程学科",
       intro:
         "成本优化、合理配置、治理、预测、成本分摊和自动化，精准测量，而非猜测。",
     },
     ai: {
       label: "AI与自动化",
-      title: "面向未来：为GenAI打造的平台",
+      title: "AI平台工程：可观测、可靠、成本可控",
       intro:
         "从LLM集成到GPU感知的平台工程：让AI可靠、可观测且成本可控的基础设施。",
     },
@@ -1593,9 +1593,9 @@ const zh: Dict = {
     },
     contact: {
       label: "开始对话",
-      title: "让我们共同构建有意义的事物",
+      title: "告诉我您在构建什么",
       intro:
-        "无论是云架构挑战、新平台建设还是长期合作，欢迎告诉我您正在做什么。",
+        "云架构、平台工程、FinOps、AI基础设施：如果工作是认真的，我想听您说。",
     },
   },
   exec: [
@@ -1644,7 +1644,7 @@ const zh: Dict = {
   contact: {
     briefingTitle: "携手合作",
     briefingDesc: "云架构、平台工程、DevOps、FinOps或AI基础设施，告诉我您正在构建什么，让我们探索合作的可能。",
-    emailCta: "联系Cesar",
+    emailCta: "给Cesar发消息",
     downloadCv: "下载简历",
     availability: "可承接国际项目",
     responseTime: "通常24小时内回复",
