@@ -30,7 +30,7 @@ export function IdentityConsole() {
       {/* Mobile: portrait as background, content on top */}
       <div className="absolute inset-0 -z-10 lg:hidden" aria-hidden>
         <Image
-          src="/portrait.jpg"
+          src="/portrait.webp"
           alt=""
           fill
           sizes="100vw"
@@ -146,7 +146,7 @@ export function IdentityConsole() {
             transition: { duration: 1.1, delay: DELAYS.photo, ease: EASE.out },
           })}
         >
-          <Image src="/portrait.jpg" alt="" fill sizes="52vw" className="object-cover object-top" priority />
+          <Image src="/portrait.webp" alt="" fill sizes="52vw" className="object-cover object-top" priority />
           {/* Live variant 2 accepted: gradient drift — boundary slowly oscillates */}
           <div className="hero-gradient-drift absolute inset-0" />
           <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[var(--color-surface-0)] to-transparent" />

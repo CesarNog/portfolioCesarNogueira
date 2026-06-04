@@ -21,7 +21,7 @@ const NAV = [
 export function SiteHeader() {
   const { t } = useI18n();
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
+  const scaleX = useSpring(scrollYProgress, { stiffness: 350, damping: 55, mass: 0.4 });
   const [active, setActive] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
   const reduce = useReducedMotion();
@@ -67,11 +67,18 @@ export function SiteHeader() {
     );
   };
 
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const HEADER_H = 56;
+    const OFFSET   = 16;
+    const top = el.getBoundingClientRect().top + window.scrollY - HEADER_H - OFFSET;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
+
   const navTo = (href: string) => {
     setMobileOpen(false);
-    setTimeout(() => {
-      document.getElementById(href)?.scrollIntoView({ behavior: "smooth" });
-    }, 50);
+    setTimeout(() => scrollToSection(href), 50);
   };
 
   return (
@@ -79,7 +86,7 @@ export function SiteHeader() {
       {/* Skip to main content — accessibility */}
       <a
         href="#top"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded focus:bg-[var(--color-blue)] focus:px-3 focus:py-2 focus:text-sm focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-scanner focus:rounded focus:bg-[var(--color-blue)] focus:px-3 focus:py-2 focus:text-sm focus:text-white"
       >
         Skip to content
       </a>
@@ -87,7 +94,7 @@ export function SiteHeader() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--color-hairline)] bg-[var(--color-surface-0)]/80 backdrop-blur-md">
         {/* Live variant 3 accepted: nav dim-siblings on hover */}
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
-          <a href="#top" className="flex items-center gap-2.5 text-[var(--color-fg)] transition-opacity hover:opacity-80" aria-label={siteConfig.name}>
+          <a href="#top" onClick={(e) => { e.preventDefault(); scrollToSection("top"); }} className="flex items-center self-stretch gap-2.5 text-[var(--color-fg)] transition-opacity hover:opacity-80" aria-label={siteConfig.name}>
             <Logo size={24} className="text-[var(--color-fg)] shrink-0" />
             <span className="font-ui text-[13px] font-semibold tracking-tight hidden lg:block">
               César<span className="text-[var(--color-blue)]"> A.</span> Nogueira
@@ -99,6 +106,7 @@ export function SiteHeader() {
               <a
                 key={item.href}
                 href={`#${item.href}`}
+                onClick={(e) => { e.preventDefault(); scrollToSection(item.href); }}
                 className={`nav-hover-link font-ui text-[13px] font-medium tracking-wide ${
                   active === item.href
                     ? "active text-[var(--color-fg)]"
@@ -144,8 +152,8 @@ export function SiteHeader() {
         </div>
 
         <m.div
-          className="h-px origin-left bg-[var(--color-blue)]"
-          style={{ scaleX }}
+          className="h-px origin-left bg-gradient-to-r from-[var(--color-blue)] via-[var(--color-cyan)] to-[var(--color-blue)]"
+          style={{ scaleX, boxShadow: "0 0 6px 0 color-mix(in oklab, var(--color-blue) 55%, transparent)" }}
         />
       </header>
 

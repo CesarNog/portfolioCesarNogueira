@@ -85,7 +85,7 @@ export function CommandPalette() {
       role="dialog"
       aria-modal="true"
       aria-label={p.commandPalette}
-      className="fixed inset-0 z-[100] flex items-start justify-center"
+      className="fixed inset-0 z-palette flex items-start justify-center"
     >
       {/* Backdrop */}
       <button
@@ -104,7 +104,7 @@ export function CommandPalette() {
         <Command.Input
           ref={inputRef}
           placeholder={p.placeholder}
-          className="w-full border-b border-[var(--color-hairline)] bg-transparent px-4 py-3.5 text-sm text-[var(--color-fg)] outline-none placeholder:text-[var(--color-fg-subtle)]"
+          className="w-full border-b border-[var(--color-hairline)] bg-transparent px-4 py-3.5 text-sm text-[var(--color-fg)] outline-none placeholder:text-[var(--color-fg-subtle)] focus-visible:ring-2 focus-visible:ring-[var(--color-blue)]/40 focus-visible:border-[var(--color-blue)]"
         />
         <Command.List className="max-h-[50vh] overflow-y-auto p-2">
           <Command.Empty className="px-3 py-6 text-center text-sm text-[var(--color-fg-subtle)]">

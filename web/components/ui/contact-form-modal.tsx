@@ -98,7 +98,7 @@ export function ContactFormModal({ open, onClose }: Props) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-modal-bg bg-black/60 backdrop-blur-sm"
           />
 
           {/* Dialog */}
@@ -110,7 +110,7 @@ export function ContactFormModal({ open, onClose }: Props) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.98 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="panel fixed inset-x-4 top-1/2 z-[120] max-w-lg -translate-y-1/2 overflow-hidden rounded-xl shadow-2xl sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-full"
+            className="panel fixed inset-x-4 top-1/2 z-modal max-w-lg -translate-y-1/2 overflow-hidden rounded-xl shadow-2xl sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-full"
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-[var(--color-hairline)] px-6 py-4">

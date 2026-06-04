@@ -172,7 +172,7 @@ export function Assistant() {
         aria-label={open ? "Close AI Career Assistant" : "Open AI Career Assistant"}
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-5 right-5 z-[90] flex items-center gap-2 rounded-full border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] px-4 py-3 text-sm text-[var(--color-fg)] shadow-2xl transition-colors hover:border-[var(--color-blue)]"
+        className="fixed bottom-5 right-5 z-floating flex items-center gap-2 rounded-full border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] px-4 py-3 text-sm text-[var(--color-fg)] shadow-2xl transition-colors hover:border-[var(--color-blue)]"
       >
         <span className="status-dot" />
         <span className="font-medium">{open ? t.assistant.close : t.assistant.launch}</span>
@@ -188,7 +188,7 @@ export function Assistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="panel fixed bottom-20 right-5 z-[90] flex h-[76vh] max-h-[640px] w-[92vw] max-w-[400px] flex-col overflow-hidden rounded-xl shadow-2xl"
+            className="panel fixed bottom-20 right-5 z-floating flex h-[76vh] max-h-[640px] w-[92vw] max-w-[400px] flex-col overflow-hidden rounded-xl shadow-2xl"
           >
             {/* Header */}
             <div className="flex items-center gap-3 border-b border-[var(--color-hairline)] px-4 py-3">

@@ -59,7 +59,7 @@ export function Story() {
             className="mx-auto w-full max-w-sm sm:max-w-none"
           >
             <Image
-              src="/portrait.jpg"
+              src="/portrait.webp"
               alt={siteConfig.name}
               width={480}
               height={640}
