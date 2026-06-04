@@ -421,19 +421,18 @@ export function RecruiterScanner() {
               </div>
             </div>
 
-            {/* ── ACT 3 Report — plain divs, no opacity animation ── */}
+            {/* ── ACT 3 Report — CSS animations (avoids React concurrent mode opacity:0 trap) ── */}
             {phase === "report" && (
               <div>
-                {/* Separator */}
+                {/* Separator — line draws from center out */}
                 <div className="mb-8 flex items-center gap-3">
-                  <div className="h-px flex-1 bg-[var(--color-hairline)]" />
-                  <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--color-ok)]">Assessment Complete</span>
-                  <div className="h-px flex-1 bg-[var(--color-hairline)]" />
+                  <div className="verdict-line h-px flex-1 bg-[var(--color-ok)]/40" />
+                  <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--color-ok)]" style={{ animationDelay: "0.15s" }}>Assessment Complete</span>
+                  <div className="verdict-line h-px flex-1 bg-[var(--color-ok)]/40" />
                 </div>
 
-                {/* PRIMARY VERDICT — dominant, no competing elements */}
-                {/* Verdict card — glow only, no border (ghost-card anti-pattern: border + shadow >16px) */}
-                <div className="mb-5 rounded-xl bg-[var(--color-ok)]/6 p-7 text-center"
+                {/* Verdict card — rises 300ms after separator */}
+                <div className="verdict-card mb-5 rounded-xl bg-[var(--color-ok)]/6 p-7 text-center"
                   style={{ boxShadow: "0 0 40px -12px color-mix(in oklab, var(--color-ok) 30%, transparent)" }}>
                   <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--color-ok)]/70">Hire Recommendation</p>
                   <p className="mt-2 font-display text-4xl font-bold leading-tight text-[var(--color-ok)] sm:text-5xl">
@@ -457,12 +456,15 @@ export function RecruiterScanner() {
                   </div>
                 </div>
 
-                {/* Best-fit roles */}
-                <div className="mb-5 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4">
+                {/* Best-fit roles — chips pop in staggered */}
+                <div className="block-rise mb-5 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4"
+                  style={{ animationDelay: "0.55s" }}>
                   <p className="mb-2.5 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Best-Fit Roles</p>
                   <div className="flex flex-wrap gap-2">
-                    {ROLES.map(role => (
-                      <span key={role} className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-ok)]/25 bg-[var(--color-ok)]/8 px-3 py-1.5 font-mono text-[11px] text-[var(--color-ok)]">
+                    {ROLES.map((role, i) => (
+                      <span key={role}
+                        className="chip-pop inline-flex items-center gap-1.5 rounded-full border border-[var(--color-ok)]/25 bg-[var(--color-ok)]/8 px-3 py-1.5 font-mono text-[11px] text-[var(--color-ok)]"
+                        style={{ animationDelay: `${0.65 + i * 0.06}s` }}>
                         <span aria-hidden>✓</span> {role}
                       </span>
                     ))}
@@ -470,7 +472,8 @@ export function RecruiterScanner() {
                 </div>
 
                 {/* Business impact */}
-                <div className="mb-5 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4">
+                <div className="block-rise mb-5 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4"
+                  style={{ animationDelay: "0.8s" }}>
                   <p className="mb-3 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Business Impact</p>
                   <div className="grid grid-cols-4 gap-2 text-center">
                     {IMPACT.map(s => (
@@ -483,7 +486,7 @@ export function RecruiterScanner() {
                 </div>
 
                 {/* CTAs */}
-                <div className="flex flex-col gap-2.5">
+                <div className="block-rise flex flex-col gap-2.5" style={{ animationDelay: "0.95s" }}>
                   <a href={siteConfig.links.calendly} target="_blank" rel="noreferrer"
                     className="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--color-ok)] px-5 py-3 text-sm font-semibold text-[#08090c] transition-opacity hover:opacity-90">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>

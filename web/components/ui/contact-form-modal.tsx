@@ -135,7 +135,7 @@ export function ContactFormModal({ open, onClose }: Props) {
             <div className="p-6">
               {state === "success" ? (
                 <div className="py-8 text-center">
-                  <div className="mb-4 text-4xl">✓</div>
+                  <div className="check-draw mb-4 text-4xl text-[var(--color-ok)]">✓</div>
                   <p className="font-display text-xl text-[var(--color-fg)]">{c.formSuccess}</p>
                   <p className="mt-2 text-sm text-[var(--color-fg-muted)]">{c.formSuccessDesc}</p>
                   <button
