@@ -13,7 +13,6 @@
 # The old static site is preserved in old-website/ for reference.
 
 [build]
-  base    = "web"
   command = "npm install --legacy-peer-deps && npm run build"
   publish = "out"
 
