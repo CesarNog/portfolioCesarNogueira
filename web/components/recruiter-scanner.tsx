@@ -159,10 +159,10 @@ function SkillBar({ skill, visible }: { skill: typeof SKILLS[number]; visible: b
         </div>
         <div className="relative h-1 w-full overflow-hidden rounded-full bg-[var(--color-surface-3)]" role="progressbar" aria-valuenow={skill.score} aria-valuemin={0} aria-valuemax={100}>
           <m.div
-            className="h-full rounded-full"
+            className="h-full w-full origin-left"
             style={{ backgroundColor: scoreColor(skill.score) }}
-            initial={{ width: 0 }}
-            animate={{ width: visible ? `${skill.score}%` : 0 }}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: visible ? skill.score / 100 : 0 }}
             transition={{ duration: 0.85, ease: EASE.out }}
           />
           {/* Flash shimmer on completion */}
@@ -293,7 +293,7 @@ export function RecruiterScanner() {
       <button
         type="button"
         onClick={open}
-        className="group relative inline-flex items-center gap-2.5 rounded-md border border-[var(--color-ok)]/40 bg-[var(--color-ok)]/5 px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-ok)] transition-all hover:border-[var(--color-ok)]/70 hover:bg-[var(--color-ok)]/10 hover:shadow-[0_0_16px_-6px_var(--color-ok)]"
+        className="group relative inline-flex min-h-[44px] items-center gap-2.5 rounded-md border border-[var(--color-ok)]/40 bg-[var(--color-ok)]/5 px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-ok)] transition-all hover:border-[var(--color-ok)]/70 hover:bg-[var(--color-ok)]/10 hover:shadow-[0_0_16px_-6px_var(--color-ok)]"
         aria-haspopup="dialog"
         title="Evaluate Cesar for a role (⌘⇧E)"
       >
@@ -315,7 +315,7 @@ export function RecruiterScanner() {
       role="dialog"
       aria-label="Candidate Evaluation — César A. Nogueira"
       aria-modal="true"
-      className="fixed inset-0 z-[200] flex flex-col overflow-hidden bg-[var(--color-surface-0)]"
+      className="fixed inset-0 z-scanner flex flex-col overflow-hidden bg-[var(--color-surface-0)]"
     >
       {/* Top bar */}
       <div className="flex shrink-0 items-center justify-between border-b border-[var(--color-hairline)] px-6 py-4">
