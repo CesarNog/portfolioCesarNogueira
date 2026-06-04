@@ -7,9 +7,10 @@
 #   GROK_API_KEY   = xai-...   (AI career assistant)
 #   RESEND_API_KEY = re_...    (contact form emails)
 #
-# DOMAIN: In Netlify dashboard → Domain management → Add custom domain:
+# DOMAIN: In Netlify dashboard → Domain management, add custom domain:
 #   cesarnogueira.tech
-# Then update DNS: point A/CNAME to Netlify's load balancer (shown in dashboard).
+# DNS: point A record (or CNAME) to Netlify's load balancer.
+# The old static site is preserved in old-website/ for reference.
 
 [build]
   base    = "web"
@@ -22,7 +23,7 @@
 [functions]
   directory = "netlify/functions"
 
-# SPA-style fallback — serve index.html for any unmatched route
+# SPA fallback — serves index.html for all non-asset routes (Next.js static export)
 [[redirects]]
   from   = "/*"
   to     = "/index.html"

@@ -3,5 +3,8 @@
     "allow": [
       "Bash(rtk *)"
     ]
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true
   }
 }
