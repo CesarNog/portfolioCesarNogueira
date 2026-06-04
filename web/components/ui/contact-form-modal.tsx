@@ -205,7 +205,7 @@ export function ContactFormModal({ open, onClose }: Props) {
 
                   <div className="space-y-1.5">
                     <label htmlFor="cf-subject" className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-                      {c.formSubject}
+                      {c.formSubject} <span className="normal-case tracking-normal text-[var(--color-fg-subtle)] opacity-60">(optional)</span>
                     </label>
                     <input
                       id="cf-subject"

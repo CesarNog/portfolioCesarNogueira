@@ -272,6 +272,19 @@ export function RecruiterScanner() {
     return () => document.removeEventListener("keydown", h);
   }, [phase]);
 
+  // ⌘⇧E (Mac) / Ctrl⇧E (Win/Linux) — keyboard shortcut to open scanner
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => {
+      if (e.key === "E" && e.shiftKey && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        if (phase === "idle") open();
+        else close();
+      }
+    };
+    document.addEventListener("keydown", h);
+    return () => document.removeEventListener("keydown", h);
+  }, [phase]);
+
   const currentSkill = activeScoringIdx >= 0 ? SKILLS[activeScoringIdx] : null;
 
   // ── Trigger ────────────────────────────────────────────────────────────────
@@ -282,6 +295,7 @@ export function RecruiterScanner() {
         onClick={open}
         className="group relative inline-flex items-center gap-2.5 rounded-md border border-[var(--color-ok)]/40 bg-[var(--color-ok)]/5 px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-ok)] transition-all hover:border-[var(--color-ok)]/70 hover:bg-[var(--color-ok)]/10 hover:shadow-[0_0_16px_-6px_var(--color-ok)]"
         aria-haspopup="dialog"
+        title="Evaluate Cesar for a role (⌘⇧E)"
       >
         <span className="relative flex h-2 w-2 shrink-0" aria-hidden>
           <span className="absolute inset-0 animate-ping rounded-full bg-[var(--color-ok)] opacity-50" style={{ animationDuration: "1.8s" }} />

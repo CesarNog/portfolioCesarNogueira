@@ -68,6 +68,7 @@ export function CommandPalette() {
     { group: ACT, label: p.darkTheme, run: () => { setTheme("dark"); setOpen(false); } },
     { group: ACT, label: p.lightTheme, run: () => { setTheme("light"); setOpen(false); } },
     { group: ACT, label: p.openFaq, run: () => { setOpen(false); document.dispatchEvent(new CustomEvent("open-smart-faq")); } },
+    { group: ACT, label: "Evaluate Cesar for a role", hint: "⌘⇧E", run: () => { setOpen(false); document.dispatchEvent(new KeyboardEvent("keydown", { key: "E", shiftKey: true, metaKey: true, bubbles: true })); } },
     { group: CON, label: p.emailCesar, hint: siteConfig.links.email, run: ext(`mailto:${siteConfig.links.email}`) },
     { group: CON, label: "LinkedIn", run: ext(siteConfig.links.linkedin) },
     { group: CON, label: "GitHub", run: ext(siteConfig.links.github) },
