@@ -96,10 +96,12 @@ export function IdentityConsole() {
                 </Magnetic>
               </m.div>
 
-              {/* Recruiter Scanner — tertiary CTA */}
-              <m.div {...enter(DELAYS.ctas + 0.1)} className="mt-4">
+              {/* Recruiter Scanner — plain div, NOT inside m.div with filter.
+                  CSS filter creates a new containing block for position:fixed,
+                  trapping the overlay inside the hero instead of the viewport. */}
+              <div className="mt-4">
                 <RecruiterScanner />
-              </m.div>
+              </div>
 
               {/* Stats — 2×2 on mobile, 4 columns on sm+ */}
               <m.div
