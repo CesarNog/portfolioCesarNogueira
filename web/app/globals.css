@@ -181,6 +181,33 @@ body {
   }
 }
 
+/* Hero photo gradient: boundary drifts slowly — live variant 2 accepted. */
+@keyframes gradient-drift {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 40% 50%; }
+}
+.hero-gradient-drift {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    var(--color-surface-0) 0%,
+    var(--color-surface-0) 20%,
+    color-mix(in oklab, var(--color-surface-0) 40%, transparent) 50%,
+    transparent 80%,
+    transparent 100%
+  );
+  background-size: 180% 100%;
+  animation: gradient-drift 9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-gradient-drift {
+    animation: none;
+    background-position: 0% 50%;
+    background: linear-gradient(to right, var(--color-surface-0) 0%, var(--color-surface-0)/40 50%, transparent 100%);
+  }
+}
+
 /* Nav hover: dim siblings, brighten hovered — live variant 3 accepted. */
 .nav-hover-dim .nav-hover-link {
   transition: opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1), color 0.18s cubic-bezier(0.16, 1, 0.3, 1);

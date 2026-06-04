@@ -148,7 +148,8 @@ export function IdentityConsole() {
           })}
         >
           <Image src="/portrait.jpg" alt="" fill sizes="52vw" className="object-cover object-top" priority />
-          <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-surface-0)] via-[var(--color-surface-0)]/40 to-transparent" />
+          {/* Live variant 2 accepted: gradient drift — boundary slowly oscillates */}
+          <div className="hero-gradient-drift absolute inset-0" />
           <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[var(--color-surface-0)] to-transparent" />
         </m.div>
       </div>
