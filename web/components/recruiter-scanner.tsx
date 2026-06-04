@@ -290,8 +290,12 @@ export function RecruiterScanner() {
     }
 
     if (phase === "report") {
-      // Scroll body to top so verdict is immediately visible
-      requestAnimationFrame(() => bodyRef.current?.scrollTo({ top: 0, behavior: "instant" }));
+      // Scroll to bottom — verdict appears after skills, user follows the bars naturally
+      requestAnimationFrame(() => {
+        if (bodyRef.current) {
+          bodyRef.current.scrollTo({ top: bodyRef.current.scrollHeight, behavior: "smooth" });
+        }
+      });
     }
 
     return () => timers.forEach(clearTimeout);
@@ -457,59 +461,6 @@ export function RecruiterScanner() {
                     </p>
                   </m.div>
 
-                  {/* ── ACT 3 VERDICT — shown FIRST when report is ready ── */}
-                  {phase === "report" && (
-                    <m.div
-                      key="verdict"
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: DUR.reveal, ease: EASE.spring }}
-                      className="mb-8"
-                    >
-                        {/* Hire recommendation banner */}
-                        <div className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-[var(--color-ok)]/30 bg-[var(--color-ok)]/6 px-5 py-4">
-                          <div>
-                            <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Hire Recommendation</p>
-                            <p className="mt-0.5 font-display text-2xl font-semibold text-[var(--color-ok)]">Proceed to Interview</p>
-                          </div>
-                          <div className="text-right shrink-0">
-                            <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Overall Fit</p>
-                            <p className="font-display text-2xl font-bold text-[var(--color-ok)]">Strong Match</p>
-                          </div>
-                        </div>
-
-                        {/* Risk + interview in 2 cols */}
-                        <div className="grid grid-cols-2 gap-3 mb-4">
-                          <div className="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4 text-center">
-                            <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Risk Level</p>
-                            <p className="mt-1 font-mono text-lg font-bold text-[var(--color-ok)]">Low</p>
-                          </div>
-                          <div className="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4 text-center">
-                            <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Decision</p>
-                            <p className="mt-1 font-mono text-lg font-bold text-[var(--color-cyan)]">Interview</p>
-                          </div>
-                        </div>
-
-                        {/* Recommended roles */}
-                        <div className="rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4">
-                          <p className="mb-2.5 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Best-Fit Roles</p>
-                          <div className="flex flex-wrap gap-2">
-                            {RECOMMENDED_ROLES.map((role, i) => (
-                              <m.span
-                                key={role}
-                                initial={reduce ? false : { opacity: 0, scale: 0.92 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.25, delay: 0.06 + i * 0.06, ease: EASE.spring }}
-                                className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-ok)]/25 bg-[var(--color-ok)]/8 px-3 py-1 font-mono text-[10px] text-[var(--color-ok)]"
-                              >
-                                <span aria-hidden>✓</span> {role}
-                              </m.span>
-                            ))}
-                          </div>
-                        </div>
-                    </m.div>
-                  )}
-
                   {/* ── ACT 2: Competency scores ─────────────────────── */}
                   <div className="mb-6">
                     <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--color-fg-subtle)]">
@@ -527,13 +478,73 @@ export function RecruiterScanner() {
                     </div>
                   </div>
 
-                  {/* ── ACT 3 CONTINUED: Business impact + CTA ───────── */}
+                  {/* ── ACT 3: Verdict + impact + CTAs (below skills) ── */}
+                  {phase === "report" && (
+                    <m.div
+                      key="report"
+                      initial={{ opacity: 0, y: 16 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: DUR.reveal, ease: EASE.spring }}
+                      className="mt-2"
+                    >
+                      {/* Separator */}
+                      <div className="mb-6 flex items-center gap-3">
+                        <div className="h-px flex-1 bg-[var(--color-hairline)]" />
+                        <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--color-ok)]">Evaluation Complete</span>
+                        <div className="h-px flex-1 bg-[var(--color-hairline)]" />
+                      </div>
+
+                      {/* Hire recommendation banner */}
+                      <div className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-[var(--color-ok)]/30 bg-[var(--color-ok)]/6 px-5 py-4">
+                        <div>
+                          <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Hire Recommendation</p>
+                          <p className="mt-0.5 font-display text-2xl font-semibold text-[var(--color-ok)]">Proceed to Interview</p>
+                        </div>
+                        <div className="text-right shrink-0">
+                          <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Overall Fit</p>
+                          <p className="font-display text-2xl font-bold text-[var(--color-ok)]">Strong Match</p>
+                        </div>
+                      </div>
+
+                      {/* Risk + decision */}
+                      <div className="grid grid-cols-2 gap-3 mb-4">
+                        <div className="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4 text-center">
+                          <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Risk Level</p>
+                          <p className="mt-1 font-mono text-lg font-bold text-[var(--color-ok)]">Low</p>
+                        </div>
+                        <div className="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4 text-center">
+                          <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Decision</p>
+                          <p className="mt-1 font-mono text-lg font-bold text-[var(--color-cyan)]">Interview</p>
+                        </div>
+                      </div>
+
+                      {/* Best-fit roles */}
+                      <div className="mb-5 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4">
+                        <p className="mb-2.5 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Best-Fit Roles</p>
+                        <div className="flex flex-wrap gap-2">
+                          {RECOMMENDED_ROLES.map((role, i) => (
+                            <m.span
+                              key={role}
+                              initial={{ opacity: 0, scale: 0.92 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ duration: 0.25, delay: 0.1 + i * 0.06, ease: EASE.spring }}
+                              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-ok)]/25 bg-[var(--color-ok)]/8 px-3 py-1 font-mono text-[10px] text-[var(--color-ok)]"
+                            >
+                              <span aria-hidden>✓</span> {role}
+                            </m.span>
+                          ))}
+                        </div>
+                      </div>
+                    </m.div>
+                  )}
+
+                  {/* ── Business impact + CTAs ───────── */}
                   {phase === "report" && (
                     <m.div
                       key="impact"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: DUR.reveal, delay: 0.15, ease: EASE.spring }}
+                      transition={{ duration: DUR.reveal, delay: 0.2, ease: EASE.spring }}
                     >
                         {/* Business impact */}
                         <div className="mb-5 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4">
@@ -562,12 +573,16 @@ export function RecruiterScanner() {
                             Schedule Interview
                           </a>
                           <div className="grid grid-cols-2 gap-2">
-                            <a
-                              href={`mailto:${siteConfig.links.email}?subject=Interview%20Request%20%E2%80%94%20Cloud%20Role`}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                close();
+                                setTimeout(() => document.dispatchEvent(new CustomEvent("open-contact-form")), 300);
+                              }}
                               className="inline-flex items-center justify-center rounded-md border border-[var(--color-hairline-strong)] px-4 py-2.5 text-sm text-[var(--color-fg)] transition-colors hover:border-[var(--color-fg-muted)]"
                             >
                               Email César →
-                            </a>
+                            </button>
                             <a
                               href={siteConfig.links.cv}
                               target="_blank"

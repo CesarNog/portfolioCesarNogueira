@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Section } from "@/components/sections/section";
 import { Magnetic } from "@/components/ui/magnetic";
 import { ContactFormModal } from "@/components/ui/contact-form-modal";
@@ -10,6 +10,13 @@ import { useI18n } from "@/lib/i18n";
 export function ContactConsole() {
   const { t } = useI18n();
   const [formOpen, setFormOpen] = useState(false);
+
+  // Allow any component to open the contact form via custom event
+  useEffect(() => {
+    const open = () => setFormOpen(true);
+    document.addEventListener("open-contact-form", open);
+    return () => document.removeEventListener("open-contact-form", open);
+  }, []);
 
   const rows = [
     { k: t.contact.rowLabels.email, v: siteConfig.links.email, action: () => setFormOpen(true) },
