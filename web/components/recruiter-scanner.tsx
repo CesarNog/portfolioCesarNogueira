@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { m, useReducedMotion } from "motion/react";
 import { siteConfig } from "@/lib/site-config";
 import { EASE } from "@/lib/motion";
@@ -228,6 +229,7 @@ export function RecruiterScanner() {
   const [skillsVisible, setSkillsVisible] = useState<boolean[]>(Array(SKILLS.length).fill(false));
   const [activeScoringIdx, setActiveScoringIdx] = useState(-1);
   const [showResultsDialog, setShowResultsDialog] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const reduce = useReducedMotion();
   const bodyRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
@@ -241,6 +243,8 @@ export function RecruiterScanner() {
     impact: s.evidenceImpact,
     certifications: s.evidenceCerts,
   };
+
+  useEffect(() => { setMounted(true); }, []);
 
   const open = () => setPhase("scanning");
   const close = () => {
@@ -555,8 +559,10 @@ export function RecruiterScanner() {
       </div>
     </div>
 
-    {/* ── Results dialog — centered, draggable by header ── */}
-    {showResultsDialog && (
+    {/* ── Results dialog — portalled to document.body to escape filter stacking context ── */}
+    {/* The CTA m.div in identity-console.tsx animates filter:blur(0px) which creates a
+        containing block for fixed descendants. createPortal renders outside that tree. */}
+    {showResultsDialog && mounted && createPortal(
       <>
         {/* Backdrop */}
         <div
@@ -566,32 +572,30 @@ export function RecruiterScanner() {
           onClick={() => setShowResultsDialog(false)}
         />
 
-        {/* Drag bounds + centering container */}
+        {/* Drag bounds — truly viewport-relative now that we're outside the filter ancestor */}
         <div
           ref={dialogBoundsRef}
           className="fixed inset-0 flex items-center justify-center pointer-events-none"
           style={{ zIndex: 211 }}
         >
-          {/* Entry animation wrapper — separate from drag so they don't fight over transform */}
-          <m.div
-            initial={reduce ? false : { opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-auto"
-          >
-          {/* Drag target — no animate prop so drag owns the transform */}
+          {/* Single m.div: direct child of bounds container so dragConstraints calc is correct.
+              Opacity-only animation — no scale/y/x that would fight the drag transform. */}
           <m.div
             role="dialog"
             aria-label="Assessment results"
             aria-modal="false"
             drag
             dragMomentum={false}
-            dragElastic={0.05}
+            dragElastic={0.04}
             dragConstraints={dialogBoundsRef}
             whileDrag={{ cursor: "grabbing" }}
-            className="overflow-hidden rounded-2xl border border-[var(--color-ok)]/25 bg-[var(--color-surface-1)] w-[min(100vw-32px,440px)]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="pointer-events-auto overflow-hidden rounded-2xl border border-[var(--color-ok)]/25 bg-[var(--color-surface-1)] w-[min(calc(100vw-32px),440px)]"
             style={{
               boxShadow: "0 0 60px -16px color-mix(in oklab, var(--color-ok) 28%, transparent), 0 32px 64px -16px rgba(0,0,0,0.6)",
+              zIndex: 211,
             }}
           >
           {/* Header */}
@@ -679,9 +683,9 @@ export function RecruiterScanner() {
             {s.dialogDismissHint}
           </p>
           </m.div>
-          </m.div>
         </div>
-      </>
+      </>,
+      document.body
     )}
     </>
   );
