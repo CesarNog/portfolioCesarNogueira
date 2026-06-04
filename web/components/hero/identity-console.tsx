@@ -74,55 +74,69 @@ export function IdentityConsole() {
                 {t.hero.desc}
               </m.p>
 
-              {/* CTAs */}
-              <m.div {...enter(DELAYS.ctas)} className="mt-8 flex flex-wrap gap-3">
-                <Magnetic>
-                  <m.a
-                    href="#contact"
-                    whileTap={buttonPress}
-                    className="bg-accent accent-blue inline-flex items-center rounded-md px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
-                  >
-                    {t.hero.ctaPrimary}
-                  </m.a>
-                </Magnetic>
-                <Magnetic>
-                  <m.a
-                    href="#work"
-                    whileTap={buttonPress}
-                    className="inline-flex items-center rounded-md border border-[var(--color-hairline-strong)] px-6 py-3 text-sm font-medium text-[var(--color-fg)] transition-colors hover:border-[var(--color-fg-muted)]"
-                  >
-                    {t.hero.ctaSecondary}
-                  </m.a>
-                </Magnetic>
+              {/* CTAs — primary + scanner in same zone so recruiter sees evaluation option immediately */}
+              <m.div {...enter(DELAYS.ctas)} className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <div className="flex flex-wrap gap-3">
+                  <Magnetic>
+                    <m.a
+                      href="#contact"
+                      whileTap={buttonPress}
+                      className="bg-accent accent-blue inline-flex items-center rounded-md px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+                    >
+                      {t.hero.ctaPrimary}
+                    </m.a>
+                  </Magnetic>
+                  <Magnetic>
+                    <m.a
+                      href="#work"
+                      whileTap={buttonPress}
+                      className="inline-flex items-center rounded-md border border-[var(--color-hairline-strong)] px-6 py-3 text-sm font-medium text-[var(--color-fg)] transition-colors hover:border-[var(--color-fg-muted)]"
+                    >
+                      {t.hero.ctaSecondary}
+                    </m.a>
+                  </Magnetic>
+                </div>
+                {/* Scanner — same row on desktop, below on mobile.
+                    Must remain plain div (not m.div with filter) to avoid fixed-position containment bug. */}
+                <div>
+                  <RecruiterScanner />
+                </div>
               </m.div>
 
-              {/* Recruiter Scanner — plain div, NOT inside m.div with filter.
-                  CSS filter creates a new containing block for position:fixed,
-                  trapping the overlay inside the hero instead of the viewport. */}
-              <div className="mt-4">
-                <RecruiterScanner />
-              </div>
-
-              {/* Stats — 2×2 on mobile, 4 columns on sm+ */}
+              {/* Stats — compact strip on mobile (above fold), full grid on sm+ */}
               <m.div
                 {...enter(DELAYS.stats)}
-                className="mt-12 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-[var(--color-hairline)] pt-7 sm:grid-cols-4 lg:mt-16"
+                className="mt-10 sm:mt-12"
               >
-                {stats.map((s, i) => (
-                  <div key={s.label}>
-                    <p className="font-display text-2xl text-[var(--color-fg)] sm:text-3xl">
-                      <Counter
-                        value={s.value}
-                        prefix={"prefix" in s ? (s.prefix as string) : ""}
-                        suffix={s.suffix}
-                        decimals={"decimals" in s ? (s.decimals as number) : 0}
-                      />
-                    </p>
-                    <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-                      {t.statsLabels[i]}
-                    </p>
-                  </div>
-                ))}
+                {/* Mobile: compact inline strip so credibility numbers are above fold */}
+                <div className="flex flex-wrap gap-x-5 gap-y-1 border-t border-[var(--color-hairline)] pt-5 sm:hidden">
+                  {stats.map((s, i) => (
+                    <span key={s.label} className="font-mono text-[11px] text-[var(--color-fg-muted)]">
+                      <span className="font-semibold text-[var(--color-fg)]">
+                        {"prefix" in s ? (s.prefix as string) : ""}{s.value}{s.suffix}
+                      </span>
+                      {" "}{t.statsLabels[i]}
+                    </span>
+                  ))}
+                </div>
+                {/* sm+: full counter grid */}
+                <div className="hidden grid-cols-2 gap-x-6 gap-y-5 border-t border-[var(--color-hairline)] pt-7 sm:grid sm:grid-cols-4">
+                  {stats.map((s, i) => (
+                    <div key={s.label}>
+                      <p className="font-display text-2xl text-[var(--color-fg)] sm:text-3xl">
+                        <Counter
+                          value={s.value}
+                          prefix={"prefix" in s ? (s.prefix as string) : ""}
+                          suffix={s.suffix}
+                          decimals={"decimals" in s ? (s.decimals as number) : 0}
+                        />
+                      </p>
+                      <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
+                        {t.statsLabels[i]}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </m.div>
             </div>
           </div>

@@ -125,7 +125,7 @@ const SKILLS = [
 const ROLES = ["Cloud Architect", "Platform Engineer", "FinOps Engineer", "Technical Consultant", "Staff Engineer"] as const;
 
 const IMPACT = [
-  { value: "$2.5M+", label: "Cloud Savings" },
+  { value: "~30%",  label: "Cloud Waste Cut" },
   { value: "40+",   label: "Projects" },
   { value: "10+",   label: "Years" },
   { value: "6+",    label: "Countries" },
@@ -418,7 +418,8 @@ export function RecruiterScanner() {
                 </div>
 
                 {/* PRIMARY VERDICT — dominant, no competing elements */}
-                <div className="mb-5 rounded-2xl border-2 border-[var(--color-ok)]/40 bg-[var(--color-ok)]/5 p-7 text-center"
+                {/* Verdict card — glow only, no border (ghost-card anti-pattern: border + shadow >16px) */}
+                <div className="mb-5 rounded-xl bg-[var(--color-ok)]/6 p-7 text-center"
                   style={{ boxShadow: "0 0 40px -12px color-mix(in oklab, var(--color-ok) 30%, transparent)" }}>
                   <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--color-ok)]/70">Hire Recommendation</p>
                   <p className="mt-2 font-display text-4xl font-bold leading-tight text-[var(--color-ok)] sm:text-5xl">
