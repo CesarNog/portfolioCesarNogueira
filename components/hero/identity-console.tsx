@@ -81,9 +81,9 @@ export function IdentityConsole() {
           loading="eager"
           fetchPriority="high"
           className="object-cover object-top"
-          style={{ opacity: 0.15 }}
+          style={{ opacity: 0.30 }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-surface-0)]/20 via-[var(--color-surface-0)]/80 to-[var(--color-surface-0)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-surface-0)]/10 via-[var(--color-surface-0)]/60 to-[var(--color-surface-0)]" />
       </div>
 
       {/* Cursor spotlight — follows mouse, GPU-only via motion values */}
