@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { m, useMotionTemplate, useMotionValue, useReducedMotion } from "motion/react";
 import { siteConfig, stats } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
@@ -8,6 +9,7 @@ import { Counter } from "@/components/ui/counter";
 import { Magnetic } from "@/components/ui/magnetic";
 import { EASE, DUR, buttonPress } from "@/lib/motion";
 import { RecruiterScanner } from "@/components/recruiter-scanner";
+import { useTypewriter } from "@/hooks/use-typewriter";
 
 // Staggered hero entrance — each layer reveals 120ms after the previous
 const DELAYS = { badge: 0.1, name: 0.2, desc: 0.38, ctas: 0.52, stats: 0.68, photo: 0.15 };
@@ -18,6 +20,32 @@ export function IdentityConsole() {
   const mouseX = useMotionValue(-1000);
   const mouseY = useMotionValue(-1000);
   const spotlight = useMotionTemplate`radial-gradient(520px at ${mouseX}px ${mouseY}px, color-mix(in oklab, var(--color-blue) 5%, transparent) 0%, transparent 70%)`;
+
+  // Typewriter effect for the hero name — starts after badge entrance delay
+  const LINE1 = siteConfig.firstName; // "César A."
+  const LINE2 = "Nogueira.";
+  const { displayed: typed1, done: done1 } = useTypewriter(LINE1, {
+    charDelay: 62,
+    startDelay: DELAYS.name * 1000 + 80,
+    skip: !!reduce,
+  });
+  const { displayed: typed2 } = useTypewriter(LINE2, {
+    charDelay: 62,
+    startDelay: DELAYS.name * 1000 + 80 + LINE1.length * 62 + 200,
+    skip: !!reduce,
+  });
+
+  // Live "last active" timestamp for AVAILABLE badge
+  const [lastActive, setLastActive] = useState("");
+  useEffect(() => {
+    const fmt = () => {
+      const now = new Date();
+      setLastActive(now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
+    };
+    fmt();
+    const id = setInterval(fmt, 60_000);
+    return () => clearInterval(id);
+  }, []);
 
   const enter = (delay: number) =>
     reduce
@@ -73,22 +101,34 @@ export function IdentityConsole() {
         <div className="flex min-h-[100svh] flex-col justify-end pb-12 pt-20 sm:justify-end sm:pt-24 lg:justify-center lg:pb-16 lg:pt-28">
           <div className="px-6 lg:pl-8 xl:pl-16">
             <div className="max-w-[520px]">
-              {/* Availability badge — mb-5 (was mb-7) */}
+              {/* Availability badge — live timestamp micro-signal */}
               <m.div {...enter(DELAYS.badge)} className="mb-5 flex items-center gap-2.5">
                 <span className="status-dot" aria-hidden />
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-ok)]">
                   {t.hero.available}
                 </span>
+                {lastActive && (
+                  <span className="font-mono text-[9px] text-[var(--color-ok)]/50 tracking-wider hidden sm:inline" aria-hidden>
+                    · {lastActive}
+                  </span>
+                )}
               </m.div>
 
-              {/* Name — tighter size clamp, slightly tighter tracking */}
+              {/* Name — typewriter reveal, cursor blinks until done */}
               <m.h1
                 {...enter(DELAYS.name)}
-                className="font-display text-[clamp(3rem,5vw,5rem)] leading-[0.88] tracking-[-0.025em] text-[var(--color-fg)] [text-wrap:balance]"
+                className="font-display text-[clamp(3rem,5vw,5rem)] leading-[0.88] tracking-[-0.025em] text-[var(--color-fg)]"
+                aria-label={`${LINE1} Nogueira.`}
               >
-                {siteConfig.firstName}
+                <span aria-hidden>
+                  {reduce ? LINE1 : typed1}
+                  {!reduce && !done1 && <span className="cursor-blink" />}
+                </span>
                 <br />
-                Nogueira.
+                <span aria-hidden>
+                  {reduce ? LINE2 : typed2}
+                  {!reduce && done1 && typed2.length < LINE2.length && <span className="cursor-blink" />}
+                </span>
               </m.h1>
 
               {/* One-liner — mt-4 (was mt-6), slightly smaller + subtler */}
