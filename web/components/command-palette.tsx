@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Command } from "cmdk";
-import * as Dialog from "@radix-ui/react-dialog";
 import { useTheme } from "next-themes";
 import { siteConfig } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
@@ -74,8 +73,8 @@ export function CommandPalette() {
         onClick={() => setOpen(false)}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
-      <div className="panel relative mt-[12vh] w-[92vw] max-w-lg overflow-hidden rounded-xl shadow-2xl">
-        <Dialog.Title className="sr-only">{t.palette.commandPalette}</Dialog.Title>
+      <div className="panel relative mt-[12vh] w-[92vw] max-w-lg overflow-hidden rounded-xl shadow-2xl" aria-labelledby="cmdk-title">
+        <h2 id="cmdk-title" className="sr-only">{t.palette.commandPalette}</h2>
         <Command.Input
           placeholder={t.palette.placeholder}
           className="w-full border-b border-[var(--color-hairline)] bg-transparent px-4 py-3.5 text-sm text-[var(--color-fg)] outline-none placeholder:text-[var(--color-fg-subtle)]"
