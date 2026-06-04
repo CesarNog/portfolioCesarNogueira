@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { SiteHeader } from "@/components/site-header";
 import { JsonLd } from "@/components/json-ld";
@@ -7,21 +6,37 @@ import { Story } from "@/components/sections/story";
 import { ExperienceTimeline } from "@/components/sections/experience-timeline";
 import { Projects } from "@/components/sections/projects";
 import { Trust } from "@/components/sections/trust";
-import { GlobalMap } from "@/components/sections/global-map";
 import { CapabilityMatrix } from "@/components/sections/capability-matrix";
 import { Certifications } from "@/components/sections/certifications";
-import { CloudGalaxy } from "@/components/sections/cloud-galaxy";
 import { Testimonials } from "@/components/sections/testimonials";
-import { ContactConsole } from "@/components/sections/contact-console";
-import { CommandPalette } from "@/components/command-palette";
-import { Assistant } from "@/components/chatbot/assistant";
-import { RecruiterMode } from "@/components/recruiter-mode";
 import { MotionToggle } from "@/components/motion-toggle";
 import { siteConfig } from "@/lib/site-config";
 
-// Canvas background — ssr:false + deferred internally via requestIdleCallback
+// Canvas background — ssr:false handled inside the component
 const InfraCanvas = dynamic(
   () => import("@/components/background/infra-canvas").then(m => m.InfraCanvas)
+);
+
+// Below-fold sections — split into separate JS chunks, load after first paint
+const GlobalMap = dynamic(
+  () => import("@/components/sections/global-map").then(m => m.GlobalMap)
+);
+const CloudGalaxy = dynamic(
+  () => import("@/components/sections/cloud-galaxy").then(m => m.CloudGalaxy)
+);
+const ContactConsole = dynamic(
+  () => import("@/components/sections/contact-console").then(m => m.ContactConsole)
+);
+
+// Interactive overlays — only needed after user interaction; load last
+const CommandPalette = dynamic(
+  () => import("@/components/command-palette").then(m => m.CommandPalette)
+);
+const RecruiterMode = dynamic(
+  () => import("@/components/recruiter-mode").then(m => m.RecruiterMode)
+);
+const Assistant = dynamic(
+  () => import("@/components/chatbot/assistant").then(m => m.Assistant)
 );
 
 export default function Home() {
