@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Counter } from "@/components/ui/counter";
 import { Magnetic } from "@/components/ui/magnetic";
 import { EASE, DUR, buttonPress } from "@/lib/motion";
+import { RecruiterScanner } from "@/components/recruiter-scanner";
 
 // Staggered hero entrance — each layer reveals 120ms after the previous
 const DELAYS = { badge: 0.1, name: 0.2, desc: 0.38, ctas: 0.52, stats: 0.68, photo: 0.15 };
@@ -92,6 +93,11 @@ export function IdentityConsole() {
                     {t.hero.ctaSecondary}
                   </m.a>
                 </Magnetic>
+              </m.div>
+
+              {/* Recruiter Scanner — tertiary CTA */}
+              <m.div {...enter(DELAYS.ctas + 0.1)} className="mt-4">
+                <RecruiterScanner />
               </m.div>
 
               {/* Stats — 2×2 on mobile, 4 columns on sm+ */}
