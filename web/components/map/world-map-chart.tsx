@@ -1,64 +1,55 @@
 "use client";
 
 /**
- * WorldMapChart — Cloudflare-style international delivery network.
- * Natural Earth 110m via react-simple-maps. Portugal is the visual hub.
+ * WorldMapChart — zero-dependency SVG dot map.
+ * Equirectangular projection: x = (lon+180)/360, y = (90-lat)/180.
+ * Replaces react-simple-maps + topojson-client (292KB combined).
  */
 
-import { useState, useEffect, memo } from "react";
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  Marker,
-  Line,
-} from "react-simple-maps";
+import { memo } from "react";
 import { m } from "motion/react";
 
-const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+const W = 800;
+const H = 420;
 
-// Atlantic corridor — Europe upper-right, Brazil lower-left, USA upper-left.
-// scale 280 shows the full transatlantic delivery network without clipping.
-const PROJECTION_CONFIG = {
-  rotate: [22, -5, 0] as [number, number, number],
-  scale: 280,
-  center: [-10, 25] as [number, number],
+function lonToX(lon: number) { return ((lon + 180) / 360) * W; }
+function latToY(lat: number) { return ((90 - lat) / 180) * H; }
+
+// Simplified land mass outlines — key geographic shapes only (no library needed)
+// Each array is a closed polygon [lon, lat][]
+const LAND_OUTLINES: [number, number][][] = [
+  // Europe rough
+  [[-10,36],[10,36],[30,46],[32,48],[28,56],[20,60],[10,58],[5,54],[-5,48],[-8,44],[-10,36]],
+  // British Isles rough
+  [[-6,50],[-2,50],[0,53],[-2,58],[-5,58],[-6,54],[-6,50]],
+  // Iberian Peninsula
+  [[-9,36],[-5,36],[3,42],[3,44],[0,46],[-2,44],[-9,44],[-9,36]],
+  // North Africa
+  [[-18,16],[52,12],[52,38],[36,36],[8,38],[-6,36],[-18,28],[-18,16]],
+  // Sub-Saharan Africa
+  [[-18,16],[52,12],[52,-26],[36,-34],[20,-36],[10,-28],[-18,-4],[-18,16]],
+  // South America
+  [[-82,12],[-70,12],[-52,4],[-36,-6],[-36,-56],[-60,-56],[-76,-54],[-82,12]],
+  // North America
+  [[-168,72],[-52,48],[-52,12],[-82,12],[-100,-4],[-120,14],[-118,34],[-82,30],[-64,18],[-72,42],[-70,48],[-60,44],[-52,48],[-62,72],[-168,72]],
+  // Asia rough
+  [[32,42],[140,40],[140,72],[70,72],[32,68],[24,68],[32,42]],
+  // Southeast Asia
+  [[100,20],[128,24],[128,0],[108,-8],[100,2],[96,6],[100,20]],
+  // Australia
+  [[116,-22],[138,-14],[148,-20],[154,-28],[148,-40],[136,-38],[130,-32],[116,-34],[114,-26],[116,-22]],
+  // Japan rough
+  [[130,34],[138,38],[144,42],[142,44],[138,42],[134,36],[130,34]],
+];
+
+// Color per delivery type
+const TYPE_COLOR: Record<string, string> = {
+  Remote:   "var(--color-blue)",
+  "On-site":"var(--color-orange)",
+  Hybrid:   "var(--color-cyan)",
 };
 
-const HIGHLIGHT_COUNTRIES = new Set([
-  "620", // Portugal
-  "724", // Spain
-  "528", // Netherlands
-  "826", // United Kingdom
-  "076", // Brazil
-  "840", // United States
-]);
-
-// All colors reference CSS custom properties — adapt to dark/light theme
-const C = {
-  ok:     "var(--color-ok)",
-  orange: "var(--color-orange)",
-  blue:   "var(--color-blue)",
-  cyan:   "var(--color-cyan)",
-};
-
-// Offsets in projected SVG units — tuned for scale 280 Atlantic-corridor view
-const MARKER_CONFIG: Record<string, {
-  color: string;
-  r: number;
-  label: string;
-  offset: [number, number];
-  anchor: "start" | "end" | "middle";
-}> = {
-  pt: { color: C.ok,     r: 8,  label: "Portugal",      offset: [12, -6],   anchor: "start" },
-  es: { color: C.orange, r: 5,  label: "Spain",          offset: [9, 10],    anchor: "start" },
-  nl: { color: C.blue,   r: 5,  label: "Netherlands",    offset: [9, -4],    anchor: "start" },
-  uk: { color: C.blue,   r: 5,  label: "UK",             offset: [-9, -11],  anchor: "end"   },
-  br: { color: C.cyan,   r: 5,  label: "Brazil",         offset: [9, 5],     anchor: "start" },
-  us: { color: C.blue,   r: 5,  label: "United States",  offset: [0, -11],   anchor: "middle"},
-};
-
-interface Marker {
+interface MarkerData {
   id: string;
   lat: number;
   lon: number;
@@ -67,7 +58,7 @@ interface Marker {
 }
 
 interface Props {
-  markers: Marker[];
+  markers: MarkerData[];
   visibleIds: string[];
   activeId: string | null;
   hubId: string;
@@ -76,220 +67,146 @@ interface Props {
 }
 
 function WorldMapChart({ markers, visibleIds, activeId, hubId, onSelect, reduce }: Props) {
-  const [ready, setReady] = useState(false);
-  const hub = markers.find((m) => m.id === hubId)!;
+  const hub = markers.find(m => m.id === hubId)!;
+  const hubX = lonToX(hub.lon);
+  const hubY = latToY(hub.lat);
 
-  useEffect(() => {
-    const t = setTimeout(() => setReady(true), 200);
-    return () => clearTimeout(t);
-  }, []);
-
-  // Brazil→Portugal route gets a slightly stronger visual weight — tells the relocation story
-  const isBrazilBridge = (destId: string) => destId === "br";
+  const markerById = Object.fromEntries(markers.map(m => [m.id, m]));
 
   return (
-    <ComposableMap
-      projection="geoNaturalEarth1"
-      projectionConfig={PROJECTION_CONFIG}
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
       style={{ width: "100%", height: "100%", minHeight: 340 }}
+      role="img"
+      aria-label="Global delivery map"
     >
       <defs>
-        <radialGradient id="vignette" cx="50%" cy="50%" r="50%">
-          <stop offset="60%" stopColor="transparent" />
-          <stop offset="100%" stopColor="var(--color-surface-1)" stopOpacity="0.55" />
+        <radialGradient id="mapBg" cx="50%" cy="50%" r="70%">
+          <stop offset="0%" stopColor="var(--color-surface-2)" />
+          <stop offset="100%" stopColor="var(--color-surface-1)" />
         </radialGradient>
-        <filter id="glow-hub" x="-80%" y="-80%" width="260%" height="260%">
-          <feGaussianBlur stdDeviation="2.5" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-        <filter id="glow-node" x="-80%" y="-80%" width="260%" height="260%">
-          <feGaussianBlur stdDeviation="1.5" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
+        <filter id="glow-hub">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
 
-      {/* === Geography layer === */}
-      <Geographies geography={GEO_URL}>
-        {({ geographies }) =>
-          geographies.map((geo) => {
-            const isHighlighted = HIGHLIGHT_COUNTRIES.has(geo.id);
-            const isPortugal = geo.id === "620";
-            return (
-              <Geography
-                key={geo.rsmKey}
-                geography={geo}
-                fill={
-                  isPortugal
-                    ? "var(--color-surface-3)"
-                    : isHighlighted
-                    ? "var(--color-surface-2)"
-                    : "var(--color-surface-1)"
-                }
-                stroke={isHighlighted ? "var(--color-hairline-strong)" : "var(--color-hairline)"}
-                strokeWidth={isHighlighted ? 0.5 : 0.25}
-                style={{
-                  default: { outline: "none" },
-                  hover:   { outline: "none", fill: isHighlighted ? "var(--color-surface-3)" : "var(--color-surface-1)" },
-                  pressed: { outline: "none" },
-                }}
-              />
-            );
-          })
-        }
-      </Geographies>
+      {/* Ocean background */}
+      <rect width={W} height={H} fill="url(#mapBg)" rx="8" />
 
-      {/* Atmospheric vignette overlay */}
-      <rect x="-9999" y="-9999" width="99999" height="99999" fill="url(#vignette)" style={{ pointerEvents: "none" }} />
+      {/* Graticule — subtle grid lines every 30° */}
+      <g stroke="var(--color-hairline)" strokeWidth={0.4} opacity={0.6}>
+        {[-60,-30,0,30,60].map(lat => (
+          <line key={`lat${lat}`} x1={0} y1={latToY(lat)} x2={W} y2={latToY(lat)} />
+        ))}
+        {[-120,-90,-60,-30,0,30,60,90,120,150].map(lon => (
+          <line key={`lon${lon}`} x1={lonToX(lon)} y1={0} x2={lonToX(lon)} y2={H} />
+        ))}
+        {/* Equator bolder */}
+        <line x1={0} y1={latToY(0)} x2={W} y2={latToY(0)} strokeWidth={0.8} opacity={0.8} />
+      </g>
 
-      {/* === Routes === */}
-      {ready && markers
-        .filter((m) => m.id !== hubId)
-        .map((dest, i) => {
-          const isVisible = visibleIds.includes(dest.id);
-          const isActive = activeId === dest.id;
-          const cfg = MARKER_CONFIG[dest.id];
-          const isBridge = isBrazilBridge(dest.id);
-          // Brazil→Portugal route is slightly stronger to tell the relocation story
-          const baseOpacity = isBridge ? 0.55 : 0.35;
-          const activeOpacity = 0.9;
+      {/* Land masses */}
+      {LAND_OUTLINES.map((poly, i) => (
+        <polygon
+          key={i}
+          points={poly.map(([lon, lat]) => `${lonToX(lon)},${latToY(lat)}`).join(" ")}
+          fill="var(--color-surface-3)"
+          stroke="var(--color-hairline-strong)"
+          strokeWidth={0.5}
+          strokeLinejoin="round"
+        />
+      ))}
 
-          return (
-            <g key={`route-${dest.id}`}>
-              {/* Base route */}
-              <Line
-                from={[hub.lon, hub.lat]}
-                to={[dest.lon, dest.lat]}
-                stroke={cfg?.color ?? C.blue}
-                strokeWidth={isActive ? 1.8 : (isBridge ? 1.0 : 0.7)}
-                strokeOpacity={isVisible ? (isActive ? activeOpacity : baseOpacity) : 0.05}
-                strokeLinecap="round"
-                strokeDasharray={isActive ? undefined : "3 6"}
-              />
-              {/* Animated packet */}
-              {isVisible && !reduce && (
-                <AnimatedPacket
-                  from={[hub.lon, hub.lat]}
-                  to={[dest.lon, dest.lat]}
-                  color={cfg?.color ?? C.blue}
-                  delay={i * 0.7}
-                  active={isActive}
-                />
-              )}
-            </g>
-          );
-        })}
+      {/* Routes from hub to each marker */}
+      {markers.filter(m => m.id !== hubId).map(dest => {
+        const dx = lonToX(dest.lon);
+        const dy = latToY(dest.lat);
+        const isVisible = visibleIds.includes(dest.id);
+        const isActive = activeId === dest.id;
+        const color = TYPE_COLOR[dest.deliveryType ?? ""] ?? "var(--color-blue)";
+        const isBrazil = dest.id === "br";
 
-      {/* === Markers === */}
-      {markers.map((marker, i) => {
-        const cfg = MARKER_CONFIG[marker.id];
-        if (!cfg) return null;
-        const isVisible = visibleIds.includes(marker.id);
-        const isActive = activeId === marker.id;
-        const isHub = marker.id === hubId;
+        // Great-circle approximation: curve through midpoint lifted toward top
+        const mx = (hubX + dx) / 2;
+        const my = (hubY + dy) / 2 - 40;
 
         return (
-          <Marker
+          <g key={`route-${dest.id}`}>
+            <path
+              d={`M ${hubX} ${hubY} Q ${mx} ${my} ${dx} ${dy}`}
+              fill="none"
+              stroke={color}
+              strokeWidth={isActive ? 1.8 : isBrazil ? 1.0 : 0.7}
+              strokeOpacity={isVisible ? (isActive ? 0.9 : isBrazil ? 0.55 : 0.35) : 0.05}
+              strokeDasharray={isActive ? undefined : "3 6"}
+              strokeLinecap="round"
+            />
+            {/* Animated packet along route */}
+            {isVisible && !reduce && (
+              <path
+                d={`M ${hubX} ${hubY} Q ${mx} ${my} ${dx} ${dy}`}
+                fill="none"
+                stroke={color}
+                strokeWidth={isActive ? 3 : 2}
+                strokeOpacity={isActive ? 0.9 : 0.6}
+                strokeLinecap="round"
+                strokeDasharray="5 250"
+                style={{ animation: `packet-travel ${isActive ? 1.6 : 2.6}s linear infinite` }}
+              />
+            )}
+          </g>
+        );
+      })}
+
+      {/* Markers */}
+      {markers.map(marker => {
+        const mx = lonToX(marker.lon);
+        const my = latToY(marker.lat);
+        const isHub = marker.id === hubId;
+        const isVisible = visibleIds.includes(marker.id);
+        const isActive = activeId === marker.id;
+        const color = isHub ? "var(--color-ok)" : (TYPE_COLOR[marker.deliveryType ?? ""] ?? "var(--color-blue)");
+        const r = isHub ? 7 : isActive ? 6 : 4.5;
+
+        return (
+          <g
             key={marker.id}
-            coordinates={[marker.lon, marker.lat]}
+            style={{ cursor: "pointer" }}
+            opacity={isVisible ? 1 : 0.12}
             onClick={() => onSelect(isActive ? null : marker.id)}
             onMouseEnter={() => onSelect(marker.id)}
             onMouseLeave={() => onSelect(null)}
           >
-            <g style={{ cursor: "pointer" }} opacity={isVisible ? 1 : 0.12}>
-              {/* Selection ring */}
-              {isActive && !isHub && (
-                <circle r={cfg.r + 5} fill="none" stroke={cfg.color} strokeWidth={1} opacity={0.35} />
-              )}
-
-              {/* Hub pulse rings — two layers for depth */}
-              {isHub && !reduce && (
-                <>
-                  <m.circle
-                    r={cfg.r + 4}
-                    fill="none"
-                    stroke={cfg.color}
-                    strokeWidth={0.6}
-                    initial={{ scale: 0.7, opacity: 0.7 }}
-                    animate={{ scale: 2.8, opacity: 0 }}
-                    transition={{ duration: 2.8, repeat: Infinity, ease: "easeOut", delay: 0 }}
-                    style={{ transformOrigin: "0px 0px" }}
-                  />
-                  <m.circle
-                    r={cfg.r + 2}
-                    fill="none"
-                    stroke={cfg.color}
-                    strokeWidth={0.8}
-                    initial={{ scale: 0.8, opacity: 0.8 }}
-                    animate={{ scale: 2.0, opacity: 0 }}
-                    transition={{ duration: 2.8, repeat: Infinity, ease: "easeOut", delay: 0.9 }}
-                    style={{ transformOrigin: "0px 0px" }}
-                  />
-                </>
-              )}
-
-              {/* Main dot */}
-              <circle
-                r={cfg.r}
-                fill={cfg.color}
-                stroke={isHub ? "var(--color-surface-0)" : "transparent"}
-                strokeWidth={isHub ? 2.5 : 0}
-                filter={isHub ? "url(#glow-hub)" : (isActive ? "url(#glow-node)" : undefined)}
-              />
-
-              {/* Label */}
-              <text
-                x={cfg.offset[0]}
-                y={cfg.offset[1]}
-                textAnchor={cfg.anchor}
-                style={{
-                  fontSize: isHub ? 10 : 8.5,
-                  fill: isHub ? "var(--color-fg)" : "var(--color-fg-muted)",
-                  fontFamily: "monospace",
-                  fontWeight: isHub ? 700 : 400,
-                  opacity: isVisible ? 1 : 0,
-                  pointerEvents: "none",
-                  letterSpacing: isHub ? "0.04em" : "0.02em",
-                  textTransform: isHub ? "uppercase" : "none",
-                }}
-              >
-                {cfg.label}
-              </text>
-            </g>
-          </Marker>
+            {/* Hub pulse rings */}
+            {isHub && !reduce && (
+              <>
+                <m.circle cx={mx} cy={my} r={r + 4} fill="none" stroke={color} strokeWidth={0.6}
+                  initial={{ scale: 0.7, opacity: 0.7 }} animate={{ scale: 2.8, opacity: 0 }}
+                  transition={{ duration: 2.8, repeat: Infinity, ease: "easeOut" }}
+                  style={{ transformOrigin: `${mx}px ${my}px` }}
+                />
+                <m.circle cx={mx} cy={my} r={r + 2} fill="none" stroke={color} strokeWidth={0.8}
+                  initial={{ scale: 0.8, opacity: 0.8 }} animate={{ scale: 2.0, opacity: 0 }}
+                  transition={{ duration: 2.8, repeat: Infinity, ease: "easeOut", delay: 0.9 }}
+                  style={{ transformOrigin: `${mx}px ${my}px` }}
+                />
+              </>
+            )}
+            {/* Selection ring */}
+            {isActive && !isHub && (
+              <circle cx={mx} cy={my} r={r + 5} fill="none" stroke={color} strokeWidth={1} opacity={0.35} />
+            )}
+            {/* Dot */}
+            <circle cx={mx} cy={my} r={r} fill={color}
+              stroke={isHub ? "var(--color-surface-0)" : "transparent"}
+              strokeWidth={isHub ? 2.5 : 0}
+              filter={isHub ? "url(#glow-hub)" : undefined}
+            />
+          </g>
         );
       })}
-    </ComposableMap>
-  );
-}
-
-function AnimatedPacket({
-  from, to, color, delay, active,
-}: {
-  from: [number, number];
-  to: [number, number];
-  color: string;
-  delay: number;
-  active: boolean;
-}) {
-  return (
-    <Line
-      from={from}
-      to={to}
-      stroke={color}
-      strokeWidth={active ? 3 : 2}
-      strokeOpacity={active ? 0.95 : 0.65}
-      strokeLinecap="round"
-      strokeDasharray="5 250"
-      style={{
-        animation: `packet-travel ${active ? 1.6 : 2.6}s linear ${delay}s infinite`,
-      }}
-    />
+    </svg>
   );
 }
 

@@ -1,27 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
+// inView state kept for future use but ForceGalaxy is now instant SVG
 import { Section } from "@/components/sections/section";
+import { ForceGalaxy } from "@/components/background/force-graph";
 import { galaxy, galaxyGroups } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
-
-function GalaxyLoading() {
-  const { t } = useI18n();
-  return (
-    <div className="flex h-full items-center justify-center font-mono text-xs text-[var(--color-fg-subtle)]">
-      {t.labels.loadingGalaxy}
-    </div>
-  );
-}
-
-const ForceGalaxy = dynamic(
-  () => import("@/components/background/force-graph").then((m) => m.ForceGalaxy),
-  {
-    ssr: false,
-    loading: () => <GalaxyLoading />,
-  },
-);
 
 const ACCENT: Record<string, string> = {
   blue: "var(--color-blue)",
@@ -60,7 +44,7 @@ export function CloudGalaxy() {
           data-recruiter-dim
           className="panel relative min-h-[360px] overflow-hidden rounded-lg lg:min-h-[420px]"
         >
-          {inView && <ForceGalaxy className="absolute inset-0" activeGroup={active} />}
+          <ForceGalaxy className="absolute inset-0" activeGroup={active} />
         </div>
 
         <div className="flex flex-col justify-center gap-2">
