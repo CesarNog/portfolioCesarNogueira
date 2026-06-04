@@ -13,7 +13,7 @@
 
 [build]
   base    = "web"
-  command = "npm install --legacy-peer-deps && npm run build"
+  command = "npm install --legacy-peer-deps && npm run build && mkdir -p out/curriculum && cp ../old-website/curriculum/CV_CesarANogueira_Cloud_EN_US.pdf out/curriculum/"
   publish = "out"
 
 [build.environment]
