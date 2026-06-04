@@ -138,6 +138,7 @@ export function ContactFormModal({ open, onClose }: Props) {
                   <div className="check-draw mb-4 text-4xl text-[var(--color-ok)]">✓</div>
                   <p className="font-display text-xl text-[var(--color-fg)]">{c.formSuccess}</p>
                   <p className="mt-2 text-sm text-[var(--color-fg-muted)]">{c.formSuccessDesc}</p>
+                  <p className="mt-1 font-mono text-[11px] text-[var(--color-ok)]">{c.responseTime}</p>
                   <button
                     onClick={reset}
                     className="mt-6 rounded-md border border-[var(--color-hairline)] px-5 py-2.5 text-sm text-[var(--color-fg)] transition-colors hover:border-[var(--color-fg-muted)]"
