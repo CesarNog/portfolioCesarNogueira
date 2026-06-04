@@ -416,7 +416,7 @@ export function RecruiterMode() {
         initial={reduce ? false : { opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 1.8, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed bottom-5 left-5 z-[90] flex items-center gap-2.5 rounded-full border px-4 py-2.5 text-sm font-medium shadow-2xl transition-all duration-300 ${
+        className={`fixed bottom-5 left-5 z-floating flex items-center gap-2.5 rounded-full border px-4 py-2.5 text-sm font-medium shadow-2xl transition-all duration-300 ${
           recruiterOn
             ? "border-[var(--color-blue)] bg-[var(--color-blue)] text-white shadow-[0_0_24px_-6px_var(--color-blue)]"
             : "border-[var(--color-blue)]/40 bg-[var(--color-surface-1)] text-[var(--color-fg)] hover:border-[var(--color-blue)] hover:shadow-[0_0_18px_-8px_var(--color-blue)]"
@@ -447,7 +447,7 @@ export function RecruiterMode() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               onClick={closePanel}
-              className="fixed inset-0 z-[95] bg-black/50 backdrop-blur-sm sm:hidden"
+              className="fixed inset-0 z-panel-bg bg-black/50 backdrop-blur-sm sm:hidden"
             />
 
             <m.div
@@ -459,7 +459,7 @@ export function RecruiterMode() {
               animate={{ opacity: 1, x: 0 }}
               exit={reduce ? { opacity: 0 } : { opacity: 0, x: "100%" }}
               transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-              className="panel fixed inset-y-0 right-0 z-[96] flex w-full flex-col overflow-hidden shadow-2xl sm:w-[440px] lg:w-[460px]"
+              className="panel fixed inset-y-0 right-0 z-panel flex w-full flex-col overflow-hidden shadow-2xl sm:w-[440px] lg:w-[460px]"
             >
               {/* ── Header ─────────────────────────────────────────────── */}
               <div className="flex shrink-0 items-center justify-between border-b border-[var(--color-hairline)] px-5 py-4">
@@ -576,10 +576,10 @@ export function RecruiterMode() {
                           {/* Score bar */}
                           <div className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--color-surface-3)]" role="progressbar" aria-valuenow={selectedRole.fitScore} aria-valuemin={0} aria-valuemax={100}>
                             <m.div
-                              className="h-full rounded-full"
+                              className="h-full w-full origin-left"
                               style={{ backgroundColor: scoreColor(selectedRole.fitScore) }}
-                              initial={{ width: 0 }}
-                              animate={{ width: `${selectedRole.fitScore}%` }}
+                              initial={{ scaleX: 0 }}
+                              animate={{ scaleX: selectedRole.fitScore / 100 }}
                               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                             />
                           </div>
@@ -617,13 +617,14 @@ export function RecruiterMode() {
                           <p className="mb-3 text-sm text-[var(--color-fg-muted)]">
                             Want to discuss this evaluation or explore a specific scenario?
                           </p>
-                          <a
-                            href={`mailto:${siteConfig.links.email}?subject=Re:%20${encodeURIComponent(selectedRole.label)}%20Evaluation`}
-                            aria-label={`Send evaluation email to César about ${selectedRole.label} role`}
+                          <button
+                            type="button"
+                            aria-label={`Contact César about ${selectedRole.label} role`}
+                            onClick={() => { setPanelOpen(false); setTimeout(() => document.dispatchEvent(new CustomEvent("open-contact-form")), 300); }}
                             className="inline-flex items-center gap-2 rounded-md bg-[var(--color-blue)] px-4 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-blue)]"
                           >
                             Email César →
-                          </a>
+                          </button>
                         </div>
                       </div>
                     )}

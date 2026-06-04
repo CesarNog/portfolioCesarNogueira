@@ -6,6 +6,23 @@
   infrastructure orange), hairline borders, tight display tracking, mono for data.
 */
 @theme inline {
+  /* ── Z-index semantic scale ───────────────────────────────────────────────
+     Use these instead of arbitrary z-[N] values. Layer order is explicit.
+     z-floating  FABs (chatbot button, hiring assistant)
+     z-panel-bg  Mobile panel backdrops (below the panel itself)
+     z-panel     Slide-in panels (recruiter mode)
+     z-palette   Command palette backdrop
+     z-modal-bg  Modal backdrops
+     z-modal     Modal dialogs (contact form, scanner)
+  ──────────────────────────────────────────────────────────────────────── */
+  --z-floating:  90;
+  --z-panel-bg:  95;
+  --z-panel:     96;
+  --z-palette:  100;
+  --z-modal-bg: 110;
+  --z-modal:    120;
+  --z-scanner:  200;
+
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-inter-tight), var(--font-geist), sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
