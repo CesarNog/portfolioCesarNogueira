@@ -458,14 +458,14 @@ export function RecruiterScanner() {
                   </m.div>
 
                   {/* ── ACT 3 VERDICT — shown FIRST when report is ready ── */}
-                  <AnimatePresence>
-                    {phase === "report" && (
-                      <m.div
-                        initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: DUR.reveal, ease: EASE.spring }}
-                        className="mb-8"
-                      >
+                  {phase === "report" && (
+                    <m.div
+                      key="verdict"
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: DUR.reveal, ease: EASE.spring }}
+                      className="mb-8"
+                    >
                         {/* Hire recommendation banner */}
                         <div className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-[var(--color-ok)]/30 bg-[var(--color-ok)]/6 px-5 py-4">
                           <div>
@@ -507,9 +507,8 @@ export function RecruiterScanner() {
                             ))}
                           </div>
                         </div>
-                      </m.div>
-                    )}
-                  </AnimatePresence>
+                    </m.div>
+                  )}
 
                   {/* ── ACT 2: Competency scores ─────────────────────── */}
                   <div className="mb-6">
@@ -529,13 +528,13 @@ export function RecruiterScanner() {
                   </div>
 
                   {/* ── ACT 3 CONTINUED: Business impact + CTA ───────── */}
-                  <AnimatePresence>
-                    {phase === "report" && (
-                      <m.div
-                        initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: DUR.reveal, delay: 0.15, ease: EASE.spring }}
-                      >
+                  {phase === "report" && (
+                    <m.div
+                      key="impact"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: DUR.reveal, delay: 0.15, ease: EASE.spring }}
+                    >
                         {/* Business impact */}
                         <div className="mb-5 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4">
                           <p className="mb-3 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Business Impact</p>
@@ -584,9 +583,8 @@ export function RecruiterScanner() {
                         <p className="mt-5 text-center font-mono text-[10px] text-[var(--color-fg-subtle)]">
                           Expand any competency above to view projects, evidence and certifications
                         </p>
-                      </m.div>
-                    )}
-                  </AnimatePresence>
+                    </m.div>
+                  )}
 
                 </div>
               )}
