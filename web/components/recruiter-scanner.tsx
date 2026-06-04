@@ -157,7 +157,7 @@ function SkillBar({ skill, visible }: { skill: typeof SKILLS[number]; visible: b
             <span className="font-mono text-[10px] text-[var(--color-fg-subtle)]" style={{ display: "inline-block", transform: expanded ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.18s" }}>▾</span>
           </div>
         </div>
-        <div className="h-1 w-full overflow-hidden rounded-full bg-[var(--color-surface-3)]" role="progressbar" aria-valuenow={skill.score} aria-valuemin={0} aria-valuemax={100}>
+        <div className="relative h-1 w-full overflow-hidden rounded-full bg-[var(--color-surface-3)]" role="progressbar" aria-valuenow={skill.score} aria-valuemin={0} aria-valuemax={100}>
           <m.div
             className="h-full rounded-full"
             style={{ backgroundColor: scoreColor(skill.score) }}
@@ -165,6 +165,10 @@ function SkillBar({ skill, visible }: { skill: typeof SKILLS[number]; visible: b
             animate={{ width: visible ? `${skill.score}%` : 0 }}
             transition={{ duration: 0.85, ease: EASE.out }}
           />
+          {/* Flash shimmer on completion */}
+          {visible && (
+            <span className="pointer-events-none absolute inset-0 translate-x-full animate-[shimmer_0.6s_0.85s_ease-out_forwards] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          )}
         </div>
       </button>
 
@@ -338,23 +342,38 @@ export function RecruiterScanner() {
 
         {/* ── ACT 1: Scanning ─────────────────────────────────────────── */}
         {phase === "scanning" && (
-          <div className="flex h-full flex-col items-center justify-center px-6 text-center">
-            <div className="w-full max-w-md">
-              <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.24em] text-[var(--color-fg-subtle)]">Candidate ID · CN-EU-2025</p>
-              <p className="font-display text-3xl text-[var(--color-fg)]">César A. Nogueira</p>
-              <p className="mt-1 font-mono text-xs text-[var(--color-blue)]">Principal Cloud Architect · FinOps Specialist · UP2CLOUD</p>
-              <div className="mt-8 flex items-center justify-center gap-3">
-                <ThinkingDots />
-                <span className="font-mono text-sm text-[var(--color-fg-muted)]">Scanning candidate profile</span>
+          <div className="flex h-full flex-col items-center justify-center px-6">
+            <div className="w-full max-w-lg">
+              {/* Terminal-style header block */}
+              <div className="mb-8 rounded-lg border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-5 font-mono">
+                <p className="mb-3 text-[10px] uppercase tracking-[0.3em] text-[var(--color-fg-subtle)]">
+                  ▸ AI Hiring Assessment System — v2.1
+                </p>
+                <p className="text-[10px] text-[var(--color-fg-subtle)]">$ assess --candidate <span className="text-[var(--color-ok)]">CN-EU-2025</span> --depth full</p>
+                <div className="mt-3 border-t border-[var(--color-hairline)] pt-3">
+                  <p className="text-sm font-semibold text-[var(--color-fg)]">César Augusto Nogueira</p>
+                  <p className="text-[11px] text-[var(--color-blue)]">Principal Cloud Architect · FinOps Specialist · UP2CLOUD</p>
+                  <p className="mt-1 text-[10px] text-[var(--color-fg-subtle)]">📍 Vila Real, Portugal · Remote EU/Worldwide</p>
+                </div>
               </div>
-              <div className="mx-auto mt-8 space-y-2.5 text-left">
+
+              {/* Scanning status */}
+              <div className="mb-6 flex items-center gap-3">
+                <ThinkingDots />
+                <span className="font-mono text-[11px] text-[var(--color-fg-muted)]">
+                  Reading profile data<span className="cursor-blink" />
+                </span>
+              </div>
+
+              {/* Facts appearing one by one */}
+              <div className="space-y-2">
                 {SCAN_FACTS.map((fact, i) => (
                   <m.div key={fact}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 0.65, x: 0 }}
-                    transition={{ duration: 0.32, delay: i * 0.28, ease: EASE.out }}
-                    className="flex items-start gap-2.5">
-                    <span className="mt-0.5 font-mono text-[10px] text-[var(--color-ok)]" aria-hidden>✓</span>
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.28, delay: i * 0.26, ease: EASE.out }}
+                    className="flex items-center gap-3 rounded-md bg-[var(--color-surface-1)] px-4 py-2.5">
+                    <span className="shrink-0 font-mono text-[10px] font-bold text-[var(--color-ok)]">✓</span>
                     <span className="font-mono text-[11px] text-[var(--color-fg-muted)]">{fact}</span>
                   </m.div>
                 ))}
@@ -392,33 +411,34 @@ export function RecruiterScanner() {
             {phase === "report" && (
               <div>
                 {/* Separator */}
-                <div className="mb-6 flex items-center gap-3">
+                <div className="mb-8 flex items-center gap-3">
                   <div className="h-px flex-1 bg-[var(--color-hairline)]" />
-                  <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--color-ok)]">Evaluation Complete</span>
+                  <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--color-ok)]">Assessment Complete</span>
                   <div className="h-px flex-1 bg-[var(--color-hairline)]" />
                 </div>
 
-                {/* Verdict banner */}
-                <div className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-[var(--color-ok)]/30 bg-[var(--color-ok)]/6 px-5 py-4">
-                  <div>
-                    <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Hire Recommendation</p>
-                    <p className="mt-0.5 font-display text-2xl font-semibold text-[var(--color-ok)]">Proceed to Interview</p>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Overall Fit</p>
-                    <p className="font-display text-2xl font-bold text-[var(--color-ok)]">Strong Match</p>
-                  </div>
-                </div>
-
-                {/* Risk + decision */}
-                <div className="grid grid-cols-2 gap-3 mb-4">
-                  <div className="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4 text-center">
-                    <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Risk Level</p>
-                    <p className="mt-1 font-mono text-lg font-bold text-[var(--color-ok)]">Low</p>
-                  </div>
-                  <div className="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4 text-center">
-                    <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Decision</p>
-                    <p className="mt-1 font-mono text-lg font-bold text-[var(--color-cyan)]">Interview</p>
+                {/* PRIMARY VERDICT — dominant, no competing elements */}
+                <div className="mb-5 rounded-2xl border-2 border-[var(--color-ok)]/40 bg-[var(--color-ok)]/5 p-7 text-center"
+                  style={{ boxShadow: "0 0 40px -12px color-mix(in oklab, var(--color-ok) 30%, transparent)" }}>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--color-ok)]/70">Hire Recommendation</p>
+                  <p className="mt-2 font-display text-4xl font-bold leading-tight text-[var(--color-ok)] sm:text-5xl">
+                    Proceed to Interview
+                  </p>
+                  <div className="mt-5 flex items-center justify-center gap-6 border-t border-[var(--color-ok)]/15 pt-4">
+                    <div>
+                      <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Overall Fit</p>
+                      <p className="mt-0.5 font-mono text-base font-bold text-[var(--color-ok)]">Strong Match</p>
+                    </div>
+                    <div className="h-8 w-px bg-[var(--color-ok)]/20" />
+                    <div>
+                      <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Risk Level</p>
+                      <p className="mt-0.5 font-mono text-base font-bold text-[var(--color-ok)]">Low</p>
+                    </div>
+                    <div className="h-8 w-px bg-[var(--color-ok)]/20" />
+                    <div>
+                      <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Availability</p>
+                      <p className="mt-0.5 font-mono text-base font-bold text-[var(--color-cyan)]">Now</p>
+                    </div>
                   </div>
                 </div>
 
@@ -427,7 +447,7 @@ export function RecruiterScanner() {
                   <p className="mb-2.5 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">Best-Fit Roles</p>
                   <div className="flex flex-wrap gap-2">
                     {ROLES.map(role => (
-                      <span key={role} className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-ok)]/25 bg-[var(--color-ok)]/8 px-3 py-1 font-mono text-[10px] text-[var(--color-ok)]">
+                      <span key={role} className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-ok)]/25 bg-[var(--color-ok)]/8 px-3 py-1.5 font-mono text-[11px] text-[var(--color-ok)]">
                         <span aria-hidden>✓</span> {role}
                       </span>
                     ))}
