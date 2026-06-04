@@ -231,6 +231,7 @@ export function RecruiterScanner() {
   const reduce = useReducedMotion();
   const bodyRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const dialogBoundsRef = useRef<HTMLDivElement>(null);
   const { t } = useI18n();
   const s = t.scanner;
   const evidenceLabels: ScannerLabels = {
@@ -554,37 +555,50 @@ export function RecruiterScanner() {
       </div>
     </div>
 
-    {/* ── Results dialog — fixed sibling above scanner, avoids overflow:hidden clipping ── */}
+    {/* ── Results dialog — centered, draggable by header ── */}
     {showResultsDialog && (
-      <div
-        role="dialog"
-        aria-label="Assessment results"
-        aria-modal="false"
-        className="fixed inset-0 flex items-end justify-center px-4 pb-6"
-        style={{ zIndex: "calc(var(--z-scanner) + 10)" }}
-        onClick={(e) => { if (e.target === e.currentTarget) setShowResultsDialog(false); }}
-      >
-        {/* Backdrop — blurs the scanner report behind */}
+      <>
+        {/* Backdrop */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-[var(--color-surface-0)]/60 backdrop-blur-[2px]"
+          className="fixed inset-0 bg-[var(--color-surface-0)]/55 backdrop-blur-[2px]"
+          style={{ zIndex: 210 }}
           onClick={() => setShowResultsDialog(false)}
         />
 
-        {/* Card */}
+        {/* Drag bounds + centering container */}
         <div
-          className="relative w-full max-w-md overflow-hidden rounded-2xl border border-[var(--color-ok)]/25 bg-[var(--color-surface-1)]"
-          style={{
-            animation: reduce ? "none" : "slide-up-dialog 0.45s cubic-bezier(0.16,1,0.3,1) forwards",
-            boxShadow: "0 0 60px -16px color-mix(in oklab, var(--color-ok) 28%, transparent), 0 32px 64px -16px rgba(0,0,0,0.6)",
-          }}
+          ref={dialogBoundsRef}
+          className="fixed inset-0 flex items-center justify-center pointer-events-none"
+          style={{ zIndex: 211 }}
         >
+          {/* Draggable card — motion animate for entry so it doesn't conflict with drag transform */}
+          <m.div
+            role="dialog"
+            aria-label="Assessment results"
+            aria-modal="false"
+            drag
+            dragMomentum={false}
+            dragElastic={0.05}
+            dragConstraints={dialogBoundsRef}
+            initial={reduce ? { opacity: 1 } : { opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+            className="pointer-events-auto overflow-hidden rounded-2xl border border-[var(--color-ok)]/25 bg-[var(--color-surface-1)] w-[min(100vw-32px,440px)]"
+            style={{
+              boxShadow: "0 0 60px -16px color-mix(in oklab, var(--color-ok) 28%, transparent), 0 32px 64px -16px rgba(0,0,0,0.6)",
+            }}
+          >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-[var(--color-hairline)] px-5 py-3.5">
-            <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between border-b border-[var(--color-hairline)] px-5 py-3.5 cursor-grab active:cursor-grabbing select-none">
+            <div className="flex items-center gap-2.5">
               <span className="h-2 w-2 rounded-full bg-[var(--color-ok)]" aria-hidden />
               <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-ok)]">
                 {s.assessmentComplete}
+              </span>
+              {/* Drag handle dots */}
+              <span className="flex gap-[3px] ml-1 opacity-30" aria-hidden>
+                {[0,1,2,3,4,5].map(i => <span key={i} className="h-[3px] w-[3px] rounded-full bg-[var(--color-fg)]" />)}
               </span>
             </div>
             <button
@@ -659,8 +673,9 @@ export function RecruiterScanner() {
           <p className="px-5 pb-4 text-center font-mono text-[9px] text-[var(--color-fg-subtle)]">
             {s.dialogDismissHint}
           </p>
+          </m.div>
         </div>
-      </div>
+      </>
     )}
     </>
   );
