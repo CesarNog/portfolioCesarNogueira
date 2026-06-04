@@ -85,6 +85,7 @@ export function SiteHeader() {
       </a>
 
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--color-hairline)] bg-[var(--color-surface-0)]/80 backdrop-blur-md">
+        {/* Live variant 3 accepted: nav dim-siblings on hover */}
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
           <a href="#top" className="flex items-center gap-2.5 text-[var(--color-fg)] transition-opacity hover:opacity-80" aria-label={siteConfig.name}>
             <Logo size={24} className="text-[var(--color-fg)] shrink-0" />
@@ -92,33 +93,27 @@ export function SiteHeader() {
               César<span className="text-[var(--color-blue)]"> A.</span> Nogueira
             </span>
           </a>
-          {/* Vertical separator between logo and nav */}
           <span className="hidden md:block h-4 w-px bg-[var(--color-hairline-strong)] mx-2" aria-hidden />
-
-          {/* Desktop nav */}
-          <nav aria-label="Main navigation" className="hidden items-center gap-6 md:flex">
+          <nav aria-label="Main navigation" className="nav-hover-dim hidden items-center gap-6 md:flex">
             {NAV.map((item) => (
               <a
                 key={item.href}
                 href={`#${item.href}`}
-                className={`font-ui text-[13px] font-medium tracking-wide transition-colors ${
+                className={`nav-hover-link font-ui text-[13px] font-medium tracking-wide ${
                   active === item.href
-                    ? "text-[var(--color-fg)]"
-                    : "text-[var(--color-fg-subtle)] hover:text-[var(--color-fg-muted)]"
+                    ? "active text-[var(--color-fg)]"
+                    : "text-[var(--color-fg-subtle)]"
                 }`}
               >
                 {t.nav[item.href] ?? item.label}
               </a>
             ))}
           </nav>
-
           <div className="flex items-center gap-1.5">
-            {/* Green availability dot */}
             <span className="hidden lg:flex items-center gap-1.5 rounded-full border border-[var(--color-ok)]/30 bg-[var(--color-ok)]/8 px-2.5 py-1 mr-1">
               <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-ok)] animate-pulse" aria-hidden />
               <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-ok)]">Available</span>
             </span>
-            {/* Compact search — icon + ⌘K */}
             <button
               type="button"
               onClick={openPalette}
@@ -141,21 +136,9 @@ export function SiteHeader() {
               onClick={() => setMobileOpen((o) => !o)}
               className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] rounded-md border border-[var(--color-hairline)] transition-colors hover:border-[var(--color-hairline-strong)] md:hidden"
             >
-              <m.span
-                animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.2 }}
-                className="block h-px w-4 bg-[var(--color-fg)]"
-              />
-              <m.span
-                animate={mobileOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
-                transition={{ duration: 0.15 }}
-                className="block h-px w-4 bg-[var(--color-fg)]"
-              />
-              <m.span
-                animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.2 }}
-                className="block h-px w-4 bg-[var(--color-fg)]"
-              />
+              <m.span animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} transition={{ duration: 0.2 }} className="block h-px w-4 bg-[var(--color-fg)]" />
+              <m.span animate={mobileOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }} transition={{ duration: 0.15 }} className="block h-px w-4 bg-[var(--color-fg)]" />
+              <m.span animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} transition={{ duration: 0.2 }} className="block h-px w-4 bg-[var(--color-fg)]" />
             </button>
           </div>
         </div>
