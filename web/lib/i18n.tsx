@@ -200,7 +200,7 @@ const en: Dict = {
     },
     capabilities: {
       label: "Technical Depth",
-      title: "Depth where it counts — no vanity metrics",
+      title: "Depth where it counts, no vanity metrics",
       intro:
         "Each capability shown by level and the tools behind it. Scope and proof, not progress bars.",
     },
@@ -208,13 +208,13 @@ const en: Dict = {
       label: "Enterprise Trust",
       title: "Trusted with regulated, mission-critical systems",
       intro:
-        "Banks, airlines and global enterprises — across four cloud providers and six industries.",
+        "Banks, airlines and global enterprises, across four cloud providers and six industries.",
     },
     global: {
       label: "Global Delivery",
       title: "Based in Portugal. Delivering globally.",
       intro:
-        "From Brazil to Europe and across the Americas — cloud, DevOps, platform engineering and FinOps delivered wherever the work is.",
+        "From Brazil to Europe and across the Americas: cloud, DevOps, platform engineering and FinOps delivered wherever the work is.",
     },
     certifications: {
       label: "Certifications",
@@ -225,19 +225,19 @@ const en: Dict = {
       label: "Technology Landscape",
       title: "An engineering galaxy, not a list of badges",
       intro:
-        "A live force-directed graph of the full stack — clouds, orchestration, CI/CD, data and FinOps. Drag, zoom and explore the connections.",
+        "A live force-directed graph of the full stack: clouds, orchestration, CI/CD, data and FinOps. Drag, zoom and explore the connections.",
     },
     finops: {
       label: "Cloud Cost Engineering",
       title: "Turning cloud spend into a strategic asset",
       intro:
-        "Cost optimization, rightsizing, governance, forecasting, chargeback and automation — measured, not guessed.",
+        "Cost optimization, rightsizing, governance, forecasting, chargeback and automation, measured, not guessed.",
     },
     ai: {
       label: "AI & Automation",
       title: "Future-ready: platforms built for GenAI",
       intro:
-        "From LLM integrations to GPU-aware platform engineering — infrastructure that makes AI reliable, observable and cost-aware.",
+        "From LLM integrations to GPU-aware platform engineering: infrastructure that makes AI reliable, observable and cost-aware.",
     },
     testimonials: {
       label: "Signal",
@@ -247,19 +247,19 @@ const en: Dict = {
       label: "Start a Conversation",
       title: "Let's build something meaningful",
       intro:
-        "Whether you're tackling a cloud challenge, building a new platform, or exploring a long-term partnership — I'd love to hear what you're working on.",
+        "Whether you're tackling a cloud challenge, building a new platform, or exploring a long-term partnership. I'd love to hear what you're working on.",
     },
   },
   exec: [
     {
       title: "The journey",
       headline: "Built from Portugal, delivered worldwide",
-      body: "Started engineering in Brazil. Moved through São Paulo, London, Madrid, and across time zones. Built platforms for banks, airlines, and media companies. Learned what it means when production fails at 3am — and how to stop it happening again.",
+      body: "Started engineering in Brazil. Moved through São Paulo, London, Madrid, and across time zones. Built platforms for banks, airlines, and media companies. Learned what it means when production fails at 3am, and how to stop it happening again.",
     },
     {
       title: "The edge",
       headline: "Engineering depth that reaches the spreadsheet",
-      body: "I've been both the architect designing the system and the FinOps lead watching the bill. That combination — knowing both the infrastructure and its real cost — is rare, and it changes what you build.",
+      body: "I've been both the architect designing the system and the FinOps lead watching the bill. That combination, knowing both the infrastructure and its real cost, is rare, and it changes what you build.",
     },
     {
       title: "The focus",
@@ -269,12 +269,12 @@ const en: Dict = {
     {
       title: "The partnership",
       headline: "A trusted partner, not a ticket-taker",
-      body: "Independent consulting via UP2CLOUD for international clients. Fractional architecture, platform builds or FinOps engagements. I prefer work where I can stay long enough to see it compound. Currently available — replies within 24h.",
+      body: "Independent consulting via UP2CLOUD for international clients. Fractional architecture, platform builds or FinOps engagements. I prefer work where I can stay long enough to see it compound. Currently available, replies within 24h.",
     },
   ],
   recruiter: {
     banner:
-      "Recruiter Mode — impact, leadership, certifications & availability emphasized",
+      "Recruiter Mode: impact, leadership, certifications & availability emphasized",
     exit: "exit",
     on: "Recruiter Mode: On",
     off: "Recruiter Mode",
@@ -285,7 +285,7 @@ const en: Dict = {
     header: "AI Career Assistant",
     subtitle: "Knows everything about Cesar · answers from his real profile",
     greeting:
-      "I'm Cesar's AI Career Assistant — I know his entire background. Ask anything a hiring decision needs: seniority, scale, leadership, cost impact, certifications or availability. Try a question below.",
+      "I'm Cesar's AI Career Assistant. I know his entire background. Ask anything a hiring decision needs: seniority, scale, leadership, cost impact, certifications or availability. Try a question below.",
     suggested: "Suggested for recruiters",
     placeholder: "Ask about Cesar's fit for your role…",
     thinking: "Thinking…",
@@ -295,12 +295,12 @@ const en: Dict = {
   portraitCaption: "São Paulo 🇧🇷 → Vila Real 🇵🇹",
   contact: {
     briefingTitle: "Let's work together",
-    briefingDesc: "Cloud architecture, platform engineering, DevOps, FinOps or AI infrastructure — tell me what you're building and let's explore how we can work together.",
+    briefingDesc: "Cloud architecture, platform engineering, DevOps, FinOps or AI infrastructure. Tell me what you're building and let's explore how we can work together.",
     emailCta: "Reach out to Cesar",
     downloadCv: "Download CV",
     availability: "Available for international projects",
     responseTime: "Usually replies within 24h",
-    contactQuote: "Every project I've worked on has been someone's critical infrastructure — a bank's payment platform, an airline's operations system, a media company's data backbone. I take that responsibility seriously. If you're building something that matters, I'd genuinely like to hear about it.",
+    contactQuote: "Every project I've worked on has been someone's critical infrastructure: a bank's payment platform, an airline's operations system, a media company's data backbone. I take that responsibility seriously. If you're building something that matters, I'd genuinely like to hear about it.",
     formTitle: "Send Cesar a message",
     formSubtitle: "Replies within 24h",
     formName: "Name",
@@ -331,7 +331,7 @@ const en: Dict = {
     architecture: "The Approach",
     businessResult: "The Outcome",
     lessons: "What I learned",
-    aiFaqNote: "// The Smart AI FAQ on this site is an AI integration — ask it anything about Cesar's fit for your role.",
+    aiFaqNote: "// The Smart AI FAQ on this site is an AI integration. Ask it anything about Cesar's fit for your role.",
     trustCompanies: "Companies",
     trustIndustries: "Industries",
     trustClouds: "Cloud Platforms",
@@ -437,10 +437,10 @@ const en: Dict = {
     ],
   },
   story: {
-    pullQuote: "I grew up in Brazil 🇧🇷. Moved to Europe. Spent 10+ years building infrastructure that doesn't fail — for banks, airlines, and enterprises that can't afford for it to.",
-    p1: "I started in São Paulo, building data platforms and software systems for large enterprises. Cloud infrastructure caught me early — the challenge of making distributed systems reliable, observable, and cost-efficient at scale. That became my career.",
+    pullQuote: "I grew up in Brazil 🇧🇷. Moved to Europe. Spent 10+ years building infrastructure that doesn't fail, for banks, airlines, and enterprises that can't afford for it to.",
+    p1: "I started in São Paulo, building data platforms and software systems for large enterprises. Cloud infrastructure caught me early: the challenge of making distributed systems reliable, observable, and cost-efficient at scale. That became my career.",
     p2: "Moving to Europe in my mid-twenties changed how I think about this work. Working across time zones, languages, and cultures taught me what certifications don't: cloud problems are mostly people problems. Systems fail because teams don't talk. Costs spiral because nobody owns them. Platforms break because the incentives are misaligned.",
-    p3: "Since then I've built platforms for banks in London and Madrid, airlines across Latin America, media companies in the US, and enterprises everywhere in between. I founded UP2CLOUD to do this work on my own terms — focused on outcomes, not headcount.",
+    p3: "Since then I've built platforms for banks in London and Madrid, airlines across Latin America, media companies in the US, and enterprises everywhere in between. I founded UP2CLOUD to do this work on my own terms, focused on outcomes, not headcount.",
   },
   projects: {
     "finops-automation": {
@@ -452,7 +452,7 @@ const en: Dict = {
       scale: "Multi-account, multi-cloud estate",
       impact: ["~30% reduction in waste", "Automated tagging & chargeback", "Executive cost visibility"],
       outcome: "Cut ~30% of cloud waste and gave finance real-time, per-team cost accountability.",
-      lessons: "Governance before optimization. You can't cut what you can't see — and the hardest part was aligning 12 platform teams on a unified tagging taxonomy. Technical solutions are easy; organizational alignment is the real work.",
+      lessons: "Governance before optimization. You can't cut what you can't see, and the hardest part was aligning 12 platform teams on a unified tagging taxonomy. Technical solutions are easy; organizational alignment is the real work.",
       metricLabel: "cloud waste",
     },
     "bigdata-platform": {
@@ -460,7 +460,7 @@ const en: Dict = {
       title: "Big Data Analytics Platform",
       client: "Mass-media corporation (US)",
       problem: "A media corporation needed a scalable analytics platform to process and query massive event streams.",
-      architecture: "Apache Beam pipelines on Google DataFlow, App Engine services, and a BigQuery warehouse — built in Java/Node.js with a React front end.",
+      architecture: "Apache Beam pipelines on Google DataFlow, App Engine services, and a BigQuery warehouse, built in Java/Node.js with a React front end.",
       scale: "Mass-scale event ingestion",
       impact: ["Real-time data pipelines", "Self-serve BigQuery analytics", "Elastic App Engine delivery"],
       outcome: "Unlocked self-serve, real-time analytics over massive event streams on Google Cloud.",
@@ -476,7 +476,7 @@ const en: Dict = {
       scale: "Regulated enterprise workloads",
       impact: ["Hardened PII security", "24/7 observability & on-call", "Resilient multi-cloud networking"],
       outcome: "Delivered secure, observable, regulator-ready cloud for banking and aviation at 99.9% availability.",
-      lessons: "In regulated industries, observability is proof — not just tooling. Audit-ready dashboards and automated alerting built from day one made the difference between passing and failing compliance reviews.",
+      lessons: "In regulated industries, observability is proof, not just tooling. Audit-ready dashboards and automated alerting built from day one made the difference between passing and failing compliance reviews.",
       metricLabel: "availability",
     },
   },
@@ -537,7 +537,7 @@ const pt: Dict = {
     },
     capabilities: {
       label: "Profundidade Técnica",
-      title: "Profundidade onde importa — sem métricas de vaidade",
+      title: "Profundidade onde importa, sem métricas de vaidade",
       intro:
         "Cada competência apresentada por nível e pelas ferramentas que a sustentam. Âmbito e prova, não barras de progresso.",
     },
@@ -545,13 +545,13 @@ const pt: Dict = {
       label: "Confiança Empresarial",
       title: "Confiado com sistemas regulados e críticos",
       intro:
-        "Bancos, companhias aéreas e grandes empresas — em quatro fornecedores de cloud e seis indústrias.",
+        "Bancos, companhias aéreas e grandes empresas, em quatro fornecedores de cloud e seis indústrias.",
     },
     global: {
       label: "Entrega Global",
       title: "Baseado em Portugal. Entrega global.",
       intro:
-        "Do Brasil à Europa e por toda a América — cloud, DevOps, engenharia de plataformas e FinOps entregues onde o trabalho existe.",
+        "Do Brasil à Europa e por toda a América: cloud, DevOps, engenharia de plataformas e FinOps entregues onde o trabalho existe.",
     },
     certifications: {
       label: "Certificações",
@@ -562,19 +562,19 @@ const pt: Dict = {
       label: "Paisagem Tecnológica",
       title: "Uma galáxia de engenharia, não uma lista de crachás",
       intro:
-        "Um grafo dinâmico de toda a stack — clouds, orquestração, CI/CD, dados e FinOps. Arraste, faça zoom e explore as ligações.",
+        "Um grafo dinâmico de toda a stack: clouds, orquestração, CI/CD, dados e FinOps. Arraste, faça zoom e explore as ligações.",
     },
     finops: {
       label: "Engenharia de Custos Cloud",
       title: "Transformar o custo da cloud num ativo estratégico",
       intro:
-        "Otimização de custos, dimensionamento, governança, previsão, imputação e automação — medido, não adivinhado.",
+        "Otimização de custos, dimensionamento, governança, previsão, imputação e automação, medido, não adivinhado.",
     },
     ai: {
       label: "IA & Automação",
       title: "Preparado para o futuro: plataformas para GenAI",
       intro:
-        "De integrações com LLMs à engenharia de plataformas com GPUs — infraestrutura que torna a IA fiável, observável e consciente dos custos.",
+        "De integrações com LLMs à engenharia de plataformas com GPUs: infraestrutura que torna a IA fiável, observável e consciente dos custos.",
     },
     testimonials: {
       label: "Reconhecimento",
@@ -584,19 +584,19 @@ const pt: Dict = {
       label: "Iniciar Conversa",
       title: "Vamos construir algo com significado",
       intro:
-        "Seja um desafio cloud, uma nova plataforma ou uma parceria a longo prazo — adorava saber o que está a construir.",
+        "Seja um desafio cloud, uma nova plataforma ou uma parceria a longo prazo. Adorava saber o que está a construir.",
     },
   },
   exec: [
     {
       title: "O percurso",
       headline: "Nascido no Brasil 🇧🇷, entregue ao mundo",
-      body: "Comecei no Brasil. Passei por São Paulo, Londres, Madrid e vários fusos. Construí plataformas pra bancos, companhias aéreas e empresas de mídia. Aprendi o que significa quando a produção cai às 3 da manhã — e como fazer pra não repetir.",
+      body: "Comecei no Brasil. Passei por São Paulo, Londres, Madrid e vários fusos. Construí plataformas pra bancos, companhias aéreas e empresas de mídia. Aprendi o que significa quando a produção cai às 3 da manhã, e como fazer pra não repetir.",
     },
     {
       title: "O diferencial",
       headline: "Profundidade técnica que chega à folha de custos",
-      body: "Já fui o arquiteto que projeta o sistema e o responsável FinOps que acompanha a fatura. Essa combinação — entender a fundo a infraestrutura e o custo real dela — é rara, e muda o que você constrói.",
+      body: "Já fui o arquiteto que projeta o sistema e o responsável FinOps que acompanha a fatura. Essa combinação, entender a fundo a infraestrutura e o custo real dela, é rara, e muda o que você constrói.",
     },
     {
       title: "O foco",
@@ -606,12 +606,12 @@ const pt: Dict = {
     {
       title: "A parceria",
       headline: "Um parceiro de confiança, não um executor de tickets",
-      body: "Consultoria independente via UP2CLOUD pra clientes internacionais. Arquitetura fracionada, construção de plataformas ou projetos FinOps. Prefiro trabalhos onde possa ficar tempo suficiente pra ver o impacto crescer. Disponível agora — respondo em 24h.",
+      body: "Consultoria independente via UP2CLOUD pra clientes internacionais. Arquitetura fracionada, construção de plataformas ou projetos FinOps. Prefiro trabalhos onde possa ficar tempo suficiente pra ver o impacto crescer. Disponível agora, respondo em 24h.",
     },
   ],
   recruiter: {
     banner:
-      "Modo Recrutador — impacto, liderança, certificações e disponibilidade em destaque",
+      "Modo Recrutador: impacto, liderança, certificações e disponibilidade em destaque",
     exit: "sair",
     on: "Modo Recrutador: Ativo",
     off: "Modo Recrutador",
@@ -622,7 +622,7 @@ const pt: Dict = {
     header: "Assistente de Carreira IA",
     subtitle: "Sabe tudo sobre o Cesar · responde a partir do perfil real",
     greeting:
-      "Sou o Assistente de Carreira IA do Cesar — conheço todo o seu percurso. Pergunte o que uma decisão de contratação precisa: senioridade, escala, liderança, impacto em custos, certificações ou disponibilidade. Experimente uma pergunta abaixo.",
+      "Sou o Assistente de Carreira IA do Cesar. Conheço todo o seu percurso. Pergunte o que uma decisão de contratação precisa: senioridade, escala, liderança, impacto em custos, certificações ou disponibilidade. Experimente uma pergunta abaixo.",
     suggested: "Sugestões para recrutadores",
     placeholder: "Pergunte sobre a adequação do Cesar ao seu cargo…",
     thinking: "A pensar…",
@@ -632,12 +632,12 @@ const pt: Dict = {
   portraitCaption: "São Paulo 🇧🇷 → Vila Real 🇵🇹",
   contact: {
     briefingTitle: "Vamos trabalhar juntos",
-    briefingDesc: "Arquitetura cloud, engenharia de plataformas, DevOps, FinOps ou infraestrutura de IA — diga-me o que está a construir e exploremos como trabalhar juntos.",
+    briefingDesc: "Arquitetura cloud, engenharia de plataformas, DevOps, FinOps ou infraestrutura de IA. Diga-me o que está a construir e exploremos como trabalhar juntos.",
     emailCta: "Contactar o Cesar",
     downloadCv: "Descarregar CV",
     availability: "Disponível para projetos internacionais",
     responseTime: "Responde normalmente em 24h",
-    contactQuote: "Cada projeto em que trabalhei foi a infraestrutura crítica de alguém — a plataforma de pagamentos de um banco, o sistema de operações de uma companhia aérea, a espinha dorsal de dados de uma empresa de media. Tomo essa responsabilidade a sério. Se está a construir algo que importa, adorava ouvir falar sobre isso.",
+    contactQuote: "Cada projeto em que trabalhei foi a infraestrutura crítica de alguém: a plataforma de pagamentos de um banco, o sistema de operações de uma companhia aérea, a espinha dorsal de dados de uma empresa de media. Tomo essa responsabilidade a sério. Se está a construir algo que importa, adorava ouvir falar sobre isso.",
     formTitle: "Enviar mensagem ao Cesar",
     formSubtitle: "Responde em 24h",
     formName: "Nome",
@@ -668,7 +668,7 @@ const pt: Dict = {
     architecture: "A Abordagem",
     businessResult: "O Resultado",
     lessons: "O que aprendi",
-    aiFaqNote: "// O Smart AI FAQ neste site é uma integração de IA — pergunte-lhe tudo sobre a adequação do Cesar ao seu cargo.",
+    aiFaqNote: "// O Smart AI FAQ neste site é uma integração de IA. Pergunte-lhe tudo sobre a adequação do Cesar ao seu cargo.",
     trustCompanies: "Empresas",
     trustIndustries: "Sectores",
     trustClouds: "Plataformas Cloud",
@@ -774,10 +774,10 @@ const pt: Dict = {
     ],
   },
   story: {
-    pullQuote: "Cresci no Brasil 🇧🇷. Vim pra Europa. São 10+ anos construindo infraestrutura que não cai — pra bancos, companhias aéreas e empresas que não podem se dar ao luxo de falhar.",
-    p1: "Comecei em São Paulo, construindo plataformas de dados e sistemas de software pra grandes empresas. Cloud me fisgou cedo — o desafio de deixar sistemas distribuídos confiáveis, observáveis e eficientes em custo na escala certa. Isso virou minha carreira.",
+    pullQuote: "Cresci no Brasil 🇧🇷. Vim pra Europa. São 10+ anos construindo infraestrutura que não cai, pra bancos, companhias aéreas e empresas que não podem se dar ao luxo de falhar.",
+    p1: "Comecei em São Paulo, construindo plataformas de dados e sistemas de software pra grandes empresas. Cloud me fisgou cedo: o desafio de deixar sistemas distribuídos confiáveis, observáveis e eficientes em custo na escala certa. Isso virou minha carreira.",
     p2: "Vim pra Europa com vinte e poucos anos, e isso mudou como eu enxergo esse trabalho. Trabalhar com fusos, idiomas e culturas diferentes me ensinou o que certificação nenhuma ensina: problema de cloud é quase sempre problema de gente. Sistema cai porque time não se fala. Custo explode porque ninguém é dono. Plataforma quebra porque os incentivos estão errados.",
-    p3: "Desde então construí plataformas pra bancos em Londres e Madrid, companhias aéreas na América Latina, empresas de mídia nos EUA e negócios no mundo inteiro. Fundei a UP2CLOUD pra fazer esse trabalho do meu jeito — focado em resultado, não em headcount.",
+    p3: "Desde então construí plataformas pra bancos em Londres e Madrid, companhias aéreas na América Latina, empresas de mídia nos EUA e negócios no mundo inteiro. Fundei a UP2CLOUD pra fazer esse trabalho do meu jeito, focado em resultado, não em headcount.",
   },
   projects: {
     "finops-automation": {
@@ -789,7 +789,7 @@ const pt: Dict = {
       scale: "Estate multi-conta e multi-cloud",
       impact: ["~30% de redução de desperdício", "Etiquetagem e chargeback automatizados", "Visibilidade de custos para a gestão"],
       outcome: "Eliminou ~30% de desperdício em cloud e deu às finanças visibilidade em tempo real por equipa.",
-      lessons: "Governação antes de otimização. Não se pode cortar o que não se vê — e a parte mais difícil foi alinhar 12 equipas de plataforma numa taxonomia de etiquetagem unificada. As soluções técnicas são fáceis; o alinhamento organizacional é o verdadeiro trabalho.",
+      lessons: "Governação antes de otimização. Não se pode cortar o que não se vê, e a parte mais difícil foi alinhar 12 equipas de plataforma numa taxonomia de etiquetagem unificada. As soluções técnicas são fáceis; o alinhamento organizacional é o verdadeiro trabalho.",
       metricLabel: "desperdício em cloud",
     },
     "bigdata-platform": {
@@ -797,7 +797,7 @@ const pt: Dict = {
       title: "Plataforma de Analytics de Big Data",
       client: "Corporação de media de massas (EUA)",
       problem: "Uma empresa de media precisava de uma plataforma de analytics escalável para processar e consultar fluxos massivos de eventos.",
-      architecture: "Pipelines Apache Beam no Google DataFlow, serviços App Engine e um armazém BigQuery — construído em Java/Node.js com frontend React.",
+      architecture: "Pipelines Apache Beam no Google DataFlow, serviços App Engine e um armazém BigQuery, construído em Java/Node.js com frontend React.",
       scale: "Ingestão de eventos à escala massiva",
       impact: ["Pipelines de dados em tempo real", "Analytics BigQuery self-service", "Entrega elástica com App Engine"],
       outcome: "Desbloqueou analytics self-service em tempo real sobre fluxos massivos de eventos no Google Cloud.",
@@ -813,7 +813,7 @@ const pt: Dict = {
       scale: "Cargas de trabalho empresariais reguladas",
       impact: ["Segurança PII reforçada", "Observabilidade 24/7 e on-call", "Redes multi-cloud resilientes"],
       outcome: "Entregou cloud segura, observável e pronta para auditores na banca e aviação com 99,9% de disponibilidade.",
-      lessons: "Na indústria regulada, observabilidade é prova — não apenas ferramenta. Dashboards prontos para auditoria e alertas automatizados desde o primeiro dia fizeram a diferença entre passar e reprovar nas revisões de conformidade.",
+      lessons: "Na indústria regulada, observabilidade é prova, não apenas ferramenta. Dashboards prontos para auditoria e alertas automatizados desde o primeiro dia fizeram a diferença entre passar e reprovar nas revisões de conformidade.",
       metricLabel: "disponibilidade",
     },
   },
@@ -874,7 +874,7 @@ const es: Dict = {
     },
     capabilities: {
       label: "Profundidad Técnica",
-      title: "Profundidad donde importa — sin métricas de vanidad",
+      title: "Profundidad donde importa, sin métricas de vanidad",
       intro:
         "Cada competencia mostrada por nivel y por las herramientas que la respaldan. Alcance y prueba, no barras de progreso.",
     },
@@ -882,13 +882,13 @@ const es: Dict = {
       label: "Confianza Empresarial",
       title: "De confianza para sistemas regulados y críticos",
       intro:
-        "Bancos, aerolíneas y grandes empresas — en cuatro proveedores de cloud y seis industrias.",
+        "Bancos, aerolíneas y grandes empresas, en cuatro proveedores de cloud y seis industrias.",
     },
     global: {
       label: "Entrega Global",
       title: "Basado en Portugal. Entrega global.",
       intro:
-        "De Brasil a Europa y por toda América — cloud, DevOps, ingeniería de plataformas y FinOps entregados donde está el trabajo.",
+        "De Brasil a Europa y por toda América: cloud, DevOps, ingeniería de plataformas y FinOps entregados donde está el trabajo.",
     },
     certifications: {
       label: "Certificaciones",
@@ -899,19 +899,19 @@ const es: Dict = {
       label: "Paisaje Tecnológico",
       title: "Una galaxia de ingeniería, no una lista de insignias",
       intro:
-        "Un grafo dinámico de todo el stack — clouds, orquestación, CI/CD, datos y FinOps. Arrastra, haz zoom y explora las conexiones.",
+        "Un grafo dinámico de todo el stack: clouds, orquestación, CI/CD, datos y FinOps. Arrastra, haz zoom y explora las conexiones.",
     },
     finops: {
       label: "Ingeniería de Costes Cloud",
       title: "Convertir el gasto cloud en un activo estratégico",
       intro:
-        "Optimización de costes, dimensionamiento, gobierno, previsión, imputación y automatización — medido, no adivinado.",
+        "Optimización de costes, dimensionamiento, gobierno, previsión, imputación y automatización, medido, no adivinado.",
     },
     ai: {
       label: "IA & Automatización",
       title: "Preparado para el futuro: plataformas para GenAI",
       intro:
-        "De integraciones con LLMs a la ingeniería de plataformas con GPUs — infraestructura que hace la IA fiable, observable y consciente del coste.",
+        "De integraciones con LLMs a la ingeniería de plataformas con GPUs: infraestructura que hace la IA fiable, observable y consciente del coste.",
     },
     testimonials: {
       label: "Reconocimiento",
@@ -921,19 +921,19 @@ const es: Dict = {
       label: "Iniciar Conversación",
       title: "Construyamos algo significativo",
       intro:
-        "Ya sea un reto cloud, una nueva plataforma o una colaboración a largo plazo — me encantaría saber en qué estás trabajando.",
+        "Ya sea un reto cloud, una nueva plataforma o una colaboración a largo plazo. Me encantaría saber en qué estás trabajando.",
     },
   },
   exec: [
     {
       title: "El camino",
       headline: "Construido desde Portugal, entregado al mundo",
-      body: "Empecé en Brasil. Pasé por São Paulo, Londres, Madrid y varios husos horarios. Construí plataformas para bancos, aerolíneas y empresas de medios. Aprendí lo que significa cuando la producción falla a las 3am — y cómo evitar que vuelva a ocurrir.",
+      body: "Empecé en Brasil. Pasé por São Paulo, Londres, Madrid y varios husos horarios. Construí plataformas para bancos, aerolíneas y empresas de medios. Aprendí lo que significa cuando la producción falla a las 3am, y cómo evitar que vuelva a ocurrir.",
     },
     {
       title: "La ventaja",
       headline: "Profundidad técnica que llega a la hoja de costes",
-      body: "He sido el arquitecto que diseña el sistema y el responsable FinOps que vigila la factura. Esa combinación — conocer tanto la infraestructura como su coste real — es poco común, y cambia lo que construyes.",
+      body: "He sido el arquitecto que diseña el sistema y el responsable FinOps que vigila la factura. Esa combinación, conocer tanto la infraestructura como su coste real, es poco común, y cambia lo que construyes.",
     },
     {
       title: "El enfoque",
@@ -943,12 +943,12 @@ const es: Dict = {
     {
       title: "La colaboración",
       headline: "Un socio de confianza, no un ejecutor de tickets",
-      body: "Consultoría independiente vía UP2CLOUD para clientes internacionales. Arquitectura fraccionada, construcción de plataformas o proyectos FinOps. Prefiero trabajos donde pueda quedarme el tiempo suficiente para ver el impacto crecer. Disponible ahora — suele responder en 24h.",
+      body: "Consultoría independiente vía UP2CLOUD para clientes internacionales. Arquitectura fraccionada, construcción de plataformas o proyectos FinOps. Prefiero trabajos donde pueda quedarme el tiempo suficiente para ver el impacto crecer. Disponible ahora, suele responder en 24h.",
     },
   ],
   recruiter: {
     banner:
-      "Modo Reclutador — impacto, liderazgo, certificaciones y disponibilidad destacados",
+      "Modo Reclutador: impacto, liderazgo, certificaciones y disponibilidad destacados",
     exit: "salir",
     on: "Modo Reclutador: Activo",
     off: "Modo Reclutador",
@@ -959,7 +959,7 @@ const es: Dict = {
     header: "Asistente de Carrera IA",
     subtitle: "Lo sabe todo sobre Cesar · responde desde su perfil real",
     greeting:
-      "Soy el Asistente de Carrera IA de Cesar — conozco todo su recorrido. Pregunta lo que necesita una decisión de contratación: seniority, escala, liderazgo, impacto en costes, certificaciones o disponibilidad. Prueba una pregunta abajo.",
+      "Soy el Asistente de Carrera IA de Cesar. Conozco todo su recorrido. Pregunta lo que necesita una decisión de contratación: seniority, escala, liderazgo, impacto en costes, certificaciones o disponibilidad. Prueba una pregunta abajo.",
     suggested: "Sugerencias para reclutadores",
     placeholder: "Pregunta por el encaje de Cesar en tu puesto…",
     thinking: "Pensando…",
@@ -969,12 +969,12 @@ const es: Dict = {
   portraitCaption: "São Paulo 🇧🇷 → Vila Real 🇵🇹",
   contact: {
     briefingTitle: "Trabajemos juntos",
-    briefingDesc: "Arquitectura cloud, ingeniería de plataformas, DevOps, FinOps o infraestructura de IA — cuéntame qué estás construyendo y exploremos cómo trabajar juntos.",
+    briefingDesc: "Arquitectura cloud, ingeniería de plataformas, DevOps, FinOps o infraestructura de IA. Cuéntame qué estás construyendo y exploremos cómo trabajar juntos.",
     emailCta: "Contactar a Cesar",
     downloadCv: "Descargar CV",
     availability: "Disponible para proyectos internacionales",
     responseTime: "Suele responder en 24h",
-    contactQuote: "Cada proyecto en el que he trabajado ha sido la infraestructura crítica de alguien — la plataforma de pagos de un banco, el sistema de operaciones de una aerolínea, la columna vertebral de datos de una empresa de medios. Me tomo esa responsabilidad en serio. Si estás construyendo algo que importa, me encantaría escuchar al respecto.",
+    contactQuote: "Cada proyecto en el que he trabajado ha sido la infraestructura crítica de alguien: la plataforma de pagos de un banco, el sistema de operaciones de una aerolínea, la columna vertebral de datos de una empresa de medios. Me tomo esa responsabilidad en serio. Si estás construyendo algo que importa, me encantaría escuchar al respecto.",
     formTitle: "Enviar un mensaje a Cesar",
     formSubtitle: "Responde en 24h",
     formName: "Nombre",
@@ -1005,7 +1005,7 @@ const es: Dict = {
     architecture: "El Enfoque",
     businessResult: "El Resultado",
     lessons: "Lo que aprendí",
-    aiFaqNote: "// El Smart AI FAQ de este sitio es una integración de IA — pregúntale lo que necesites sobre la idoneidad de Cesar para tu puesto.",
+    aiFaqNote: "// El Smart AI FAQ de este sitio es una integración de IA. Pregúntale lo que necesites sobre la idoneidad de Cesar para tu puesto.",
     trustCompanies: "Empresas",
     trustIndustries: "Sectores",
     trustClouds: "Plataformas Cloud",
@@ -1111,10 +1111,10 @@ const es: Dict = {
     ],
   },
   story: {
-    pullQuote: "Crecí en Brasil 🇧🇷. Me mudé a Europa. Llevo 10+ años construyendo infraestructura que no falla — para bancos, aerolíneas y empresas que no pueden permitirse que falle.",
-    p1: "Empecé en São Paulo, construyendo plataformas de datos y sistemas para grandes empresas. La infraestructura cloud me enganchó pronto — el reto de hacer sistemas distribuidos fiables, observables y eficientes en coste a escala. Eso se convirtió en mi carrera.",
+    pullQuote: "Crecí en Brasil 🇧🇷. Me mudé a Europa. Llevo 10+ años construyendo infraestructura que no falla, para bancos, aerolíneas y empresas que no pueden permitirse que falle.",
+    p1: "Empecé en São Paulo, construyendo plataformas de datos y sistemas para grandes empresas. La infraestructura cloud me enganchó pronto: el reto de hacer sistemas distribuidos fiables, observables y eficientes en coste a escala. Eso se convirtió en mi carrera.",
     p2: "Mudarme a Europa a mediados de los veinte cambió cómo pienso sobre este trabajo. Trabajar en distintas zonas horarias, idiomas y culturas me enseñó lo que las certificaciones no enseñan: los problemas de cloud son sobre todo problemas de personas. Los sistemas fallan porque los equipos no se comunican. Los costes se disparan porque nadie los gestiona. Las plataformas fallan porque los incentivos están mal alineados.",
-    p3: "Desde entonces he construido plataformas para bancos en Londres y Madrid, aerolíneas en América Latina, empresas de medios en EE.UU. y empresas de todo el mundo. Fundé UP2CLOUD para hacer este trabajo en mis propios términos — centrado en resultados, no en plantilla.",
+    p3: "Desde entonces he construido plataformas para bancos en Londres y Madrid, aerolíneas en América Latina, empresas de medios en EE.UU. y empresas de todo el mundo. Fundé UP2CLOUD para hacer este trabajo en mis propios términos, centrado en resultados, no en plantilla.",
   },
   projects: {
     "finops-automation": {
@@ -1126,7 +1126,7 @@ const es: Dict = {
       scale: "Estate multi-cuenta y multi-cloud",
       impact: ["~30% de reducción de desperdicio", "Etiquetado y chargeback automatizados", "Visibilidad de costes para dirección"],
       outcome: "Eliminó ~30% de desperdicio cloud y dio a finanzas visibilidad en tiempo real por equipo.",
-      lessons: "Gobernanza antes de optimización. No puedes recortar lo que no ves — y la parte más difícil fue alinear 12 equipos de plataforma en una taxonomía de etiquetado unificada. Las soluciones técnicas son fáciles; el alineamiento organizacional es el trabajo real.",
+      lessons: "Gobernanza antes de optimización. No puedes recortar lo que no ves, y la parte más difícil fue alinear 12 equipos de plataforma en una taxonomía de etiquetado unificada. Las soluciones técnicas son fáciles; el alineamiento organizacional es el trabajo real.",
       metricLabel: "desperdicio cloud",
     },
     "bigdata-platform": {
@@ -1134,7 +1134,7 @@ const es: Dict = {
       title: "Plataforma de Analytics de Big Data",
       client: "Corporación de medios de masas (EE.UU.)",
       problem: "Una empresa de medios necesitaba una plataforma de analytics escalable para procesar y consultar flujos masivos de eventos.",
-      architecture: "Pipelines Apache Beam en Google DataFlow, servicios App Engine y un almacén BigQuery — construido en Java/Node.js con frontend React.",
+      architecture: "Pipelines Apache Beam en Google DataFlow, servicios App Engine y un almacén BigQuery, construido en Java/Node.js con frontend React.",
       scale: "Ingesta de eventos a escala masiva",
       impact: ["Pipelines de datos en tiempo real", "Analytics BigQuery self-service", "Entrega elástica con App Engine"],
       outcome: "Desbloqueó analytics self-service en tiempo real sobre flujos masivos de eventos en Google Cloud.",
@@ -1150,7 +1150,7 @@ const es: Dict = {
       scale: "Cargas de trabajo empresariales reguladas",
       impact: ["Seguridad PII reforzada", "Observabilidad 24/7 y on-call", "Redes multi-cloud resilientes"],
       outcome: "Entregó cloud segura, observable y lista para reguladores en banca y aviación con 99,9% de disponibilidad.",
-      lessons: "En industrias reguladas, la observabilidad es prueba — no solo herramienta. Los dashboards listos para auditoría y las alertas automatizadas desde el primer día marcaron la diferencia entre pasar y reprobar las revisiones de cumplimiento.",
+      lessons: "En industrias reguladas, la observabilidad es prueba, no solo herramienta. Los dashboards listos para auditoría y las alertas automatizadas desde el primer día marcaron la diferencia entre pasar y reprobar las revisiones de cumplimiento.",
       metricLabel: "disponibilidad",
     },
   },
@@ -1211,7 +1211,7 @@ const fr: Dict = {
     },
     capabilities: {
       label: "Profondeur Technique",
-      title: "Profondeur là où ça compte — sans métriques de vanité",
+      title: "Profondeur là où ça compte, sans métriques de vanité",
       intro:
         "Chaque compétence présentée par niveau et par les outils qui la soutiennent. Périmètre et preuves, pas des barres de progression.",
     },
@@ -1219,13 +1219,13 @@ const fr: Dict = {
       label: "Confiance Entreprise",
       title: "Approuvé pour des systèmes réglementés et critiques",
       intro:
-        "Banques, compagnies aériennes et multinationales — sur quatre fournisseurs cloud et six secteurs.",
+        "Banques, compagnies aériennes et multinationales, sur quatre fournisseurs cloud et six secteurs.",
     },
     global: {
       label: "Livraison Mondiale",
       title: "Basé au Portugal. Livraison mondiale.",
       intro:
-        "Du Brésil à l'Europe et à travers les Amériques — cloud, DevOps, ingénierie de plateformes et FinOps, livrés où le travail se trouve.",
+        "Du Brésil à l'Europe et à travers les Amériques: cloud, DevOps, ingénierie de plateformes et FinOps, livrés où le travail se trouve.",
     },
     certifications: {
       label: "Certifications",
@@ -1236,19 +1236,19 @@ const fr: Dict = {
       label: "Paysage Technologique",
       title: "Une galaxie d'ingénierie, pas une liste de badges",
       intro:
-        "Un graphe dynamique de la stack complète — clouds, orchestration, CI/CD, données et FinOps. Faites glisser, zoomez et explorez les connexions.",
+        "Un graphe dynamique de la stack complète: clouds, orchestration, CI/CD, données et FinOps. Faites glisser, zoomez et explorez les connexions.",
     },
     finops: {
       label: "Ingénierie des Coûts Cloud",
       title: "Transformer les dépenses cloud en actif stratégique",
       intro:
-        "Optimisation des coûts, redimensionnement, gouvernance, prévision, refacturation et automatisation — mesuré, pas deviné.",
+        "Optimisation des coûts, redimensionnement, gouvernance, prévision, refacturation et automatisation, mesuré, pas deviné.",
     },
     ai: {
       label: "IA & Automatisation",
       title: "Préparé pour l'avenir : plateformes conçues pour GenAI",
       intro:
-        "Des intégrations LLM à l'ingénierie de plateformes GPU — infrastructure qui rend l'IA fiable, observable et économe.",
+        "Des intégrations LLM à l'ingénierie de plateformes GPU: infrastructure qui rend l'IA fiable, observable et économe.",
     },
     testimonials: {
       label: "Références",
@@ -1258,19 +1258,19 @@ const fr: Dict = {
       label: "Prenons Contact",
       title: "Construisons quelque chose de grand ensemble",
       intro:
-        "Que ce soit un défi cloud, une nouvelle plateforme ou un partenariat à long terme — j'adorerais entendre ce sur quoi vous travaillez.",
+        "Que ce soit un défi cloud, une nouvelle plateforme ou un partenariat à long terme. J'adorerais entendre ce sur quoi vous travaillez.",
     },
   },
   exec: [
     {
       title: "Le parcours",
       headline: "Construit depuis le Portugal, livré au monde entier",
-      body: "J'ai commencé au Brésil. Travaillé à São Paulo, Londres, Madrid et dans plusieurs fuseaux horaires. Construit des plateformes pour des banques, des compagnies aériennes et des médias. Appris ce que signifie une panne en production à 3h du matin — et comment l'éviter.",
+      body: "J'ai commencé au Brésil. Travaillé à São Paulo, Londres, Madrid et dans plusieurs fuseaux horaires. Construit des plateformes pour des banques, des compagnies aériennes et des médias. Appris ce que signifie une panne en production à 3h du matin, et comment l'éviter.",
     },
     {
       title: "L'avantage",
       headline: "Une profondeur technique qui rejoint la feuille de coûts",
-      body: "J'ai été à la fois l'architecte qui conçoit le système et le responsable FinOps qui surveille la facture. Cette combinaison — connaître à la fois l'infrastructure et son coût réel — est rare, et elle change ce qu'on construit.",
+      body: "J'ai été à la fois l'architecte qui conçoit le système et le responsable FinOps qui surveille la facture. Cette combinaison, connaître à la fois l'infrastructure et son coût réel, est rare, et elle change ce qu'on construit.",
     },
     {
       title: "Le focus",
@@ -1280,12 +1280,12 @@ const fr: Dict = {
     {
       title: "Le partenariat",
       headline: "Un partenaire de confiance, pas un exécutant de tickets",
-      body: "Conseil indépendant via UP2CLOUD pour des clients internationaux. Architecture fractionnée, construction de plateformes ou missions FinOps. Je préfère les missions longues où je peux voir l'impact se construire. Disponible maintenant — répond sous 24h.",
+      body: "Conseil indépendant via UP2CLOUD pour des clients internationaux. Architecture fractionnée, construction de plateformes ou missions FinOps. Je préfère les missions longues où je peux voir l'impact se construire. Disponible maintenant, répond sous 24h.",
     },
   ],
   recruiter: {
     banner:
-      "Mode Recruteur — impact, leadership, certifications & disponibilité mis en avant",
+      "Mode Recruteur: impact, leadership, certifications & disponibilité mis en avant",
     exit: "quitter",
     on: "Mode Recruteur : Actif",
     off: "Mode Recruteur",
@@ -1296,7 +1296,7 @@ const fr: Dict = {
     header: "Assistant Carrière IA",
     subtitle: "Connaît tout sur Cesar · répond depuis son vrai profil",
     greeting:
-      "Je suis l'Assistant Carrière IA de Cesar — je connais tout son parcours. Posez tout ce qu'une décision de recrutement nécessite : séniorité, échelle, leadership, impact financier, certifications ou disponibilité. Essayez une question ci-dessous.",
+      "Je suis l'Assistant Carrière IA de Cesar. Je connais tout son parcours. Posez tout ce qu'une décision de recrutement nécessite : séniorité, échelle, leadership, impact financier, certifications ou disponibilité. Essayez une question ci-dessous.",
     suggested: "Questions suggérées pour les recruteurs",
     placeholder: "Posez une question sur l'adéquation de Cesar à votre poste…",
     thinking: "Réflexion…",
@@ -1306,12 +1306,12 @@ const fr: Dict = {
   portraitCaption: "São Paulo 🇧🇷 → Vila Real 🇵🇹",
   contact: {
     briefingTitle: "Travaillons ensemble",
-    briefingDesc: "Architecture cloud, ingénierie de plateformes, DevOps, FinOps ou infrastructure IA — dites-moi ce que vous construisez et explorons comment collaborer.",
+    briefingDesc: "Architecture cloud, ingénierie de plateformes, DevOps, FinOps ou infrastructure IA. Dites-moi ce que vous construisez et explorons comment collaborer.",
     emailCta: "Contacter Cesar",
     downloadCv: "Télécharger le CV",
     availability: "Disponible pour des projets internationaux",
     responseTime: "Répond généralement sous 24h",
-    contactQuote: "Chaque projet sur lequel j'ai travaillé a été l'infrastructure critique de quelqu'un — la plateforme de paiement d'une banque, le système d'opérations d'une compagnie aérienne, la colonne vertébrale des données d'une entreprise de médias. Je prends cette responsabilité au sérieux. Si vous construisez quelque chose qui compte, j'aimerais vraiment en entendre parler.",
+    contactQuote: "Chaque projet sur lequel j'ai travaillé a été l'infrastructure critique de quelqu'un: la plateforme de paiement d'une banque, le système d'opérations d'une compagnie aérienne, la colonne vertébrale des données d'une entreprise de médias. Je prends cette responsabilité au sérieux. Si vous construisez quelque chose qui compte, j'aimerais vraiment en entendre parler.",
     formTitle: "Envoyer un message à Cesar",
     formSubtitle: "Répond sous 24h",
     formName: "Nom",
@@ -1342,7 +1342,7 @@ const fr: Dict = {
     architecture: "L'Approche",
     businessResult: "Le Résultat",
     lessons: "Ce que j'ai appris",
-    aiFaqNote: "// Le Smart AI FAQ de ce site est une intégration IA — posez-lui toutes vos questions sur l'adéquation de Cesar à votre poste.",
+    aiFaqNote: "// Le Smart AI FAQ de ce site est une intégration IA. Posez-lui toutes vos questions sur l'adéquation de Cesar à votre poste.",
     trustCompanies: "Entreprises",
     trustIndustries: "Secteurs",
     trustClouds: "Plateformes Cloud",
@@ -1448,10 +1448,10 @@ const fr: Dict = {
     ],
   },
   story: {
-    pullQuote: "J'ai grandi au Brésil 🇧🇷. Je suis parti en Europe. 10+ ans à construire des infrastructures qui ne tombent pas en panne — pour des banques, des compagnies aériennes et des entreprises qui ne peuvent pas se le permettre.",
-    p1: "J'ai commencé à São Paulo, en construisant des plateformes de données et des systèmes pour de grandes entreprises. L'infrastructure cloud m'a vite séduit — le défi de rendre les systèmes distribués fiables, observables et rentables à grande échelle. C'est devenu ma carrière.",
+    pullQuote: "J'ai grandi au Brésil 🇧🇷. Je suis parti en Europe. 10+ ans à construire des infrastructures qui ne tombent pas en panne, pour des banques, des compagnies aériennes et des entreprises qui ne peuvent pas se le permettre.",
+    p1: "J'ai commencé à São Paulo, en construisant des plateformes de données et des systèmes pour de grandes entreprises. L'infrastructure cloud m'a vite séduit: le défi de rendre les systèmes distribués fiables, observables et rentables à grande échelle. C'est devenu ma carrière.",
     p2: "Partir en Europe dans la mi-vingtaine a changé ma façon de voir ce travail. Travailler dans différents fuseaux horaires, langues et cultures m'a appris ce que les certifications n'enseignent pas : les problèmes cloud sont avant tout des problèmes humains. Les systèmes tombent en panne parce que les équipes ne communiquent pas. Les coûts s'envolent parce que personne n'en est responsable. Les plateformes se brisent parce que les incitations sont mal alignées.",
-    p3: "Depuis, j'ai construit des plateformes pour des banques à Londres et Madrid, des compagnies aériennes en Amérique latine, des entreprises de médias aux États-Unis et des entreprises partout dans le monde. J'ai fondé UP2CLOUD pour faire ce travail selon mes propres termes — axé sur les résultats, pas sur les effectifs.",
+    p3: "Depuis, j'ai construit des plateformes pour des banques à Londres et Madrid, des compagnies aériennes en Amérique latine, des entreprises de médias aux États-Unis et des entreprises partout dans le monde. J'ai fondé UP2CLOUD pour faire ce travail selon mes propres termes, axé sur les résultats, pas sur les effectifs.",
   },
   projects: {
     "finops-automation": {
@@ -1463,7 +1463,7 @@ const fr: Dict = {
       scale: "Estate multi-compte et multi-cloud",
       impact: ["~30% de réduction des gaspillages", "Étiquetage et refacturation automatisés", "Visibilité des coûts pour la direction"],
       outcome: "A éliminé ~30% de gaspillage cloud et donné aux finances une visibilité en temps réel par équipe.",
-      lessons: "La gouvernance avant l'optimisation. On ne peut pas couper ce qu'on ne voit pas — et la partie la plus difficile était d'aligner 12 équipes plateformes sur une taxonomie d'étiquetage unifiée. Les solutions techniques sont faciles ; l'alignement organisationnel est le vrai travail.",
+      lessons: "La gouvernance avant l'optimisation. On ne peut pas couper ce qu'on ne voit pas, et la partie la plus difficile était d'aligner 12 équipes plateformes sur une taxonomie d'étiquetage unifiée. Les solutions techniques sont faciles ; l'alignement organisationnel est le vrai travail.",
       metricLabel: "gaspillage cloud",
     },
     "bigdata-platform": {
@@ -1471,7 +1471,7 @@ const fr: Dict = {
       title: "Plateforme d'Analytics Big Data",
       client: "Corporation de médias de masse (États-Unis)",
       problem: "Une entreprise médiatique avait besoin d'une plateforme d'analytics scalable pour traiter et interroger des flux d'événements massifs.",
-      architecture: "Pipelines Apache Beam sur Google DataFlow, services App Engine et un entrepôt BigQuery — développé en Java/Node.js avec un frontend React.",
+      architecture: "Pipelines Apache Beam sur Google DataFlow, services App Engine et un entrepôt BigQuery, développé en Java/Node.js avec un frontend React.",
       scale: "Ingestion d'événements à grande échelle",
       impact: ["Pipelines de données en temps réel", "Analytics BigQuery en libre-service", "Livraison élastique avec App Engine"],
       outcome: "A débloqué des analytics en libre-service et en temps réel sur des flux d'événements massifs sur Google Cloud.",
@@ -1487,7 +1487,7 @@ const fr: Dict = {
       scale: "Charges de travail d'entreprise réglementées",
       impact: ["Sécurité PII renforcée", "Observabilité 24/7 et on-call", "Réseaux multi-cloud résilients"],
       outcome: "A livré un cloud sécurisé, observable et prêt pour les régulateurs pour la banque et l'aviation à 99,9% de disponibilité.",
-      lessons: "Dans les secteurs réglementés, l'observabilité est une preuve — pas seulement un outil. Les tableaux de bord prêts pour audit et les alertes automatisées dès le premier jour ont fait la différence entre réussir et échouer les examens de conformité.",
+      lessons: "Dans les secteurs réglementés, l'observabilité est une preuve, pas seulement un outil. Les tableaux de bord prêts pour audit et les alertes automatisées dès le premier jour ont fait la différence entre réussir et échouer les examens de conformité.",
       metricLabel: "disponibilité",
     },
   },
@@ -1548,7 +1548,7 @@ const zh: Dict = {
     },
     capabilities: {
       label: "技术深度",
-      title: "深度聚焦关键领域——拒绝虚荣指标",
+      title: "深度聚焦关键领域，拒绝虚荣指标",
       intro:
         "每项能力按级别和支撑工具展示。范围与证明，而非进度条。",
     },
@@ -1556,13 +1556,13 @@ const zh: Dict = {
       label: "企业信任",
       title: "受托于受监管的关键业务系统",
       intro:
-        "银行、航空公司和全球企业——跨越四大云服务商和六个行业。",
+        "银行、航空公司和全球企业，跨越四大云服务商和六个行业。",
     },
     global: {
       label: "全球交付",
       title: "立足葡萄牙，交付全球。",
       intro:
-        "从巴西到欧洲，遍及美洲——云计算、DevOps、平台工程和FinOps，交付于工作所在之处。",
+        "从巴西到欧洲，遍及美洲：云计算、DevOps、平台工程和FinOps，交付于工作所在之处。",
     },
     certifications: {
       label: "认证",
@@ -1573,19 +1573,19 @@ const zh: Dict = {
       label: "技术全景",
       title: "工程星系，而非徽章列表",
       intro:
-        "全栈实时力导向图——云、编排、CI/CD、数据和FinOps。拖拽、缩放，探索连接关系。",
+        "全栈实时力导向图：云、编排、CI/CD、数据和FinOps。拖拽、缩放，探索连接关系。",
     },
     finops: {
       label: "云成本工程",
       title: "将云支出转化为战略资产",
       intro:
-        "成本优化、合理配置、治理、预测、成本分摊和自动化——精准测量，而非猜测。",
+        "成本优化、合理配置、治理、预测、成本分摊和自动化，精准测量，而非猜测。",
     },
     ai: {
       label: "AI与自动化",
       title: "面向未来：为GenAI打造的平台",
       intro:
-        "从LLM集成到GPU感知的平台工程——让AI可靠、可观测且成本可控的基础设施。",
+        "从LLM集成到GPU感知的平台工程：让AI可靠、可观测且成本可控的基础设施。",
     },
     testimonials: {
       label: "认可",
@@ -1595,19 +1595,19 @@ const zh: Dict = {
       label: "开始对话",
       title: "让我们共同构建有意义的事物",
       intro:
-        "无论是云架构挑战、新平台建设还是长期合作——欢迎告诉我您正在做什么。",
+        "无论是云架构挑战、新平台建设还是长期合作，欢迎告诉我您正在做什么。",
     },
   },
   exec: [
     {
       title: "成长历程",
       headline: "从葡萄牙出发，交付全球",
-      body: "从巴西起步，辗转圣保罗、伦敦、马德里，跨越多个时区。为银行、航空公司和媒体企业构建平台。深刻理解生产环境在凌晨3点崩溃意味着什么——以及如何防止它再次发生。",
+      body: "从巴西起步，辗转圣保罗、伦敦、马德里，跨越多个时区。为银行、航空公司和媒体企业构建平台。深刻理解生产环境在凌晨3点崩溃意味着什么，以及如何防止它再次发生。",
     },
     {
       title: "独特优势",
       headline: "技术深度延伸至成本管控",
-      body: "我既是设计系统的架构师，也是盯着账单的FinOps负责人。这种组合——同时了解基础设施和其真实成本——实属罕见，它从根本上改变了你所构建的东西。",
+      body: "我既是设计系统的架构师，也是盯着账单的FinOps负责人。这种组合，同时了解基础设施和其真实成本，实属罕见，它从根本上改变了你所构建的东西。",
     },
     {
       title: "专注领域",
@@ -1617,12 +1617,12 @@ const zh: Dict = {
     {
       title: "合作方式",
       headline: "值得信赖的伙伴，而非任务执行者",
-      body: "通过UP2CLOUD为国际客户提供独立咨询。分散式架构、平台构建或FinOps项目。我更倾向于能看到成果持续积累的长期合作。目前可接项目——通常24小时内回复。",
+      body: "通过UP2CLOUD为国际客户提供独立咨询。分散式架构、平台构建或FinOps项目。我更倾向于能看到成果持续积累的长期合作。目前可接项目，通常24小时内回复。",
     },
   ],
   recruiter: {
     banner:
-      "招聘模式 — 突出展示成就、领导力、认证和可用性",
+      "招聘模式：突出展示成就、领导力、认证和可用性",
     exit: "退出",
     on: "招聘模式：开启",
     off: "招聘模式",
@@ -1633,7 +1633,7 @@ const zh: Dict = {
     header: "AI职业助手",
     subtitle: "全面了解Cesar · 基于真实资料回答",
     greeting:
-      "我是Cesar的AI职业助手——我了解他的全部背景。请提问招聘决策所需的任何内容：资历、规模、领导力、成本影响、认证或可用性。请在下方尝试提问。",
+      "我是Cesar的AI职业助手。我了解他的全部背景。请提问招聘决策所需的任何内容：资历、规模、领导力、成本影响、认证或可用性。请在下方尝试提问。",
     suggested: "为招聘者推荐的问题",
     placeholder: "询问Cesar是否适合您的职位…",
     thinking: "思考中…",
@@ -1643,12 +1643,12 @@ const zh: Dict = {
   portraitCaption: "圣保罗 🇧🇷 → 维拉雷亚尔 🇵🇹",
   contact: {
     briefingTitle: "携手合作",
-    briefingDesc: "云架构、平台工程、DevOps、FinOps或AI基础设施——告诉我您正在构建什么，让我们探索合作的可能。",
+    briefingDesc: "云架构、平台工程、DevOps、FinOps或AI基础设施，告诉我您正在构建什么，让我们探索合作的可能。",
     emailCta: "联系Cesar",
     downloadCv: "下载简历",
     availability: "可承接国际项目",
     responseTime: "通常24小时内回复",
-    contactQuote: "我参与的每个项目都是某人的关键基础设施——银行的支付平台、航空公司的运营系统、媒体公司的数据骨干。我认真对待这份责任。如果您正在构建重要的东西，我真诚地想听您讲述。",
+    contactQuote: "我参与的每个项目都是某人的关键基础设施：银行的支付平台、航空公司的运营系统、媒体公司的数据骨干。我认真对待这份责任。如果您正在构建重要的东西，我真诚地想听您讲述。",
     formTitle: "给Cesar发消息",
     formSubtitle: "24小时内回复",
     formName: "姓名",
@@ -1679,7 +1679,7 @@ const zh: Dict = {
     architecture: "方法",
     businessResult: "成果",
     lessons: "收获",
-    aiFaqNote: "// 本网站的智能AI FAQ本身是一个AI集成——询问任何关于Cesar是否适合您职位的问题。",
+    aiFaqNote: "// 本网站的智能AI FAQ本身是一个AI集成，询问任何关于Cesar是否适合您职位的问题。",
     trustCompanies: "客户公司",
     trustIndustries: "行业领域",
     trustClouds: "云平台",
@@ -1785,10 +1785,10 @@ const zh: Dict = {
     ],
   },
   story: {
-    pullQuote: "我在巴西🇧🇷长大，后来移居欧洲。10年以上，我一直在构建不会故障的基础设施——为那些承受不起故障的银行、航空公司和企业。",
-    p1: "我在圣保罗起步，为大型企业构建数据平台和软件系统。云基础设施很快吸引了我——如何让分布式系统在大规模下保持可靠、可观测且成本高效。这成为了我的事业。",
+    pullQuote: "我在巴西🇧🇷长大，后来移居欧洲。10年以上，我一直在构建不会故障的基础设施，为那些承受不起故障的银行、航空公司和企业。",
+    p1: "我在圣保罗起步，为大型企业构建数据平台和软件系统。云基础设施很快吸引了我：如何让分布式系统在大规模下保持可靠、可观测且成本高效。这成为了我的事业。",
     p2: "二十多岁移居欧洲改变了我对这份工作的认知。跨越时区、语言和文化的工作经历教会了我认证所不能教的东西：云问题在很大程度上是人的问题。系统故障是因为团队之间沟通不畅。成本失控是因为没有人对其负责。平台崩溃是因为激励机制错位。",
-    p3: "此后，我为伦敦和马德里的银行、拉丁美洲的航空公司、美国的媒体企业以及全球各地的公司构建了平台。我创立了UP2CLOUD，以自己的方式从事这份工作——专注于成果，而非人员规模。",
+    p3: "此后，我为伦敦和马德里的银行、拉丁美洲的航空公司、美国的媒体企业以及全球各地的公司构建了平台。我创立了UP2CLOUD，以自己的方式从事这份工作，专注于成果，而非人员规模。",
   },
   projects: {
     "finops-automation": {
@@ -1800,7 +1800,7 @@ const zh: Dict = {
       scale: "多账户、多云资产",
       impact: ["减少约30%浪费", "自动化标签与成本分摊", "管理层成本可见性"],
       outcome: "削减了约30%的云浪费，并为财务团队提供了按团队划分的实时成本可见性。",
-      lessons: "治理先于优化。看不见的东西无法削减——最难的部分是让12个平台团队在统一的标签分类法上达成一致。技术解决方案是容易的，组织对齐才是真正的工作。",
+      lessons: "治理先于优化。看不见的东西无法削减，最难的部分是让12个平台团队在统一的标签分类法上达成一致。技术解决方案是容易的，组织对齐才是真正的工作。",
       metricLabel: "云浪费",
     },
     "bigdata-platform": {
@@ -1808,7 +1808,7 @@ const zh: Dict = {
       title: "大数据分析平台",
       client: "大众媒体集团（美国）",
       problem: "一家媒体公司需要一个可扩展的分析平台来处理和查询海量事件流。",
-      architecture: "Google DataFlow上的Apache Beam管道、App Engine服务和BigQuery数据仓库——使用Java/Node.js构建，配合React前端。",
+      architecture: "Google DataFlow上的Apache Beam管道、App Engine服务和BigQuery数据仓库，使用Java/Node.js构建，配合React前端。",
       scale: "大规模事件摄入",
       impact: ["实时数据管道", "BigQuery自助分析", "App Engine弹性交付"],
       outcome: "在Google Cloud上解锁了对海量事件流的实时自助分析。",
@@ -1824,7 +1824,7 @@ const zh: Dict = {
       scale: "受监管的企业级工作负载",
       impact: ["强化的PII安全", "24/7可观测性与值班", "弹性多云网络"],
       outcome: "以99.9%的可用性为银行业和航空业交付了安全、可观测、符合监管要求的云环境。",
-      lessons: "在受监管行业，可观测性是证明——不仅仅是工具。从第一天起构建的审计就绪仪表板和自动告警，决定了能否通过合规性审查。",
+      lessons: "在受监管行业，可观测性是证明，不仅仅是工具。从第一天起构建的审计就绪仪表板和自动告警，决定了能否通过合规性审查。",
       metricLabel: "可用性",
     },
   },
@@ -1832,7 +1832,7 @@ const zh: Dict = {
     { area: "云架构",         level: "首席级",    note: "在GCP、AWS、Azure和OCI上为受监管企业提供多云架构。" },
     { area: "平台工程",       level: "专家",      note: "黄金路径、自助服务平台与大规模Kubernetes。" },
     { area: "DevOps & CI/CD", level: "专家",      note: "端到端流水线设计与交付自动化。" },
-    { area: "FinOps",         level: "专家级",    note: "成本优化、标签管理、成本分摊与预测——消除真实浪费。" },
+    { area: "FinOps",         level: "专家级",    note: "成本优化、标签管理、成本分摊与预测，消除真实浪费。" },
     { area: "基础设施即代码", level: "专家",      note: "跨云平台可复现、可审查的基础设施。" },
     { area: "可观测性",       level: "专家",      note: "关键系统的24/7监控、值班与事件响应工具。" },
     { area: "数据平台",       level: "高级",      note: "Google Cloud上的实时管道与数据仓储。" },

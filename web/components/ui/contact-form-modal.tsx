@@ -7,6 +7,10 @@ import { useI18n } from "@/lib/i18n";
 
 type State = "idle" | "sending" | "success" | "error";
 
+function validateEmail(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 interface Props {
   open: boolean;
   onClose: () => void;
@@ -18,7 +22,9 @@ export function ContactFormModal({ open, onClose }: Props) {
   const c = t.contact;
   const [state, setState] = useState<State>("idle");
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [fieldErrors, setFieldErrors] = useState({ name: "", email: "", message: "" });
   const firstInputRef = useRef<HTMLInputElement>(null);
+  const statusRef = useRef<HTMLDivElement>(null);
 
   // Focus first field on open
   useEffect(() => {
@@ -42,8 +48,19 @@ export function ContactFormModal({ open, onClose }: Props) {
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
+  function validate() {
+    const errors = { name: "", email: "", message: "" };
+    if (!form.name.trim()) errors.name = "Name is required.";
+    if (!form.email.trim()) errors.email = "Email is required.";
+    else if (!validateEmail(form.email)) errors.email = "Enter a valid email address.";
+    if (!form.message.trim()) errors.message = "Message is required.";
+    setFieldErrors(errors);
+    return !errors.name && !errors.email && !errors.message;
+  }
+
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (!validate()) return;
     setState("sending");
     try {
       const res = await fetch("/.netlify/functions/contact", {
@@ -52,8 +69,11 @@ export function ContactFormModal({ open, onClose }: Props) {
         body: JSON.stringify(form),
       });
       setState(res.ok ? "success" : "error");
+      // Announce status change to screen readers
+      setTimeout(() => statusRef.current?.focus(), 80);
     } catch {
       setState("error");
+      setTimeout(() => statusRef.current?.focus(), 80);
     }
   }
 
@@ -126,13 +146,19 @@ export function ContactFormModal({ open, onClose }: Props) {
                   </button>
                 </div>
               ) : (
-                /* Netlify Form — data-netlify="true" enables Netlify form handling on static export */
+                <>
+                {/* ARIA live region — announces status changes to screen readers */}
+                <div ref={statusRef} role="status" aria-live="polite" aria-atomic="true" tabIndex={-1} className="sr-only">
+                  {state === "error" && "Message failed to send. Please try again or email directly."}
+                </div>
+
                 <form
                   name="contact"
                   method="POST"
                   data-netlify="true"
                   onSubmit={submit}
                   className="space-y-4"
+                  noValidate
                 >
                   {/* Hidden field for Netlify form detection */}
                   <input type="hidden" name="form-name" value="contact" />
@@ -147,12 +173,15 @@ export function ContactFormModal({ open, onClose }: Props) {
                         id="cf-name"
                         name="name"
                         type="text"
-                        required
+                        aria-required="true"
+                        aria-invalid={!!fieldErrors.name}
+                        aria-describedby={fieldErrors.name ? "cf-name-err" : undefined}
                         value={form.name}
                         onChange={set("name")}
                         placeholder={c.formNamePlaceholder}
-                        className={inputClass}
+                        className={`${inputClass} ${fieldErrors.name ? "border-red-500/60" : ""}`}
                       />
+                      {fieldErrors.name && <p id="cf-name-err" role="alert" className="font-mono text-[10px] text-red-400">{fieldErrors.name}</p>}
                     </div>
                     <div className="space-y-1.5">
                       <label htmlFor="cf-email" className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
@@ -162,12 +191,15 @@ export function ContactFormModal({ open, onClose }: Props) {
                         id="cf-email"
                         name="email"
                         type="email"
-                        required
+                        aria-required="true"
+                        aria-invalid={!!fieldErrors.email}
+                        aria-describedby={fieldErrors.email ? "cf-email-err" : undefined}
                         value={form.email}
                         onChange={set("email")}
                         placeholder={c.formEmailPlaceholder}
-                        className={inputClass}
+                        className={`${inputClass} ${fieldErrors.email ? "border-red-500/60" : ""}`}
                       />
+                      {fieldErrors.email && <p id="cf-email-err" role="alert" className="font-mono text-[10px] text-red-400">{fieldErrors.email}</p>}
                     </div>
                   </div>
 
@@ -193,17 +225,20 @@ export function ContactFormModal({ open, onClose }: Props) {
                     <textarea
                       id="cf-message"
                       name="message"
-                      required
+                      aria-required="true"
+                      aria-invalid={!!fieldErrors.message}
+                      aria-describedby={fieldErrors.message ? "cf-message-err" : undefined}
                       rows={5}
                       value={form.message}
                       onChange={set("message")}
                       placeholder={c.formMessagePlaceholder}
-                      className={`${inputClass} resize-none`}
+                      className={`${inputClass} resize-none ${fieldErrors.message ? "border-red-500/60" : ""}`}
                     />
+                    {fieldErrors.message && <p id="cf-message-err" role="alert" className="font-mono text-[10px] text-red-400">{fieldErrors.message}</p>}
                   </div>
 
                   {state === "error" && (
-                    <p className="rounded-md bg-red-500/10 px-4 py-2.5 text-sm text-red-400">
+                    <p role="alert" className="rounded-md bg-red-500/10 px-4 py-2.5 text-sm text-red-400">
                       {c.formError} {siteConfig.links.email}
                     </p>
                   )}
@@ -232,6 +267,7 @@ export function ContactFormModal({ open, onClose }: Props) {
                     </button>
                   </div>
                 </form>
+                </>
               )}
             </div>
           </m.div>
