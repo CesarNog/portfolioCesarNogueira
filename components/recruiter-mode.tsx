@@ -351,7 +351,7 @@ export function RecruiterMode() {
   const callAI = useCallback(async (question: string): Promise<string> => {
     const fallback = `César is a Principal Cloud Architect with 10+ years across GCP, AWS, Azure and OCI — available now for international consulting via UP2CLOUD. Email ${siteConfig.links.email} for enquiries.`;
     try {
-      const res = await fetch("/.netlify/functions/ask", {
+      const res = await fetch("/api/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question, lang }),
