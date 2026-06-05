@@ -2,8 +2,7 @@
 // Set RESEND_API_KEY in Netlify > Site settings > Environment variables.
 
 const TO = "cesarnogueira1210@gmail.com";
-// TODO: switch to "Portfolio <portfolio@cesarnogueira.tech>" once Resend domain is verified
-const FROM = "Portfolio <onboarding@resend.dev>";
+const FROM = "Portfolio <portfolio@cesarnogueira.tech>";
 
 export default async (req) => {
   const json = (body, status = 200) =>
