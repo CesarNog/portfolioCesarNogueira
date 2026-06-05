@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getIp, isRateLimited } from "@/lib/rate-limit";
 
 const KNOWLEDGE_BASE = `
 Cesar Augusto Nogueira — Principal Cloud Architect, Platform Engineer, DevOps Leader, FinOps Consultant and AI Infrastructure specialist. 10+ years in tech. Based in Vila Real, Portugal; works remotely with international clients via his consultancy UP2CLOUD. Available now for global remote consulting; usually replies within 24h.
@@ -38,6 +39,10 @@ function buildSystemPrompt(lang: string): string {
 }
 
 export async function POST(req: NextRequest) {
+  if (isRateLimited(getIp(req), { windowMs: 60_000, max: 20 })) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   let question = "";
   let lang = "en";
   try {
@@ -82,16 +87,14 @@ export async function POST(req: NextRequest) {
     });
 
     if (!r.ok) {
-      const detail = await r.text().catch(() => "");
-      const provider = grokKey ? "xai" : "groq";
-      console.error(`[ask] ${provider} error ${r.status}:`, detail);
-      return NextResponse.json({ fallback: true, error: `${provider} ${r.status}`, detail });
+      console.error(`[ask] ${grokKey ? "xai" : "groq"} error ${r.status}`);
+      return NextResponse.json({ fallback: true, error: "upstream error" });
     }
 
     const data = await r.json();
     const answer = data?.choices?.[0]?.message?.content?.trim();
     return NextResponse.json({ answer: answer || "" });
-  } catch (e) {
-    return NextResponse.json({ fallback: true, error: String(e) });
+  } catch {
+    return NextResponse.json({ fallback: true, error: "request failed" });
   }
 }
