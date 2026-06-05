@@ -1,4 +1,5 @@
 import Script from "next/script";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
 const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID;
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
@@ -6,6 +7,9 @@ const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 export function Analytics() {
   return (
     <>
+      {/* Vercel Web Analytics */}
+      <VercelAnalytics />
+
       {/* Google Analytics 4 */}
       {GA_ID && (
         <>
