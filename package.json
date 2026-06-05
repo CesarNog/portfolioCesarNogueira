@@ -1,0 +1,42 @@
+{
+  "name": "cesarnogueira-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && node -e \"const fs=require('fs');['opengraph-image','twitter-image'].forEach(f=>{const p='out/'+f;if(fs.existsSync(p)&&!fs.existsSync(p+'.png'))fs.copyFileSync(p,p+'.png');})\"",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "cmdk": "^1.1.1",
+    "motion": "^12.0.0",
+    "next": "^16.2.7",
+    "next-themes": "^0.4.4",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-force-graph-2d": "^1.29.1",
+    "react-simple-maps": "^3.0.0",
+    "topojson-client": "^3.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/react-simple-maps": "^3.0.6",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5"
+  },
+  "overrides": {
+    "postcss": ">=8.5.10",
+    "d3-color": ">=3.1.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "postcss": ">=8.5.10",
+      "d3-color": ">=3.1.0"
+    }
+  }
+}
