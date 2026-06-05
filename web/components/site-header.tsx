@@ -46,12 +46,17 @@ export function SiteHeader() {
     return () => obs.disconnect();
   }, []);
 
-  // Close mobile menu on Escape.
+  // Close mobile menu on Escape or when other UI components request it.
   useEffect(() => {
     if (!mobileOpen) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMobileOpen(false);
+    const onClose = () => setMobileOpen(false);
     document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    document.addEventListener("close-mobile-menu", onClose);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("close-mobile-menu", onClose);
+    };
   }, [mobileOpen]);
 
   // Lock body scroll when mobile menu open.

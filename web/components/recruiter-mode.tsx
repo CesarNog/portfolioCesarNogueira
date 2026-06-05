@@ -19,6 +19,7 @@ export function RecruiterMode() {
   }, []);
 
   const toggle = () => {
+    document.dispatchEvent(new CustomEvent("close-mobile-menu"));
     const next = !on;
     setOn(next);
     if (next) {
@@ -41,7 +42,7 @@ export function RecruiterMode() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -40 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-x-0 top-14 z-40 border-b border-[var(--color-blue)]/30 bg-[var(--color-surface-1)]/95 backdrop-blur-md"
+            className="fixed inset-x-0 top-14 z-30 border-b border-[var(--color-blue)]/30 bg-[var(--color-surface-1)]/95 backdrop-blur-md"
             role="status"
           >
             <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-2">
