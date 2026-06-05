@@ -347,7 +347,7 @@ const en: Dict = {
     launch: "Ask about César",
     close: "Close",
     header: "AI Career Assistant",
-    subtitle: "Knows everything about César · answers from his real profile",
+    subtitle: "Ask anything about Cesar's profile",
     greeting:
       "I'm Cesar's AI Career Assistant. I know his entire background. Ask anything a hiring decision needs: seniority, scale, leadership, cost impact, certifications or availability. Try a question below.",
     suggested: "Suggested for recruiters",
@@ -756,7 +756,7 @@ const pt: Dict = {
     launch: "FAQ Inteligente",
     close: "Fechar",
     header: "Assistente de Carreira IA",
-    subtitle: "Sabe tudo sobre o Cesar · responde a partir do perfil real",
+    subtitle: "Pergunte qualquer coisa sobre o perfil do Cesar",
     greeting:
       "Sou o Assistente de Carreira IA do Cesar. Conheço todo o seu percurso. Pergunte o que uma decisão de contratação precisa: senioridade, escala, liderança, impacto em custos, certificações ou disponibilidade. Experimente uma pergunta abaixo.",
     suggested: "Sugestões para recrutadores",
@@ -1165,7 +1165,7 @@ const es: Dict = {
     launch: "FAQ Inteligente",
     close: "Cerrar",
     header: "Asistente de Carrera IA",
-    subtitle: "Lo sabe todo sobre Cesar · responde desde su perfil real",
+    subtitle: "Pregunta cualquier cosa sobre el perfil de Cesar",
     greeting:
       "Soy el Asistente de Carrera IA de Cesar. Conozco todo su recorrido. Pregunta lo que necesita una decisión de contratación: seniority, escala, liderazgo, impacto en costes, certificaciones o disponibilidad. Prueba una pregunta abajo.",
     suggested: "Sugerencias para reclutadores",
@@ -1574,7 +1574,7 @@ const fr: Dict = {
     launch: "FAQ IA",
     close: "Fermer",
     header: "Assistant Carrière IA",
-    subtitle: "Connaît tout sur Cesar · répond depuis son vrai profil",
+    subtitle: "Posez n'importe quelle question sur le profil de Cesar",
     greeting:
       "Je suis l'Assistant Carrière IA de Cesar. Je connais tout son parcours. Posez tout ce qu'une décision de recrutement nécessite : séniorité, échelle, leadership, impact financier, certifications ou disponibilité. Essayez une question ci-dessous.",
     suggested: "Questions suggérées pour les recruteurs",
@@ -1983,7 +1983,7 @@ const zh: Dict = {
     launch: "智能FAQ",
     close: "关闭",
     header: "AI职业助手",
-    subtitle: "全面了解Cesar · 基于真实资料回答",
+    subtitle: "随时提问关于Cesar的职业资料",
     greeting:
       "我是Cesar的AI职业助手。我了解他的全部背景。请提问招聘决策所需的任何内容：资历、规模、领导力、成本影响、认证或可用性。请在下方尝试提问。",
     suggested: "为招聘者推荐的问题",

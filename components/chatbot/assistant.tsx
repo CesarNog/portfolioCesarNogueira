@@ -192,14 +192,13 @@ export function Assistant() {
           >
             {/* Header */}
             <div className="flex items-center gap-3 border-b border-[var(--color-hairline)] px-4 py-3">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={AVATAR_SRC}
-                alt={siteConfig.name}
-                width={32}
-                height={32}
-                className="h-8 w-8 shrink-0 rounded-full border border-[var(--color-hairline-strong)] object-cover"
-              />
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--color-blue)]/15 border border-[var(--color-blue)]/30">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-blue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M12 2a10 10 0 1 0 10 10" />
+                  <path d="M12 6v6l4 2" />
+                  <circle cx="19" cy="5" r="3" fill="var(--color-blue)" stroke="none" />
+                </svg>
+              </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-[var(--color-fg)]">{t.assistant.header}</p>
                 <p className="truncate font-mono text-[10px] text-[var(--color-fg-subtle)]">
