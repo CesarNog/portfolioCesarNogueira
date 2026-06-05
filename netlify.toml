@@ -1,19 +1,17 @@
 # Netlify build config — cesarnogueira.tech
 #
-# Static Next.js export (output: "export"). Netlify builds from web/ and serves web/out.
+# Static Next.js export (output: "export"). Netlify serves out/ directly.
 # No Next.js runtime or plugin required.
 #
 # SETUP: In Netlify UI → Site settings → Environment variables, add:
-#   GROQ_API_KEY   = <your-groq-key>   (AI chatbot — free at console.groq.com)
-#   RESEND_API_KEY = <your-resend-key> (contact form emails)
+#   GROK_API_KEY   = xai-...   (AI career assistant)
+#   RESEND_API_KEY = re_...    (contact form emails)
 #
 # DOMAIN: In Netlify UI → Domain management, add custom domain:
 #   cesarnogueira.tech
-# The old static site is preserved in old-website/ for reference.
 
 [build]
-  base    = "web"
-  command = "npm install --legacy-peer-deps && npm run build && mkdir -p out/curriculum && cp ../old-website/curriculum/CV_CesarANogueira_Cloud_EN_US.pdf out/curriculum/"
+  command = "npm install --legacy-peer-deps && npm run build && mkdir -p out/curriculum && cp old-website/curriculum/CV_CesarANogueira_Cloud_EN_US.pdf out/curriculum/"
   publish = "out"
 
 [build.environment]
