@@ -17,54 +17,101 @@ export async function POST(req: NextRequest) {
   const { name, email, subject, message } = body;
   if (!name || !email || !message) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
+  const sentAt = new Date().toLocaleString("en-GB", {
+    timeZone: "Europe/Lisbon",
+    day: "2-digit", month: "short", year: "numeric",
+    hour: "2-digit", minute: "2-digit",
+  });
+
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;padding:0;background:#0a0a0a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a;padding:40px 16px;">
     <tr><td align="center">
-      <table width="100%" style="max-width:560px;background:#111;border:1px solid #222;border-radius:8px;overflow:hidden;">
+      <table width="100%" style="max-width:580px;background:#111;border:1px solid #222;border-radius:10px;overflow:hidden;">
+
+        <!-- Header -->
         <tr>
-          <td style="background:#111;border-bottom:1px solid #222;padding:24px 32px;">
-            <p style="margin:0;font-size:11px;font-family:monospace;letter-spacing:0.12em;text-transform:uppercase;color:#555;">cesarnogueira.tech</p>
-            <p style="margin:6px 0 0;font-size:18px;font-weight:600;color:#f0f0f0;">New message</p>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:24px 32px 0;">
+          <td style="background:#0f1929;border-bottom:1px solid #1e3a5f;padding:24px 32px;">
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
-                <td style="padding:0 0 12px;">
-                  <p style="margin:0 0 3px;font-size:10px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;color:#555;">From</p>
-                  <p style="margin:0;font-size:14px;color:#e0e0e0;">${name} <span style="color:#666;">&lt;${email}&gt;</span></p>
+                <td>
+                  <p style="margin:0;font-size:11px;font-family:monospace;letter-spacing:0.14em;text-transform:uppercase;color:#2563eb;">cesarnogueira.tech</p>
+                  <p style="margin:6px 0 0;font-size:20px;font-weight:700;color:#f0f0f0;">New contact message</p>
                 </td>
-              </tr>
-              <tr>
-                <td style="padding:0 0 12px;">
-                  <p style="margin:0 0 3px;font-size:10px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;color:#555;">Subject</p>
-                  <p style="margin:0;font-size:14px;color:#e0e0e0;">${subject || "—"}</p>
+                <td align="right" valign="top">
+                  <span style="display:inline-block;padding:4px 10px;background:#1a3a1a;color:#4ade80;font-size:11px;font-family:monospace;border-radius:4px;border:1px solid #166534;">SLA: 24h</span>
                 </td>
               </tr>
             </table>
           </td>
         </tr>
-        <tr><td style="padding:16px 32px 0;"><div style="height:1px;background:#222;"></div></td></tr>
+
+        <!-- Meta grid -->
+        <tr>
+          <td style="padding:24px 32px 0;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="50%" style="padding:0 12px 16px 0;vertical-align:top;">
+                  <p style="margin:0 0 4px;font-size:10px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;color:#444;">From</p>
+                  <p style="margin:0;font-size:14px;font-weight:500;color:#e0e0e0;">${name}</p>
+                  <p style="margin:2px 0 0;font-size:12px;color:#555;">${email}</p>
+                </td>
+                <td width="50%" style="padding:0 0 16px 0;vertical-align:top;">
+                  <p style="margin:0 0 4px;font-size:10px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;color:#444;">Received</p>
+                  <p style="margin:0;font-size:14px;font-weight:500;color:#e0e0e0;">${sentAt}</p>
+                  <p style="margin:2px 0 0;font-size:12px;color:#555;">Lisbon time</p>
+                </td>
+              </tr>
+              ${subject ? `<tr>
+                <td colspan="2" style="padding:0 0 16px 0;">
+                  <p style="margin:0 0 4px;font-size:10px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;color:#444;">Subject</p>
+                  <p style="margin:0;font-size:14px;font-weight:500;color:#e0e0e0;">${subject}</p>
+                </td>
+              </tr>` : ""}
+            </table>
+          </td>
+        </tr>
+
+        <!-- Divider -->
+        <tr><td style="padding:0 32px;"><div style="height:1px;background:#1e1e1e;"></div></td></tr>
+
+        <!-- Message -->
         <tr>
           <td style="padding:24px 32px;">
-            <p style="margin:0 0 12px;font-size:10px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;color:#555;">Message</p>
-            <p style="margin:0;font-size:15px;line-height:1.7;color:#c8c8c8;white-space:pre-wrap;">${message.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
+            <p style="margin:0 0 12px;font-size:10px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;color:#444;">Message</p>
+            <p style="margin:0;font-size:15px;line-height:1.8;color:#c0c0c0;white-space:pre-wrap;">${message.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
           </td>
         </tr>
+
+        <!-- CTA -->
         <tr>
-          <td style="padding:0 32px 32px;">
-            <a href="mailto:${email}?subject=Re: ${encodeURIComponent(subject || "Your message")}" style="display:inline-block;margin-top:8px;padding:10px 20px;background:#1a6bff;color:#fff;font-size:13px;font-weight:500;text-decoration:none;border-radius:6px;">Reply to ${name}</a>
+          <td style="padding:0 32px 28px;">
+            <a href="mailto:${email}?subject=Re: ${encodeURIComponent(subject || "Your message")}" style="display:inline-block;padding:11px 22px;background:#2563eb;color:#fff;font-size:13px;font-weight:600;text-decoration:none;border-radius:6px;letter-spacing:0.01em;">Reply to ${name} →</a>
           </td>
         </tr>
+
+        <!-- SLA reminder -->
         <tr>
-          <td style="background:#0d0d0d;border-top:1px solid #1a1a1a;padding:16px 32px;">
-            <p style="margin:0;font-size:11px;color:#444;">Sent via cesarnogueira.tech contact form</p>
+          <td style="padding:0 32px 24px;">
+            <table cellpadding="0" cellspacing="0" style="background:#0f1a0f;border:1px solid #1a3a1a;border-radius:6px;width:100%;">
+              <tr>
+                <td style="padding:12px 16px;">
+                  <p style="margin:0;font-size:12px;color:#4ade80;">⏱ Reply within <strong>24 hours</strong> — SLA committed on cesarnogueira.tech</p>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="background:#0d0d0d;border-top:1px solid #1a1a1a;padding:14px 32px;">
+            <p style="margin:0;font-size:11px;color:#3a3a3a;">Sent via cesarnogueira.tech contact form · ${sentAt}</p>
+          </td>
+        </tr>
+
       </table>
     </td></tr>
   </table>
