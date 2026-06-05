@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node -e \"const fs=require('fs');['opengraph-image','twitter-image'].forEach(f=>{const p='out/'+f;if(fs.existsSync(p)&&!fs.existsSync(p+'.png'))fs.copyFileSync(p,p+'.png');});\"",
+    "build": "next build && node -e \"const fs=require('fs');['opengraph-image','twitter-image'].forEach(f=>{const p='out/'+f;if(fs.existsSync(p)&&!fs.existsSync(p+'.png'))fs.copyFileSync(p,p+'.png');})\"",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "cmdk": "^1.1.1",
