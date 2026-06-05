@@ -36,7 +36,7 @@ export default async (req) => {
       from: FROM,
       to: TO,
       reply_to: email,
-      subject: subject ? `[Portfolio] ${subject}` : `[Portfolio] Message from ${name}`,
+      subject: subject ? `✉ ${subject} — from ${name}` : `✉ New message from ${name}`,
       html: `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
