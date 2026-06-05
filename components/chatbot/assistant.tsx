@@ -139,7 +139,7 @@ export function Assistant() {
         `Cesar is a Principal Cloud Architect with 10+ years across GCP, AWS, Azure and OCI, available now for international consulting via UP2CLOUD. For specific questions email ${siteConfig.links.email}.`;
 
       try {
-        const res = await fetch("/.netlify/functions/ask", {
+        const res = await fetch("/api/ask", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ question: q }),
