@@ -11,20 +11,19 @@ Personal portfolio and consulting pitch for Cesar Augusto Nogueira — Principal
 - **Framework:** Next.js 16 (App Router), React 19, TypeScript
 - **Styling:** Tailwind CSS 4
 - **Animations:** Motion (Framer Motion)
-- **Output:** Static export (`next build` → `out/`)
-- **Hosting:** Netlify (with serverless functions)
+- **Hosting:** Vercel (primary) · Netlify (PR deploy previews)
 - **Domain:** cesarnogueira.tech
+- **Analytics:** Vercel Analytics · Google Analytics 4 · Hotjar
 
 ## Features
 
-- AI career assistant chatbot (Grok API via Netlify function)
-- Contact form (Resend API via Netlify function)
+- AI career assistant chatbot (xAI Grok / Groq Llama 3.3 via `/api/ask`)
+- Contact form (Resend API via `/api/contact`)
 - Command palette (`⌘K`)
 - Recruiter mode — tailored CV view
 - Language switcher — EN, PT, ES, FR, ZH
 - Dark/light theme toggle
 - Motion toggle (`prefers-reduced-motion` respected)
-- Fully static — no Next.js server runtime required
 
 ## Sections
 
@@ -37,21 +36,29 @@ npm install --legacy-peer-deps
 npm run dev
 ```
 
-## Build
+## Scripts
 
 ```bash
-npm run build   # outputs to out/
+npm run dev          # development server on :3000
+npm run build        # production build
+npm run type-check   # TypeScript check (no emit)
+npm run lint         # ESLint via next lint
 ```
 
 ## Environment Variables
 
-Set in Netlify dashboard (Site settings → Environment variables):
+Set in Vercel dashboard (Project Settings → Environment variables):
 
 | Variable | Purpose |
 |----------|---------|
-| `GROK_API_KEY` | AI career assistant (xai-...) |
-| `RESEND_API_KEY` | Contact form emails (re_...) |
+| `GROK_API_KEY` | AI chatbot — primary (xAI Grok, `xai-...`) |
+| `GROQ_API_KEY` | AI chatbot — fallback (Groq / Llama 3.3) |
+| `RESEND_API_KEY` | Contact form emails (`re_...`) |
+| `NEXT_PUBLIC_GA_ID` | Google Analytics 4 measurement ID (optional) |
+| `NEXT_PUBLIC_HOTJAR_ID` | Hotjar site ID (default: `173193`) |
+| `GROK_MODEL` | Override xAI model (default: `grok-3-mini`) |
+| `GROQ_MODEL` | Override Groq model (default: `llama-3.3-70b-versatile`) |
 
 ## Deploy
 
-Netlify auto-deploys on push to `master`. Build command and publish directory are defined in `netlify.toml`.
+Vercel auto-deploys on push to `master` via GitHub integration. Netlify provides deploy previews on every pull request.

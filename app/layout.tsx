@@ -93,11 +93,6 @@ export default function RootLayout({
         className={`${geist.variable} ${geistMono.variable} ${interTight.variable} ${hanken.variable} tracking-tight-body antialiased`}
         suppressHydrationWarning
       >
-        {/* Hotjar */}
-        <Script id="hotjar" strategy="afterInteractive">
-          {`(function(h,o,t,j,a,r){h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};h._hjSettings={hjid:173193,hjsv:6};a=o.getElementsByTagName('head')[0];r=o.createElement('script');r.async=1;r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;a.appendChild(r);})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`}
-        </Script>
-
         {/* Tab visibility — pauses aurora/canvas when page hidden, saves battery */}
         <Script id="tab-visibility" strategy="afterInteractive">
           {`(function(){var b=document.body;document.addEventListener('visibilitychange',function(){b.classList.toggle('tab-hidden',document.hidden);});})();`}

@@ -3,6 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 const TO = "cesarnogueira1210@gmail.com";
 const FROM = "Portfolio <portfolio@cesarnogueira.tech>";
 
+function esc(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 export async function POST(req: NextRequest) {
   const key = process.env.RESEND_API_KEY;
   if (!key) return NextResponse.json({ error: "Email not configured" }, { status: 500 });
@@ -22,6 +30,11 @@ export async function POST(req: NextRequest) {
     day: "2-digit", month: "short", year: "numeric",
     hour: "2-digit", minute: "2-digit",
   });
+
+  const safeName = esc(name);
+  const safeEmail = esc(email);
+  const safeSubject = subject ? esc(subject) : "";
+  const safeMessage = esc(message).replace(/\n/g, "<br>");
 
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -55,8 +68,8 @@ export async function POST(req: NextRequest) {
               <tr>
                 <td width="50%" style="padding:0 12px 16px 0;vertical-align:top;">
                   <p style="margin:0 0 4px;font-size:10px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;color:#444;">From</p>
-                  <p style="margin:0;font-size:14px;font-weight:500;color:#e0e0e0;">${name}</p>
-                  <p style="margin:2px 0 0;font-size:12px;color:#555;">${email}</p>
+                  <p style="margin:0;font-size:14px;font-weight:500;color:#e0e0e0;">${safeName}</p>
+                  <p style="margin:2px 0 0;font-size:12px;color:#555;">${safeEmail}</p>
                 </td>
                 <td width="50%" style="padding:0 0 16px 0;vertical-align:top;">
                   <p style="margin:0 0 4px;font-size:10px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;color:#444;">Received</p>
@@ -64,10 +77,10 @@ export async function POST(req: NextRequest) {
                   <p style="margin:2px 0 0;font-size:12px;color:#555;">Lisbon time</p>
                 </td>
               </tr>
-              ${subject ? `<tr>
+              ${safeSubject ? `<tr>
                 <td colspan="2" style="padding:0 0 16px 0;">
                   <p style="margin:0 0 4px;font-size:10px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;color:#444;">Subject</p>
-                  <p style="margin:0;font-size:14px;font-weight:500;color:#e0e0e0;">${subject}</p>
+                  <p style="margin:0;font-size:14px;font-weight:500;color:#e0e0e0;">${safeSubject}</p>
                 </td>
               </tr>` : ""}
             </table>
@@ -81,14 +94,14 @@ export async function POST(req: NextRequest) {
         <tr>
           <td style="padding:24px 32px;">
             <p style="margin:0 0 12px;font-size:10px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;color:#444;">Message</p>
-            <p style="margin:0;font-size:15px;line-height:1.8;color:#c0c0c0;white-space:pre-wrap;">${message.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
+            <p style="margin:0;font-size:15px;line-height:1.8;color:#c0c0c0;white-space:pre-wrap;">${safeMessage}</p>
           </td>
         </tr>
 
         <!-- CTA -->
         <tr>
           <td style="padding:0 32px 28px;">
-            <a href="mailto:${email}?subject=Re: ${encodeURIComponent(subject || "Your message")}" style="display:inline-block;padding:11px 22px;background:#2563eb;color:#fff;font-size:13px;font-weight:600;text-decoration:none;border-radius:6px;letter-spacing:0.01em;">Reply to ${name} →</a>
+            <a href="mailto:${safeEmail}?subject=Re: ${encodeURIComponent(subject || "Your message")}" style="display:inline-block;padding:11px 22px;background:#2563eb;color:#fff;font-size:13px;font-weight:600;text-decoration:none;border-radius:6px;letter-spacing:0.01em;">Reply to ${safeName} &rarr;</a>
           </td>
         </tr>
 
@@ -98,7 +111,7 @@ export async function POST(req: NextRequest) {
             <table cellpadding="0" cellspacing="0" style="background:#0f1a0f;border:1px solid #1a3a1a;border-radius:6px;width:100%;">
               <tr>
                 <td style="padding:12px 16px;">
-                  <p style="margin:0;font-size:12px;color:#4ade80;">⏱ Reply within <strong>24 hours</strong> — SLA committed on cesarnogueira.tech</p>
+                  <p style="margin:0;font-size:12px;color:#4ade80;">&#9201; Reply within <strong>24 hours</strong> &mdash; SLA committed on cesarnogueira.tech</p>
                 </td>
               </tr>
             </table>
@@ -108,7 +121,7 @@ export async function POST(req: NextRequest) {
         <!-- Footer -->
         <tr>
           <td style="background:#0d0d0d;border-top:1px solid #1a1a1a;padding:14px 32px;">
-            <p style="margin:0;font-size:11px;color:#3a3a3a;">Sent via cesarnogueira.tech contact form · ${sentAt}</p>
+            <p style="margin:0;font-size:11px;color:#3a3a3a;">Sent via cesarnogueira.tech contact form &middot; ${sentAt}</p>
           </td>
         </tr>
 
