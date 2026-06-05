@@ -1,6 +1,12 @@
 # Cesar Augusto Nogueira — Portfolio
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/b344af8e-fe74-4d1c-9cae-8e781c270684/deploy-status)](https://app.netlify.com/projects/cesarnog/deploys)
+[![CI](https://github.com/CesarNog/portfolioCesarNogueira/actions/workflows/ci.yml/badge.svg)](https://github.com/CesarNog/portfolioCesarNogueira/actions/workflows/ci.yml)
+[![Vercel](https://img.shields.io/badge/Vercel-deployed-000?logo=vercel&logoColor=white)](https://cesarnogueira.tech)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](tsconfig.json)
+[![Next.js](https://img.shields.io/badge/Next.js-16-000?logo=nextdotjs&logoColor=white)](next.config.ts)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Last commit](https://img.shields.io/github/last-commit/CesarNog/portfolioCesarNogueira)](https://github.com/CesarNog/portfolioCesarNogueira/commits/master)
 
 **[cesarnogueira.tech](https://cesarnogueira.tech)**
 
@@ -19,6 +25,7 @@ Personal portfolio and consulting pitch for Cesar Augusto Nogueira — Principal
 
 - AI career assistant chatbot (xAI Grok / Groq Llama 3.3 via `/api/ask`)
 - Contact form (Resend API via `/api/contact`)
+- Per-IP rate limiting on all API endpoints
 - Command palette (`⌘K`)
 - Recruiter mode — tailored CV view
 - Language switcher — EN, PT, ES, FR, ZH
