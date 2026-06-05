@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
     ? "https://api.x.ai/v1/chat/completions"
     : "https://api.groq.com/openai/v1/chat/completions";
   const model = grokKey
-    ? (process.env.GROK_MODEL || "grok-2-1212")
+    ? (process.env.GROK_MODEL || "grok-3-mini")
     : (process.env.GROQ_MODEL || "llama-3.3-70b-versatile");
 
   if (!key) {
