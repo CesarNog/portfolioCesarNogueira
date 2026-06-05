@@ -264,7 +264,7 @@ export function RecruiterMode() {
   const [quickResult, setQuickResult] = useState<{ id: QuickId; text: string } | null>(null);
 
   const reduce = useReducedMotion();
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
 
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const chatListRef = useRef<HTMLDivElement>(null);
@@ -354,7 +354,7 @@ export function RecruiterMode() {
       const res = await fetch("/.netlify/functions/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question }),
+        body: JSON.stringify({ question, lang }),
       });
       if (!res.ok) throw new Error(String(res.status));
       const data = (await res.json()) as { answer?: string };
@@ -362,7 +362,7 @@ export function RecruiterMode() {
     } catch {
       return fallback;
     }
-  }, []);
+  }, [lang]);
 
   const sendChat = useCallback(async (q: string) => {
     const question = q.trim();
