@@ -63,7 +63,7 @@ export function ContactFormModal({ open, onClose }: Props) {
     if (!validate()) return;
     setState("sending");
     try {
-      const res = await fetch("/.netlify/functions/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
