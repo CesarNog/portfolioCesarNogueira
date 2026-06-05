@@ -1,5 +1,7 @@
 # Cesar Augusto Nogueira — Portfolio
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b344af8e-fe74-4d1c-9cae-8e781c270684/deploy-status)](https://app.netlify.com/projects/cesarnog/deploys)
+
 **[cesarnogueira.tech](https://cesarnogueira.tech)**
 
 Personal portfolio and consulting pitch for Cesar Augusto Nogueira — Principal Cloud Architect, FinOps specialist, DevOps leader.
