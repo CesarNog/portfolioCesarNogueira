@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getIp, isRateLimited } from "@/lib/rate-limit";
 
 const TO = "cesarnogueira1210@gmail.com";
 const FROM = "Portfolio <portfolio@cesarnogueira.tech>";
@@ -12,6 +13,10 @@ function esc(s: string): string {
 }
 
 export async function POST(req: NextRequest) {
+  if (isRateLimited(getIp(req), { windowMs: 60_000, max: 5 })) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   const key = process.env.RESEND_API_KEY;
   if (!key) return NextResponse.json({ error: "Email not configured" }, { status: 500 });
 
@@ -43,8 +48,6 @@ export async function POST(req: NextRequest) {
   <table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a;padding:40px 16px;">
     <tr><td align="center">
       <table width="100%" style="max-width:580px;background:#111;border:1px solid #222;border-radius:10px;overflow:hidden;">
-
-        <!-- Header -->
         <tr>
           <td style="background:#0f1929;border-bottom:1px solid #1e3a5f;padding:24px 32px;">
             <table width="100%" cellpadding="0" cellspacing="0">
@@ -60,8 +63,6 @@ export async function POST(req: NextRequest) {
             </table>
           </td>
         </tr>
-
-        <!-- Meta grid -->
         <tr>
           <td style="padding:24px 32px 0;">
             <table width="100%" cellpadding="0" cellspacing="0">
@@ -77,54 +78,34 @@ export async function POST(req: NextRequest) {
                   <p style="margin:2px 0 0;font-size:12px;color:#555;">Lisbon time</p>
                 </td>
               </tr>
-              ${safeSubject ? `<tr>
-                <td colspan="2" style="padding:0 0 16px 0;">
-                  <p style="margin:0 0 4px;font-size:10px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;color:#444;">Subject</p>
-                  <p style="margin:0;font-size:14px;font-weight:500;color:#e0e0e0;">${safeSubject}</p>
-                </td>
-              </tr>` : ""}
+              ${safeSubject ? `<tr><td colspan="2" style="padding:0 0 16px 0;"><p style="margin:0 0 4px;font-size:10px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;color:#444;">Subject</p><p style="margin:0;font-size:14px;font-weight:500;color:#e0e0e0;">${safeSubject}</p></td></tr>` : ""}
             </table>
           </td>
         </tr>
-
-        <!-- Divider -->
         <tr><td style="padding:0 32px;"><div style="height:1px;background:#1e1e1e;"></div></td></tr>
-
-        <!-- Message -->
         <tr>
           <td style="padding:24px 32px;">
             <p style="margin:0 0 12px;font-size:10px;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;color:#444;">Message</p>
             <p style="margin:0;font-size:15px;line-height:1.8;color:#c0c0c0;white-space:pre-wrap;">${safeMessage}</p>
           </td>
         </tr>
-
-        <!-- CTA -->
         <tr>
           <td style="padding:0 32px 28px;">
             <a href="mailto:${safeEmail}?subject=Re: ${encodeURIComponent(subject || "Your message")}" style="display:inline-block;padding:11px 22px;background:#2563eb;color:#fff;font-size:13px;font-weight:600;text-decoration:none;border-radius:6px;letter-spacing:0.01em;">Reply to ${safeName} &rarr;</a>
           </td>
         </tr>
-
-        <!-- SLA reminder -->
         <tr>
           <td style="padding:0 32px 24px;">
             <table cellpadding="0" cellspacing="0" style="background:#0f1a0f;border:1px solid #1a3a1a;border-radius:6px;width:100%;">
-              <tr>
-                <td style="padding:12px 16px;">
-                  <p style="margin:0;font-size:12px;color:#4ade80;">&#9201; Reply within <strong>24 hours</strong> &mdash; SLA committed on cesarnogueira.tech</p>
-                </td>
-              </tr>
+              <tr><td style="padding:12px 16px;"><p style="margin:0;font-size:12px;color:#4ade80;">&#9201; Reply within <strong>24 hours</strong> &mdash; SLA committed on cesarnogueira.tech</p></td></tr>
             </table>
           </td>
         </tr>
-
-        <!-- Footer -->
         <tr>
           <td style="background:#0d0d0d;border-top:1px solid #1a1a1a;padding:14px 32px;">
             <p style="margin:0;font-size:11px;color:#3a3a3a;">Sent via cesarnogueira.tech contact form &middot; ${sentAt}</p>
           </td>
         </tr>
-
       </table>
     </td></tr>
   </table>
@@ -144,8 +125,7 @@ export async function POST(req: NextRequest) {
   });
 
   if (!r.ok) {
-    const detail = await r.text().catch(() => "");
-    return NextResponse.json({ error: "Send failed", detail }, { status: 500 });
+    return NextResponse.json({ error: "Send failed" }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true });
