@@ -13,15 +13,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Detect Next.js project
+        id: detect
+        run: |
+          if [ -f next.config.ts ] || [ -f next.config.js ] || [ -f next.config.mjs ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+            echo "Next.js project found at root — running checks"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            echo "No Next.js project at root — skipping type-check and lint"
+          fi
+
       - uses: actions/setup-node@v4
+        if: steps.detect.outputs.found == 'true'
         with:
           node-version: '22'
 
       - name: Install dependencies
+        if: steps.detect.outputs.found == 'true'
         run: npm install --legacy-peer-deps
 
       - name: Type-check
+        if: steps.detect.outputs.found == 'true'
         run: npm run type-check
 
       - name: Lint
+        if: steps.detect.outputs.found == 'true'
         run: npm run lint
