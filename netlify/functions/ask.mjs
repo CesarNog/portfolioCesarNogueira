@@ -31,7 +31,15 @@ Skills: GCP, AWS, Azure, OCI, Kubernetes, Terraform, Docker, Argo, GitHub Action
 Contact: cesarnogueira1210@gmail.com, LinkedIn linkedin.com/in/cesarnog, GitHub github.com/cesarnog.
 `.trim();
 
-const SYSTEM_PROMPT = `You are the AI Career Assistant for Principal Cloud Architect Cesar Augusto Nogueira. Your audience is recruiters, CTOs, VPs of Engineering, Platform Directors, Heads of Cloud and Founders evaluating Cesar for a role or consulting engagement. Act as an expert representative of the candidate: answer concisely (2-4 sentences), professionally and in the third person, and always lead with seniority, scale, business impact, leadership or availability where relevant. Use ONLY the facts below. If asked something unrelated or unknown, briefly steer back to Cesar's professional fit and suggest emailing him. Never invent employers, certifications or numbers.\n\nFACTS:\n${KNOWLEDGE_BASE}`;
+const LANG_NAMES = { en: "English", pt: "Portuguese", es: "Spanish", fr: "French", zh: "Chinese" };
+
+function buildSystemPrompt(lang) {
+  const langName = LANG_NAMES[lang] || "English";
+  const langInstruction = lang && lang !== "en"
+    ? ` IMPORTANT: You MUST reply in ${langName}. The user's interface language is ${langName} — match it exactly.`
+    : "";
+  return `You are the AI Career Assistant for Principal Cloud Architect Cesar Augusto Nogueira. Your audience is recruiters, CTOs, VPs of Engineering, Platform Directors, Heads of Cloud and Founders evaluating Cesar for a role or consulting engagement. Act as an expert representative of the candidate: answer concisely (2-4 sentences), professionally and in the third person, and always lead with seniority, scale, business impact, leadership or availability where relevant. Use ONLY the facts below. If asked something unrelated or unknown, briefly steer back to Cesar's professional fit and suggest emailing him. Never invent employers, certifications or numbers.${langInstruction}\n\nFACTS:\n${KNOWLEDGE_BASE}`;
+}
 
 export default async (req) => {
   const json = (body, status = 200) =>
@@ -43,9 +51,11 @@ export default async (req) => {
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
   let question = "";
+  let lang = "en";
   try {
     const body = await req.json();
     question = String(body?.question || "").slice(0, 600);
+    lang = String(body?.lang || "en").slice(0, 5);
   } catch {
     return json({ error: "Bad request" }, 400);
   }
@@ -65,8 +75,7 @@ export default async (req) => {
   if (!key) {
     return json({
       fallback: true,
-      answer:
-        "Live AI is not configured yet. Add GROK_API_KEY in Netlify environment variables to enable it.",
+      answer: "Cesar is a Principal Cloud Architect with 10+ years across GCP, AWS, Azure and OCI, available now for international consulting via UP2CLOUD. For specific questions email cesarnogueira1210@gmail.com.",
     });
   }
 
@@ -82,7 +91,7 @@ export default async (req) => {
         temperature: 0.4,
         max_tokens: 320,
         messages: [
-          { role: "system", content: SYSTEM_PROMPT },
+          { role: "system", content: buildSystemPrompt(lang) },
           { role: "user", content: question },
         ],
       }),
