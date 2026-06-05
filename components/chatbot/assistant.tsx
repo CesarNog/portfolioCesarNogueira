@@ -31,7 +31,7 @@ function matchFaq(q: string): string | null {
 
 export function Assistant() {
   const reduce = useReducedMotion();
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
 
   // Follow-up suggestions from i18n — fully translated per active language
   const getFollowUps = (answer: string): string[] => {
@@ -134,15 +134,13 @@ export function Assistant() {
         });
       }, 40);
 
-      const fallback = () =>
-        matchFaq(q) ??
-        `Cesar is a Principal Cloud Architect with 10+ years across GCP, AWS, Azure and OCI, available now for international consulting via UP2CLOUD. For specific questions email ${siteConfig.links.email}.`;
+      const fallback = () => matchFaq(q) ?? t.assistant.fallback;
 
       try {
         const res = await fetch("/api/ask", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question: q }),
+          body: JSON.stringify({ question: q, lang }),
         });
         if (!res.ok) throw new Error(String(res.status));
         const data = (await res.json()) as { answer?: string };
