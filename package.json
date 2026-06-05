@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build && node -e \"const fs=require('fs');['opengraph-image','twitter-image'].forEach(f=>{const p='out/'+f;if(fs.existsSync(p)&&!fs.existsSync(p+'.png'))fs.copyFileSync(p,p+'.png');})\"",
     "start": "next start",
-    "lint": "eslint .",
+    "lint": "eslint app components lib",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
