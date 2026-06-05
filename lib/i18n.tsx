@@ -45,6 +45,7 @@ type Dict = {
     thinking: string;
     followUp: string;
     sourceLabel: string;
+    fallback: string;
   };
   portraitCaption: string;
   contact: {
@@ -355,6 +356,7 @@ const en: Dict = {
     thinking: "Thinking…",
     followUp: "Follow up",
     sourceLabel: "Based on portfolio evidence",
+    fallback: `Cesar is a Principal Cloud Architect with 10+ years across GCP, AWS, Azure and OCI, available now for international consulting via UP2CLOUD. For specific questions email cesarnogueira1210@gmail.com.`,
   },
   portraitCaption: "São Paulo 🇧🇷 → Vila Real 🇵🇹",
   contact: {
@@ -764,6 +766,7 @@ const pt: Dict = {
     thinking: "Pensando…",
     followUp: "Continuar",
     sourceLabel: "Com base no perfil",
+    fallback: `O Cesar é Arquiteto Cloud Principal com 10+ anos em GCP, AWS, Azure e OCI, disponível agora para consultoria internacional via UP2CLOUD. Para questões específicas envie email para cesarnogueira1210@gmail.com.`,
   },
   portraitCaption: "São Paulo 🇧🇷 → Vila Real 🇵🇹",
   contact: {
@@ -1173,6 +1176,7 @@ const es: Dict = {
     thinking: "Pensando…",
     followUp: "Seguir",
     sourceLabel: "Basado en el perfil",
+    fallback: `Cesar es Arquitecto Cloud Principal con 10+ años en GCP, AWS, Azure y OCI, disponible ahora para consultoría internacional vía UP2CLOUD. Para preguntas específicas escribe a cesarnogueira1210@gmail.com.`,
   },
   portraitCaption: "São Paulo 🇧🇷 → Vila Real 🇵🇹",
   contact: {
@@ -1582,6 +1586,7 @@ const fr: Dict = {
     thinking: "Réflexion…",
     followUp: "Continuer",
     sourceLabel: "Basé sur le profil",
+    fallback: `Cesar est Architecte Cloud Principal avec 10+ ans sur GCP, AWS, Azure et OCI, disponible maintenant pour du conseil international via UP2CLOUD. Pour des questions spécifiques écrivez à cesarnogueira1210@gmail.com.`,
   },
   portraitCaption: "São Paulo 🇧🇷 → Vila Real 🇵🇹",
   contact: {
@@ -1991,6 +1996,7 @@ const zh: Dict = {
     thinking: "思考中…",
     followUp: "继续提问",
     sourceLabel: "基于个人资料",
+    fallback: `Cesar是首席云架构师，在GCP、AWS、Azure和OCI拥有10+年经验，目前通过UP2CLOUD提供国际远程咨询。如有具体问题请发邮件至 cesarnogueira1210@gmail.com。`,
   },
   portraitCaption: "圣保罗 🇧🇷 → 维拉雷亚尔 🇵🇹",
   contact: {
