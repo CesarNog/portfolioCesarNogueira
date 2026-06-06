@@ -103,7 +103,7 @@ export function IdentityConsole() {
           <div className="px-6 lg:pl-8 xl:pl-16">
             <div className="max-w-[520px]">
               {/* Availability badge — live timestamp micro-signal */}
-              <m.div {...enter(DELAYS.badge)} className="mb-5 flex items-center gap-2.5">
+              <m.div {...enter(DELAYS.badge)} className="mb-5 flex items-center gap-2.5 pl-1">
                 <span className="status-dot" aria-hidden />
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-ok)]">
                   {t.hero.available}
