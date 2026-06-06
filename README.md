@@ -1,6 +1,4 @@
 # Cesar Augusto Nogueira — Portfolio
-
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b344af8e-fe74-4d1c-9cae-8e781c270684/deploy-status)](https://app.netlify.com/projects/cesarnog/deploys)
 [![CI](https://github.com/CesarNog/portfolioCesarNogueira/actions/workflows/ci.yml/badge.svg)](https://github.com/CesarNog/portfolioCesarNogueira/actions/workflows/ci.yml)
 [![Vercel](https://img.shields.io/badge/Vercel-deployed-000?logo=vercel&logoColor=white)](https://cesarnogueira.tech)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](tsconfig.json)
