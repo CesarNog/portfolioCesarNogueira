@@ -13,7 +13,6 @@ export function Projects() {
   return (
     <Section
       id="work"
-      label={t.sections.work.label}
       title={t.sections.work.title}
       intro={t.sections.work.intro}
     >

@@ -19,7 +19,6 @@ export function CapabilityMatrix() {
   return (
     <Section
       id="capabilities"
-      label={t.sections.capabilities.label}
       title={t.sections.capabilities.title}
       intro={t.sections.capabilities.intro}
     >

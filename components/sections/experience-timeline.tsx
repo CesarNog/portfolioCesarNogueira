@@ -23,7 +23,6 @@ export function ExperienceTimeline() {
   return (
     <Section
       id="experience"
-      label={t.sections.experience.label}
       title={t.sections.experience.title}
       intro={t.sections.experience.intro}
     >

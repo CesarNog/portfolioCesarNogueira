@@ -20,7 +20,6 @@ export function Trust() {
   return (
     <Section
       id="trust"
-      label={t.sections.trust.label}
       title={t.sections.trust.title}
       intro={t.sections.trust.intro}
     >

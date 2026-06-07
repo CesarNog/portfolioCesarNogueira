@@ -28,7 +28,6 @@ export function FinOps() {
   return (
     <Section
       id="finops"
-      label={t.sections.finops.label}
       title={t.sections.finops.title}
       intro={t.sections.finops.intro}
     >

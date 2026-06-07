@@ -10,7 +10,6 @@ export function AiInfra() {
   return (
     <Section
       id="ai"
-      label={t.sections.ai.label}
       title={t.sections.ai.title}
       intro={t.sections.ai.intro}
     >

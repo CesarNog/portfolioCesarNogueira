@@ -53,7 +53,6 @@ export function GlobalMap() {
   return (
     <Section
       id="global"
-      label={t.sections.global.label}
       title={t.sections.global.title}
       intro={t.sections.global.intro}
     >

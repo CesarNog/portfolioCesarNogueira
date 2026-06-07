@@ -101,10 +101,8 @@ export function Certifications() {
   return (
     <Section
       id="certifications"
-      label={t.sections.certifications.label}
       title={t.sections.certifications.title}
       intro={t.sections.certifications.intro}
-      noEyebrow
     >
       <div className="grid gap-5 sm:grid-cols-2">
         {certifications.map((cat, i) => {
@@ -113,11 +111,11 @@ export function Certifications() {
             <Reveal key={cat.group} delay={i * 0.08}>
               <div
                 data-recruiter-highlight
-                className="group relative flex h-full flex-col overflow-hidden rounded-xl border bg-[var(--color-surface-1)] transition-shadow hover:shadow-lg"
+                className="group relative flex h-full flex-col overflow-hidden rounded-xl border bg-[var(--color-surface-1)] transition-colors"
                 style={{ borderColor: accent.border }}
               >
                 {/* Top accent strip */}
-                <div className="h-0.5 w-full" style={{ backgroundColor: accent.bg }} />
+                <div className="h-[3px] w-full transition-opacity group-hover:opacity-70" style={{ backgroundColor: accent.bg }} />
 
                 <div className="flex flex-1 flex-col p-6">
                   {/* Provider logo + count */}
