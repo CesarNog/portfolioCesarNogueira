@@ -5,6 +5,7 @@ import { AnimatePresence, m, useReducedMotion } from "motion/react";
 import { faq, siteConfig } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
 import { AVATAR_SRC } from "@/lib/images";
+import { EASE, DUR } from "@/lib/motion";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -33,7 +34,6 @@ export function Assistant() {
   const reduce = useReducedMotion();
   const { t, lang } = useI18n();
 
-  // Follow-up suggestions from i18n — fully translated per active language
   const getFollowUps = (answer: string): string[] => {
     const lower = answer.toLowerCase();
     const fu = t.assistantFollowUps;
@@ -52,18 +52,17 @@ export function Assistant() {
     }
     return fu.fallback;
   };
+
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Refs
   const listRef = useRef<HTMLDivElement>(null);
   const lastAnswerRef = useRef<HTMLDivElement>(null);
   const userScrolledRef = useRef(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Track manual scroll — stop auto-scrolling if user scrolls up
   useEffect(() => {
     const el = listRef.current;
     if (!el) return;
@@ -78,8 +77,6 @@ export function Assistant() {
     return () => el.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Scroll to START of last answer when it arrives (explicit container scroll
-  // avoids viewport jump from scrollIntoView on nested scroll containers)
   useEffect(() => {
     if (loading) return;
     if (userScrolledRef.current) return;
@@ -96,7 +93,6 @@ export function Assistant() {
     return () => clearTimeout(timer);
   }, [messages, reduce, loading]);
 
-  // Escape to close
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
@@ -104,14 +100,12 @@ export function Assistant() {
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
-  // External open trigger (command palette, recruiter mode)
   useEffect(() => {
     const openIt = () => setOpen(true);
     document.addEventListener("open-smart-faq", openIt);
     return () => document.removeEventListener("open-smart-faq", openIt);
   }, []);
 
-  // Focus input when panel opens
   useEffect(() => {
     if (open) setTimeout(() => inputRef.current?.focus(), 100);
   }, [open]);
@@ -126,7 +120,6 @@ export function Assistant() {
       setInput("");
       setLoading(true);
 
-      // Scroll to show the "Thinking…" state immediately
       setTimeout(() => {
         listRef.current?.scrollTo({
           top: listRef.current.scrollHeight,
@@ -164,17 +157,22 @@ export function Assistant() {
 
   return (
     <>
-      {/* Launcher button */}
-      <button
+      {/* Launcher button — slides up on mount, hover lift, tap press */}
+      <m.button
         type="button"
         aria-label={open ? "Close AI Career Assistant" : "Open AI Career Assistant"}
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
+        initial={reduce ? false : { opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: DUR.reveal, delay: 0.5, ease: EASE.spring }}
+        whileHover={reduce ? undefined : { scale: 1.04, transition: { duration: DUR.micro } }}
+        whileTap={reduce ? undefined : { scale: 0.95, transition: { duration: DUR.micro } }}
         className="fixed bottom-5 right-5 z-floating flex items-center gap-2 rounded-full border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] px-4 py-3 text-sm text-[var(--color-fg)] shadow-2xl transition-colors hover:border-[var(--color-blue)]"
       >
         <span className="status-dot" />
         <span className="font-medium">{open ? t.assistant.close : t.assistant.launch}</span>
-      </button>
+      </m.button>
 
       <AnimatePresence>
         {open && (
@@ -182,21 +180,35 @@ export function Assistant() {
             role="dialog"
             aria-label="AI Career Assistant"
             aria-modal="true"
-            initial={reduce ? false : { opacity: 0, y: 16, scale: 0.98 }}
+            initial={reduce ? false : { opacity: 0, y: 28, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
-            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.95 }}
+            transition={{ duration: 0.32, ease: EASE.spring }}
+            style={{ transformOrigin: "bottom right" }}
             className="panel fixed bottom-20 right-5 z-floating flex h-[76vh] max-h-[640px] w-[92vw] max-w-[400px] flex-col overflow-hidden rounded-xl shadow-2xl"
           >
             {/* Header */}
             <div className="flex items-center gap-3 border-b border-[var(--color-hairline)] px-4 py-3">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--color-blue)]/15 border border-[var(--color-blue)]/30">
+              {/* Icon breathes gently while loading */}
+              <m.div
+                animate={
+                  loading && !reduce
+                    ? { opacity: [1, 0.45, 1] }
+                    : { opacity: 1 }
+                }
+                transition={{
+                  duration: 1.4,
+                  repeat: loading ? Infinity : 0,
+                  ease: "easeInOut",
+                }}
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--color-blue)]/15 border border-[var(--color-blue)]/30"
+              >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-blue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M12 2a10 10 0 1 0 10 10" />
                   <path d="M12 6v6l4 2" />
                   <circle cx="19" cy="5" r="3" fill="var(--color-blue)" stroke="none" />
                 </svg>
-              </div>
+              </m.div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-[var(--color-fg)]">{t.assistant.header}</p>
                 <p className="truncate font-mono text-[10px] text-[var(--color-fg-subtle)]">
@@ -218,26 +230,37 @@ export function Assistant() {
               className="flex-1 overflow-y-auto overscroll-contain scroll-pt-2 p-4"
             >
               <div className="space-y-4">
-                {/* Greeting */}
-                <div className="flex justify-start">
+                {/* Greeting — slides in from left after panel opens */}
+                <m.div
+                  initial={reduce ? false : { opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.35, delay: 0.12, ease: EASE.spring }}
+                  className="flex justify-start"
+                >
                   <p className="panel-2 max-w-[88%] rounded-xl px-4 py-3 text-sm leading-relaxed text-[var(--color-fg)]">
                     {t.assistant.greeting}
                   </p>
-                </div>
+                </m.div>
 
-                {/* Message list */}
+                {/* Message list — each slides in from its sender's side */}
                 {messages.map((msg, i) => {
                   const isLast = i === messages.length - 1;
                   const isLastAssistant = msg.role === "assistant" && isLast;
+                  const isUser = msg.role === "user";
 
                   return (
-                    <div key={i} className="space-y-2">
-                      <div className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                        {/* Attach ref to the START of the last assistant message */}
+                    <m.div
+                      key={i}
+                      initial={reduce ? false : { opacity: 0, x: isUser ? 16 : -16, y: 4 }}
+                      animate={{ opacity: 1, x: 0, y: 0 }}
+                      transition={{ duration: 0.28, ease: EASE.spring }}
+                      className="space-y-2"
+                    >
+                      <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
                         <div
                           ref={isLastAssistant ? lastAnswerRef : undefined}
                           className={`max-w-[88%] rounded-xl px-4 py-3 text-sm leading-relaxed ${
-                            msg.role === "user"
+                            isUser
                               ? "bg-accent accent-blue text-white"
                               : "panel-2 text-[var(--color-fg)]"
                           }`}
@@ -251,67 +274,88 @@ export function Assistant() {
                         </div>
                       </div>
 
-                      {/* Smart follow-ups after assistant messages */}
+                      {/* Follow-up chips stagger in after assistant message */}
                       {msg.role === "assistant" && msg.followUps && msg.followUps.length > 0 && (
                         <m.div
                           initial={reduce ? false : { opacity: 0, y: 4 }}
                           animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.3, delay: 0.15 }}
+                          transition={{ duration: 0.3, delay: 0.15, ease: EASE.out }}
                           className="ml-1 flex flex-col gap-1.5"
                         >
                           <p className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
                             {t.assistant.followUp}
                           </p>
-                          {msg.followUps.map((fu) => (
-                            <button
+                          {msg.followUps.map((fu, fi) => (
+                            <m.button
                               key={fu}
+                              initial={reduce ? false : { opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{
+                                duration: 0.22,
+                                delay: 0.22 + fi * 0.06,
+                                ease: EASE.out,
+                              }}
+                              whileTap={reduce ? undefined : { scale: 0.96, transition: { duration: DUR.micro } }}
                               type="button"
                               onClick={() => ask(fu)}
                               disabled={loading}
                               className="w-fit rounded-md border border-[var(--color-hairline)] bg-[var(--color-surface-1)] px-3 py-1.5 text-left text-xs text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-blue)] hover:text-[var(--color-fg)] disabled:opacity-40"
                             >
                               {fu}
-                            </button>
+                            </m.button>
                           ))}
                         </m.div>
                       )}
-                    </div>
+                    </m.div>
                   );
                 })}
 
-                {/* Thinking indicator */}
-                {loading && (
-                  <m.div
-                    initial={reduce ? false : { opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="flex justify-start"
-                  >
-                    <div className="panel-2 flex items-center gap-2 rounded-xl px-4 py-3">
-                      <ThinkingDots />
-                      <span className="font-mono text-xs text-[var(--color-fg-muted)]">
-                        {t.assistant.thinking}
-                      </span>
-                    </div>
-                  </m.div>
-                )}
+                {/* Thinking indicator — animates in and out */}
+                <AnimatePresence>
+                  {loading && (
+                    <m.div
+                      key="thinking"
+                      initial={reduce ? false : { opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -6, transition: { duration: 0.15 } }}
+                      transition={{ duration: 0.22, ease: EASE.out }}
+                      className="flex justify-start"
+                    >
+                      <div className="panel-2 flex items-center gap-2 rounded-xl px-4 py-3">
+                        <ThinkingDots reduce={!!reduce} />
+                        <span className="font-mono text-xs text-[var(--color-fg-muted)]">
+                          {t.assistant.thinking}
+                        </span>
+                      </div>
+                    </m.div>
+                  )}
+                </AnimatePresence>
 
-                {/* Suggested prompts — shown only when thread is empty */}
+                {/* Suggested prompts — stagger in when thread is empty */}
                 {messages.length === 0 && (
                   <div className="pt-2">
                     <p className="mb-3 font-mono text-[10px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
                       {t.assistant.suggested}
                     </p>
                     <div className="flex flex-col gap-2">
-                      {t.recruiterPrompts.map((q) => (
-                        <button
+                      {t.recruiterPrompts.map((q, i) => (
+                        <m.button
                           key={q}
+                          initial={reduce ? false : { opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{
+                            duration: DUR.fast,
+                            delay: 0.2 + i * 0.07,
+                            ease: EASE.out,
+                          }}
+                          whileTap={reduce ? undefined : { scale: 0.97, transition: { duration: DUR.micro } }}
                           type="button"
                           onClick={() => ask(q)}
                           disabled={loading}
                           className="w-fit rounded-md border border-[var(--color-hairline)] bg-[var(--color-surface-1)] px-3 py-2 text-left text-xs text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-blue)] hover:text-[var(--color-fg)] disabled:opacity-40"
                         >
                           {q}
-                        </button>
+                        </m.button>
                       ))}
                     </div>
                   </div>
@@ -333,16 +377,17 @@ export function Assistant() {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={t.assistant.placeholder}
                 aria-label={t.assistant.header}
-                className="flex-1 rounded-md border border-[var(--color-hairline)] bg-transparent px-3 py-2 text-sm text-[var(--color-fg)] outline-none placeholder:text-[var(--color-fg-subtle)] focus:border-[var(--color-blue)]"
+                className="flex-1 rounded-md border border-[var(--color-hairline)] bg-transparent px-3 py-2 text-sm text-[var(--color-fg)] outline-none placeholder:text-[var(--color-fg-subtle)] transition-[border-color,box-shadow] focus:border-[var(--color-blue)] focus:ring-2 focus:ring-[var(--color-blue)]/15"
               />
-              <button
+              <m.button
                 type="submit"
                 disabled={loading || !input.trim()}
                 aria-label="Send message"
+                whileTap={reduce ? undefined : { scale: 0.87, transition: { duration: DUR.micro, ease: EASE.in } }}
                 className="bg-accent accent-blue flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium text-white disabled:opacity-40"
               >
                 ↑
-              </button>
+              </m.button>
             </form>
           </m.div>
         )}
@@ -351,16 +396,25 @@ export function Assistant() {
   );
 }
 
-// Animated thinking dots
-function ThinkingDots() {
+// Animated thinking dots — vertical wave + opacity stagger
+function ThinkingDots({ reduce }: { reduce: boolean }) {
   return (
-    <div className="flex gap-1" aria-hidden>
+    <div className="flex gap-1.5" aria-hidden>
       {[0, 1, 2].map((i) => (
         <m.span
           key={i}
-          className="h-1.5 w-1.5 rounded-full bg-[var(--color-fg-subtle)]"
-          animate={{ opacity: [0.3, 1, 0.3] }}
-          transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.2, ease: "easeInOut" }}
+          className="h-1.5 w-1.5 rounded-full bg-[var(--color-blue)]/70"
+          animate={
+            reduce
+              ? undefined
+              : { y: [0, -4, 0], opacity: [0.35, 1, 0.35] }
+          }
+          transition={{
+            duration: 1.0,
+            repeat: Infinity,
+            delay: i * 0.18,
+            ease: "easeInOut",
+          }}
         />
       ))}
     </div>
