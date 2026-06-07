@@ -83,11 +83,11 @@ export function Projects() {
                   </div>
 
                   {lessons && (
-                    <div className="border-l-2 border-[var(--color-blue)] pl-4">
+                    <div className="rounded border border-[var(--color-blue)]/20 bg-[var(--color-blue)]/5 px-4 py-3">
                       <p className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-blue)]">
                         {t.labels.lessons}
                       </p>
-                      <p className="mt-1.5 text-sm leading-relaxed text-[var(--color-fg-muted)] italic">
+                      <p className="mt-1.5 text-sm leading-relaxed text-[var(--color-fg-muted)] italic [text-wrap:pretty]">
                         {lessons}
                       </p>
                     </div>

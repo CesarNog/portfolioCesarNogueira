@@ -37,7 +37,7 @@ export function Testimonials() {
               >
                 &ldquo;
               </span>
-              <p className="relative max-w-3xl text-xl leading-[1.65] text-[var(--color-fg)] sm:text-2xl lg:text-[1.625rem]">
+              <p className="relative max-w-3xl text-xl leading-[1.65] text-[var(--color-fg)] sm:text-2xl lg:text-[1.625rem] [text-wrap:pretty]">
                 {testimonial.text}
               </p>
             </blockquote>

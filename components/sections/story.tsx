@@ -78,7 +78,7 @@ export function Story() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mt-12 max-w-2xl text-base leading-[1.85] text-[var(--color-fg-muted)] sm:text-[17px] lg:mt-16"
+          className="mt-12 max-w-2xl text-base leading-[1.85] text-[var(--color-fg-muted)] sm:text-[17px] lg:mt-16 [text-wrap:pretty]"
         >
           {t.story.p3}
         </m.p>

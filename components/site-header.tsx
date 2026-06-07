@@ -120,9 +120,9 @@ export function SiteHeader() {
           <div className="flex items-center gap-1.5">
             <span className="group hidden lg:flex items-center gap-1.5 rounded-full border border-[var(--color-ok)]/30 bg-[var(--color-ok)]/8 px-2.5 py-1 mr-1 transition-[border-color] duration-200 hover:border-[var(--color-ok)]/60">
               <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-ok)] animate-pulse" aria-hidden />
-              <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-ok)]">Available</span>
+              <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-ok)]">{t.hero.available.split(" ")[0]}</span>
               <span className="overflow-hidden whitespace-nowrap font-mono text-[10px] uppercase tracking-wider text-[var(--color-ok)] max-w-0 group-hover:max-w-[9rem] transition-[max-width] duration-300 ease-out opacity-0 group-hover:opacity-100">
-                &nbsp;for global consulting
+                {t.hero.available.includes(" ") ? ` ${t.hero.available.slice(t.hero.available.indexOf(" ") + 1)}` : ""}
               </span>
             </span>
             <button
