@@ -225,6 +225,8 @@ Tactile and decisive. Buttons press cleanly with scale feedback. No gradients, n
 
 **Nested cards are prohibited.** `.panel` inside `.panel` never. The `panel-2` variant (surface-raised background) exists for content containers inside a panel — it reads as "inside the card", not "a card on a card."
 
+**Inline callout / lesson block:** when a section of content needs to stand out without a side-stripe accent, use `rounded border border-[var(--color-blue)]/20 bg-[var(--color-blue)]/5 px-4 py-3`. Full border at 20% opacity + subtle blue tint. Never `border-l-2` or `border-r-2` — those are banned regardless of intent.
+
 ### Inputs / Fields
 
 - **Style:** transparent background, 1px hairline border, 8px radius
@@ -238,6 +240,7 @@ Tactile and decisive. Buttons press cleanly with scale feedback. No gradients, n
 - **Desktop:** centered nav links (13px, 500), active state at full ink-primary, resting at ink-subtle
 - **Separator:** 1px hairline between logo zone and nav links
 - **Right zone:** AVAILABLE pill (green), search ⌘K icon, language dropdown (PT ▾), theme toggle
+- **Available pill i18n:** static visible part = `t.hero.available.split(" ")[0]`; hover-expanded part = rest of string after first space. ZH has no space, so full text shows statically and the hover expansion is empty — works without special casing.
 - **Scroll indicator:** blue `scaleX` progress bar at bottom of header, springs with scroll
 - **Mobile:** right-drawer at 288px, slides in from right with spring easing
 
@@ -271,6 +274,7 @@ The recruiter scanner is the most complex surface in the system. Full-screen ove
 - **Do** wrap `position: fixed` overlays (command palette, scanner, hiring panel) in plain `<div>` containers with no CSS `filter`, `transform`, or `perspective` on ancestors.
 - **Do** use the motion system: EASE.spring [0.22,1,0.36,1] for entrances, EASE.out [0.16,1,0.3,1] for reveals. Every animation needs a `prefers-reduced-motion` fallback.
 - **Do** keep card radius at 8–12px. Tags and status pills use full-pill (9999px). Nothing in between.
+- **Do** ship all 5 language variants (EN, PT, ES, FR, ZH) before merging any new interactive feature. Partial translations break the experience for non-English visitors and undermine the multilingual credibility signal.
 - **Do** name clients and outcomes. "AndBank, Santander, LATAM Airlines" beats "major enterprise clients". Specificity is the brand.
 
 ### Don't:
@@ -287,3 +291,4 @@ The recruiter scanner is the most complex surface in the system. Full-screen ove
 - **Don't** put an eyebrow label (small all-caps tracked text) above every section heading. The section component uses `noEyebrow` prop on most sections — the eyebrow appears only when the label adds information the heading doesn't.
 - **Don't** use AI slop copy: "productivity theater", "actually X", "not just X, it's Y". Specific noun + verb, always.
 - **Don't** animate opacity to 0 on components that conditionally render based on state in React 18 concurrent mode. Initial opacity:0 on phase-conditional divs causes the animate callback to never fire. Conditional rendering = instantly visible; motion enhances, never gates visibility.
+- **Don't** hardcode user-visible strings. Every label, badge, button, tooltip, or status text must go through the i18n `Dict` (`t.*`). Hardcoded English strings are invisible to non-English visitors.

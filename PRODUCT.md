@@ -6,9 +6,11 @@ brand
 
 ## Users
 
-Senior tech recruiters, engineering directors, CTOs, and potential consulting clients — primarily European and international. Context: they find this link on LinkedIn, from a referral, or after a cold outreach. They scan for 10 seconds to decide if Cesar is worth a call. They are busy, skeptical of marketing fluff, and calibrated to detect AI-generated portfolios instantly.
+**Primary:** Senior tech recruiters and engineering directors — European and international, higher volume than initially expected. They arrive via LinkedIn or referral, scan for 10 seconds, and decide if Cesar is worth a call. They are busy, skeptical of marketing fluff, calibrated to detect AI-generated portfolios instantly. They actively use the Hiring Assistant chatbot and language switcher; multilingual quality is load-bearing, not a nice-to-have.
 
-Secondary: Cesar himself, using the site as a living CV and consulting pitch for UP2CLOUD engagements.
+**Secondary:** CTOs, Heads of Cloud, and consulting clients evaluating Cesar for a fractional or project engagement via UP2CLOUD. They spend more time than recruiters and read the case studies in depth.
+
+**Tertiary:** Cesar himself, using the site as a living CV and consulting pitch.
 
 ## Product Purpose
 
@@ -34,6 +36,7 @@ The tone is that of someone who has been in production at 3am and knows what it 
 3. **Editorial restraint.** Every section gets one typographic move. Whitespace is the primary layout tool; borders are the last resort.
 4. **Earned credibility.** Credentials, testimonials, and case studies feel documented, not marketed. The tone is post-mortem, not pitch deck.
 5. **Globally legible.** Five languages (EN, PT, ES, FR, ZH). Accessible at WCAG AA minimum. Prints cleanly as a CV.
+6. **i18n-first shipping.** Any new interactive feature (chatbot, scanner, form, badge) ships only when all 5 language variants are complete and verified. Partial translations break the experience for non-English visitors and undermine the multilingual credibility signal.
 
 ## Accessibility & Inclusion
 
