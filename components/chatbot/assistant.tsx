@@ -62,6 +62,7 @@ export function Assistant() {
   const lastAnswerRef = useRef<HTMLDivElement>(null);
   const userScrolledRef = useRef(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = listRef.current;
@@ -98,6 +99,27 @@ export function Assistant() {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  useEffect(() => {
+    if (!open || !dialogRef.current) return;
+    const dialog = dialogRef.current;
+    const trap = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const focusable = dialog.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), input:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener("keydown", trap);
+    return () => document.removeEventListener("keydown", trap);
   }, [open]);
 
   useEffect(() => {
@@ -177,6 +199,7 @@ export function Assistant() {
       <AnimatePresence>
         {open && (
           <m.div
+            ref={dialogRef}
             role="dialog"
             aria-label="AI Career Assistant"
             aria-modal="true"
@@ -185,7 +208,7 @@ export function Assistant() {
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.95 }}
             transition={{ duration: 0.32, ease: EASE.spring }}
             style={{ transformOrigin: "bottom right" }}
-            className="panel fixed bottom-20 right-5 z-floating flex h-[76vh] max-h-[640px] w-[92vw] max-w-[400px] flex-col overflow-hidden rounded-xl shadow-2xl"
+            className="panel fixed bottom-20 right-5 z-floating flex h-[76vh] max-h-[min(640px,calc(100dvh-144px))] w-[92vw] max-w-[400px] flex-col overflow-hidden rounded-xl shadow-2xl"
           >
             {/* Header */}
             <div className="flex items-center gap-3 border-b border-[var(--color-hairline)] px-4 py-3">

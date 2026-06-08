@@ -64,7 +64,7 @@
   --color-surface-3: #e3e8ee;
   --color-fg: #0b1118;
   --color-fg-muted: #4a5663;
-  --color-fg-subtle: #697785; /* was #8a97a6 — 2.98:1 fail → now 4.59:1 ✓ */
+  --color-fg-subtle: #616e7b; /* 4.87:1 on surface-1 ✓, 5.22:1 on white ✓ */
   --color-blue: #1f6fe0;
   --color-cyan: #0e9aa3;
   --color-orange: #e0641b;
