@@ -225,7 +225,7 @@ const en: Dict = {
   nav: {
     summary: "Summary",
     experience: "Impact",
-    work: "Stories",
+    work: "Work",
     capabilities: "Expertise",
     trust: "Trust",
     global: "Global",

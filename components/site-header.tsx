@@ -11,7 +11,7 @@ import { Logo } from "@/components/logo";
 const NAV = [
   { href: "summary", label: "Summary" },
   { href: "experience", label: "Impact" },
-  { href: "work", label: "Stories" },
+  { href: "work", label: "Work" },
   { href: "capabilities", label: "Expertise" },
   { href: "trust", label: "Trust" },
   { href: "global", label: "Global" },

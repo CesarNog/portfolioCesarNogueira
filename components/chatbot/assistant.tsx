@@ -95,8 +95,11 @@ export function Assistant() {
   }, [messages, reduce, loading]);
 
   useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && open) { setOpen(false); return; }
+      const tag = (e.target as HTMLElement).tagName;
+      if (e.key === "?" && !open && tag !== "INPUT" && tag !== "TEXTAREA") setOpen(true);
+    };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
