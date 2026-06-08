@@ -156,7 +156,15 @@ export function Assistant() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ question: q, lang }),
+          signal: AbortSignal.timeout(12000),
         });
+        if (res.status === 429) {
+          setMessages((prev) => [
+            ...prev,
+            { role: "assistant", text: t.assistant.rateLimit, followUps: getFollowUps(t.assistant.rateLimit) },
+          ]);
+          return;
+        }
         if (!res.ok) throw new Error(String(res.status));
         const data = (await res.json()) as { answer?: string };
         const answer = data.answer?.trim() || fallback();
@@ -182,7 +190,7 @@ export function Assistant() {
       {/* Launcher button — slides up on mount, hover lift, tap press */}
       <m.button
         type="button"
-        aria-label={open ? "Close AI Career Assistant" : "Open AI Career Assistant"}
+        aria-label={open ? t.assistant.close : t.assistant.launch}
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
         initial={reduce ? false : { opacity: 0, y: 14 }}
@@ -201,7 +209,7 @@ export function Assistant() {
           <m.div
             ref={dialogRef}
             role="dialog"
-            aria-label="AI Career Assistant"
+            aria-label={t.assistant.header}
             aria-modal="true"
             initial={reduce ? false : { opacity: 0, y: 28, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}

@@ -10,6 +10,7 @@ colors:
   ink-primary: "#edf0f3"
   ink-secondary: "#97a1ad"
   ink-tertiary: "#788490"
+  # Light ink-tertiary updated 2026-06-08: was #697785 (4.27:1 on surface-base-light — WCAG fail), now #616e7b (4.87:1 ✓)
   accent-blue: "#3b82f6"
   accent-cyan: "#22b8c4"
   accent-orange: "#f59e5b"
@@ -22,6 +23,7 @@ colors:
   surface-raised-light: "#eef1f5"
   ink-primary-light: "#0b1118"
   ink-secondary-light: "#4a5663"
+  ink-tertiary-light: "#616e7b"
   accent-blue-light: "#1f6fe0"
   accent-cyan-light: "#0e9aa3"
   accent-orange-light: "#e0641b"
@@ -155,7 +157,7 @@ Three accent colors with distinct domain roles, deployed deliberately against a 
 - **Overlay** (#20242c): Highest-elevation interactive states.
 - **Ink Primary** (#edf0f3): Body text and headings. Near-white, not pure white — reduces harshness.
 - **Ink Secondary** (#97a1ad): Supporting text, meta information.
-- **Ink Tertiary** (#788490): Labels, hints, placeholder text. WCAG AA compliant at 5.22:1 on Base.
+- **Ink Tertiary** (#788490 dark / #616e7b light): Labels, hints, placeholder text. Dark 5.22:1 on Base ✓; light #616e7b 4.87:1 on surface-base-light ✓. Do not revert to #697785 — it fails 4.5:1 on tinted light surfaces.
 - **Hairline** (rgba(255,255,255,0.07)): Dividers, card borders. Structural without competing with content.
 
 ### Named Rules
@@ -262,6 +264,24 @@ The recruiter scanner is the most complex surface in the system. Full-screen ove
 - **Skill bars:** m.div `width: 0 → score%`, 0.85s ease-out, shimmer sweep keyframe on completion
 - **Verdict card:** `border-2 border-green/40`, `box-shadow: 0 0 40px -12px green/30`, centered text, 4xl–5xl "Proceed to Interview"
 
+### Chatbot / Hiring Assistant
+
+The floating AI career assistant. Full-pill launcher mounts at bottom-right with a green status dot, expands into a 400px panel.
+
+- **Launcher:** full-pill border, `border-hairline-strong`, `surface-1` background. Status dot pulses green (`status-dot` class). `whileHover` scale 1.04, `whileTap` 0.95. Slides up on mount (0.55s, delay 0.5s, `EASE.spring`).
+- **Panel:** `transformOrigin: bottom-right` — scale entrance from 0.92 to 1 so it physically expands from the button. 400px wide, `h-[76vh] max-h-[min(640px,calc(100dvh-144px))]` — the dvh cap prevents the panel from overlapping the fixed header on small viewports (≤568px). `rounded-xl` (16px).
+- **Focus trap:** Tab key cycles inside the dialog when open. `dialogRef` queries `'button:not([disabled]), input:not([disabled]), a[href]'` and wraps at boundaries. ESC closes.
+- **API resilience:** fetch uses `AbortSignal.timeout(12000)`. 429 response shows `t.assistant.rateLimit` (localized in all 5 languages). All error paths use `t.*` — no hardcoded English strings.
+- **Aria:** launcher `aria-label` uses `t.assistant.launch` / `t.assistant.close`. Dialog `aria-label` uses `t.assistant.header`. All localized.
+- **Messages:** user messages right-aligned, slide in from right (`x: 16 → 0`). Assistant messages left-aligned, slide from left (`x: -16 → 0`). 280ms, `EASE.spring`.
+- **Greeting:** slides from left on panel open, `delay: 0.12s`.
+- **Suggested prompts:** stagger in `y: 8 → 0`, `delay: 0.2 + i * 0.07`. Each chip has `whileTap` scale 0.97.
+- **Follow-up chips:** stagger from left after assistant reply, `x: -10 → 0`, `delay: 0.22 + i * 0.06`.
+- **Thinking indicator:** `AnimatePresence` exit slide. Header icon breathes (opacity `[1, 0.45, 1]` loop) while loading.
+- **Thinking dots:** `bg-[blue]/70`, vertical wave `y: [0, -4, 0]` + opacity `[0.35, 1, 0.35]`, staggered per dot (0.18s apart).
+- **Input focus:** `focus:ring-2 focus:ring-[blue]/15` glow ring on focus.
+- **Inline callout block (projects lessons):** `rounded border border-[var(--color-blue)]/20 bg-[var(--color-blue)]/5 px-4 py-3`. Full border at 20% opacity. Never `border-l-2` or `border-r-2`.
+
 ## 6. Do's and Don'ts
 
 ### Do:
@@ -276,6 +296,7 @@ The recruiter scanner is the most complex surface in the system. Full-screen ove
 - **Do** keep card radius at 8–12px. Tags and status pills use full-pill (9999px). Nothing in between.
 - **Do** ship all 5 language variants (EN, PT, ES, FR, ZH) before merging any new interactive feature. Partial translations break the experience for non-English visitors and undermine the multilingual credibility signal.
 - **Do** name clients and outcomes. "AndBank, Santander, LATAM Airlines" beats "major enterprise clients". Specificity is the brand.
+- **Do** pad all icon-only interactive elements (footer social links, small action buttons) to minimum 24×24px touch target per WCAG 2.2 SC 2.5.8. Use `p-2` on the anchor to reach 34×34px.
 
 ### Don't:
 - **Don't** use SaaS landing-page templates: symmetric card grids, gradient badges, dashboard-widget credibility signals, fake terminal boot sequences. The PRODUCT.md explicitly prohibits all of these.
