@@ -122,7 +122,7 @@ export function SiteHeader() {
               <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-ok)] animate-pulse" aria-hidden />
               <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-ok)]">{t.hero.available.split(" ")[0]}</span>
               <span className="overflow-hidden whitespace-nowrap font-mono text-[10px] uppercase tracking-wider text-[var(--color-ok)] max-w-0 group-hover:max-w-[9rem] transition-[max-width] duration-300 ease-out opacity-0 group-hover:opacity-100">
-                {t.hero.available.includes(" ") ? ` ${t.hero.available.slice(t.hero.available.indexOf(" ") + 1)}` : ""}
+                {t.hero.available.includes(" ") ? ` ${t.hero.available.slice(t.hero.available.indexOf(" ") + 1)}` : ""}
               </span>
             </span>
             <button
