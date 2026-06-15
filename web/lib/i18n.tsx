@@ -19,7 +19,7 @@ export const LANGS: { code: Lang; label: string; name: string }[] = [
   { code: "zh", label: "中文", name: "中文" },
 ];
 
-type SectionCopy = { label: string; title: string; intro?: string };
+type SectionCopy = { label: string; title: string; intro?: string; verified?: string };
 
 type Dict = {
   nav: Record<string, string>;
@@ -138,6 +138,7 @@ const en: Dict = {
       label: "Certification Command Center",
       title: "Verified, multi-cloud credentials",
       intro: "Validated expertise across the three major clouds plus FinOps practice.",
+      verified: "verified",
     },
     stack: {
       label: "Multi-Cloud Architecture Map",
@@ -313,6 +314,7 @@ const pt: Dict = {
       label: "Centro de Certificações",
       title: "Credenciais multi-cloud verificadas",
       intro: "Competências validadas nas três grandes clouds, mais prática de FinOps.",
+      verified: "verificadas",
     },
     stack: {
       label: "Mapa de Arquitetura Multi-Cloud",
@@ -488,6 +490,7 @@ const es: Dict = {
       label: "Centro de Certificaciones",
       title: "Credenciales multi-cloud verificadas",
       intro: "Experiencia validada en las tres grandes clouds, más práctica de FinOps.",
+      verified: "verificadas",
     },
     stack: {
       label: "Mapa de Arquitectura Multi-Cloud",
@@ -663,6 +666,7 @@ const fr: Dict = {
       label: "Centre de Certifications",
       title: "Certifications multi-cloud vérifiées",
       intro: "Expertise validée sur les trois grands clouds et la pratique FinOps.",
+      verified: "vérifiées",
     },
     stack: {
       label: "Carte d'Architecture Multi-Cloud",
@@ -838,6 +842,7 @@ const zh: Dict = {
       label: "认证中心",
       title: "已验证的多云认证",
       intro: "三大主流云及FinOps实践的验证专业知识。",
+      verified: "已验证",
     },
     stack: {
       label: "多云架构图",
@@ -961,10 +966,13 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     if (stored && stored in DICT) setLangState(stored);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
   const setLang = useCallback((l: Lang) => {
     setLangState(l);
     localStorage.setItem(KEY, l);
-    document.documentElement.lang = l;
   }, []);
 
   const value = useMemo<I18nValue>(() => ({ lang, setLang, t: DICT[lang] }), [lang, setLang]);

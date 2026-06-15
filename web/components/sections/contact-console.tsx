@@ -27,11 +27,14 @@ export function ContactConsole() {
     e.preventDefault();
     if (status === "sending") return;
     setStatus("sending");
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30_000);
     try {
       const res = await fetch("/.netlify/functions/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),
+        signal: controller.signal,
       });
       if (!res.ok) throw new Error(String(res.status));
       setStatus("success");
@@ -40,6 +43,8 @@ export function ContactConsole() {
       setMessage("");
     } catch {
       setStatus("error");
+    } finally {
+      clearTimeout(timeout);
     }
   }
 

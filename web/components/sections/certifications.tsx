@@ -23,7 +23,7 @@ export function Certifications() {
                   {cat.group}
                 </h3>
                 <span className="text-accent font-mono text-[11px] uppercase tracking-wider">
-                  {cat.items.length} verified
+                  {cat.items.length} {t.sections.certifications.verified}
                 </span>
               </div>
               <ul className="mt-4 space-y-2.5">
@@ -33,19 +33,15 @@ export function Certifications() {
                     className="flex items-center gap-3 border-t border-[var(--color-hairline)] pt-2.5 first:border-0 first:pt-0"
                   >
                     <span
-                      className="text-accent grid h-5 w-5 place-items-center rounded-full border border-[var(--color-hairline-strong)] text-[11px]"
-                      aria-hidden
-                    >
-                      ✓
-                    </span>
-                    <span className="flex-1 text-sm text-[var(--color-fg)]">
-                      {it.name}
-                    </span>
-                    {"note" in it && it.note && (
-                      <span className="font-mono text-[11px] text-[var(--color-fg-subtle)]">
-                        {it.note}
-                      </span>
-                    )}
+                      className="h-2 w-2 shrink-0 rounded-full"
+                      style={{ background: `var(--color-${cat.accent})` }}
+                    />
+                    <div className="min-w-0">
+                      <p className="text-sm text-[var(--color-fg)]">{it.name}</p>
+                      {it.issuer && (
+                        <p className="font-mono text-[11px] text-[var(--color-fg-subtle)]">{it.issuer}</p>
+                      )}
+                    </div>
                   </li>
                 ))}
               </ul>

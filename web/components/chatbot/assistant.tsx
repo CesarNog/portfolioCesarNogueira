@@ -1,57 +1,31 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { AnimatePresence, m, useReducedMotion } from "motion/react";
 import { faq, siteConfig } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
-import { AVATAR_SRC } from "@/lib/images";
 
-type Msg = { role: "user" | "assistant"; text: string };
+type Message = { role: "user" | "assistant"; text: string };
+
+function matchFaq(q: string): string | null {
+  const lower = q.toLowerCase();
+  for (const item of faq) {
+    if (item.keywords.some((k: string) => lower.includes(k))) return item.answer;
+  }
+  return null;
+}
 
 export function Assistant() {
-  const reduce = useReducedMotion();
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Msg[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const listRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
 
-  useEffect(() => {
-    listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
-  }, [messages, loading]);
-
-  // Close on Escape.
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [open]);
-
-  // Allow other UI (command palette, recruiter mode) to open the assistant.
-  useEffect(() => {
-    const openIt = () => setOpen(true);
-    document.addEventListener("open-smart-faq", openIt);
-    return () => document.removeEventListener("open-smart-faq", openIt);
-  }, []);
-
-  // Match a free-text question to the best curated answer.
-  const matchFaq = (q: string) => {
-    const lower = q.toLowerCase();
-    let best: { score: number; a: string } | null = null;
-    for (const f of faq) {
-      const words = f.q.toLowerCase().split(/\W+/).filter((w) => w.length > 3);
-      const score = words.reduce((n, w) => (lower.includes(w) ? n + 1 : n), 0);
-      if (score > 0 && (!best || score > best.score)) best = { score, a: f.a };
-    }
-    return best?.a;
-  };
-
-  async function ask(question: string) {
-    const q = question.trim();
-    if (!q || loading) return;
+  async function send(q: string) {
+    if (!q.trim() || loading) return;
     setMessages((prev) => [...prev, { role: "user", text: q }]);
     setInput("");
     setLoading(true);
@@ -60,11 +34,14 @@ export function Assistant() {
       matchFaq(q) ??
       `Here's the short version: ${siteConfig.name} is a Principal Cloud Architect & FinOps consultant (GCP/AWS/Azure, 10+ years) available for international projects. Email ${siteConfig.links.email}.`;
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30_000);
     try {
       const res = await fetch("/.netlify/functions/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: q }),
+        signal: controller.signal,
       });
       if (!res.ok) throw new Error(String(res.status));
       const data = (await res.json()) as { answer?: string };
@@ -75,6 +52,7 @@ export function Assistant() {
     } catch {
       setMessages((prev) => [...prev, { role: "assistant", text: fallback() }]);
     } finally {
+      clearTimeout(timeout);
       setLoading(false);
     }
   }
@@ -84,7 +62,7 @@ export function Assistant() {
       {/* Launcher */}
       <button
         type="button"
-        aria-label={open ? "Close Smart AI FAQ" : "Open Smart AI FAQ"}
+        aria-label={open ? t.assistant.close : t.assistant.launch}
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
         className="fixed bottom-5 right-5 z-[90] flex items-center gap-2 rounded-full border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] px-4 py-3 text-sm text-[var(--color-fg)] shadow-2xl transition-colors hover:border-[var(--color-blue)]"
@@ -98,7 +76,7 @@ export function Assistant() {
           <m.div
             ref={panelRef}
             role="dialog"
-            aria-label="Smart AI FAQ — AI Career Assistant"
+            aria-label={t.assistant.header}
             initial={reduce ? false : { opacity: 0, y: 16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
@@ -107,23 +85,15 @@ export function Assistant() {
           >
             {/* Header */}
             <div className="flex items-center gap-3 border-b border-[var(--color-hairline)] px-4 py-3">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={AVATAR_SRC}
-                alt={siteConfig.name}
-                width={32}
-                height={32}
-                className="h-8 w-8 shrink-0 rounded-full border border-[var(--color-hairline-strong)] object-cover"
-              />
-              <div className="flex-1">
-                <p className="text-sm text-[var(--color-fg)]">{t.assistant.header}</p>
-                <p className="font-mono text-[10px] text-[var(--color-fg-subtle)]">
-                  {t.assistant.subtitle}
-                </p>
+              <span className="status-dot" />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-[var(--color-fg)]">{t.assistant.header}</p>
+                <p className="font-mono text-[10px] text-[var(--color-fg-subtle)] truncate">{t.assistant.subtitle}</p>
               </div>
               <button
-                aria-label={t.assistant.close}
+                type="button"
                 onClick={() => setOpen(false)}
+                aria-label={t.assistant.close}
                 className="text-[var(--color-fg-subtle)] hover:text-[var(--color-fg)]"
               >
                 ✕
@@ -131,75 +101,70 @@ export function Assistant() {
             </div>
 
             {/* Messages */}
-            <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto p-4">
-              {/* Localized greeting always leads the thread */}
-              <div className="flex justify-start">
-                <p className="panel-2 max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed text-[var(--color-fg)]">
-                  {t.assistant.greeting}
-                </p>
-              </div>
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
+              {messages.length === 0 && (
+                <>
+                  <p className="text-sm text-[var(--color-fg-muted)]">{t.assistant.greeting}</p>
+                  <p className="mt-4 font-mono text-[10px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
+                    {t.assistant.suggested}
+                  </p>
+                  <div className="mt-2 flex flex-col gap-1.5">
+                    {t.assistant.prompts.map((q) => (
+                      <button
+                        key={q}
+                        type="button"
+                        onClick={() => send(q)}
+                        className="rounded-md border border-[var(--color-hairline)] px-3 py-2 text-left text-sm text-[var(--color-fg-muted)] hover:border-[var(--color-blue)] hover:text-[var(--color-fg)] transition-colors"
+                      >
+                        {q}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
               {messages.map((msg, i) => (
                 <div
                   key={i}
-                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                  className={`flex ${
+                    msg.role === "user" ? "justify-end" : "justify-start"
+                  }`}
                 >
-                  <p
-                    className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed ${
+                  <div
+                    className={`max-w-[85%] rounded-xl px-3 py-2 text-sm leading-relaxed ${
                       msg.role === "user"
-                        ? "bg-accent accent-blue text-white"
-                        : "panel-2 text-[var(--color-fg)]"
+                        ? "bg-[var(--color-blue)] text-white"
+                        : "bg-[var(--color-surface-2)] text-[var(--color-fg)]"
                     }`}
                   >
                     {msg.text}
-                  </p>
+                  </div>
                 </div>
               ))}
               {loading && (
-                <p className="panel-2 inline-block rounded-lg px-3 py-2 font-mono text-xs text-[var(--color-fg-muted)]">
-                  analyzing…
-                </p>
-              )}
-
-              {/* Recruiter-focused suggested prompts */}
-              <div className="pt-1">
-                <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-                  {t.assistant.suggested}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {t.assistant.prompts.map((q) => (
-                    <button
-                      key={q}
-                      type="button"
-                      onClick={() => ask(q)}
-                      disabled={loading}
-                      className="rounded-full border border-[var(--color-hairline)] px-3 py-1.5 text-left text-xs text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-blue)] hover:text-[var(--color-fg)] disabled:opacity-40"
-                    >
-                      {q}
-                    </button>
-                  ))}
+                <div className="flex justify-start">
+                  <div className="rounded-xl bg-[var(--color-surface-2)] px-3 py-2 text-sm text-[var(--color-fg-subtle)]">
+                    …
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Input */}
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                ask(input);
-              }}
-              className="flex items-center gap-2 border-t border-[var(--color-hairline)] p-3"
+              onSubmit={(e) => { e.preventDefault(); send(input); }}
+              className="border-t border-[var(--color-hairline)] px-3 py-2 flex gap-2"
             >
               <input
+                type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={t.assistant.placeholder}
-                aria-label={t.assistant.header}
-                className="flex-1 rounded-md border border-[var(--color-hairline)] bg-transparent px-3 py-2 text-sm text-[var(--color-fg)] outline-none placeholder:text-[var(--color-fg-subtle)] focus:border-[var(--color-blue)]"
+                className="flex-1 bg-transparent text-sm text-[var(--color-fg)] outline-none placeholder:text-[var(--color-fg-subtle)]"
               />
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
-                className="bg-accent accent-blue rounded-md px-3 py-2 text-sm font-medium text-white disabled:opacity-40"
+                className="rounded-md bg-[var(--color-blue)] px-3 py-1.5 text-xs font-medium text-white disabled:opacity-40"
               >
                 ↑
               </button>
