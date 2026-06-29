@@ -166,7 +166,7 @@ function SkillBar({ skill, visible, labels, text }: { skill: typeof SKILLS[numbe
             style={{ backgroundColor: scoreColor(skill.score) }}
             initial={{ scaleX: 0 }}
             animate={{ scaleX: visible ? skill.score / 100 : 0 }}
-            transition={{ duration: 0.85, ease: EASE.out }}
+            transition={{ duration: 1.15, ease: EASE.out }}
           />
           {visible && (
             <span className="pointer-events-none absolute inset-0 translate-x-full animate-[shimmer_0.6s_0.85s_ease-out_forwards] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
@@ -224,14 +224,10 @@ export function RecruiterScanner() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [skillsVisible, setSkillsVisible] = useState<boolean[]>(Array(SKILLS.length).fill(false));
   const [activeScoringIdx, setActiveScoringIdx] = useState(-1);
-  const [showResultsDialog, setShowResultsDialog] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [dialogPos, setDialogPos] = useState({ x: 0, y: 0 });
   const reduce = useReducedMotion();
   const bodyRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
-  const dialogBoundsRef = useRef<HTMLDivElement>(null);
-  const dragStart = useRef<{ px: number; py: number; ex: number; ey: number } | null>(null);
   const { t } = useI18n();
   const s = t.scanner;
   const evidenceLabels: ScannerLabels = {
@@ -255,15 +251,13 @@ export function RecruiterScanner() {
     setPhase("idle");
     setSkillsVisible(Array(SKILLS.length).fill(false));
     setActiveScoringIdx(-1);
-    setShowResultsDialog(false);
-    setDialogPos({ x: 0, y: 0 });
   };
 
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
 
     if (phase === "scanning") {
-      timers.push(setTimeout(() => setPhase("analyzing"), reduce ? 50 : 1700));
+      timers.push(setTimeout(() => setPhase("analyzing"), reduce ? 50 : 2800));
     }
 
     if (phase === "analyzing") {
@@ -271,12 +265,12 @@ export function RecruiterScanner() {
         timers.push(setTimeout(() => {
           setActiveScoringIdx(i);
           setSkillsVisible(prev => { const n = [...prev]; n[i] = true; return n; });
-        }, reduce ? 0 : i * 230 + 200));
+        }, reduce ? 0 : i * 380 + 450));
       });
       timers.push(setTimeout(() => {
         setPhase("report");
         setActiveScoringIdx(-1);
-      }, reduce ? 50 : SKILLS.length * 230 + 700));
+      }, reduce ? 50 : SKILLS.length * 380 + 1100));
     }
 
     if (phase === "report") {
@@ -285,8 +279,6 @@ export function RecruiterScanner() {
           bodyRef.current.scrollTo({ top: bodyRef.current.scrollHeight, behavior: "smooth" });
         }
       }, 120));
-      // Results dialog appears after verdict card has animated in
-      timers.push(setTimeout(() => setShowResultsDialog(true), reduce ? 200 : 1800));
     }
 
     return () => timers.forEach(clearTimeout);
@@ -386,7 +378,7 @@ export function RecruiterScanner() {
           aria-hidden
           initial={{ top: 0 }}
           animate={{ top: "100vh" }}
-          transition={{ duration: 1.5, ease: EASE.out }}
+          transition={{ duration: 2.6, ease: EASE.out }}
           className="pointer-events-none absolute inset-x-0 z-10 h-px"
           style={{
             background: "linear-gradient(90deg, transparent 0%, var(--color-blue) 20%, var(--color-ok) 50%, var(--color-blue) 80%, transparent 100%)",
@@ -575,148 +567,6 @@ export function RecruiterScanner() {
         </div>
       </div>
     </div>
-
-    {/* ── Results dialog — portalled to document.body to escape filter stacking context ── */}
-    {/* The CTA m.div in identity-console.tsx animates filter:blur(0px) which creates a
-        containing block for fixed descendants. createPortal renders outside that tree. */}
-    {showResultsDialog && mounted && createPortal(
-      <>
-        {/* Backdrop */}
-        <div
-          aria-hidden
-          className="fixed inset-0 bg-[var(--color-surface-0)]/55 backdrop-blur-[2px]"
-          style={{ zIndex: 210 }}
-          onClick={() => setShowResultsDialog(false)}
-        />
-
-        {/* Centering container — portal ensures fixed is viewport-relative */}
-        <div
-          className="fixed inset-0 flex items-center justify-center pointer-events-none"
-          style={{ zIndex: 211 }}
-        >
-          {/* Drag card — native pointer capture; motion only for opacity fade-in */}
-          <m.div
-            role="dialog"
-            aria-label="Assessment results"
-            aria-modal="false"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="pointer-events-auto overflow-hidden rounded-2xl border border-[var(--color-ok)]/25 bg-[var(--color-surface-1)] w-[min(calc(100vw-32px),440px)]"
-            style={{
-              boxShadow: "0 0 60px -16px color-mix(in oklab, var(--color-ok) 28%, transparent), 0 32px 64px -16px rgba(0,0,0,0.6)",
-              zIndex: 211,
-              transform: `translate(${dialogPos.x}px, ${dialogPos.y}px)`,
-              cursor: "default",
-            }}
-            onPointerDown={(e) => {
-              if (reduce) return;
-              const target = e.target as HTMLElement;
-              // Only drag from header — not from CTAs or content
-              if (!target.closest('.dialog-drag-handle')) return;
-              dragStart.current = { px: e.clientX, py: e.clientY, ex: dialogPos.x, ey: dialogPos.y };
-              (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-            }}
-            onPointerMove={(e) => {
-              if (!dragStart.current) return;
-              const dx = e.clientX - dragStart.current.px;
-              const dy = e.clientY - dragStart.current.py;
-              const nx = Math.max(-480, Math.min(480, dragStart.current.ex + dx));
-              const ny = Math.max(-320, Math.min(320, dragStart.current.ey + dy));
-              setDialogPos({ x: nx, y: ny });
-            }}
-            onPointerUp={() => { dragStart.current = null; }}
-            onPointerCancel={() => { dragStart.current = null; }}
-          >
-          {/* Header */}
-          <div className="dialog-drag-handle flex items-center justify-between border-b border-[var(--color-hairline)] px-5 py-3.5 cursor-grab active:cursor-grabbing select-none">
-            <div className="flex items-center gap-2.5">
-              <span className="h-2 w-2 rounded-full bg-[var(--color-ok)]" aria-hidden />
-              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-ok)]">
-                {s.assessmentComplete}
-              </span>
-              {/* Drag handle dots */}
-              <span className="flex gap-[3px] ml-1 opacity-30" aria-hidden>
-                {[0,1,2,3,4,5].map(i => <span key={i} className="h-[3px] w-[3px] rounded-full bg-[var(--color-fg)]" />)}
-              </span>
-            </div>
-            <button
-              type="button"
-              aria-label={s.dialogDismissHint}
-              onClick={() => setShowResultsDialog(false)}
-              className="font-mono text-[11px] text-[var(--color-fg-subtle)] transition-colors hover:text-[var(--color-fg)]"
-            >
-              ✕
-            </button>
-          </div>
-
-          {/* Candidate identity */}
-          <div className="border-b border-[var(--color-hairline)] px-5 pb-3 pt-4">
-            <p className="font-display text-xl text-[var(--color-fg)]">César A. Nogueira</p>
-            <p className="mt-0.5 font-mono text-[10px] text-[var(--color-blue)]">
-              Principal Cloud Architect · FinOps · Platform Engineering · Vila Real, PT
-            </p>
-          </div>
-
-          {/* Verdict banner */}
-          <div className="bg-[var(--color-ok)]/6 px-5 py-4 text-center border-b border-[var(--color-ok)]/12">
-            <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-[var(--color-ok)]/70 mb-1">{s.hireRecommendation}</p>
-            <p className="font-display text-2xl font-bold text-[var(--color-ok)]">{s.verdict}</p>
-          </div>
-
-          {/* Metrics row */}
-          <div className="grid grid-cols-4 divide-x divide-[var(--color-hairline)]">
-            {[
-              { label: s.dialogFitLabel,          value: "Strong",                         color: "var(--color-ok)" },
-              { label: s.dialogRiskLabel,         value: s.riskValue,                      color: "var(--color-ok)" },
-              { label: s.dialogAvailLabel, value: s.availabilityValue,                            color: "var(--color-cyan)" },
-              { label: s.dialogVerifiedLabel,     value: `${SKILLS.length}/${SKILLS.length}`, color: "var(--color-blue)" },
-            ].map(({ label, value, color }) => (
-              <div key={label} className="flex flex-col items-center px-2 py-3 text-center">
-                <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]">{label}</span>
-                <span className="mt-1 font-mono text-sm font-bold tabular-nums" style={{ color }}>{value}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* CTAs */}
-          <div className="flex flex-col gap-2 px-5 pb-5 pt-4">
-            <button
-              type="button"
-              className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[var(--color-blue)] text-sm font-semibold text-white transition-opacity hover:opacity-90"
-              onClick={() => { close(); setTimeout(() => document.dispatchEvent(new CustomEvent("open-contact-form")), 300); }}
-            >
-              {s.dialogSendMessage}
-            </button>
-            <a
-              href={siteConfig.links.calendly}
-              target="_blank"
-              rel="noreferrer"
-              className="flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-[var(--color-ok)]/40 bg-[var(--color-ok)]/6 text-sm font-semibold text-[var(--color-ok)] transition-colors hover:bg-[var(--color-ok)]/10"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
-                <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-              </svg>
-              {s.scheduleInterview}
-            </a>
-            <a
-              href={siteConfig.links.cv}
-              target="_blank"
-              rel="noreferrer"
-              className="flex h-9 w-full items-center justify-center gap-1.5 rounded-lg text-sm text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
-            >
-              {s.downloadCv} ↓
-            </a>
-          </div>
-
-          <p className="px-5 pb-4 text-center font-mono text-[9px] text-[var(--color-fg-subtle)]">
-            {s.dialogDismissHint}
-          </p>
-          </m.div>
-        </div>
-      </>,
-      document.body
-    )}
     </>,
     document.body
   );

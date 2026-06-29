@@ -54,18 +54,15 @@ export const siteConfig = {
 
 /**
  * Per-language CV PDFs, keyed by interface language.
- * Only the EN file currently exists on the server; the other locales fall back
- * to it. To make each language download its own CV, upload the localized PDFs
- * and replace the values below (suggested names follow the EN pattern, e.g.
- * CV_CesarANogueira_Cloud_PT_PT.pdf / _ES_ES / _FR_FR / _ZH_CN).
+ * Each locale links its own localized CV under /curriculum/.
  */
-const CV_EN = "https://cesarnogueira.tech/curriculum/CV_CesarANogueira_Cloud_EN_US.pdf";
+const CV_BASE = "https://cesarnogueira.tech/curriculum";
 export const cvByLang: Record<string, string> = {
-  en: CV_EN,
-  pt: CV_EN,
-  es: CV_EN,
-  fr: CV_EN,
-  zh: CV_EN,
+  en: `${CV_BASE}/CV_CesarANogueira_Cloud_EN_US.pdf`,
+  pt: `${CV_BASE}/CV_CesarANogueira_Cloud_PT_PT.pdf`,
+  es: `${CV_BASE}/CV_CesarANogueira_Cloud_ES_ES.pdf`,
+  fr: `${CV_BASE}/CV_CesarANogueira_Cloud_FR_FR.pdf`,
+  zh: `${CV_BASE}/CV_CesarANogueira_Cloud_ZH_CN.pdf`,
 };
 
 /** Animated KPI counters for the hero / stats strip. */
