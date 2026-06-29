@@ -257,7 +257,7 @@ export function RecruiterScanner() {
     const timers: ReturnType<typeof setTimeout>[] = [];
 
     if (phase === "scanning") {
-      timers.push(setTimeout(() => setPhase("analyzing"), reduce ? 50 : 2800));
+      timers.push(setTimeout(() => setPhase("analyzing"), reduce ? 50 : 5000));
     }
 
     if (phase === "analyzing") {
@@ -343,13 +343,13 @@ export function RecruiterScanner() {
       role="dialog"
       aria-label="Candidate Evaluation — César A. Nogueira"
       aria-modal="true"
-      className="fixed inset-0 z-scanner flex flex-col overflow-hidden bg-[var(--color-surface-0)]"
+      className="fixed inset-0 z-scanner flex flex-col overflow-hidden bg-black"
     >
       {/* Matrix digital-rain backdrop — full-screen during scan + analysis,
           brand-tinted, behind all content (which sits at z-10). */}
       <MatrixRain
         active={phase === "scanning" || phase === "analyzing"}
-        opacity={phase === "scanning" ? 0.55 : 0.2}
+        opacity={phase === "scanning" ? 0.7 : 0.18}
         reduce={!!reduce}
       />
 
@@ -378,7 +378,7 @@ export function RecruiterScanner() {
           aria-hidden
           initial={{ top: 0 }}
           animate={{ top: "100vh" }}
-          transition={{ duration: 2.6, ease: EASE.out }}
+          transition={{ duration: 4.6, ease: EASE.out }}
           className="pointer-events-none absolute inset-x-0 z-10 h-px"
           style={{
             background: "linear-gradient(90deg, transparent 0%, var(--color-blue) 20%, var(--color-ok) 50%, var(--color-blue) 80%, transparent 100%)",
