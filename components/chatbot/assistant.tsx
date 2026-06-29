@@ -185,7 +185,10 @@ export function Assistant() {
         setLoading(false);
       }
     },
-    [loading, reduce],
+    // lang + t must be deps: without them the memoized callback keeps the boot
+    // language (en) captured before i18n loads the stored locale, so the first
+    // answer comes back in English on a non-English interface.
+    [loading, reduce, lang, t],
   );
 
   return (
