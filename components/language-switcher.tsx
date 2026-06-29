@@ -30,7 +30,7 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
     <div ref={ref} className={`relative ${className}`}>
       <button
         type="button"
-        aria-label={`Language: ${current.name}. Click to change.`}
+        aria-label={`${current.label}, Language: ${current.name}. Click to change.`}
         aria-expanded={open}
         aria-haspopup="listbox"
         onClick={() => setOpen((o) => !o)}

@@ -5,7 +5,6 @@ import { AnimatePresence, m, useReducedMotion, useScroll, useSpring } from "moti
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useI18n } from "@/lib/i18n";
-import { siteConfig } from "@/lib/site-config";
 import { Logo } from "@/components/logo";
 
 const NAV = [
@@ -94,7 +93,7 @@ export function SiteHeader() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--color-hairline)] bg-[var(--color-surface-0)]/80 backdrop-blur-md">
         {/* Live variant 3 accepted: nav dim-siblings on hover */}
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
-          <a href="#top" onClick={(e) => { e.preventDefault(); scrollToSection("top"); }} className="flex items-center self-stretch gap-2.5 text-[var(--color-fg)] transition-opacity hover:opacity-80" aria-label={siteConfig.name}>
+          <a href="#top" onClick={(e) => { e.preventDefault(); scrollToSection("top"); }} className="flex items-center self-stretch gap-2.5 text-[var(--color-fg)] transition-opacity hover:opacity-80" aria-label="César A. Nogueira, home">
             <Logo size={24} className="text-[var(--color-fg)] shrink-0" />
             <span className="font-ui text-[13px] font-semibold tracking-tight hidden lg:block">
               César<span className="text-[var(--color-blue)]"> A.</span> Nogueira
@@ -128,7 +127,7 @@ export function SiteHeader() {
             <button
               type="button"
               onClick={openPalette}
-              aria-label="Open command palette"
+              aria-label="Open command palette (⌘K)"
               className="hidden items-center gap-1.5 rounded-md border border-[var(--color-hairline)] px-2 py-1.5 font-mono text-[11px] text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] hover:text-[var(--color-fg)] sm:flex"
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>

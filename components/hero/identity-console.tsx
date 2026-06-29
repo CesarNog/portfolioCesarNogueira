@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { m, useMotionTemplate, useMotionValue, useReducedMotion } from "motion/react";
-import { siteConfig, stats } from "@/lib/site-config";
+import { siteConfig, stats, cvByLang } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
 import Image from "next/image";
 import { Counter } from "@/components/ui/counter";
@@ -16,7 +16,7 @@ const DELAYS = { badge: 0.1, name: 0.2, desc: 0.38, ctas: 0.52, stats: 0.68, pho
 
 export function IdentityConsole() {
   const reduce = useReducedMotion();
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const mouseX = useMotionValue(-1000);
   const mouseY = useMotionValue(-1000);
   const spotlight = useMotionTemplate`radial-gradient(520px at ${mouseX}px ${mouseY}px, color-mix(in oklab, var(--color-blue) 5%, transparent) 0%, transparent 70%)`;
@@ -161,6 +161,22 @@ export function IdentityConsole() {
                       className="inline-flex items-center rounded-md border border-[var(--color-hairline-strong)] px-6 py-3 text-sm font-medium text-[var(--color-fg)] transition-all hover:border-[var(--color-fg-muted)] hover:-translate-y-px active:translate-y-0"
                     >
                       {t.hero.ctaSecondary}
+                    </m.a>
+                  </Magnetic>
+                  <Magnetic>
+                    <m.a
+                      href={cvByLang[lang] ?? siteConfig.links.cv}
+                      target="_blank"
+                      rel="noreferrer"
+                      whileTap={buttonPress}
+                      className="inline-flex items-center gap-2 rounded-md px-6 py-3 text-sm font-medium text-[var(--color-fg-muted)] transition-all hover:text-[var(--color-fg)] hover:-translate-y-px active:translate-y-0"
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                      </svg>
+                      {t.scanner.downloadCv}
                     </m.a>
                   </Magnetic>
                 </div>

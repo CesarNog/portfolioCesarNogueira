@@ -6,16 +6,12 @@ import { m, useReducedMotion } from "motion/react";
 import { siteConfig } from "@/lib/site-config";
 import { EASE } from "@/lib/motion";
 import { useI18n } from "@/lib/i18n";
+import { MatrixRain } from "@/components/ui/matrix-rain";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
-
-const SCAN_FACTS = [
-  "10+ years cloud experience · 6 countries delivered",
-  "GCP, AWS, Azure, OCI — all four hyperscalers",
-  "FinOps Automation Engineer · Randstad Digital (3.5 yrs)",
-  "Founder · UP2CLOUD · Available now for international engagements",
-  "2× Google Cloud Professional Cloud Architect · certified",
-] as const;
+// Structural facts only. All user-visible scan copy (facts, roles, skill labels,
+// scoring lines, prose) lives in lib/i18n.tsx under scanner.scan and is resolved
+// at render so every string ships in all five languages.
 
 const SKILLS = [
   {
@@ -124,8 +120,6 @@ const SKILLS = [
   },
 ] as const;
 
-const ROLES = ["Cloud Architect", "Platform Engineer", "FinOps Engineer", "Technical Consultant", "Staff Engineer"] as const;
-
 const IMPACT = [
   { value: "~30%",  label: "Cloud Waste Cut" },
   { value: "40+",   label: "Projects" },
@@ -148,14 +142,16 @@ type ScannerLabels = {
   impact: string; certifications: string;
 };
 
-function SkillBar({ skill, visible, labels }: { skill: typeof SKILLS[number]; visible: boolean; labels: ScannerLabels }) {
+type SkillText = { label: string; scoringLabel: string; production: string; impact: string };
+
+function SkillBar({ skill, visible, labels, text }: { skill: typeof SKILLS[number]; visible: boolean; labels: ScannerLabels; text?: SkillText }) {
   const [expanded, setExpanded] = useState(false);
   return (
     <div>
       <button type="button" onClick={() => setExpanded(e => !e)} aria-expanded={expanded} className="w-full group">
         <div className="flex items-center justify-between gap-3 py-2.5">
           <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-muted)] group-hover:text-[var(--color-fg)] transition-colors">
-            {skill.label}
+            {text?.label ?? skill.label}
           </span>
           <div className="flex items-center gap-2.5 shrink-0">
             <span className="font-mono text-[13px] font-bold tabular-nums" style={{ color: scoreColor(skill.score) }}>
@@ -184,11 +180,11 @@ function SkillBar({ skill, visible, labels }: { skill: typeof SKILLS[number]; vi
           <EvidenceRow label={labels.technologies} items={skill.evidence.technologies} />
           <div>
             <p className="mb-1 font-mono text-[9px] uppercase tracking-wider text-[var(--color-blue)]">{labels.production}</p>
-            <p className="text-[12px] leading-relaxed text-[var(--color-fg-muted)]">{skill.evidence.production}</p>
+            <p className="text-[12px] leading-relaxed text-[var(--color-fg-muted)]">{text?.production ?? skill.evidence.production}</p>
           </div>
           <div>
             <p className="mb-1 font-mono text-[9px] uppercase tracking-wider text-[var(--color-ok)]">{labels.impact}</p>
-            <p className="text-[12px] leading-relaxed text-[var(--color-fg-muted)]">{skill.evidence.impact}</p>
+            <p className="text-[12px] leading-relaxed text-[var(--color-fg-muted)]">{text?.impact ?? skill.evidence.impact}</p>
           </div>
           <EvidenceRow label={labels.certifications} items={skill.evidence.certifications} accent="var(--color-orange)" />
         </div>
@@ -245,6 +241,12 @@ export function RecruiterScanner() {
     impact: s.evidenceImpact,
     certifications: s.evidenceCerts,
   };
+
+  // Localized scan copy (facts, roles, skill labels/scoring/prose). Structural
+  // data — scores, proper-noun evidence — stays in the SKILLS const; only the
+  // translatable text is resolved here, matched by skill id with an EN fallback.
+  const scan = s.scan;
+  const skillText = (id: string) => scan.skills.find((k) => k.id === id);
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -339,7 +341,11 @@ export function RecruiterScanner() {
   }
 
   // ── Overlay (always visible when phase !== idle — no AnimatePresence/opacity:0) ──
-  return (
+  // Portalled to document.body. The hero CTA wrapper animates filter:blur(0px) and
+  // will-change:transform, which create a containing block that would otherwise trap
+  // this fixed overlay inside the hero box. The portal lets the scan fill the viewport.
+  if (!mounted) return null;
+  return createPortal(
     <>
     <div
       role="dialog"
@@ -347,8 +353,16 @@ export function RecruiterScanner() {
       aria-modal="true"
       className="fixed inset-0 z-scanner flex flex-col overflow-hidden bg-[var(--color-surface-0)]"
     >
+      {/* Matrix digital-rain backdrop — full-screen during scan + analysis,
+          brand-tinted, behind all content (which sits at z-10). */}
+      <MatrixRain
+        active={phase === "scanning" || phase === "analyzing"}
+        opacity={phase === "scanning" ? 0.55 : 0.2}
+        reduce={!!reduce}
+      />
+
       {/* Top bar */}
-      <div className="flex shrink-0 items-center justify-between border-b border-[var(--color-hairline)] px-6 py-4">
+      <div className="relative z-10 flex shrink-0 items-center justify-between border-b border-[var(--color-hairline)] px-6 py-4">
         <div className="flex items-center gap-3 min-w-0">
           <span className="relative flex h-2 w-2 shrink-0" aria-hidden>
             {phase !== "report" && <span className="absolute inset-0 animate-ping rounded-full bg-[var(--color-ok)] opacity-60" style={{ animationDuration: "1.4s" }} />}
@@ -356,7 +370,7 @@ export function RecruiterScanner() {
           </span>
           <span className="truncate font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
             {phase === "scanning" && s.phaseScanning}
-            {phase === "analyzing" && (currentSkill ? currentSkill.scoringLabel : s.phaseAnalyzing)}
+            {phase === "analyzing" && (currentSkill ? (skillText(currentSkill.id)?.scoringLabel ?? currentSkill.scoringLabel) : s.phaseAnalyzing)}
             {phase === "report" && s.phaseReport}
           </span>
         </div>
@@ -382,7 +396,7 @@ export function RecruiterScanner() {
       )}
 
       {/* Body */}
-      <div ref={bodyRef} className="flex-1 overflow-y-auto overscroll-contain">
+      <div ref={bodyRef} className="relative z-10 flex-1 overflow-y-auto overscroll-contain">
 
         {/* ── ACT 1: Scanning ─────────────────────────────────────────── */}
         {phase === "scanning" && (
@@ -391,13 +405,13 @@ export function RecruiterScanner() {
               {/* Terminal-style header block */}
               <div className="mb-8 rounded-lg border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-5 font-mono">
                 <p className="mb-3 text-[10px] uppercase tracking-[0.3em] text-[var(--color-fg-subtle)]">
-                  ▸ AI Hiring Assessment System — v2.1
+                  ▸ {scan.systemLabel}
                 </p>
                 <p className="text-[10px] text-[var(--color-fg-subtle)]">$ assess --candidate <span className="text-[var(--color-ok)]">CN-EU-2025</span> --depth full</p>
                 <div className="mt-3 border-t border-[var(--color-hairline)] pt-3">
                   <p className="text-sm font-semibold text-[var(--color-fg)]">César Augusto Nogueira</p>
-                  <p className="text-[11px] text-[var(--color-blue)]">Principal Cloud Architect · FinOps Specialist · UP2CLOUD</p>
-                  <p className="mt-1 text-[10px] text-[var(--color-fg-subtle)]">📍 Vila Real, Portugal · Remote EU/Worldwide</p>
+                  <p className="text-[11px] text-[var(--color-blue)]">{scan.subtitle}</p>
+                  <p className="mt-1 text-[10px] text-[var(--color-fg-subtle)]">📍 {scan.location}</p>
                 </div>
               </div>
 
@@ -405,13 +419,13 @@ export function RecruiterScanner() {
               <div className="mb-6 flex items-center gap-3">
                 <ThinkingDots />
                 <span className="font-mono text-[11px] text-[var(--color-fg-muted)]">
-                  Reading profile data<span className="cursor-blink" />
+                  {scan.readingProfile}<span className="cursor-blink" />
                 </span>
               </div>
 
               {/* Facts appearing one by one */}
               <div className="space-y-2">
-                {SCAN_FACTS.map((fact, i) => (
+                {scan.facts.map((fact, i) => (
                   <m.div key={fact}
                     initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -435,7 +449,7 @@ export function RecruiterScanner() {
                 {s.candidateEvalLabel} · {new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}
               </p>
               <p className="font-display text-xl text-[var(--color-fg)] sm:text-2xl">César Augusto Nogueira</p>
-              <p className="font-mono text-[11px] text-[var(--color-blue)]">Principal Cloud Architect · FinOps Specialist · UP2CLOUD · Vila Real, Portugal</p>
+              <p className="font-mono text-[11px] text-[var(--color-blue)]">{scan.subtitle} · {scan.location}</p>
             </div>
 
             {/* Skills */}
@@ -447,7 +461,7 @@ export function RecruiterScanner() {
                 )}
               </p>
               <div className="divide-y divide-[var(--color-hairline)]">
-                {SKILLS.map((skill, i) => <SkillBar key={skill.id} skill={skill} visible={skillsVisible[i]} labels={evidenceLabels} />)}
+                {SKILLS.map((skill, i) => <SkillBar key={skill.id} skill={skill} visible={skillsVisible[i]} labels={evidenceLabels} text={skillText(skill.id)} />)}
               </div>
             </div>
 
@@ -491,7 +505,7 @@ export function RecruiterScanner() {
                   style={{ animationDelay: "0.55s" }}>
                   <p className="mb-2.5 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">{s.bestFitRoles}</p>
                   <div className="flex flex-wrap gap-2">
-                    {ROLES.map((role, i) => (
+                    {scan.roles.map((role, i) => (
                       <span key={role}
                         className="chip-pop inline-flex items-center gap-1.5 rounded-full border border-[var(--color-ok)]/25 bg-[var(--color-ok)]/8 px-3 py-1.5 font-mono text-[11px] text-[var(--color-ok)]"
                         style={{ animationDelay: `${0.65 + i * 0.06}s` }}>
@@ -506,10 +520,10 @@ export function RecruiterScanner() {
                   style={{ animationDelay: "0.8s" }}>
                   <p className="mb-3 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">{s.businessImpact}</p>
                   <div className="grid grid-cols-4 gap-2 text-center">
-                    {IMPACT.map(s => (
-                      <div key={s.label}>
-                        <p className="font-display text-xl font-bold text-[var(--color-fg)]">{s.value}</p>
-                        <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">{s.label}</p>
+                    {IMPACT.map((item, i) => (
+                      <div key={item.label}>
+                        <p className="font-display text-xl font-bold text-[var(--color-fg)]">{item.value}</p>
+                        <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">{scan.impactLabels[i] ?? item.label}</p>
                       </div>
                     ))}
                   </div>
@@ -547,7 +561,7 @@ export function RecruiterScanner() {
       </div>
 
       {/* Status bar */}
-      <div className="shrink-0 border-t border-[var(--color-hairline)] px-6 py-3">
+      <div className="relative z-10 shrink-0 border-t border-[var(--color-hairline)] px-6 py-3">
         <div className="flex items-center justify-between gap-4">
           <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
             {phase === "scanning" && s.statusScanning}
@@ -703,6 +717,7 @@ export function RecruiterScanner() {
       </>,
       document.body
     )}
-    </>
+    </>,
+    document.body
   );
 }

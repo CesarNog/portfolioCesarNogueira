@@ -193,6 +193,16 @@ type Dict = {
     dialogRiskLabel: string;
     dialogAvailLabel: string;
     dialogVerifiedLabel: string;
+    scan: {
+      systemLabel: string;
+      readingProfile: string;
+      subtitle: string;
+      location: string;
+      facts: string[];
+      roles: string[];
+      impactLabels: string[];
+      skills: { id: string; label: string; scoringLabel: string; production: string; impact: string }[];
+    };
   };
   recruiterMode: {
     backToRoles: string;
@@ -596,6 +606,31 @@ const en: Dict = {
     dialogRiskLabel: "Risk",
     dialogAvailLabel: "Availability",
     dialogVerifiedLabel: "Verified",
+    scan: {
+      systemLabel: "AI Hiring Assessment System · v2.1",
+      readingProfile: "Reading profile data",
+      subtitle: "Principal Cloud Architect · FinOps Specialist · UP2CLOUD",
+      location: "Vila Real, Portugal · Remote EU / Worldwide",
+      facts: [
+        "10+ years cloud experience · 6 countries delivered",
+        "GCP, AWS, Azure, OCI · all four hyperscalers",
+        "FinOps Automation Engineer · Randstad Digital (3.5 yrs)",
+        "Founder · UP2CLOUD · Available now for international engagements",
+        "2× Google Cloud Professional Cloud Architect · certified",
+      ],
+      roles: ["Cloud Architect", "Platform Engineer", "FinOps Engineer", "Technical Consultant", "Staff Engineer"],
+      impactLabels: ["Cloud Waste Cut", "Projects", "Years", "Countries"],
+      skills: [
+        { id: "cloud-architecture", label: "Cloud Architecture", scoringLabel: "Verifying 10+ years multi-cloud delivery…", production: "Regulatory-grade multi-cloud for banking, aviation and staffing enterprises across Europe and the Americas.", impact: "99.9% availability SLA delivered for regulated banking and aviation workloads." },
+        { id: "platform-engineering", label: "Platform Engineering", scoringLabel: "Scanning GKE production deployments…", production: "GKE in production serving Volkswagen, Lucid, Vinfast, Cadillac and Mitsubishi via ZeroLight.", impact: "120+ Accenture engineers trained to Google Cloud certification. 40% faster deployment cycles." },
+        { id: "terraform", label: "Terraform / IaC", scoringLabel: "Cross-referencing IaC scope across 4 clouds…", production: "Reproducible, reviewed infrastructure across GCP, AWS, Azure and OCI for enterprise clients.", impact: "Eliminated configuration drift across multi-account cloud estates." },
+        { id: "kubernetes", label: "Kubernetes", scoringLabel: "Validating cluster administration experience…", production: "Production GKE cluster admin, multi-tenant namespace isolation, Jenkins + Spinnaker CD automation.", impact: "GKE from zero to production at Accenture. Reduced deployment time by 40%." },
+        { id: "finops", label: "FinOps", scoringLabel: "Measuring cost governance outcomes at Randstad…", production: "Dedicated Cloud FinOps Automation Engineer at a global Fortune 500 staffing leader.", impact: "~30% cloud waste reduction. Automated chargeback and tagging across 12 platform teams." },
+        { id: "automation", label: "Automation", scoringLabel: "Counting automated cloud operations…", production: "1,200+ automated cloud operations monthly. Full CI/CD pipeline lifecycle at enterprise scale.", impact: "Eliminated manual cost reporting. Automated resource tagging across 3 cloud providers." },
+        { id: "ai-infrastructure", label: "AI Infrastructure", scoringLabel: "Evaluating GenAI platform experience…", production: "Live AI assistant in production. LLM and RAG integrations for enterprise clients.", impact: "Scalable, cost-aware inference infrastructure. AI-driven ops and cost anomaly detection." },
+        { id: "leadership", label: "Leadership", scoringLabel: "Verifying team and company leadership record…", production: "Led cloud enablement team at Accenture. 70% technical, 30% management.", impact: "Trained 120+ engineers to GCP certification. Founded B2B consultancy delivering globally." },
+      ],
+    },
   },
   recruiterMode: {
     backToRoles: "← All roles",
@@ -1007,6 +1042,31 @@ const pt: Dict = {
     dialogRiskLabel: "Risco",
     dialogAvailLabel: "Disponível",
     dialogVerifiedLabel: "Verificadas",
+    scan: {
+      systemLabel: "Sistema de Avaliação de Candidatos por IA · v2.1",
+      readingProfile: "A ler dados do perfil",
+      subtitle: "Arquiteto Cloud Principal · Especialista FinOps · UP2CLOUD",
+      location: "Vila Real, Portugal · Remoto UE / Mundial",
+      facts: [
+        "10+ anos de experiência cloud · entregas em 6 países",
+        "GCP, AWS, Azure, OCI · os quatro hyperscalers",
+        "Engenheiro de Automação FinOps · Randstad Digital (3,5 anos)",
+        "Fundador · UP2CLOUD · Disponível para projetos internacionais",
+        "2× Google Cloud Professional Cloud Architect · certificado",
+      ],
+      roles: ["Arquiteto Cloud", "Engenheiro de Plataforma", "Engenheiro FinOps", "Consultor Técnico", "Staff Engineer"],
+      impactLabels: ["Desperdício Cloud Reduzido", "Projetos", "Anos", "Países"],
+      skills: [
+        { id: "cloud-architecture", label: "Arquitetura Cloud", scoringLabel: "A verificar 10+ anos de entrega multicloud…", production: "Multicloud de nível regulatório para empresas de banca, aviação e recrutamento na Europa e nas Américas.", impact: "SLA de 99,9% de disponibilidade entregue para cargas reguladas de banca e aviação." },
+        { id: "platform-engineering", label: "Engenharia de Plataforma", scoringLabel: "A analisar implementações GKE em produção…", production: "GKE em produção a servir Volkswagen, Lucid, Vinfast, Cadillac e Mitsubishi via ZeroLight.", impact: "120+ engenheiros da Accenture certificados em Google Cloud. Ciclos de implementação 40% mais rápidos." },
+        { id: "terraform", label: "Terraform / IaC", scoringLabel: "A cruzar o âmbito de IaC em 4 clouds…", production: "Infraestrutura reproduzível e revista em GCP, AWS, Azure e OCI para clientes empresariais.", impact: "Eliminação de desvios de configuração em ambientes cloud multiconta." },
+        { id: "kubernetes", label: "Kubernetes", scoringLabel: "A validar experiência de administração de clusters…", production: "Administração de clusters GKE em produção, isolamento de namespaces multi-inquilino, automação CD com Jenkins + Spinnaker.", impact: "GKE do zero à produção na Accenture. Tempo de implementação reduzido em 40%." },
+        { id: "finops", label: "FinOps", scoringLabel: "A medir resultados de governança de custos na Randstad…", production: "Engenheiro dedicado de Automação Cloud FinOps numa líder global de recrutamento Fortune 500.", impact: "~30% de redução de desperdício cloud. Chargeback e etiquetagem automatizados em 12 equipas de plataforma." },
+        { id: "automation", label: "Automação", scoringLabel: "A contabilizar operações cloud automatizadas…", production: "1.200+ operações cloud automatizadas por mês. Ciclo completo de pipelines CI/CD à escala empresarial.", impact: "Eliminação de relatórios de custos manuais. Etiquetagem de recursos automatizada em 3 fornecedores cloud." },
+        { id: "ai-infrastructure", label: "Infraestrutura de IA", scoringLabel: "A avaliar experiência em plataformas GenAI…", production: "Assistente de IA em produção. Integrações de LLM e RAG para clientes empresariais.", impact: "Infraestrutura de inferência escalável e consciente de custos. Operações e deteção de anomalias de custo guiadas por IA." },
+        { id: "leadership", label: "Liderança", scoringLabel: "A verificar histórico de liderança de equipas e empresa…", production: "Liderou a equipa de capacitação cloud na Accenture. 70% técnico, 30% gestão.", impact: "Formou 120+ engenheiros até à certificação GCP. Fundou uma consultora B2B com entrega global." },
+      ],
+    },
   },
   recruiterMode: {
     backToRoles: "← Todas as funções",
@@ -1418,6 +1478,31 @@ const es: Dict = {
     dialogRiskLabel: "Riesgo",
     dialogAvailLabel: "Disponible",
     dialogVerifiedLabel: "Verificadas",
+    scan: {
+      systemLabel: "Sistema de Evaluación de Candidatos con IA · v2.1",
+      readingProfile: "Leyendo datos del perfil",
+      subtitle: "Arquitecto Cloud Principal · Especialista FinOps · UP2CLOUD",
+      location: "Vila Real, Portugal · Remoto UE / Mundial",
+      facts: [
+        "10+ años de experiencia cloud · entregas en 6 países",
+        "GCP, AWS, Azure, OCI · los cuatro hyperscalers",
+        "Ingeniero de Automatización FinOps · Randstad Digital (3,5 años)",
+        "Fundador · UP2CLOUD · Disponible para proyectos internacionales",
+        "2× Google Cloud Professional Cloud Architect · certificado",
+      ],
+      roles: ["Arquitecto Cloud", "Ingeniero de Plataforma", "Ingeniero FinOps", "Consultor Técnico", "Staff Engineer"],
+      impactLabels: ["Desperdicio Cloud Reducido", "Proyectos", "Años", "Países"],
+      skills: [
+        { id: "cloud-architecture", label: "Arquitectura Cloud", scoringLabel: "Verificando 10+ años de entrega multicloud…", production: "Multicloud de nivel regulatorio para empresas de banca, aviación y selección de personal en Europa y América.", impact: "SLA de 99,9% de disponibilidad entregado para cargas reguladas de banca y aviación." },
+        { id: "platform-engineering", label: "Ingeniería de Plataforma", scoringLabel: "Escaneando despliegues GKE en producción…", production: "GKE en producción sirviendo a Volkswagen, Lucid, Vinfast, Cadillac y Mitsubishi vía ZeroLight.", impact: "120+ ingenieros de Accenture certificados en Google Cloud. Ciclos de despliegue 40% más rápidos." },
+        { id: "terraform", label: "Terraform / IaC", scoringLabel: "Cruzando el alcance de IaC en 4 clouds…", production: "Infraestructura reproducible y revisada en GCP, AWS, Azure y OCI para clientes empresariales.", impact: "Eliminación de desviaciones de configuración en entornos cloud multicuenta." },
+        { id: "kubernetes", label: "Kubernetes", scoringLabel: "Validando experiencia en administración de clústeres…", production: "Administración de clústeres GKE en producción, aislamiento de namespaces multiinquilino, automatización CD con Jenkins + Spinnaker.", impact: "GKE de cero a producción en Accenture. Tiempo de despliegue reducido un 40%." },
+        { id: "finops", label: "FinOps", scoringLabel: "Midiendo resultados de gobernanza de costes en Randstad…", production: "Ingeniero dedicado de Automatización Cloud FinOps en un líder global de selección Fortune 500.", impact: "~30% de reducción de desperdicio cloud. Chargeback y etiquetado automatizados en 12 equipos de plataforma." },
+        { id: "automation", label: "Automatización", scoringLabel: "Contabilizando operaciones cloud automatizadas…", production: "1.200+ operaciones cloud automatizadas al mes. Ciclo de vida completo de pipelines CI/CD a escala empresarial.", impact: "Eliminación de informes de costes manuales. Etiquetado de recursos automatizado en 3 proveedores cloud." },
+        { id: "ai-infrastructure", label: "Infraestructura de IA", scoringLabel: "Evaluando experiencia en plataformas GenAI…", production: "Asistente de IA en producción. Integraciones de LLM y RAG para clientes empresariales.", impact: "Infraestructura de inferencia escalable y consciente de costes. Operaciones y detección de anomalías de coste impulsadas por IA." },
+        { id: "leadership", label: "Liderazgo", scoringLabel: "Verificando trayectoria de liderazgo de equipos y empresa…", production: "Lideró el equipo de habilitación cloud en Accenture. 70% técnico, 30% gestión.", impact: "Formó a 120+ ingenieros hasta la certificación GCP. Fundó una consultora B2B con entrega global." },
+      ],
+    },
   },
   recruiterMode: {
     backToRoles: "← Todos los roles",
@@ -1829,6 +1914,31 @@ const fr: Dict = {
     dialogRiskLabel: "Risque",
     dialogAvailLabel: "Disponible",
     dialogVerifiedLabel: "Vérifiées",
+    scan: {
+      systemLabel: "Système d'évaluation des candidats par IA · v2.1",
+      readingProfile: "Lecture des données du profil",
+      subtitle: "Architecte Cloud Principal · Spécialiste FinOps · UP2CLOUD",
+      location: "Vila Real, Portugal · À distance UE / Monde",
+      facts: [
+        "10+ ans d'expérience cloud · livraisons dans 6 pays",
+        "GCP, AWS, Azure, OCI · les quatre hyperscalers",
+        "Ingénieur Automatisation FinOps · Randstad Digital (3,5 ans)",
+        "Fondateur · UP2CLOUD · Disponible pour des missions internationales",
+        "2× Google Cloud Professional Cloud Architect · certifié",
+      ],
+      roles: ["Architecte Cloud", "Ingénieur Plateforme", "Ingénieur FinOps", "Consultant Technique", "Staff Engineer"],
+      impactLabels: ["Gaspillage Cloud Réduit", "Projets", "Années", "Pays"],
+      skills: [
+        { id: "cloud-architecture", label: "Architecture Cloud", scoringLabel: "Vérification de 10+ ans de livraison multicloud…", production: "Multicloud de niveau réglementaire pour des entreprises de la banque, de l'aviation et du recrutement en Europe et dans les Amériques.", impact: "SLA de 99,9% de disponibilité livré pour des charges réglementées de banque et d'aviation." },
+        { id: "platform-engineering", label: "Ingénierie de Plateforme", scoringLabel: "Analyse des déploiements GKE en production…", production: "GKE en production au service de Volkswagen, Lucid, Vinfast, Cadillac et Mitsubishi via ZeroLight.", impact: "120+ ingénieurs Accenture certifiés Google Cloud. Cycles de déploiement 40% plus rapides." },
+        { id: "terraform", label: "Terraform / IaC", scoringLabel: "Recoupement de la portée IaC sur 4 clouds…", production: "Infrastructure reproductible et revue sur GCP, AWS, Azure et OCI pour des clients entreprise.", impact: "Élimination des dérives de configuration sur des parcs cloud multicomptes." },
+        { id: "kubernetes", label: "Kubernetes", scoringLabel: "Validation de l'expérience d'administration de clusters…", production: "Administration de clusters GKE en production, isolation de namespaces multi-tenants, automatisation CD avec Jenkins + Spinnaker.", impact: "GKE de zéro à la production chez Accenture. Temps de déploiement réduit de 40%." },
+        { id: "finops", label: "FinOps", scoringLabel: "Mesure des résultats de gouvernance des coûts chez Randstad…", production: "Ingénieur dédié à l'automatisation Cloud FinOps chez un leader mondial du recrutement Fortune 500.", impact: "~30% de réduction du gaspillage cloud. Refacturation et étiquetage automatisés sur 12 équipes plateforme." },
+        { id: "automation", label: "Automatisation", scoringLabel: "Décompte des opérations cloud automatisées…", production: "1 200+ opérations cloud automatisées par mois. Cycle de vie complet des pipelines CI/CD à l'échelle entreprise.", impact: "Élimination des rapports de coûts manuels. Étiquetage des ressources automatisé sur 3 fournisseurs cloud." },
+        { id: "ai-infrastructure", label: "Infrastructure IA", scoringLabel: "Évaluation de l'expérience des plateformes GenAI…", production: "Assistant IA en production. Intégrations LLM et RAG pour des clients entreprise.", impact: "Infrastructure d'inférence évolutive et soucieuse des coûts. Opérations et détection d'anomalies de coût pilotées par IA." },
+        { id: "leadership", label: "Leadership", scoringLabel: "Vérification du parcours de leadership d'équipe et d'entreprise…", production: "A dirigé l'équipe d'activation cloud chez Accenture. 70% technique, 30% management.", impact: "A formé 120+ ingénieurs jusqu'à la certification GCP. A fondé un cabinet de conseil B2B livrant à l'international." },
+      ],
+    },
   },
   recruiterMode: {
     backToRoles: "← Tous les rôles",
@@ -2240,6 +2350,31 @@ const zh: Dict = {
     dialogRiskLabel: "风险",
     dialogAvailLabel: "可用",
     dialogVerifiedLabel: "已验证",
+    scan: {
+      systemLabel: "AI 招聘评估系统 · v2.1",
+      readingProfile: "正在读取档案数据",
+      subtitle: "首席云架构师 · FinOps 专家 · UP2CLOUD",
+      location: "葡萄牙维拉雷亚尔 · 远程（欧盟／全球）",
+      facts: [
+        "10+ 年云计算经验 · 已交付 6 个国家",
+        "GCP、AWS、Azure、OCI · 四大超大规模云",
+        "FinOps 自动化工程师 · Randstad Digital（3.5 年）",
+        "创始人 · UP2CLOUD · 现可承接国际项目",
+        "2× Google Cloud 专业云架构师 · 已认证",
+      ],
+      roles: ["云架构师", "平台工程师", "FinOps 工程师", "技术顾问", "资深工程师"],
+      impactLabels: ["云成本削减", "项目", "年限", "国家"],
+      skills: [
+        { id: "cloud-architecture", label: "云架构", scoringLabel: "正在核实 10+ 年多云交付经验…", production: "为欧洲和美洲的银行、航空和人力资源企业提供合规级多云架构。", impact: "为受监管的银行与航空工作负载交付 99.9% 可用性 SLA。" },
+        { id: "platform-engineering", label: "平台工程", scoringLabel: "正在扫描 GKE 生产部署…", production: "GKE 生产环境通过 ZeroLight 服务于大众、Lucid、Vinfast、凯迪拉克和三菱。", impact: "120+ 名埃森哲工程师通过 Google Cloud 认证。部署周期加快 40%。" },
+        { id: "terraform", label: "Terraform / IaC", scoringLabel: "正在跨 4 个云平台交叉核对 IaC 范围…", production: "为企业客户在 GCP、AWS、Azure 和 OCI 上构建可复现、经评审的基础设施。", impact: "消除了多账户云环境中的配置漂移。" },
+        { id: "kubernetes", label: "Kubernetes", scoringLabel: "正在验证集群管理经验…", production: "生产级 GKE 集群管理、多租户命名空间隔离、Jenkins + Spinnaker CD 自动化。", impact: "在埃森哲将 GKE 从零推向生产。部署时间缩短 40%。" },
+        { id: "finops", label: "FinOps", scoringLabel: "正在评估在 Randstad 的成本治理成果…", production: "在一家全球《财富》500 强人力资源企业担任专职云 FinOps 自动化工程师。", impact: "云浪费降低约 30%。在 12 个平台团队中实现自动化分摊与标签。" },
+        { id: "automation", label: "自动化", scoringLabel: "正在统计自动化云操作…", production: "每月 1,200+ 次自动化云操作。企业级完整 CI/CD 流水线生命周期。", impact: "消除了手动成本报告。在 3 家云服务商中实现资源标签自动化。" },
+        { id: "ai-infrastructure", label: "AI 基础设施", scoringLabel: "正在评估生成式 AI 平台经验…", production: "生产环境中的实时 AI 助手。为企业客户提供 LLM 与 RAG 集成。", impact: "可扩展、成本感知的推理基础设施。由 AI 驱动的运维与成本异常检测。" },
+        { id: "leadership", label: "领导力", scoringLabel: "正在核实团队与公司领导经历…", production: "在埃森哲领导云赋能团队。70% 技术，30% 管理。", impact: "培养 120+ 名工程师通过 GCP 认证。创立面向全球交付的 B2B 咨询公司。" },
+      ],
+    },
   },
   recruiterMode: {
     backToRoles: "← 所有职位",
