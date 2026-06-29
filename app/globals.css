@@ -448,6 +448,15 @@ body.tab-hidden .aurora-blob {
   to   { stroke-dashoffset: 0; }
 }
 
+/* Live-node heartbeat — slow expanding ring under each delivery marker.
+   Drives the "every node monitored" read on the global map. Subtle by design:
+   it is support, not the showpiece. JS gates rendering on inView + reduce. */
+@keyframes map-heartbeat {
+  0%   { transform: scale(0.6); opacity: 0; }
+  18%  { opacity: 0.5; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
 /* ComposableMap SVG background — subtle ocean tint */
 .rsm-svg {
   background: color-mix(in oklab, var(--color-blue) 3%, var(--color-surface-1));

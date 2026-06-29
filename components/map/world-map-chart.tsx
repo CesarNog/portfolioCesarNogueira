@@ -1,13 +1,33 @@
 "use client";
 
-import { memo } from "react";
-import { m } from "motion/react";
+import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { m, useReducedMotion } from "motion/react";
 
 const W = 800;
 const H = 420;
 
 function lonToX(lon: number) { return ((lon + 180) / 360) * W; }
 function latToY(lat: number) { return ((90 - lat) / 180) * H; }
+
+/** Great-circle distance in km — the honest signal behind packet travel time. */
+function haversineKm(aLat: number, aLon: number, bLat: number, bLon: number) {
+  const R = 6371;
+  const dLat = ((bLat - aLat) * Math.PI) / 180;
+  const dLon = ((bLon - aLon) * Math.PI) / 180;
+  const la1 = (aLat * Math.PI) / 180;
+  const la2 = (bLat * Math.PI) / 180;
+  const h =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(la1) * Math.cos(la2) * Math.sin(dLon / 2) ** 2;
+  return 2 * R * Math.asin(Math.min(1, Math.sqrt(h)));
+}
+
+/** Map a real distance to a packet travel duration (seconds).
+   Lisbon→Madrid (~500 km) reads fast; Lisbon→São Paulo (~7600 km) reads slow.
+   Propagation is honest: time scales with distance, no fabricated latency. */
+function travelDuration(km: number) {
+  return Math.min(5.4, 1.5 + km / 2100);
+}
 
 // Significantly improved land outlines — geographically recognizable at this scale.
 // Each polygon is a [lon, lat][] sequence; equirectangular projection applied in render.
@@ -90,17 +110,91 @@ interface Props {
   reduce: boolean;
 }
 
-function WorldMapChart({ markers, visibleIds, activeId, hubId, onSelect, reduce }: Props) {
+/** Precomputed per-route geometry + honest travel timing. */
+interface Route {
+  id: string;
+  d: string;
+  dx: number;
+  dy: number;
+  color: string;
+  deliveryType: string;
+  duration: number;
+  cometLen: number;
+}
+
+function WorldMapChart({ markers, visibleIds, activeId, hubId, onSelect, reduce: reduceProp }: Props) {
+  // Honor both the page-level toggle (prop) and the OS preference (hook).
+  const reduceOS = useReducedMotion();
+  const reduce = reduceProp || !!reduceOS;
+
   const hub = markers.find(m => m.id === hubId)!;
   const hubX = lonToX(hub.lon);
   const hubY = latToY(hub.lat);
 
+  // Pause all looping motion while the map is off-screen — battery + main-thread budget.
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = svgRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") { setInView(true); return; }
+    const io = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: "120px", threshold: 0.01 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Arcs trace themselves from the hub outward once, the first time the map is seen.
+  const [drawn, setDrawn] = useState(false);
+  useEffect(() => { if (inView) setDrawn(true); }, [inView]);
+
+  // Build route geometry once.
+  const routes: Route[] = markers
+    .filter(m => m.id !== hubId)
+    .map((dest) => {
+      const dx = lonToX(dest.lon);
+      const dy = latToY(dest.lat);
+      const screenDist = Math.sqrt((dx - hubX) ** 2 + (dy - hubY) ** 2);
+      const lift = Math.min(screenDist * 0.38, 110);
+      const mx = (hubX + dx) / 2;
+      const my = Math.min(hubY, dy) - lift;
+      const km = haversineKm(hub.lat, hub.lon, dest.lat, dest.lon);
+      return {
+        id: dest.id,
+        d: `M ${hubX} ${hubY} Q ${mx} ${my} ${dx} ${dy}`,
+        dx, dy,
+        color: TYPE_COLOR[dest.deliveryType ?? ""] ?? "var(--color-blue)",
+        deliveryType: dest.deliveryType ?? "",
+        duration: travelDuration(km),
+        // Streak length scales gently with distance so long hauls feel weightier.
+        cometLen: 14 + Math.min(screenDist * 0.04, 10),
+      };
+    });
+
+  // Measure each arc's path length (viewBox units, constant across display sizes)
+  // so the travelling dash sweeps exactly one end-to-end pass per cycle.
+  const wireRefs = useRef<Record<string, SVGPathElement | null>>({});
+  const [lengths, setLengths] = useState<Record<string, number>>({});
+  useLayoutEffect(() => {
+    const next: Record<string, number> = {};
+    for (const r of routes) {
+      const p = wireRefs.current[r.id];
+      if (p) next[r.id] = p.getTotalLength();
+    }
+    setLengths(next);
+    // routes are derived from a stable marker list; measuring once per count change is enough.
+  }, [markers.length]);
+
+  const animateTraffic = inView && !reduce;
+
   return (
     <svg
+      ref={svgRef}
       viewBox={`0 0 ${W} ${H}`}
       style={{ width: "100%", height: "100%", minHeight: 380 }}
       role="img"
-      aria-label="Global delivery map — based in Portugal, delivering across Europe and the Americas"
+      aria-label="Global delivery map — based in Portugal, delivering across Europe and the Americas. Traffic animation reflects relative distance between the delivery hub and each engagement."
     >
       <defs>
         {/* Ocean: subtle blue-tinted dark gradient */}
@@ -114,6 +208,11 @@ function WorldMapChart({ markers, visibleIds, activeId, hubId, onSelect, reduce 
         </filter>
         <filter id="glow-active" x="-80%" y="-80%" width="260%" height="260%">
           <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        {/* Soft bloom for the travelling traffic comets. */}
+        <filter id="glow-comet" x="-120%" y="-120%" width="340%" height="340%">
+          <feGaussianBlur stdDeviation="2.2" result="blur"/>
           <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
@@ -148,41 +247,68 @@ function WorldMapChart({ markers, visibleIds, activeId, hubId, onSelect, reduce 
       ))}
 
       {/* Routes — quadratic bezier arcs from hub, lifted northward */}
-      {markers.filter(m => m.id !== hubId).map(dest => {
-        const dx = lonToX(dest.lon);
-        const dy = latToY(dest.lat);
-        const isVisible = visibleIds.includes(dest.id);
-        const isActive = activeId === dest.id;
-        const color = TYPE_COLOR[dest.deliveryType ?? ""] ?? "var(--color-blue)";
-
-        const dist = Math.sqrt((dx - hubX) ** 2 + (dy - hubY) ** 2);
-        const lift = Math.min(dist * 0.38, 110);
-        const mx = (hubX + dx) / 2;
-        const my = Math.min(hubY, dy) - lift;
-        const d = `M ${hubX} ${hubY} Q ${mx} ${my} ${dx} ${dy}`;
+      {routes.map((route, ri) => {
+        const isVisible = visibleIds.includes(route.id);
+        const isActive = activeId === route.id;
+        const L = lengths[route.id];
+        // Keep the streak shorter than its arc so it sweeps end-to-end. On the
+        // short intra-Europe routes (e.g. Lisbon→Madrid) an unclamped streak
+        // would exceed the path length and pulse in place instead of travelling.
+        const cometLen = L > 0 ? Math.min(route.cometLen, L * 0.45) : route.cometLen;
 
         return (
-          <g key={`route-${dest.id}`}>
-            <path
-              d={d}
+          <g key={`route-${route.id}`}>
+            {/* Wire: the resting arc. Traces from hub→node on first view, then holds. */}
+            <m.path
+              ref={(el) => { wireRefs.current[route.id] = el; }}
+              d={route.d}
               fill="none"
-              stroke={color}
-              strokeWidth={isActive ? 1.6 : 0.8}
-              strokeOpacity={isVisible ? (isActive ? 0.9 : 0.28) : 0.04}
-              strokeDasharray={isActive ? undefined : "4 8"}
+              stroke={route.color}
+              strokeWidth={isActive ? 1.6 : 0.9}
+              strokeOpacity={isVisible ? (isActive ? 0.92 : 0.34) : 0.05}
               strokeLinecap="round"
+              initial={reduce ? false : { pathLength: 0, opacity: 0 }}
+              animate={reduce ? {} : { pathLength: drawn ? 1 : 0, opacity: 1 }}
+              transition={{ duration: 0.9, delay: 0.15 + ri * 0.12, ease: [0.16, 1, 0.3, 1] }}
             />
-            {/* Animated packet — uses globals.css @keyframes packet-travel (dashoffset 204→0, array "5 250") */}
-            {isVisible && !reduce && (
-              <path
-                d={d}
+
+            {/* Travelling traffic comet — speed encodes real hub→node distance.
+                Looping dash sweeps the full arc once per cycle. */}
+            {animateTraffic && isVisible && L > 0 && (
+              <m.path
+                d={route.d}
                 fill="none"
-                stroke={color}
+                stroke={route.color}
                 strokeWidth={isActive ? 3 : 2}
-                strokeOpacity={isActive ? 0.95 : 0.55}
+                strokeOpacity={isActive ? 1 : 0.7}
                 strokeLinecap="round"
-                strokeDasharray="5 250"
-                style={{ animation: `packet-travel ${isActive ? 1.6 : 2.6}s linear infinite` }}
+                strokeDasharray={`${cometLen} ${L}`}
+                filter="url(#glow-comet)"
+                initial={{ strokeDashoffset: L }}
+                animate={{ strokeDashoffset: 0 }}
+                transition={{
+                  duration: isActive ? route.duration * 0.7 : route.duration,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
+            )}
+
+            {/* Establish sweep — a single bright pulse races hub→node the moment
+                a route is selected, then steady traffic resumes. */}
+            {animateTraffic && isActive && L > 0 && (
+              <m.path
+                key={`establish-${route.id}`}
+                d={route.d}
+                fill="none"
+                stroke={route.color}
+                strokeWidth={3.4}
+                strokeLinecap="round"
+                strokeDasharray={`${Math.min(cometLen * 1.6, L * 0.6)} ${L}`}
+                filter="url(#glow-comet)"
+                initial={{ strokeDashoffset: L, opacity: 1 }}
+                animate={{ strokeDashoffset: 0, opacity: [1, 1, 0] }}
+                transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
               />
             )}
           </g>
@@ -190,7 +316,7 @@ function WorldMapChart({ markers, visibleIds, activeId, hubId, onSelect, reduce 
       })}
 
       {/* Markers */}
-      {markers.map(marker => {
+      {markers.map((marker, idx) => {
         const mx = lonToX(marker.lon);
         const my = latToY(marker.lat);
         const isHub = marker.id === hubId;
@@ -200,16 +326,32 @@ function WorldMapChart({ markers, visibleIds, activeId, hubId, onSelect, reduce 
         const r = isHub ? 6 : isActive ? 5.5 : 4;
 
         return (
-          <g
+          <m.g
             key={marker.id}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", transformOrigin: `${mx}px ${my}px` }}
             opacity={isVisible ? 1 : 0.07}
+            initial={reduce ? false : { scale: 0, opacity: 0 }}
+            animate={reduce ? {} : { scale: 1, opacity: isVisible ? 1 : 0.07 }}
+            transition={{ duration: 0.5, delay: 0.2 + idx * 0.09, ease: [0.22, 1, 0.36, 1] }}
             onClick={() => onSelect(isActive ? null : marker.id)}
             onMouseEnter={() => onSelect(marker.id)}
             onMouseLeave={() => onSelect(null)}
           >
+            {/* Live-node heartbeat — every active delivery node breathes a slow ring.
+                Support layer: subtle, staggered, paused off-screen + under reduce. */}
+            {!isHub && isVisible && animateTraffic && (
+              <circle
+                cx={mx} cy={my} r={r + 4}
+                fill="none" stroke={color} strokeWidth={0.6}
+                style={{
+                  transformOrigin: `${mx}px ${my}px`,
+                  animation: `map-heartbeat ${isActive ? 3.2 : 4.4}s ease-out infinite`,
+                  animationDelay: `${idx * 0.7}s`,
+                }}
+              />
+            )}
             {/* Hub: two staggered pulse rings */}
-            {isHub && !reduce && (
+            {isHub && !reduce && inView && (
               <>
                 <m.circle cx={mx} cy={my} r={r + 6}
                   fill="none" stroke={color} strokeWidth={0.5}
@@ -240,7 +382,7 @@ function WorldMapChart({ markers, visibleIds, activeId, hubId, onSelect, reduce 
               strokeWidth={isHub ? 2 : 0}
               filter={isHub || isActive ? "url(#glow-hub)" : undefined}
             />
-          </g>
+          </m.g>
         );
       })}
     </svg>
