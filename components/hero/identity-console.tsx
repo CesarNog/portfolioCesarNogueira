@@ -17,6 +17,11 @@ const DELAYS = { badge: 0.1, name: 0.2, desc: 0.38, ctas: 0.52, stats: 0.68, pho
 export function IdentityConsole() {
   const reduce = useReducedMotion();
   const { t, lang } = useI18n();
+  // SSR and first client paint render the full name + non-reduced structure so
+  // the markup matches (and the name is present in SSR HTML for SEO); motion /
+  // reduced-motion branches only take effect after mount.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   const mouseX = useMotionValue(-1000);
   const mouseY = useMotionValue(-1000);
   const spotlight = useMotionTemplate`radial-gradient(520px at ${mouseX}px ${mouseY}px, color-mix(in oklab, var(--color-blue) 5%, transparent) 0%, transparent 70%)`;
@@ -88,7 +93,7 @@ export function IdentityConsole() {
       </div>
 
       {/* Cursor spotlight — follows mouse, GPU-only via motion values */}
-      {!reduce && (
+      {mounted && !reduce && (
         <m.div
           aria-hidden
           className="pointer-events-none absolute inset-0 z-10 lg:block hidden"
@@ -123,13 +128,13 @@ export function IdentityConsole() {
                 aria-label={`${LINE1} Nogueira.`}
               >
                 <span aria-hidden>
-                  {reduce ? LINE1 : typed1}
-                  {!reduce && !done1 && <span className="cursor-blink" />}
+                  {!mounted ? "" : reduce ? LINE1 : typed1}
+                  {mounted && !reduce && !done1 && <span className="cursor-blink" />}
                 </span>
                 <br />
                 <span aria-hidden>
-                  {reduce ? LINE2 : typed2}
-                  {!reduce && done1 && typed2.length < LINE2.length && <span className="cursor-blink" />}
+                  {!mounted ? "" : reduce ? LINE2 : typed2}
+                  {mounted && !reduce && done1 && typed2.length < LINE2.length && <span className="cursor-blink" />}
                 </span>
               </m.h1>
 

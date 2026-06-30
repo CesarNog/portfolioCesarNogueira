@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -75,9 +75,13 @@ function makeBands(mobile: boolean): ContourBand[] {
 export function InfraCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const reduce = useReducedMotion();
+  // SSR and first client paint render the static div regardless of motion
+  // preference; the canvas mounts only after this flips, so the two trees agree.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
-    if (reduce) return;
+    if (reduce || !mounted) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -341,9 +345,9 @@ export function InfraCanvas() {
       document.documentElement.removeEventListener("mouseleave", onMouseLeave);
       document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, [reduce]);
+  }, [reduce, mounted]);
 
-  if (reduce) {
+  if (reduce || !mounted) {
     return (
       <div
         aria-hidden

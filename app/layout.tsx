@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono"
 const interTight = Inter_Tight({ subsets: ["latin"], variable: "--font-inter-tight", display: "swap" });
 const hanken = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken", display: "swap", weight: ["400", "500", "600"] });
 
-const OG_TITLE = `${siteConfig.name} — ${siteConfig.shortRole}`;
+const OG_TITLE = `${siteConfig.name} · ${siteConfig.shortRole}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),

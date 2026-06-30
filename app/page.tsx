@@ -12,7 +12,9 @@ import { Testimonials } from "@/components/sections/testimonials";
 import { MotionToggle } from "@/components/motion-toggle";
 import { siteConfig } from "@/lib/site-config";
 
-// Canvas background — ssr:false handled inside the component
+// Decorative -z-10 canvas background. The component gates its canvas-vs-static
+// render on a mount flag so SSR and first client paint agree (no hydration
+// mismatch for reduced-motion visitors).
 const InfraCanvas = dynamic(
   () => import("@/components/background/infra-canvas").then(m => m.InfraCanvas)
 );

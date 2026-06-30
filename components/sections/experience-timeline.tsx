@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, m, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { Section } from "@/components/sections/section";
 import { experience } from "@/lib/site-config";
@@ -11,6 +11,8 @@ export function ExperienceTimeline() {
   const { t } = useI18n();
   const reduce = useReducedMotion();
   const [open, setOpen] = useState<number | null>(0);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Deployment beam — vertical line fills as user scrolls through section
@@ -33,7 +35,7 @@ export function ExperienceTimeline() {
           aria-hidden
         />
         {/* Deployment beam — blue fill, scroll-driven */}
-        {!reduce && (
+        {mounted && !reduce && (
           <m.div
             className="absolute left-[7px] top-2 w-px origin-top bg-[var(--color-blue)] sm:left-[9px]"
             style={{ height: beamHeight }}
