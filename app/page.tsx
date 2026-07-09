@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import { SiteHeader } from "@/components/site-header";
-import { JsonLd } from "@/components/json-ld";
 import { IdentityConsole } from "@/components/hero/identity-console";
 import { Story } from "@/components/sections/story";
 import { ExperienceTimeline } from "@/components/sections/experience-timeline";
@@ -42,7 +41,6 @@ const Assistant = dynamic(
 export default function Home() {
   return (
     <>
-      <JsonLd />
       <InfraCanvas />
       <SiteHeader />
       <main>

@@ -4,7 +4,7 @@ import { Geist, Geist_Mono, Inter_Tight, Hanken_Grotesk } from "next/font/google
 import { ThemeProvider } from "@/components/theme-provider";
 import { I18nProvider } from "@/lib/i18n";
 import { MotionProvider } from "@/components/motion-provider";
-import { siteConfig } from "@/lib/site-config";
+import { siteConfig, certifications, capabilities } from "@/lib/site-config";
 import { Analytics } from "@/components/analytics";
 import { ConsoleGreeting } from "@/components/ui/console-greeting";
 import "./globals.css";
@@ -98,36 +98,83 @@ export default function RootLayout({
           {`(function(){var b=document.body;document.addEventListener('visibilitychange',function(){b.classList.toggle('tab-hidden',document.hidden);});})();`}
         </Script>
 
-        {/* JSON-LD structured data — Person schema for SEO */}
+        {/* JSON-LD structured data — Person + WebSite + ProfessionalService graph */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Person",
-              name: siteConfig.name,
-              url: siteConfig.url,
-              email: `mailto:${siteConfig.links.email}`,
-              telephone: siteConfig.links.phone,
-              jobTitle: "Principal Cloud Architect",
-              description: siteConfig.description,
-              image: `${siteConfig.url}/portrait.webp`,
-              sameAs: [
-                siteConfig.links.linkedin,
-                siteConfig.links.github,
-                siteConfig.links.x,
+              "@graph": [
+                {
+                  "@type": "Person",
+                  "@id": `${siteConfig.url}/#person`,
+                  name: siteConfig.name,
+                  alternateName: "Cesar Nogueira",
+                  url: siteConfig.url,
+                  email: `mailto:${siteConfig.links.email}`,
+                  telephone: siteConfig.links.phone,
+                  jobTitle: "Principal Cloud Architect",
+                  description: siteConfig.description,
+                  image: `${siteConfig.url}/portrait.webp`,
+                  knowsLanguage: ["en", "pt", "es"],
+                  sameAs: [
+                    siteConfig.links.linkedin,
+                    siteConfig.links.github,
+                    siteConfig.links.x,
+                  ],
+                  worksFor: { "@id": `${siteConfig.url}/#organization` },
+                  address: {
+                    "@type": "PostalAddress",
+                    addressLocality: "Vila Real",
+                    addressCountry: "PT",
+                  },
+                  knowsAbout: siteConfig.knowsAbout,
+                  hasCredential: certifications.flatMap((group) =>
+                    group.items.map((item) => ({
+                      "@type": "EducationalOccupationalCredential",
+                      credentialCategory: "certification",
+                      name: item.name,
+                      recognizedBy: { "@type": "Organization", name: group.group },
+                    })),
+                  ),
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": `${siteConfig.url}/#website`,
+                  url: siteConfig.url,
+                  name: siteConfig.name,
+                  description: siteConfig.description,
+                  inLanguage: ["en", "pt-BR", "es", "fr", "zh"],
+                  publisher: { "@id": `${siteConfig.url}/#person` },
+                },
+                {
+                  "@type": "ProfessionalService",
+                  "@id": `${siteConfig.url}/#organization`,
+                  name: siteConfig.company,
+                  url: siteConfig.url,
+                  description:
+                    "Independent Principal Cloud Architect and FinOps consultancy — multi-cloud architecture, Platform Engineering, DevOps and cloud cost optimization for enterprise teams worldwide.",
+                  image: `${siteConfig.url}/opengraph-image.png`,
+                  email: `mailto:${siteConfig.links.email}`,
+                  telephone: siteConfig.links.phone,
+                  founder: { "@id": `${siteConfig.url}/#person` },
+                  areaServed: "Worldwide",
+                  priceRange: "$$",
+                  knowsAbout: siteConfig.knowsAbout,
+                  hasOfferCatalog: {
+                    "@type": "OfferCatalog",
+                    name: "Cloud Engineering Services",
+                    itemListElement: capabilities.map((cap) => ({
+                      "@type": "Offer",
+                      itemOffered: {
+                        "@type": "Service",
+                        name: cap.area,
+                        description: cap.note,
+                      },
+                    })),
+                  },
+                },
               ],
-              worksFor: {
-                "@type": "Organization",
-                name: siteConfig.company,
-                url: siteConfig.url,
-              },
-              address: {
-                "@type": "PostalAddress",
-                addressLocality: "Vila Real",
-                addressCountry: "PT",
-              },
-              knowsAbout: siteConfig.knowsAbout,
             }),
           }}
         />
