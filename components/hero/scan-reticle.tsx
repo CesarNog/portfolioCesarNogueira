@@ -1,6 +1,5 @@
 "use client";
 
-import { forwardRef } from "react";
 import { useI18n } from "@/lib/i18n";
 
 /**
@@ -13,10 +12,15 @@ import { useI18n } from "@/lib/i18n";
  * prefers-reduced-motion — so the constant spin animations here never reach
  * reduced-motion visitors.
  */
-export const ScanReticle = forwardRef<HTMLDivElement, { className?: string }>(
-  function ScanReticle({ className = "" }, ref) {
-    const { t } = useI18n();
-    const ticks = Array.from({ length: 60 }, (_, i) => (i * 360) / 60);
+export function ScanReticle({
+  className = "",
+  ref,
+}: {
+  className?: string;
+  ref?: React.Ref<HTMLDivElement>;
+}) {
+  const { t } = useI18n();
+  const ticks = Array.from({ length: 60 }, (_, i) => (i * 360) / 60);
 
     return (
       <div ref={ref} className={`pointer-events-none relative ${className}`} aria-hidden>
@@ -96,5 +100,4 @@ export const ScanReticle = forwardRef<HTMLDivElement, { className?: string }>(
         </span>
       </div>
     );
-  },
-);
+}

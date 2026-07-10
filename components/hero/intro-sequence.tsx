@@ -56,6 +56,12 @@ export function IntroSequence() {
   const iconsRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef(0);
 
+  // Documented exception to the "Motion for all animation" rule: this scene
+  // needs scroll PINNING + scrubbed timeline orchestration, which GSAP
+  // ScrollTrigger provides and Motion's useScroll/useTransform do not
+  // (no pin primitive; the reference implementation also found framer's
+  // useScroll unreliable on a pinned track). GSAP is scoped to this one
+  // component; everything else on the site stays on Motion.
   useEffect(() => {
     if (reduce) return;
     gsap.registerPlugin(ScrollTrigger);
