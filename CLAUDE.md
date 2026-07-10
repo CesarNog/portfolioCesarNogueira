@@ -61,18 +61,24 @@ client outcomes).
 
 ### Key components
 - `hero/intro-sequence.tsx` — cinematic scroll-scrubbed opener that plays
-  **before** the hero: a pinned `h-[260vh]` track (GSAP `ScrollTrigger`, `pin`
-  + `scrub`) where a 3D "cloud core" — modular glowing server/container blocks
-  (`hero/scene3d/CloudCore.tsx`) — assembles from scattered positions into a
-  cloud silhouette as the visitor scrolls, then hands off cleanly into the
-  unmodified `IdentityConsole` below. Purely atmospheric (carries no unique
-  content), so `prefers-reduced-motion` visitors get `null` — zero added
-  height, no WebGL ever fetched — rather than a static substitute.
-  `scene3d/blocks-data.ts` defines block positions/scatter deterministically
-  (no `Math.random()` in render, same hydration-safety rule as the rest of
-  the site). Progress is read via a ref inside `useFrame` (no React
-  re-renders per scroll tick) — the DOM status-label crossfade is driven by
-  the same GSAP timeline directly, not React state.
+  **before** the hero: a short pinned `h-[120vh]` track (GSAP `ScrollTrigger`,
+  `pin` + `scrub`) where a 3D "cloud core" — modular glowing server/container
+  blocks (`hero/scene3d/CloudCore.tsx`), single blue accent per the
+  Domain-Color Rule below — assembles from scattered positions into a cloud
+  silhouette as the visitor scrolls, then hands off cleanly into the
+  unmodified `IdentityConsole` below. No status-readout text or terminal-
+  style copy: PRODUCT.md names "fake terminal boot sequences" as rejected
+  AI-portfolio-syndrome, and an earlier draft had exactly that (cycling
+  TERRAFORM/KUBERNETES/... labels) — cut after a design critique. Kept short
+  (120vh, not the original 260vh) so it doesn't eat into the ~10-second scan
+  recruiters give the page (PRODUCT.md user research) — "person before
+  product" (Design Principle #1) still means the name/photo arrive quickly.
+  Purely atmospheric (carries no unique content), so `prefers-reduced-motion`
+  visitors get `null` — zero added height, no WebGL ever fetched — rather
+  than a static substitute. `scene3d/blocks-data.ts` defines block
+  positions/scatter deterministically (no `Math.random()` in render, same
+  hydration-safety rule as the rest of the site). Progress is read via a ref
+  inside `useFrame` (no React re-renders per scroll tick).
 - `hero/identity-console.tsx` — **the hero**. Typewriter-types the name
   (`use-typewriter`), cursor-follow radial spotlight gradient
   (`useMotionValue`/`useMotionTemplate`), staggered entrance (badge → name →

@@ -1,13 +1,11 @@
 import * as THREE from "three";
 
-// Mirrors the site's dark-mode CSS tokens (app/globals.css): --color-blue,
-// --color-cyan, --color-orange. Kept as plain hex since three.js materials
-// don't read CSS custom properties.
-export const ACCENT_HEX = {
-  blue: "#3b82f6",
-  cyan: "#22b8c4",
-  orange: "#f59e5b",
-} as const;
+// Single accent for the whole scene: blue = architecture, per this
+// project's Domain-Color Rule (DESIGN.md) — each accent maps to one
+// technical domain and the three are never mixed decoratively on one
+// element. Mirrors --color-blue in app/globals.css (kept as a plain hex
+// since three.js materials don't read CSS custom properties).
+const ACCENT_BLUE = "#3b82f6";
 
 export function chassisMaterial() {
   return new THREE.MeshStandardMaterial({
@@ -17,11 +15,10 @@ export function chassisMaterial() {
   });
 }
 
-export function accentMaterial(accent: keyof typeof ACCENT_HEX, emissiveIntensity = 0.9) {
-  const hex = ACCENT_HEX[accent];
+export function accentMaterial(emissiveIntensity = 0.9) {
   return new THREE.MeshStandardMaterial({
-    color: hex,
-    emissive: hex,
+    color: ACCENT_BLUE,
+    emissive: ACCENT_BLUE,
     emissiveIntensity,
     metalness: 0.2,
     roughness: 0.4,
@@ -30,8 +27,8 @@ export function accentMaterial(accent: keyof typeof ACCENT_HEX, emissiveIntensit
 
 export function coreMaterial() {
   return new THREE.MeshStandardMaterial({
-    color: "#22b8c4",
-    emissive: "#22b8c4",
+    color: ACCENT_BLUE,
+    emissive: ACCENT_BLUE,
     emissiveIntensity: 1,
     metalness: 0.1,
     roughness: 0.2,

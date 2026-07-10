@@ -23,13 +23,12 @@ function smoothstep(edge0: number, edge1: number, x: number) {
 const SPAN = 0.5; // fraction of assembly progress each block's own animation takes
 
 type ProgressRef = React.MutableRefObject<number>;
+type SharedMaterials = { chassis: THREE.Material; accent: THREE.Material };
 
-function Block({ index, progressRef }: { index: number; progressRef: ProgressRef }) {
+function Block({ index, progressRef, materials }: { index: number; progressRef: ProgressRef; materials: SharedMaterials }) {
   const def = BLOCKS[index];
   const groupRef = useRef<THREE.Group>(null);
   const [sx, sy, sz, srx, sry, srz] = useMemo(() => scatterOffset(index), [index]);
-  const chassis = useMemo(() => chassisMaterial(), []);
-  const accent = useMemo(() => accentMaterial(def.accent), [def.accent]);
 
   useFrame(() => {
     const g = groupRef.current;
@@ -49,9 +48,9 @@ function Block({ index, progressRef }: { index: number; progressRef: ProgressRef
 
   return (
     <group ref={groupRef}>
-      <RoundedBox args={[0.95, 0.6, 0.95]} radius={0.06} smoothness={2} scale={def.scale} material={chassis} />
+      <RoundedBox args={[0.95, 0.6, 0.95]} radius={0.06} smoothness={2} scale={def.scale} material={materials.chassis} />
       {/* accent strip on the front face — reads as a glowing panel light */}
-      <mesh position={[0, 0, 0.48 * def.scale]} material={accent}>
+      <mesh position={[0, 0, 0.48 * def.scale]} material={materials.accent}>
         <boxGeometry args={[0.62 * def.scale, 0.1 * def.scale, 0.02]} />
       </mesh>
     </group>
@@ -59,9 +58,12 @@ function Block({ index, progressRef }: { index: number; progressRef: ProgressRef
 }
 
 export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
+  const chassis = useMemo(() => chassisMaterial(), []);
+  const accent = useMemo(() => accentMaterial(), []);
   const coreMat = useMemo(() => coreMaterial(), []);
   const coreRef = useRef<THREE.Mesh>(null);
   const lightRef = useRef<THREE.PointLight>(null);
+  const materials = useMemo(() => ({ chassis, accent }), [chassis, accent]);
 
   useFrame(() => {
     const p = progressRef.current;
@@ -79,10 +81,10 @@ export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
 
   return (
     <group>
-      <pointLight ref={lightRef} position={[0, 0, 0]} color="#22b8c4" intensity={1.2} distance={8} />
+      <pointLight ref={lightRef} position={[0, 0, 0]} color="#3b82f6" intensity={1.2} distance={8} />
       <Icosahedron ref={coreRef} args={[0.32, 1]} material={coreMat} />
       {BLOCKS.map((_, i) => (
-        <Block key={i} index={i} progressRef={progressRef} />
+        <Block key={i} index={i} progressRef={progressRef} materials={materials} />
       ))}
     </group>
   );
