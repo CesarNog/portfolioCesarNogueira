@@ -23,8 +23,8 @@ const ORBIT_ICONS = [
   { src: "/icons/azure.svg", name: "Azure", x: 78, y: 30 },
   { src: "/icons/gcp.svg", name: "GCP", x: 14, y: 62 },
   { src: "/icons/kubernetes.svg", name: "Kubernetes", x: 84, y: 60 },
-  { src: "/icons/terraform.svg", name: "Terraform", x: 30, y: 82 },
-  { src: "/icons/docker.svg", name: "Docker", x: 68, y: 84 },
+  { src: "/icons/terraform.svg", name: "Terraform", x: 32, y: 76 },
+  { src: "/icons/docker.svg", name: "Docker", x: 66, y: 78 },
 ];
 
 /**
@@ -111,7 +111,7 @@ export function IntroSequence() {
     <div ref={trackRef} className="relative h-[220vh]" aria-hidden>
       <div ref={stageRef} className="relative h-dvh w-full overflow-hidden bg-[var(--color-surface-0)]">
         {/* 3D scene — faint at rest so the identity block owns the first read */}
-        <div ref={canvasWrapRef} className="absolute inset-0" style={{ opacity: 0.22 }}>
+        <div ref={canvasWrapRef} className="absolute inset-0" style={{ opacity: 0.16 }}>
           <HeroCanvas progressRef={progressRef} />
         </div>
 
