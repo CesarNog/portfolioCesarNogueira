@@ -80,6 +80,11 @@ export const metadata: Metadata = {
       "x-default": siteConfig.url,
     },
   },
+  // Google Search Console ownership verification (HTML tag method) —
+  // set NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION in Vercel to enable.
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
+    : {}),
 };
 
 export const viewport = { themeColor: "#08090c" };
