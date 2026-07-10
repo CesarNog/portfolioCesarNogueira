@@ -37,10 +37,11 @@ client outcomes).
   render the same final content (no motion-only information).
 
 ## Architecture
-- `lib/site-config.ts` — **single source of truth** for ALL portfolio content
+- `lib/site-config.ts` — **single source of truth** for portfolio/domain content
   (`siteConfig`, `stats`, `experience`, `certifications`, `galaxy`, `projects`,
   `finops`, `testimonials`, `faq`, `knowledgeBase`, `globalPresence`,
-  `capabilities`). Edit content here, never inline in components.
+  `capabilities`). Edit domain data here, never inline in components —
+  localized UI copy lives separately in `lib/i18n.tsx` (below).
 - `lib/i18n.tsx` — full dictionary-based i18n (EN/PT-BR/ES/FR/ZH), `I18nProvider`
   + `useI18n()`. No external i18n framework — plain object dictionaries per
   language, ~2400 lines (this is the single biggest file in the repo; expect
@@ -109,10 +110,14 @@ Real testimonials from named colleagues (CI&T, Apollo Group, Eldorado Research
 Institute, RealWorksBV).
 
 ## Environment variables
-`NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_GOOGLE_ADS_ID`, `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`,
-`NEXT_PUBLIC_HOTJAR_ID` — all optional, gate cleanly (site works identically
-unset). `GROQ_API_KEY` / `GROK_API_KEY` + `GROK_MODEL`/`GROQ_MODEL` — chatbot
-backend, set in Vercel project settings, never committed.
+`NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_GOOGLE_ADS_ID`, `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`
+are optional and gate cleanly (those features are inert unset). `NEXT_PUBLIC_HOTJAR_ID`
+is **not** a kill switch — `components/analytics.tsx` falls back to the
+registered site ID (`173193`) when it's unset, so Hotjar tracking is always
+active in production regardless of this var; it only lets you point tracking
+at a *different* Hotjar site ID. `GROQ_API_KEY` / `GROK_API_KEY` +
+`GROK_MODEL`/`GROQ_MODEL` — chatbot backend, set in Vercel project settings,
+never committed.
 
 ## Open items / TODO
 - (none tracked here currently — see `MEMORY.md` for session-to-session state
