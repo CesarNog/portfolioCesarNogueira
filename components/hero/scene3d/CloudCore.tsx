@@ -1,11 +1,11 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { RoundedBox, Icosahedron } from "@react-three/drei";
 import * as THREE from "three";
 import { BLOCKS, scatterOffset } from "./blocks-data";
-import { chassisMaterial, accentMaterial, coreMaterial } from "./materials";
+import { chassisMaterial, accentMaterial, coreMaterial, ACCENT_BLUE } from "./materials";
 
 function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
@@ -65,6 +65,17 @@ export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
   const lightRef = useRef<THREE.PointLight>(null);
   const materials = useMemo(() => ({ chassis, accent }), [chassis, accent]);
 
+  // Materials created outside R3F's reconciler aren't auto-disposed —
+  // free the GPU resources if the scene ever unmounts (e.g. a live
+  // prefers-reduced-motion toggle).
+  useEffect(() => {
+    return () => {
+      chassis.dispose();
+      accent.dispose();
+      coreMat.dispose();
+    };
+  }, [chassis, accent, coreMat]);
+
   useFrame(() => {
     const p = progressRef.current;
     const ignite = smoothstep(0.82, 0.96, p);
@@ -81,7 +92,7 @@ export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
 
   return (
     <group>
-      <pointLight ref={lightRef} position={[0, 0, 0]} color="#3b82f6" intensity={1.2} distance={8} />
+      <pointLight ref={lightRef} position={[0, 0, 0]} color={ACCENT_BLUE} intensity={1.2} distance={8} />
       <Icosahedron ref={coreRef} args={[0.32, 1]} material={coreMat} />
       {BLOCKS.map((_, i) => (
         <Block key={i} index={i} progressRef={progressRef} materials={materials} />

@@ -5,7 +5,7 @@ import * as THREE from "three";
 // technical domain and the three are never mixed decoratively on one
 // element. Mirrors --color-blue in app/globals.css (kept as a plain hex
 // since three.js materials don't read CSS custom properties).
-const ACCENT_BLUE = "#3b82f6";
+export const ACCENT_BLUE = "#3b82f6";
 
 export function chassisMaterial() {
   return new THREE.MeshStandardMaterial({
