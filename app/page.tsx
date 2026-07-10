@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import { SiteHeader } from "@/components/site-header";
+import { IntroSequence } from "@/components/hero/intro-sequence";
 import { IdentityConsole } from "@/components/hero/identity-console";
 import { Story } from "@/components/sections/story";
 import { ExperienceTimeline } from "@/components/sections/experience-timeline";
@@ -46,6 +47,7 @@ export default function Home() {
       <InfraCanvas />
       <SiteHeader />
       <main>
+        <IntroSequence />
         <IdentityConsole />
         <Story />
         <ExperienceTimeline />
