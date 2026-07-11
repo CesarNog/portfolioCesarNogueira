@@ -2,7 +2,7 @@ import Script from "next/script";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 import { WebVitalsReporter } from "@/components/web-vitals-reporter";
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-SQR8VVTFEK';
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 // Falls back to the registered site ID so Hotjar is always active even without an env var
 const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID || "173193";
