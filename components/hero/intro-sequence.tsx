@@ -171,11 +171,12 @@ export function IntroSequence() {
           </svg>
         </div>
 
-        {/* Connection lines — draw from the core out to each icon as it
+        {/* Connection lines — revealed from the core outward as each icon
             arrives, resolving the finale into an architecture diagram.
-            pathLength=1 normalizes every line so a single dashoffset 1→0
-            tween draws it regardless of true length; non-scaling-stroke
-            keeps the 1px weight despite the stretched viewBox. */}
+            Visibility is gated by a per-line opacity tween in segment C (see
+            the quirk note on the <line> elements for why a dashoffset "draw"
+            doesn't work here); non-scaling-stroke keeps the 1px weight
+            despite the stretched viewBox. */}
         <svg
           ref={linesRef}
           className="pointer-events-none absolute inset-0 h-full w-full"
