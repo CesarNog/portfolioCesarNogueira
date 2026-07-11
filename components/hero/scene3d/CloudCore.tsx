@@ -98,6 +98,13 @@ export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
       const idle = Math.sin(state.clock.elapsedTime * 0.18) * 0.02;
       rootRef.current.rotation.y = THREE.MathUtils.lerp(-0.38, 0.0, easeOutCubic(clamp01(p * 1.15))) + idle;
       rootRef.current.rotation.x = THREE.MathUtils.lerp(0.07, 0.0, clamp01(p * 1.3));
+      // Aspect-aware fit: the framing is tuned for wide viewports; on
+      // narrow/portrait screens the outer blocks crop at the edges, so
+      // scale the whole scene down proportionally (found via 390px-wide
+      // screenshot review).
+      const aspect = state.viewport.aspect;
+      const fit = THREE.MathUtils.clamp(aspect / 1.15, 0.44, 1);
+      rootRef.current.scale.setScalar(fit);
     }
 
     // Camera dolly: gentle push-in as the assembly completes — cinema on

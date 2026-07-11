@@ -163,7 +163,7 @@ export function IntroSequence() {
         {/* Scroll prompt — bottom center */}
         <div
           ref={scrollHintRef}
-          className="absolute inset-x-0 bottom-8 flex flex-col items-center gap-1.5 text-[var(--color-fg-subtle)]"
+          className="absolute inset-x-0 bottom-24 flex flex-col items-center gap-1.5 text-[var(--color-fg-subtle)] sm:bottom-8"
         >
           <span className="font-mono text-[10px] uppercase tracking-[0.3em]">{t.intro.scroll}</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="animate-float">
