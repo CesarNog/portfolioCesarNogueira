@@ -15,7 +15,12 @@ client outcomes).
 ## Stack & conventions
 - **Next.js 16 (App Router)** + TypeScript + **Tailwind CSS v4** (CSS-first
   tokens, no `tailwind.config.js`) + **Motion** (Framer Motion's `motion/react`
-  package) for all animation — no Three.js/WebGL, no GSAP.
+  package) for all animation. **Three.js / React-Three-Fiber + drei +
+  postprocessing (Bloom) + GSAP ScrollTrigger** power one scene only — the
+  `IntroSequence` scroll-scrubbed hero opener (`components/hero/scene3d/`) —
+  everything else on the site stays Motion/CSS/Canvas2D as before. Adds ~320KB
+  gzip as a client-only lazy chunk (never fetched under reduced-motion, since
+  `IntroSequence` returns `null` before it would render).
 - Deployed to **Vercel** (full Next.js runtime, not a static export — `/api/ask`
   and `/api/contact` are real serverless routes). `npm run dev` →
   http://localhost:3000. `npm run build` must pass; `.github/workflows/ci.yml`
@@ -49,12 +54,31 @@ client outcomes).
 - `lib/motion.ts` — shared easing/duration tokens + `buttonPress` variant.
 - `hooks/use-typewriter.ts` — the hero name's character-by-character reveal.
 - `app/page.tsx` order: `SiteHeader` → `InfraCanvas` (background) → main[
-  `IdentityConsole`, `Story`, `ExperienceTimeline`, `Projects`, `Trust`,
-  `GlobalMap`, `CapabilityMatrix`, `Certifications`, `CloudGalaxy`,
+  `IntroSequence`, `IdentityConsole`, `Story`, `ExperienceTimeline`, `Projects`,
+  `Trust`, `GlobalMap`, `CapabilityMatrix`, `Certifications`, `CloudGalaxy`,
   `Testimonials`, `ContactConsole` ] → footer → `CommandPalette`,
   `RecruiterMode`, `Assistant` (chat widget, mounted last/lazily).
 
 ### Key components
+- `hero/intro-sequence.tsx` — cinematic scroll-scrubbed opener that plays
+  **before** the hero: a short pinned `h-[120vh]` track (GSAP `ScrollTrigger`,
+  `pin` + `scrub`) where a 3D "cloud core" — modular glowing server/container
+  blocks (`hero/scene3d/CloudCore.tsx`), single blue accent per the
+  Domain-Color Rule below — assembles from scattered positions into a cloud
+  silhouette as the visitor scrolls, then hands off cleanly into the
+  unmodified `IdentityConsole` below. No status-readout text or terminal-
+  style copy: PRODUCT.md names "fake terminal boot sequences" as rejected
+  AI-portfolio-syndrome, and an earlier draft had exactly that (cycling
+  TERRAFORM/KUBERNETES/... labels) — cut after a design critique. Kept short
+  (120vh, not the original 260vh) so it doesn't eat into the ~10-second scan
+  recruiters give the page (PRODUCT.md user research) — "person before
+  product" (Design Principle #1) still means the name/photo arrive quickly.
+  Purely atmospheric (carries no unique content), so `prefers-reduced-motion`
+  visitors get `null` — zero added height, no WebGL ever fetched — rather
+  than a static substitute. `scene3d/blocks-data.ts` defines block
+  positions/scatter deterministically (no `Math.random()` in render, same
+  hydration-safety rule as the rest of the site). Progress is read via a ref
+  inside `useFrame` (no React re-renders per scroll tick).
 - `hero/identity-console.tsx` — **the hero**. Typewriter-types the name
   (`use-typewriter`), cursor-follow radial spotlight gradient
   (`useMotionValue`/`useMotionTemplate`), staggered entrance (badge → name →

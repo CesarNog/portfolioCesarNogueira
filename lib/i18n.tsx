@@ -23,6 +23,12 @@ type SectionCopy = { label: string; title: string; intro?: string };
 
 type Dict = {
   nav: Record<string, string>;
+  intro: {
+    welcome: string;
+    scroll: string;
+    scan: string;
+    calibrating: string;
+  };
   hero: {
     available: string;
     roleLine: string;
@@ -240,6 +246,12 @@ const en: Dict = {
     trust: "Trust",
     global: "Global",
     contact: "Contact",
+  },
+  intro: {
+    welcome: "Welcome to the cloud,",
+    scroll: "Scroll to initialize",
+    scan: "INFRA SCAN",
+    calibrating: "CALIBRATING",
   },
   hero: {
     available: "Available for global consulting",
@@ -677,6 +689,12 @@ const pt: Dict = {
     global: "Global",
     contact: "Contato",
   },
+  intro: {
+    welcome: "Bem-vindo à nuvem,",
+    scroll: "Role para iniciar",
+    scan: "SCAN DE INFRA",
+    calibrating: "CALIBRANDO",
+  },
   hero: {
     available: "Disponível para consultoria global",
     roleLine: "Cloud · DevOps · FinOps · Infraestrutura de IA",
@@ -1112,6 +1130,12 @@ const es: Dict = {
     trust: "Confianza",
     global: "Global",
     contact: "Contacto",
+  },
+  intro: {
+    welcome: "Bienvenido a la nube,",
+    scroll: "Desplázate para iniciar",
+    scan: "ESCANEO DE INFRA",
+    calibrating: "CALIBRANDO",
   },
   hero: {
     available: "Disponible para consultoría global",
@@ -1549,6 +1573,12 @@ const fr: Dict = {
     global: "Global",
     contact: "Contact",
   },
+  intro: {
+    welcome: "Bienvenue dans le cloud,",
+    scroll: "Faites défiler pour lancer",
+    scan: "SCAN INFRA",
+    calibrating: "CALIBRAGE",
+  },
   hero: {
     available: "Disponible pour des missions de conseil",
     roleLine: "Cloud · DevOps · FinOps · Infrastructure IA",
@@ -1984,6 +2014,12 @@ const zh: Dict = {
     trust: "信任",
     global: "全球",
     contact: "联系",
+  },
+  intro: {
+    welcome: "欢迎来到云端，",
+    scroll: "滚动以启动",
+    scan: "基础设施扫描",
+    calibrating: "校准中",
   },
   hero: {
     available: "可提供全球咨询服务",
