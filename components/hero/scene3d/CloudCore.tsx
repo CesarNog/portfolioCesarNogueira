@@ -30,6 +30,8 @@ function Block({ index, progressRef, materials }: { index: number; progressRef: 
   const groupRef = useRef<THREE.Group>(null);
   const [sx, sy, sz, srx, sry, srz] = useMemo(() => scatterOffset(index), [index]);
 
+  const stripRef = useRef<THREE.Mesh>(null);
+
   useFrame((state) => {
     const g = groupRef.current;
     if (!g) return;
@@ -47,13 +49,19 @@ function Block({ index, progressRef, materials }: { index: number; progressRef: 
       THREE.MathUtils.lerp(sry, 0, t),
       THREE.MathUtils.lerp(srz, 0, t),
     );
+    // Boot-up: the accent strip "powers on" (expands from center) only as
+    // its block docks — dark chassis flying in, lights coming online.
+    if (stripRef.current) {
+      const boot = smoothstep(0.72, 0.98, t);
+      stripRef.current.scale.set(Math.max(boot, 0.001), 1, 1);
+    }
   });
 
   return (
     <group ref={groupRef}>
       <RoundedBox args={[0.95, 0.6, 0.95]} radius={0.06} smoothness={2} scale={def.scale} material={materials.chassis} />
       {/* accent strip on the front face — reads as a glowing panel light */}
-      <mesh position={[0, 0, 0.48 * def.scale]} material={materials.accent}>
+      <mesh ref={stripRef} position={[0, 0, 0.48 * def.scale]} material={materials.accent}>
         <boxGeometry args={[0.62 * def.scale, 0.1 * def.scale, 0.02]} />
       </mesh>
     </group>
@@ -91,6 +99,12 @@ export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
       rootRef.current.rotation.y = THREE.MathUtils.lerp(-0.38, 0.0, easeOutCubic(clamp01(p * 1.15))) + idle;
       rootRef.current.rotation.x = THREE.MathUtils.lerp(0.07, 0.0, clamp01(p * 1.3));
     }
+
+    // Camera dolly: gentle push-in as the assembly completes — cinema on
+    // the scrub, not just object motion.
+    state.camera.position.z = 8.4 - easeOutCubic(clamp01(p * 1.1)) * 0.9;
+    state.camera.position.y = 0.35 - clamp01(p) * 0.15;
+    state.camera.lookAt(0, 0.05, 0);
 
     const ignite = smoothstep(0.82, 0.96, p);
     const calm = 1 - smoothstep(0.96, 1, p) * 0.35;

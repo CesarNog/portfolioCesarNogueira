@@ -54,6 +54,7 @@ export function IntroSequence() {
   const reticleRef = useRef<HTMLDivElement>(null);
   const scrollHintRef = useRef<HTMLDivElement>(null);
   const iconsRef = useRef<HTMLDivElement>(null);
+  const linesRef = useRef<SVGSVGElement>(null);
   const progressRef = useRef(0);
 
   // Documented exception to the "Motion for all animation" rule: this scene
@@ -94,7 +95,19 @@ export function IntroSequence() {
       // Canvas ramps from faint backdrop to full presence for the assembly.
       tl.to(canvasWrapRef.current, { opacity: 1, duration: 0.28, ease: "power1.inOut" }, 0.1);
 
-      // Segment C: provider icons orbit in around the assembled cloud.
+      // Segment C: provider icons orbit in around the assembled cloud, each
+      // preceded by its connection line drawing outward from the core — the
+      // finale resolves into a materializing architecture diagram.
+      if (linesRef.current) {
+        const lines = Array.from(linesRef.current.querySelectorAll("line"));
+        lines.forEach((line, i) => {
+          tl.to(
+            line,
+            { attr: { "stroke-dashoffset": 0 }, duration: 0.07, ease: "power1.out" },
+            0.72 + i * 0.035,
+          );
+        });
+      }
       if (iconsRef.current) {
         const chips = Array.from(iconsRef.current.children);
         chips.forEach((chip, i) => {
@@ -157,6 +170,38 @@ export function IntroSequence() {
             <polyline points="6 9 12 15 18 9" />
           </svg>
         </div>
+
+        {/* Connection lines — draw from the core out to each icon as it
+            arrives, resolving the finale into an architecture diagram.
+            pathLength=1 normalizes every line so a single dashoffset 1→0
+            tween draws it regardless of true length; non-scaling-stroke
+            keeps the 1px weight despite the stretched viewBox. */}
+        <svg
+          ref={linesRef}
+          className="pointer-events-none absolute inset-0 h-full w-full"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
+          {ORBIT_ICONS.map((icon) => {
+            // Start each line 16% of the way out from center so they don't
+            // converge through the core in an asterisk — they emanate from
+            // just outside the ignited sphere instead.
+            const x1 = (50 + (icon.x - 50) * 0.16).toFixed(2);
+            const y1 = (52 + (icon.y - 52) * 0.16).toFixed(2);
+            return (
+              <line
+                key={icon.name}
+                x1={x1} y1={y1} x2={icon.x} y2={icon.y}
+                pathLength={1}
+                strokeDasharray="1"
+                strokeDashoffset="1"
+                stroke="var(--color-blue)"
+                strokeOpacity="0.3"
+                vectorEffect="non-scaling-stroke"
+              />
+            );
+          })}
+        </svg>
 
         {/* Provider/DevOps icon orbit — revealed as the cloud finishes assembling */}
         <div ref={iconsRef} className="absolute inset-0">
