@@ -19,12 +19,12 @@ const HeroCanvas = dynamic(
 // final segment. Local SVGs (devicon, MIT) — no runtime CDN dependency.
 // Positions are % of the stage, ringed around the centered 3D cloud.
 const ORBIT_ICONS = [
-  { src: "/icons/aws.svg", name: "AWS", x: 20, y: 34 },
-  { src: "/icons/azure.svg", name: "Azure", x: 78, y: 30 },
-  { src: "/icons/gcp.svg", name: "GCP", x: 14, y: 62 },
-  { src: "/icons/kubernetes.svg", name: "Kubernetes", x: 84, y: 60 },
-  { src: "/icons/terraform.svg", name: "Terraform", x: 32, y: 76 },
-  { src: "/icons/docker.svg", name: "Docker", x: 66, y: 78 },
+  { src: "/icons/aws.svg", name: "AWS", x: 25, y: 31 },
+  { src: "/icons/azure.svg", name: "Azure", x: 75, y: 29 },
+  { src: "/icons/gcp.svg", name: "GCP", x: 19, y: 59 },
+  { src: "/icons/kubernetes.svg", name: "Kubernetes", x: 81, y: 57 },
+  { src: "/icons/terraform.svg", name: "Terraform", x: 34, y: 80 },
+  { src: "/icons/docker.svg", name: "Docker", x: 66, y: 81 },
 ];
 
 /**
@@ -103,7 +103,7 @@ export function IntroSequence() {
         lines.forEach((line, i) => {
           tl.to(
             line,
-            { attr: { "stroke-dashoffset": 0 }, duration: 0.07, ease: "power1.out" },
+            { opacity: 1, duration: 0.06, ease: "power1.out" },
             0.72 + i * 0.035,
           );
         });
@@ -192,12 +192,18 @@ export function IntroSequence() {
               <line
                 key={icon.name}
                 x1={x1} y1={y1} x2={icon.x} y2={icon.y}
-                pathLength={1}
-                strokeDasharray="1"
-                strokeDashoffset="1"
+                // Dashed on purpose: dotted links are the standard visual for
+                // network connections in architecture diagrams. Screen-space
+                // dashes via non-scaling-stroke; visibility gated by an
+                // opacity tween in segment C (a dashoffset "draw" trick does
+                // NOT work here — non-scaling-stroke makes dash patterns
+                // screen-space, ignoring pathLength normalization, which
+                // leaked faint dashed rays over the at-rest identity block).
+                strokeDasharray="5 7"
                 stroke="var(--color-blue)"
-                strokeOpacity="0.3"
+                strokeOpacity="0.45"
                 vectorEffect="non-scaling-stroke"
+                style={{ opacity: 0 }}
               />
             );
           })}
@@ -208,8 +214,14 @@ export function IntroSequence() {
           {ORBIT_ICONS.map((icon) => (
             <div
               key={icon.name}
-              className="absolute flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-lg border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)]/80 p-2.5 opacity-0"
-              style={{ left: `${icon.x}%`, top: `${icon.y}%` }}
+              className="absolute flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-lg border bg-[var(--color-surface-1)]/80 p-2.5 opacity-0"
+              style={{
+                left: `${icon.x}%`,
+                top: `${icon.y}%`,
+                // Blue-tinted border ties the endpoint chips to the diagram's
+                // connection lines — they read as part of one system.
+                borderColor: "color-mix(in oklab, var(--color-blue) 35%, var(--color-hairline-strong))",
+              }}
             >
               <Image src={icon.src} alt="" width={34} height={34} unoptimized />
             </div>
