@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { RoundedBox, Icosahedron } from "@react-three/drei";
+import { RoundedBox, Icosahedron, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
 import { BLOCKS, scatterOffset } from "./blocks-data";
 import { chassisMaterial, accentMaterial, coreMaterial, ACCENT_BLUE } from "./materials";
@@ -30,13 +30,16 @@ function Block({ index, progressRef, materials }: { index: number; progressRef: 
   const groupRef = useRef<THREE.Group>(null);
   const [sx, sy, sz, srx, sry, srz] = useMemo(() => scatterOffset(index), [index]);
 
-  useFrame(() => {
+  useFrame((state) => {
     const g = groupRef.current;
     if (!g) return;
     const t = easeOutCubic(clamp01((progressRef.current - def.delay) / SPAN));
+    // Idle "breathing": a tiny per-block bob that grows in as the block
+    // settles — the assembled cloud reads as a live, running system.
+    const bob = Math.sin(state.clock.elapsedTime * 0.9 + index * 1.7) * 0.04 * t;
     g.position.set(
       THREE.MathUtils.lerp(sx, def.pos[0], t),
-      THREE.MathUtils.lerp(sy, def.pos[1], t),
+      THREE.MathUtils.lerp(sy, def.pos[1], t) + bob,
       THREE.MathUtils.lerp(sz, def.pos[2], t),
     );
     g.rotation.set(
@@ -61,6 +64,7 @@ export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
   const chassis = useMemo(() => chassisMaterial(), []);
   const accent = useMemo(() => accentMaterial(), []);
   const coreMat = useMemo(() => coreMaterial(), []);
+  const rootRef = useRef<THREE.Group>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const lightRef = useRef<THREE.PointLight>(null);
   const materials = useMemo(() => ({ chassis, accent }), [chassis, accent]);
@@ -76,8 +80,18 @@ export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
     };
   }, [chassis, accent, coreMat]);
 
-  useFrame(() => {
+  useFrame((state) => {
     const p = progressRef.current;
+
+    // The whole cloud yaws in as it assembles and settles level at
+    // completion — parallax depth on the scrub, plus a whisper of idle
+    // drift so the finished scene never freezes.
+    if (rootRef.current) {
+      const idle = Math.sin(state.clock.elapsedTime * 0.18) * 0.02;
+      rootRef.current.rotation.y = THREE.MathUtils.lerp(-0.38, 0.0, easeOutCubic(clamp01(p * 1.15))) + idle;
+      rootRef.current.rotation.x = THREE.MathUtils.lerp(0.07, 0.0, clamp01(p * 1.3));
+    }
+
     const ignite = smoothstep(0.82, 0.96, p);
     const calm = 1 - smoothstep(0.96, 1, p) * 0.35;
     const intensity = (0.6 + ignite * 3) * calm;
@@ -91,7 +105,11 @@ export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
   });
 
   return (
-    <group>
+    <group ref={rootRef}>
+      {/* Sparse ambient particle field behind the cloud — atmosphere/depth.
+          Client-only canvas (ssr:false), so drei's internal randomness here
+          can't cause a hydration mismatch. */}
+      <Sparkles count={70} scale={[9, 5.5, 5]} position={[0, 0.1, -1.2]} size={1.6} speed={0.25} opacity={0.35} color={ACCENT_BLUE} />
       <pointLight ref={lightRef} position={[0, 0, 0]} color={ACCENT_BLUE} intensity={1.2} distance={8} />
       <Icosahedron ref={coreRef} args={[0.32, 1]} material={coreMat} />
       {BLOCKS.map((_, i) => (
