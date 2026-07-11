@@ -15,7 +15,7 @@ export function chassisMaterial() {
   });
 }
 
-export function accentMaterial(emissiveIntensity = 0.9) {
+export function accentMaterial(emissiveIntensity = 1.05) {
   return new THREE.MeshStandardMaterial({
     color: ACCENT_BLUE,
     emissive: ACCENT_BLUE,

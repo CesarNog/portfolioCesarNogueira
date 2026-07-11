@@ -130,7 +130,7 @@ export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
       {/* Sparse ambient particle field behind the cloud — atmosphere/depth.
           Client-only canvas (ssr:false), so drei's internal randomness here
           can't cause a hydration mismatch. */}
-      <Sparkles count={70} scale={[9, 5.5, 5]} position={[0, 0.1, -1.2]} size={1.6} speed={0.25} opacity={0.35} color={ACCENT_BLUE} />
+      <Sparkles count={90} scale={[9, 5.5, 5]} position={[0, 0.1, -1.2]} size={1.9} speed={0.25} opacity={0.35} color={ACCENT_BLUE} />
       <pointLight ref={lightRef} position={[0, 0, 0]} color={ACCENT_BLUE} intensity={1.2} distance={8} />
       <Icosahedron ref={coreRef} args={[0.32, 1]} material={coreMat} />
       {BLOCKS.map((_, i) => (
