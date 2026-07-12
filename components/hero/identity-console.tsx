@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { m, useMotionTemplate, useMotionValue, useReducedMotion } from "motion/react";
 import { siteConfig, stats, cvByLang } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
@@ -26,18 +26,49 @@ export function IdentityConsole() {
   const mouseY = useMotionValue(-1000);
   const spotlight = useMotionTemplate`radial-gradient(520px at ${mouseX}px ${mouseY}px, color-mix(in oklab, var(--color-blue) 5%, transparent) 0%, transparent 70%)`;
 
-  // Typewriter effect for the hero name — starts after badge entrance delay
+  // Continuous-handoff fix: this section mounts at the same time as the
+  // pinned IntroSequence sitting above it, so a mount-triggered entrance
+  // would finish off-screen before the visitor ever scrolls down to it.
+  // Gate the whole staggered reveal (and the typewriter) on scroll-arrival
+  // instead — the "real hero" now animates to life at the moment the intro's
+  // pin releases and this section actually enters view, same pattern
+  // ui/counter.tsx already uses for its count-up (first-view IntersectionObserver,
+  // disconnect after firing once). Under prefers-reduced-motion IntroSequence
+  // renders nothing, so this section sits at the top of the page from the
+  // first frame and the observer fires immediately — same net effect as before.
+  const sectionRef = useRef<HTMLElement>(null);
+  const [entered, setEntered] = useState(false);
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setEntered(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Typewriter effect for the hero name — starts after badge entrance delay,
+  // counted from scroll-arrival (`entered`), not from component mount.
   const LINE1 = siteConfig.firstName; // "César A."
   const LINE2 = "Nogueira.";
   const { displayed: typed1, done: done1 } = useTypewriter(LINE1, {
     charDelay: 62,
     startDelay: DELAYS.name * 1000 + 80,
     skip: !!reduce,
+    start: entered,
   });
   const { displayed: typed2 } = useTypewriter(LINE2, {
     charDelay: 62,
     startDelay: DELAYS.name * 1000 + 80 + LINE1.length * 62 + 200,
     skip: !!reduce,
+    start: entered,
   });
 
   // Live "last active" timestamp for AVAILABLE badge
@@ -52,12 +83,17 @@ export function IdentityConsole() {
     return () => clearInterval(id);
   }, []);
 
+  // `animate` targets the hidden `initial` state until `entered` flips true,
+  // so Motion holds everything at rest off-screen and only actually plays
+  // the stagger once the visitor scrolls this section into view.
   const enter = (delay: number) =>
     reduce
       ? {}
       : {
           initial: { opacity: 0, y: 16, filter: "blur(6px)" },
-          animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+          animate: entered
+            ? { opacity: 1, y: 0, filter: "blur(0px)" }
+            : { opacity: 0, y: 16, filter: "blur(6px)" },
           transition: { duration: DUR.section, delay, ease: EASE.out },
           style: { willChange: "transform" },
         };
@@ -65,6 +101,7 @@ export function IdentityConsole() {
   return (
     <section
       id="top"
+      ref={sectionRef}
       className="relative overflow-hidden"
       onMouseMove={reduce ? undefined : (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
@@ -128,13 +165,13 @@ export function IdentityConsole() {
                 aria-label={`${LINE1} Nogueira.`}
               >
                 <span aria-hidden>
-                  {mounted && !reduce ? typed1 : LINE1}
-                  {mounted && !reduce && !done1 && <span className="cursor-blink" />}
+                  {entered && !reduce ? typed1 : LINE1}
+                  {entered && !reduce && !done1 && <span className="cursor-blink" />}
                 </span>
                 <br />
                 <span aria-hidden>
-                  {mounted && !reduce ? typed2 : LINE2}
-                  {mounted && !reduce && done1 && typed2.length < LINE2.length && <span className="cursor-blink" />}
+                  {entered && !reduce ? typed2 : LINE2}
+                  {entered && !reduce && done1 && typed2.length < LINE2.length && <span className="cursor-blink" />}
                 </span>
               </m.h1>
 
@@ -231,7 +268,7 @@ export function IdentityConsole() {
           aria-hidden
           {...(reduce ? {} : {
             initial: { opacity: 0, scale: 1.03 },
-            animate: { opacity: 1, scale: 1 },
+            animate: entered ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.03 },
             transition: { duration: 1.1, delay: DELAYS.photo, ease: EASE.out },
           })}
         >
@@ -248,7 +285,7 @@ export function IdentityConsole() {
         className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center justify-center text-[var(--color-fg-subtle)] transition-colors hover:text-[var(--color-fg)]"
         {...(reduce ? {} : {
           initial: { opacity: 0 },
-          animate: { opacity: 1 },
+          animate: entered ? { opacity: 1 } : { opacity: 0 },
           transition: { duration: 0.6, delay: 1.4, ease: EASE.out },
         })}
       >
