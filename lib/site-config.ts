@@ -6,7 +6,7 @@ export const siteConfig = {
   tagline:
     "One of the strongest Cloud, Platform, DevOps & FinOps consultants available remotely in Europe.",
   description:
-    "Principal Cloud Architect and FinOps consultant with 10+ years building, automating and optimizing enterprise-scale multi-cloud platforms across GCP, AWS and Azure. Available for international projects.",
+    "Principal Cloud Architect & FinOps consultant with 10+ years optimizing multi-cloud platforms across GCP, AWS and Azure. Available for international projects.",
   url: "https://cesarnogueira.tech",
   location: "Vila Real, Portugal · Remote (Europe / Worldwide)",
   availability: "Available for international projects",

@@ -14,7 +14,10 @@ const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono"
 const interTight = Inter_Tight({ subsets: ["latin"], variable: "--font-inter-tight", display: "swap" });
 const hanken = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken", display: "swap", weight: ["400", "500", "600"] });
 
-const OG_TITLE = `${siteConfig.name} · ${siteConfig.shortRole}`;
+// Shorter than siteConfig.name for the <title>/OG tags only — the full title
+// pixel width must stay under Google's ~580px SERP truncation threshold.
+const TITLE_NAME = "César Nogueira";
+const OG_TITLE = `${TITLE_NAME} · ${siteConfig.shortRole}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -70,13 +73,13 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
   alternates: {
+    // Single URL for every language (i18n is a client-side toggle, not
+    // per-locale routing) — only "en" (the actual server-rendered language)
+    // and "x-default" are listed; repeating the same URL under pt-BR/es/fr/zh
+    // hreflang tags reads to crawlers as duplicate/misleading alternates.
     canonical: siteConfig.url,
     languages: {
       "en": siteConfig.url,
-      "pt-BR": siteConfig.url,
-      "es": siteConfig.url,
-      "fr": siteConfig.url,
-      "zh": siteConfig.url,
       "x-default": siteConfig.url,
     },
   },
