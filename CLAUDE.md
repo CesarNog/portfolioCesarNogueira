@@ -113,10 +113,13 @@ client outcomes).
   over the standard portfolio view.
 - `ui/console-greeting.tsx` — a browser-devtools-console Easter egg greeting.
 - `analytics.tsx` + `web-vitals-reporter.tsx` — Vercel Analytics + GA4 + Google
-  Ads (gtag, shared loader, env-var gated: `NEXT_PUBLIC_GA_ID` /
-  `NEXT_PUBLIC_GOOGLE_ADS_ID`) + Hotjar + Core Web Vitals reported to GA4 as
-  events (metrics queued if gtag isn't loaded yet, flushed once ready — see
-  git history for why: GA4 can load after LCP fires on a bounce visit).
+  Ads (gtag, shared loader; `NEXT_PUBLIC_GA_ID` falls back to the registered
+  measurement ID `G-SQR8VVTFEK` so GA4 is always active) + Hotjar + Core Web
+  Vitals reported to GA4 as events (metrics queued if gtag isn't loaded yet,
+  flushed once ready — see git history for why: GA4 can load after LCP fires
+  on a bounce visit). This is the only place gtag.js is loaded — don't add a
+  second raw gtag snippet elsewhere (e.g. `app/layout.tsx`), which would
+  double-fire `gtag('config', ...)` and double-count page views.
 - JSON-LD: `app/layout.tsx` emits a single `@graph` with cross-linked
   `Person` (+ `hasCredential` from `certifications`), `WebSite`, and
   `ProfessionalService` (+ `hasOfferCatalog` from `capabilities`) nodes.
@@ -134,12 +137,13 @@ Real testimonials from named colleagues (CI&T, Apollo Group, Eldorado Research
 Institute, RealWorksBV).
 
 ## Environment variables
-`NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_GOOGLE_ADS_ID`, `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`
-are optional and gate cleanly (those features are inert unset). `NEXT_PUBLIC_HOTJAR_ID`
-is **not** a kill switch — `components/analytics.tsx` falls back to the
-registered site ID (`173193`) when it's unset, so Hotjar tracking is always
-active in production regardless of this var; it only lets you point tracking
-at a *different* Hotjar site ID. `GROQ_API_KEY` / `GROK_API_KEY` +
+`NEXT_PUBLIC_GOOGLE_ADS_ID` and `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` are optional
+and gate cleanly (those features are inert unset). Neither `NEXT_PUBLIC_GA_ID` nor
+`NEXT_PUBLIC_HOTJAR_ID` is a kill switch — `components/analytics.tsx` falls back to
+the registered measurement/site IDs (`G-SQR8VVTFEK` / `173193`) when unset, so GA4
+and Hotjar tracking are always active in production regardless of these vars; they
+only let you point tracking at a *different* GA4 property or Hotjar site ID.
+`GROQ_API_KEY` / `GROK_API_KEY` +
 `GROK_MODEL`/`GROQ_MODEL` — chatbot backend, set in Vercel project settings,
 never committed.
 

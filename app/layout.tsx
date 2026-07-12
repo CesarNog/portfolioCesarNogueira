@@ -98,16 +98,6 @@ export default function RootLayout({
         className={`${geist.variable} ${geistMono.variable} ${interTight.variable} ${hanken.variable} tracking-tight-body antialiased`}
         suppressHydrationWarning
       >
-        {/* Google tag (gtag.js) — inserted to satisfy Google verification */}
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-SQR8VVTFEK" strategy="afterInteractive" />
-        <Script id="gtag-init" strategy="afterInteractive">
-          {`window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);} 
-          gtag('js', new Date());
-
-          gtag('config', 'G-SQR8VVTFEK');`}
-        </Script>
-
         {/* Tab visibility — pauses aurora/canvas when page hidden, saves battery */}
         <Script id="tab-visibility" strategy="afterInteractive">
           {`(function(){var b=document.body;document.addEventListener('visibilitychange',function(){b.classList.toggle('tab-hidden',document.hidden);});})();`}
