@@ -2,10 +2,10 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { RoundedBox, Icosahedron, Sparkles } from "@react-three/drei";
+import { RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
-import { BLOCKS, scatterOffset } from "./blocks-data";
-import { chassisMaterial, accentMaterial, coreMaterial, ACCENT_BLUE } from "./materials";
+import { BLOCKS, BOX_ARGS, scatterOffset } from "./blocks-data";
+import { chassisMaterial, accentMaterial, coreMaterial, ACCENT_BLUE, type Domain } from "./materials";
 
 function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
@@ -20,25 +20,37 @@ function smoothstep(edge0: number, edge1: number, x: number) {
   return t * t * (3 - 2 * t);
 }
 
-const SPAN = 0.5; // fraction of assembly progress each block's own animation takes
+// Fraction of assembly progress each block's own dock animation takes. Paired
+// with the retimed `delay` values in blocks-data.ts, every block finishes
+// docking by p≈0.62 — well before the core's ignite ramp starts at p=0.68 —
+// so "infrastructure assembly" reads as a beat that completes before
+// "platform activation" begins, rather than the two overlapping throughout.
+const SPAN = 0.3;
 
 type ProgressRef = React.MutableRefObject<number>;
-type SharedMaterials = { chassis: THREE.Material; accent: THREE.Material };
+type SharedMaterials = { chassis: THREE.Material; accent: Record<Domain, THREE.Material> };
 
 function Block({ index, progressRef, materials }: { index: number; progressRef: ProgressRef; materials: SharedMaterials }) {
   const def = BLOCKS[index];
   const groupRef = useRef<THREE.Group>(null);
   const [sx, sy, sz, srx, sry, srz] = useMemo(() => scatterOffset(index), [index]);
+  const [bw, bh, bd] = BOX_ARGS[def.domain];
 
   const stripRef = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
     const g = groupRef.current;
     if (!g) return;
-    const t = easeOutCubic(clamp01((progressRef.current - def.delay) / SPAN));
+    const p = progressRef.current;
+    const t = easeOutCubic(clamp01((p - def.delay) / SPAN));
     // Idle "breathing": a tiny per-block bob that grows in as the block
-    // settles — the assembled cloud reads as a live, running system.
-    const bob = Math.sin(state.clock.elapsedTime * 0.9 + index * 1.7) * 0.04 * t;
+    // settles — the assembled cloud reads as a live, running system. Once
+    // the whole scene reaches its stable operating state (p→1) the bob
+    // tapers to a quieter whisper rather than holding full amplitude
+    // forever — a settled system still hums, it doesn't keep visibly
+    // breathing at full strength once handoff is long past.
+    const settle = 1 - smoothstep(0.9, 1, p) * 0.6;
+    const bob = Math.sin(state.clock.elapsedTime * 0.9 + index * 1.7) * 0.04 * t * settle;
     g.position.set(
       THREE.MathUtils.lerp(sx, def.pos[0], t),
       THREE.MathUtils.lerp(sy, def.pos[1], t) + bob,
@@ -59,10 +71,16 @@ function Block({ index, progressRef, materials }: { index: number; progressRef: 
 
   return (
     <group ref={groupRef}>
-      <RoundedBox args={[0.95, 0.6, 0.95]} radius={0.06} smoothness={2} scale={def.scale} material={materials.chassis} />
-      {/* accent strip on the front face — reads as a glowing panel light */}
-      <mesh ref={stripRef} position={[0, 0, 0.48 * def.scale]} material={materials.accent}>
-        <boxGeometry args={[0.62 * def.scale, 0.1 * def.scale, 0.02]} />
+      {/* Per-domain proportions (see BOX_ARGS): architecture stays the
+          original cloud-lobe cube, platform/DevOps modules are wider and
+          flatter (stacked-container read), FinOps modules are narrower and
+          taller (ledger-tile read) — same rounded-corner chassis language
+          throughout, so the kit-of-parts still reads as one system. */}
+      <RoundedBox args={[bw, bh, bd]} radius={0.06} smoothness={2} scale={def.scale} material={materials.chassis} />
+      {/* accent strip on the front face — reads as a glowing panel light,
+          colored by this block's domain (blue/cyan/orange) */}
+      <mesh ref={stripRef} position={[0, 0, (bd / 2 + 0.02) * def.scale]} material={materials.accent[def.domain]}>
+        <boxGeometry args={[bw * 0.65 * def.scale, bh * 0.17 * def.scale, 0.02]} />
       </mesh>
     </group>
   );
@@ -70,12 +88,17 @@ function Block({ index, progressRef, materials }: { index: number; progressRef: 
 
 export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
   const chassis = useMemo(() => chassisMaterial(), []);
-  const accent = useMemo(() => accentMaterial(), []);
+  const accentBlue = useMemo(() => accentMaterial("blue"), []);
+  const accentCyan = useMemo(() => accentMaterial("cyan"), []);
+  const accentOrange = useMemo(() => accentMaterial("orange"), []);
   const coreMat = useMemo(() => coreMaterial(), []);
   const rootRef = useRef<THREE.Group>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const lightRef = useRef<THREE.PointLight>(null);
-  const materials = useMemo(() => ({ chassis, accent }), [chassis, accent]);
+  const materials = useMemo(
+    () => ({ chassis, accent: { blue: accentBlue, cyan: accentCyan, orange: accentOrange } }),
+    [chassis, accentBlue, accentCyan, accentOrange],
+  );
 
   // Materials created outside R3F's reconciler aren't auto-disposed —
   // free the GPU resources if the scene ever unmounts (e.g. a live
@@ -83,19 +106,25 @@ export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
   useEffect(() => {
     return () => {
       chassis.dispose();
-      accent.dispose();
+      accentBlue.dispose();
+      accentCyan.dispose();
+      accentOrange.dispose();
       coreMat.dispose();
     };
-  }, [chassis, accent, coreMat]);
+  }, [chassis, accentBlue, accentCyan, accentOrange, coreMat]);
 
   useFrame((state) => {
     const p = progressRef.current;
 
     // The whole cloud yaws in as it assembles and settles level at
     // completion — parallax depth on the scrub, plus a whisper of idle
-    // drift so the finished scene never freezes.
+    // drift so the finished scene never freezes. That drift itself tapers
+    // (not to zero) once the scene reaches its stable operating state, so
+    // the "settled system" doesn't keep drifting at the same amplitude it
+    // used while still assembling.
+    const idleSettle = 1 - smoothstep(0.9, 1, p) * 0.55;
     if (rootRef.current) {
-      const idle = Math.sin(state.clock.elapsedTime * 0.18) * 0.02;
+      const idle = Math.sin(state.clock.elapsedTime * 0.18) * 0.02 * idleSettle;
       rootRef.current.rotation.y = THREE.MathUtils.lerp(-0.38, 0.0, easeOutCubic(clamp01(p * 1.15))) + idle;
       rootRef.current.rotation.x = THREE.MathUtils.lerp(0.07, 0.0, clamp01(p * 1.3));
       // Aspect-aware fit: the framing is tuned for wide viewports; on
@@ -113,8 +142,15 @@ export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
     state.camera.position.y = 0.35 - clamp01(p) * 0.15;
     state.camera.lookAt(0, 0.05, 0);
 
-    const ignite = smoothstep(0.82, 0.96, p);
-    const calm = 1 - smoothstep(0.96, 1, p) * 0.35;
+    // Platform activation: ignite starts only after assembly has finished
+    // (p≈0.62, see SPAN/blocks-data.ts), and finishes with room to spare
+    // before the finale's connector lines/icons stop arriving (~p=0.84–0.90)
+    // — so the causal read is "the core lights up, then the diagram grows
+    // out of it," not the two happening at once. Stable operating state:
+    // the glow calms down over the last stretch rather than staying at
+    // peak brightness indefinitely.
+    const ignite = smoothstep(0.68, 0.84, p);
+    const calm = 1 - smoothstep(0.88, 1, p) * 0.4;
     const intensity = (0.6 + ignite * 3) * calm;
     if (coreRef.current) {
       coreRef.current.scale.setScalar(0.85 + ignite * 0.25);
@@ -127,12 +163,14 @@ export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
 
   return (
     <group ref={rootRef}>
-      {/* Sparse ambient particle field behind the cloud — atmosphere/depth.
-          Client-only canvas (ssr:false), so drei's internal randomness here
-          can't cause a hydration mismatch. */}
-      <Sparkles count={90} scale={[9, 5.5, 5]} position={[0, 0.1, -1.2]} size={1.9} speed={0.25} opacity={0.35} color={ACCENT_BLUE} />
       <pointLight ref={lightRef} position={[0, 0, 0]} color={ACCENT_BLUE} intensity={1.2} distance={8} />
-      <Icosahedron ref={coreRef} args={[0.32, 1]} material={coreMat} />
+      {/* The control-plane hub: a small rounded module at the center, same
+          chassis language (RoundedBox, matching corner radius) as the
+          modules docking around it, rather than a faceted crystal — it
+          reads as "the cloud's hub", not an unrelated sci-fi power gem. It
+          stays architecture-blue: the dominant, central discipline the
+          platform and FinOps modules assemble around. */}
+      <RoundedBox ref={coreRef} args={[0.46, 0.46, 0.46]} radius={0.14} smoothness={3} material={coreMat} />
       {BLOCKS.map((_, i) => (
         <Block key={i} index={i} progressRef={progressRef} materials={materials} />
       ))}
