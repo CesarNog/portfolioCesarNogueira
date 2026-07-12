@@ -128,12 +128,12 @@ export function IdentityConsole() {
                 aria-label={`${LINE1} Nogueira.`}
               >
                 <span aria-hidden>
-                  {!mounted ? "" : reduce ? LINE1 : typed1}
+                  {mounted && !reduce ? typed1 : LINE1}
                   {mounted && !reduce && !done1 && <span className="cursor-blink" />}
                 </span>
                 <br />
                 <span aria-hidden>
-                  {!mounted ? "" : reduce ? LINE2 : typed2}
+                  {mounted && !reduce ? typed2 : LINE2}
                   {mounted && !reduce && done1 && typed2.length < LINE2.length && <span className="cursor-blink" />}
                 </span>
               </m.h1>
@@ -235,7 +235,7 @@ export function IdentityConsole() {
             transition: { duration: 1.1, delay: DELAYS.photo, ease: EASE.out },
           })}
         >
-          <Image src="/portrait.webp" alt="" fill sizes="52vw" className="object-cover object-top" priority loading="eager" />
+          <Image src="/portrait.webp" alt={siteConfig.name} fill sizes="52vw" className="object-cover object-top" priority loading="eager" />
           {/* Live variant 2 accepted: gradient drift — boundary slowly oscillates */}
           <div className="hero-gradient-drift absolute inset-0" />
           <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[var(--color-surface-0)] to-transparent" />

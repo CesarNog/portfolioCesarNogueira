@@ -224,7 +224,7 @@ export function IntroSequence() {
                 borderColor: "color-mix(in oklab, var(--color-blue) 35%, var(--color-hairline-strong))",
               }}
             >
-              <Image src={icon.src} alt="" width={34} height={34} unoptimized />
+              <Image src={icon.src} alt={icon.name} width={34} height={34} unoptimized />
             </div>
           ))}
         </div>
