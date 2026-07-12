@@ -59,7 +59,7 @@ Set in Vercel dashboard (Project Settings → Environment variables):
 | `GROK_API_KEY` | AI chatbot — primary (xAI Grok, `xai-...`) |
 | `GROQ_API_KEY` | AI chatbot — fallback (Groq / Llama 3.3) |
 | `RESEND_API_KEY` | Contact form emails (`re_...`) |
-| `NEXT_PUBLIC_GA_ID` | Google Analytics 4 measurement ID (optional) |
+| `NEXT_PUBLIC_GA_ID` | Google Analytics 4 measurement ID (optional — falls back to `G-SQR8VVTFEK`) |
 | `NEXT_PUBLIC_HOTJAR_ID` | Hotjar site ID (default: `173193`) |
 | `GROK_MODEL` | Override xAI model (default: `grok-3-mini`) |
 | `GROQ_MODEL` | Override Groq model (default: `llama-3.3-70b-versatile`) |
