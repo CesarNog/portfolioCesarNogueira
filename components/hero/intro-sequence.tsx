@@ -233,6 +233,12 @@ export function IntroSequence() {
               (window as unknown as { __introProgress?: number }).__introProgress = self.progress;
             }
           },
+          onRefresh: () => {
+            progressRef.current = 0;
+            if (progressBarRef.current) {
+              progressBarRef.current.style.transform = `scaleX(0)`;
+            }
+          },
         },
       });
       // Pad to duration 1 so position parameters below read as scroll fractions.
@@ -281,7 +287,16 @@ export function IntroSequence() {
       }
     }, trackRef);
 
-    return () => ctx.revert();
+    // Refresh ScrollTrigger on window resize to recalculate pin/scroll positions
+    const handleResize = () => {
+      ScrollTrigger.refresh();
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      ctx.revert();
+    };
   }, [shouldReduce]);
 
   if (shouldReduce) return null;
