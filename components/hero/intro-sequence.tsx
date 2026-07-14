@@ -100,6 +100,12 @@ export function IntroSequence() {
   const progressRef = useRef(0);
   const [overlayFit, setOverlayFit] = useState(1);
   const [siteReduced, setSiteReduced] = useState(false);
+  // The 3D scene has two deliberate material identities (materials.ts SCENE):
+  // a glowing data-center void in dark, a crisp light-grey architecture-diagram
+  // look in light. Default "dark" (this repo is dark-first and the Canvas is
+  // client-only, so no SSR markup depends on it); a class-attribute observer
+  // re-skins the scene live if the visitor toggles the theme mid-view.
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
   // SSR (and the very first, hydrating client render) must agree, or React
   // logs a hydration mismatch and the 120vh track visibly collapses/re-
   // expands. `useReducedMotion()` returns false during SSR but can already
@@ -170,6 +176,18 @@ export function IntroSequence() {
     check();
     const mo = new MutationObserver(check);
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-reduce-motion"] });
+    return () => mo.disconnect();
+  }, []);
+
+  // Track the site theme (next-themes toggles `.light`/`.dark` on <html>) so
+  // the 3D scene can flip between its two material identities live. Read post-
+  // mount + observe the class attribute for mid-view toggles.
+  useEffect(() => {
+    const check = () =>
+      setTheme(document.documentElement.classList.contains("light") ? "light" : "dark");
+    check();
+    const mo = new MutationObserver(check);
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
     return () => mo.disconnect();
   }, []);
 
@@ -305,6 +323,7 @@ export function IntroSequence() {
               <HeroCanvas
                 progressRef={progressRef}
                 active={canvasVisible}
+                theme={theme}
                 onContextLost={() => setCanvasFailed(true)}
               />
             </WebGLBoundary>
