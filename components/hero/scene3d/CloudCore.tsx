@@ -5,7 +5,7 @@ import { useFrame } from "@react-three/fiber";
 import { RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
 import { BLOCKS, BOX_ARGS, scatterOffset } from "./blocks-data";
-import { chassisMaterial, accentMaterial, coreMaterial, SCENE, type Domain, type Theme } from "./materials";
+import { chassisMaterial, accentMaterial, bezelMaterial, coreMaterial, SCENE, type Domain, type Theme } from "./materials";
 
 function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
@@ -28,7 +28,7 @@ function smoothstep(edge0: number, edge1: number, x: number) {
 const SPAN = 0.3;
 
 type ProgressRef = React.MutableRefObject<number>;
-type SharedMaterials = { chassis: THREE.Material; accent: Record<Domain, THREE.Material> };
+type SharedMaterials = { chassis: THREE.Material; bezel: THREE.Material; accent: Record<Domain, THREE.Material> };
 
 function Block({ index, progressRef, materials }: { index: number; progressRef: ProgressRef; materials: SharedMaterials }) {
   const def = BLOCKS[index];
@@ -75,8 +75,17 @@ function Block({ index, progressRef, materials }: { index: number; progressRef: 
           original cloud-lobe cube, platform/DevOps modules are wider and
           flatter (stacked-container read), FinOps modules are narrower and
           taller (ledger-tile read) — same rounded-corner chassis language
-          throughout, so the kit-of-parts still reads as one system. */}
-      <RoundedBox args={[bw, bh, bd]} radius={0.06} smoothness={2} scale={def.scale} material={materials.chassis} />
+          throughout, so the kit-of-parts still reads as one system.
+          smoothness bumped 2→4: crisper rounded edges at the sizes these
+          render on screen, still trivial triangle counts for 11 blocks. */}
+      <RoundedBox args={[bw, bh, bd]} radius={0.06} smoothness={4} scale={def.scale} material={materials.chassis} />
+      {/* Recessed bezel behind the strip — sits closer to the chassis surface
+          and ~20% larger in width/height than the strip in front of it, so
+          its edges read as a shadowed frame around a mounted indicator
+          rather than the strip floating on the face as a flat decal. */}
+      <mesh position={[0, 0, (bd / 2 + 0.008) * def.scale]} material={materials.bezel}>
+        <boxGeometry args={[bw * 0.78 * def.scale, bh * 0.24 * def.scale, 0.015]} />
+      </mesh>
       {/* accent strip on the front face — reads as a glowing panel light,
           colored by this block's domain (blue/cyan/orange) */}
       <mesh ref={stripRef} position={[0, 0, (bd / 2 + 0.02) * def.scale]} material={materials.accent[def.domain]}>
@@ -91,6 +100,7 @@ export function CloudCore({ progressRef, theme = "dark" }: { progressRef: Progre
   // light/dark toggle re-skins the scene; the old set is disposed by the
   // cleanup effect below, which re-runs on the same dependency change.
   const chassis = useMemo(() => chassisMaterial(theme), [theme]);
+  const bezel = useMemo(() => bezelMaterial(theme), [theme]);
   const accentBlue = useMemo(() => accentMaterial("blue", theme), [theme]);
   const accentCyan = useMemo(() => accentMaterial("cyan", theme), [theme]);
   const accentOrange = useMemo(() => accentMaterial("orange", theme), [theme]);
@@ -99,8 +109,8 @@ export function CloudCore({ progressRef, theme = "dark" }: { progressRef: Progre
   const coreRef = useRef<THREE.Mesh>(null);
   const lightRef = useRef<THREE.PointLight>(null);
   const materials = useMemo(
-    () => ({ chassis, accent: { blue: accentBlue, cyan: accentCyan, orange: accentOrange } }),
-    [chassis, accentBlue, accentCyan, accentOrange],
+    () => ({ chassis, bezel, accent: { blue: accentBlue, cyan: accentCyan, orange: accentOrange } }),
+    [chassis, bezel, accentBlue, accentCyan, accentOrange],
   );
   const scene = SCENE[theme];
 
@@ -110,12 +120,13 @@ export function CloudCore({ progressRef, theme = "dark" }: { progressRef: Progre
   useEffect(() => {
     return () => {
       chassis.dispose();
+      bezel.dispose();
       accentBlue.dispose();
       accentCyan.dispose();
       accentOrange.dispose();
       coreMat.dispose();
     };
-  }, [chassis, accentBlue, accentCyan, accentOrange, coreMat]);
+  }, [chassis, bezel, accentBlue, accentCyan, accentOrange, coreMat]);
 
   useFrame((state) => {
     const p = progressRef.current;
@@ -177,7 +188,7 @@ export function CloudCore({ progressRef, theme = "dark" }: { progressRef: Progre
           reads as "the cloud's hub", not an unrelated sci-fi power gem. It
           stays architecture-blue: the dominant, central discipline the
           platform and FinOps modules assemble around. */}
-      <RoundedBox ref={coreRef} args={[0.46, 0.46, 0.46]} radius={0.14} smoothness={3} material={coreMat} />
+      <RoundedBox ref={coreRef} args={[0.46, 0.46, 0.46]} radius={0.14} smoothness={4} material={coreMat} />
       {BLOCKS.map((_, i) => (
         <Block key={i} index={i} progressRef={progressRef} materials={materials} />
       ))}

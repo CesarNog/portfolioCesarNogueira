@@ -10,6 +10,7 @@ import { useI18n } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site-config";
 import { ScanReticle } from "@/components/hero/scan-reticle";
 import { WebGLBoundary } from "@/components/hero/scene3d/webgl-boundary";
+import { SCENE } from "@/components/hero/scene3d/materials";
 
 const HeroCanvas = dynamic(
   () => import("@/components/hero/scene3d/HeroCanvas").then((m) => m.HeroCanvas),
@@ -275,8 +276,16 @@ export function IntroSequence() {
 
       // Segment B: canvas ramps from faint backdrop to full presence only
       // once identity/reticle have cleared, so the handoff from text to 3D
-      // reads as sequential rather than simultaneous.
-      tl.to(canvasWrapRef.current, { opacity: 1, duration: 0.2, ease: "power1.inOut" }, 0.22);
+      // reads as sequential rather than simultaneous. Animates a `--gsap-fade`
+      // custom property (0→1), NOT `opacity` directly — see the JSX below for
+      // why: GSAP caches a scrub-tween's start value the first time the
+      // playhead reaches it, so a tween driving `opacity` straight from the
+      // theme's rest value would go stale if the visitor scrolled past this
+      // point, back to rest, toggled the theme, then scrolled forward again
+      // (the tween would animate from its originally-cached start, not the
+      // new theme's value). `--gsap-fade` sidesteps this: it's always a clean
+      // 0→1 regardless of theme, so there's nothing theme-dependent to cache.
+      tl.fromTo(canvasWrapRef.current, { "--gsap-fade": 0 }, { "--gsap-fade": 1, duration: 0.2, ease: "power1.inOut" }, 0.22);
 
       // Segment C: the core's own ignite ramp (CloudCore.tsx) starts at
       // p=0.68. Connector lines/icons are staggered to start at/after that,
@@ -324,7 +333,19 @@ export function IntroSequence() {
   return (
     <div ref={trackRef} className="relative h-[120vh]" aria-hidden>
       <div ref={stageRef} className="relative h-dvh w-full overflow-hidden bg-[var(--color-surface-0)]">
-        {/* 3D scene — faint at rest so the identity block owns the first read.
+        {/* 3D scene — faint at rest so the identity block owns the first read,
+            but not so faint it's invisible: the rest-state opacity is
+            per-theme (SCENE.restOpacity) because a flat 0.16 made the dark
+            void's near-black chassis disappear against the near-black
+            background entirely, leaving the assembly with no visible
+            "before" to animate from. React owns `--rest-opacity` (always
+            fresh — recomputed every render from `theme`) and GSAP owns
+            `--gsap-fade` (a clean 0→1 scroll-driven ramp, set on the tween
+            above) as two independent CSS custom properties; `calc()` combines
+            them into the actual opacity. This split — rather than GSAP
+            tweening `opacity` straight from the theme's rest value — is what
+            avoids GSAP's start-value caching going stale on a scroll-away/
+            theme-toggle/scroll-back sequence (see the tween comment above).
             Wrapped in WebGLBoundary (hard requirement: a Canvas init failure
             must never take the page down). The Canvas stays mounted for the
             whole visit and only its render loop is paused off-screen (via the
@@ -332,7 +353,14 @@ export function IntroSequence() {
             why this must NOT be an unmount. Only a genuine, unrecoverable
             context loss (canvasFailed) actually removes it, leaving an empty
             wrapper div with the 2D layer and IdentityConsole handoff intact. */}
-        <div ref={canvasWrapRef} className="absolute inset-0" style={{ opacity: 0.16 }}>
+        <div
+          ref={canvasWrapRef}
+          className="absolute inset-0"
+          style={{
+            "--rest-opacity": SCENE[theme].restOpacity,
+            opacity: "calc(var(--rest-opacity) + (1 - var(--rest-opacity)) * var(--gsap-fade, 0))",
+          } as React.CSSProperties}
+        >
           {!canvasFailed && (
             <WebGLBoundary>
               <HeroCanvas
