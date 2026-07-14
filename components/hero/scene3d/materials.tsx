@@ -50,13 +50,28 @@ export function domainColor(domain: Domain, theme: Theme = "dark"): string {
 
 // Chassis stays a single neutral shell regardless of domain — the module's
 // "body" is quiet by design; only its accent strip declares which domain it
-// belongs to. Dark: near-black metal for the void. Light: a mid cool-grey tile
-// that has real presence on white (darker than the page's surface-1) and reads
-// as matte hardware, not a shiny black slab.
+// belongs to. Dark: near-black metal for the void (nudged one step up from
+// pure void-black so a scattered, unlit block still has a sliver of presence
+// against the near-black background at rest — see SCENE.restOpacity below).
+// Light: a mid cool-grey tile that has real presence on white (darker than
+// the page's surface-1) and reads as matte hardware, not a shiny black slab.
 export function chassisMaterial(theme: Theme) {
   return theme === "light"
     ? new THREE.MeshStandardMaterial({ color: "#c2ccd8", metalness: 0.15, roughness: 0.62 })
-    : new THREE.MeshStandardMaterial({ color: "#0f1520", metalness: 0.6, roughness: 0.35 });
+    : new THREE.MeshStandardMaterial({ color: "#131b28", metalness: 0.6, roughness: 0.35 });
+}
+
+// The accent strip doesn't float on the chassis face as a flat decal — it
+// sits inset in a recessed bezel, like a real panel-mounted status light.
+// The bezel is a single shared material (it's domain-neutral, unlike the
+// strip) sitting just behind the strip and slightly larger, so its edges
+// read as a shadowed frame. This is the one "sharpen the detail" addition:
+// it costs one extra mesh per block but is what makes the strip read as a
+// mounted indicator rather than a sticker.
+export function bezelMaterial(theme: Theme) {
+  return theme === "light"
+    ? new THREE.MeshStandardMaterial({ color: "#8b96a6", metalness: 0.1, roughness: 0.55 })
+    : new THREE.MeshStandardMaterial({ color: "#05070c", metalness: 0.1, roughness: 0.85 });
 }
 
 export function accentMaterial(domain: Domain, theme: Theme) {
@@ -101,6 +116,17 @@ export const SCENE: Record<
     bloom: { intensity: number; threshold: number };
     point: { base: number; ignite: number; color: string };
     coreIgnite: { base: number; scale: number };
+    /**
+     * The 2D DOM wrapper's rest-state opacity (IntroSequence's canvasWrapRef,
+     * before the GSAP timeline ramps it to 1 in segment B) — how much of the
+     * scattered, not-yet-assembled blocks shows through at progress=0. Dark
+     * was 0.16 site-wide; combined with a near-black chassis on a near-black
+     * background that's effectively invisible, so the assembly has no visible
+     * "before" to animate from. Raised per-theme rather than to one shared
+     * value: dark needs the bigger jump (worst contrast case), light's grey-
+     * on-white chassis already has some natural presence at low opacity.
+     */
+    restOpacity: number;
   }
 > = {
   dark: {
@@ -111,6 +137,7 @@ export const SCENE: Record<
     bloom: { intensity: 0.5, threshold: 0.35 },
     point: { base: 1.2, ignite: 6, color: ACCENT_BLUE },
     coreIgnite: { base: 0.6, scale: 3 },
+    restOpacity: 0.34,
   },
   light: {
     ambient: 0.92,
@@ -120,5 +147,6 @@ export const SCENE: Record<
     bloom: { intensity: 0.22, threshold: 0.68 },
     point: { base: 0.55, ignite: 2.4, color: "#1f6fe0" },
     coreIgnite: { base: 0.5, scale: 1.6 },
+    restOpacity: 0.24,
   },
 };

@@ -10,6 +10,7 @@ import { useI18n } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site-config";
 import { ScanReticle } from "@/components/hero/scan-reticle";
 import { WebGLBoundary } from "@/components/hero/scene3d/webgl-boundary";
+import { SCENE } from "@/components/hero/scene3d/materials";
 
 const HeroCanvas = dynamic(
   () => import("@/components/hero/scene3d/HeroCanvas").then((m) => m.HeroCanvas),
@@ -191,6 +192,22 @@ export function IntroSequence() {
     return () => mo.disconnect();
   }, []);
 
+  // canvasWrapRef's opacity is normally GSAP's to own (ramped 0.something→1 by
+  // the segment-B tween below, read from the DOM's current value each time it
+  // scrubs). A theme toggle re-renders this component, and re-rendering with a
+  // theme-derived `style` prop would fight that — React would snap opacity
+  // back down to the new theme's restOpacity even mid-assembly, undoing
+  // GSAP's ramp. So the JSX below only sets a static first-paint default, and
+  // this effect imperatively nudges opacity on a theme change — but only
+  // while still at rest (before the ramp start, 0.22): past that point GSAP
+  // already owns full opacity and a toggle shouldn't dim the assembled scene.
+  useEffect(() => {
+    if (progressRef.current >= 0.22) return;
+    if (canvasWrapRef.current) {
+      canvasWrapRef.current.style.opacity = String(SCENE[theme].restOpacity);
+    }
+  }, [theme]);
+
   const shouldReduce = mounted && (reduce || siteReduced);
 
   // Perf/resilience: gate the Canvas mount on the track's own viewport
@@ -324,15 +341,20 @@ export function IntroSequence() {
   return (
     <div ref={trackRef} className="relative h-[120vh]" aria-hidden>
       <div ref={stageRef} className="relative h-dvh w-full overflow-hidden bg-[var(--color-surface-0)]">
-        {/* 3D scene — faint at rest so the identity block owns the first read.
-            Wrapped in WebGLBoundary (hard requirement: a Canvas init failure
-            must never take the page down). The Canvas stays mounted for the
-            whole visit and only its render loop is paused off-screen (via the
-            `active` prop → frameloop) — see the canvasVisible note above for
-            why this must NOT be an unmount. Only a genuine, unrecoverable
-            context loss (canvasFailed) actually removes it, leaving an empty
-            wrapper div with the 2D layer and IdentityConsole handoff intact. */}
-        <div ref={canvasWrapRef} className="absolute inset-0" style={{ opacity: 0.16 }}>
+        {/* 3D scene — faint at rest so the identity block owns the first read,
+            but not so faint it's invisible: the rest-state opacity is
+            per-theme (SCENE.restOpacity) because a flat 0.16 made the dark
+            void's near-black chassis disappear against the near-black
+            background entirely, leaving the assembly with no visible
+            "before" to animate from. Wrapped in WebGLBoundary (hard
+            requirement: a Canvas init failure must never take the page
+            down). The Canvas stays mounted for the whole visit and only its
+            render loop is paused off-screen (via the `active` prop →
+            frameloop) — see the canvasVisible note above for why this must
+            NOT be an unmount. Only a genuine, unrecoverable context loss
+            (canvasFailed) actually removes it, leaving an empty wrapper div
+            with the 2D layer and IdentityConsole handoff intact. */}
+        <div ref={canvasWrapRef} className="absolute inset-0" style={{ opacity: SCENE.dark.restOpacity }}>
           {!canvasFailed && (
             <WebGLBoundary>
               <HeroCanvas
