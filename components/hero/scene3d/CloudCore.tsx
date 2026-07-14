@@ -5,7 +5,7 @@ import { useFrame } from "@react-three/fiber";
 import { RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
 import { BLOCKS, BOX_ARGS, scatterOffset } from "./blocks-data";
-import { chassisMaterial, accentMaterial, coreMaterial, ACCENT_BLUE, type Domain } from "./materials";
+import { chassisMaterial, accentMaterial, coreMaterial, SCENE, type Domain, type Theme } from "./materials";
 
 function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
@@ -86,12 +86,15 @@ function Block({ index, progressRef, materials }: { index: number; progressRef: 
   );
 }
 
-export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
-  const chassis = useMemo(() => chassisMaterial(), []);
-  const accentBlue = useMemo(() => accentMaterial("blue"), []);
-  const accentCyan = useMemo(() => accentMaterial("cyan"), []);
-  const accentOrange = useMemo(() => accentMaterial("orange"), []);
-  const coreMat = useMemo(() => coreMaterial(), []);
+export function CloudCore({ progressRef, theme = "dark" }: { progressRef: ProgressRef; theme?: Theme }) {
+  // Materials are rebuilt when the theme flips (deps: [theme]) so a live
+  // light/dark toggle re-skins the scene; the old set is disposed by the
+  // cleanup effect below, which re-runs on the same dependency change.
+  const chassis = useMemo(() => chassisMaterial(theme), [theme]);
+  const accentBlue = useMemo(() => accentMaterial("blue", theme), [theme]);
+  const accentCyan = useMemo(() => accentMaterial("cyan", theme), [theme]);
+  const accentOrange = useMemo(() => accentMaterial("orange", theme), [theme]);
+  const coreMat = useMemo(() => coreMaterial(theme), [theme]);
   const rootRef = useRef<THREE.Group>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const lightRef = useRef<THREE.PointLight>(null);
@@ -99,10 +102,11 @@ export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
     () => ({ chassis, accent: { blue: accentBlue, cyan: accentCyan, orange: accentOrange } }),
     [chassis, accentBlue, accentCyan, accentOrange],
   );
+  const scene = SCENE[theme];
 
-  // Materials created outside R3F's reconciler aren't auto-disposed —
-  // free the GPU resources if the scene ever unmounts (e.g. a live
-  // prefers-reduced-motion toggle).
+  // Materials created outside R3F's reconciler aren't auto-disposed — free the
+  // GPU resources when the scene unmounts OR when the theme flips (the memo'd
+  // materials become new objects, so this cleanup disposes the superseded set).
   useEffect(() => {
     return () => {
       chassis.dispose();
@@ -151,19 +155,22 @@ export function CloudCore({ progressRef }: { progressRef: ProgressRef }) {
     // peak brightness indefinitely.
     const ignite = smoothstep(0.68, 0.84, p);
     const calm = 1 - smoothstep(0.88, 1, p) * 0.4;
-    const intensity = (0.6 + ignite * 3) * calm;
+    // Ignite/point-light ranges are per-theme (see SCENE): the dark void wants
+    // a strong bloom-fed flare, but on white that same range blows out to a
+    // muddy haze, so light uses a gentler ramp.
+    const intensity = (scene.coreIgnite.base + ignite * scene.coreIgnite.scale) * calm;
     if (coreRef.current) {
       coreRef.current.scale.setScalar(0.85 + ignite * 0.25);
       (coreRef.current.material as THREE.MeshStandardMaterial).emissiveIntensity = intensity;
     }
     if (lightRef.current) {
-      lightRef.current.intensity = 1.2 + ignite * 6;
+      lightRef.current.intensity = scene.point.base + ignite * scene.point.ignite;
     }
   });
 
   return (
     <group ref={rootRef}>
-      <pointLight ref={lightRef} position={[0, 0, 0]} color={ACCENT_BLUE} intensity={1.2} distance={8} />
+      <pointLight ref={lightRef} position={[0, 0, 0]} color={scene.point.color} intensity={scene.point.base} distance={8} />
       {/* The control-plane hub: a small rounded module at the center, same
           chassis language (RoundedBox, matching corner radius) as the
           modules docking around it, rather than a faceted crystal — it

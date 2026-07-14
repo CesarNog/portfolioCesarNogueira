@@ -100,6 +100,12 @@ export function IntroSequence() {
   const progressRef = useRef(0);
   const [overlayFit, setOverlayFit] = useState(1);
   const [siteReduced, setSiteReduced] = useState(false);
+  // The 3D scene has two deliberate material identities (materials.ts SCENE):
+  // a glowing data-center void in dark, a crisp light-grey architecture-diagram
+  // look in light. Default "dark" (this repo is dark-first and the Canvas is
+  // client-only, so no SSR markup depends on it); a class-attribute observer
+  // re-skins the scene live if the visitor toggles the theme mid-view.
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
   // SSR (and the very first, hydrating client render) must agree, or React
   // logs a hydration mismatch and the 120vh track visibly collapses/re-
   // expands. `useReducedMotion()` returns false during SSR but can already
@@ -122,12 +128,14 @@ export function IntroSequence() {
   // Perf/resilience: once this 120vh track has scrolled well out of view
   // (visitor has moved on to Story/ExperienceTimeline/etc.), there is no
   // reason for the R3F Canvas to keep rendering every frame indefinitely.
-  // Unmounting HeroCanvas (rather than fiddling with `frameloop`) stops the
-  // render loop outright and runs CloudCore's existing material-disposal
-  // cleanup, reclaiming the GPU resources; remounting on scroll-back reads
-  // live from `progressRef` so it snaps back to the correct assembly state
-  // with no extra bookkeeping. Generous rootMargin avoids any pop during
-  // the scroll-through itself, only unmounting once genuinely far away.
+  // This PAUSES the render loop (HeroCanvas `frameloop="never"`) rather than
+  // unmounting the Canvas: unmounting disposes the WebGL context, which fires
+  // `webglcontextlost`, and scroll-away/scroll-back churn either trips the
+  // context-lost handler below (permanently blanking the scene) or exhausts
+  // the browser's live-context budget. Pausing keeps the context alive (a few
+  // MB idle) while doing zero per-frame work off-screen — the actual cost the
+  // gating targets. The scene reads live from `progressRef`, so on resume it
+  // renders the correct assembly state on its next frame with no bookkeeping.
   const [canvasVisible, setCanvasVisible] = useState(true);
 
   // Mirrors CloudCore's own aspect-aware `fit` (scene3d/CloudCore.tsx) so the
@@ -168,6 +176,18 @@ export function IntroSequence() {
     check();
     const mo = new MutationObserver(check);
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-reduce-motion"] });
+    return () => mo.disconnect();
+  }, []);
+
+  // Track the site theme (next-themes toggles `.light`/`.dark` on <html>) so
+  // the 3D scene can flip between its two material identities live. Read post-
+  // mount + observe the class attribute for mid-view toggles.
+  useEffect(() => {
+    const check = () =>
+      setTheme(document.documentElement.classList.contains("light") ? "light" : "dark");
+    check();
+    const mo = new MutationObserver(check);
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
     return () => mo.disconnect();
   }, []);
 
@@ -306,14 +326,21 @@ export function IntroSequence() {
       <div ref={stageRef} className="relative h-dvh w-full overflow-hidden bg-[var(--color-surface-0)]">
         {/* 3D scene — faint at rest so the identity block owns the first read.
             Wrapped in WebGLBoundary (hard requirement: a Canvas init failure
-            must never take the page down) and gated on canvasVisible/
-            canvasFailed — either condition simply renders an empty wrapper
-            div, leaving the 2D layer and the handoff into IdentityConsole
-            completely unaffected. */}
+            must never take the page down). The Canvas stays mounted for the
+            whole visit and only its render loop is paused off-screen (via the
+            `active` prop → frameloop) — see the canvasVisible note above for
+            why this must NOT be an unmount. Only a genuine, unrecoverable
+            context loss (canvasFailed) actually removes it, leaving an empty
+            wrapper div with the 2D layer and IdentityConsole handoff intact. */}
         <div ref={canvasWrapRef} className="absolute inset-0" style={{ opacity: 0.16 }}>
-          {!canvasFailed && canvasVisible && (
+          {!canvasFailed && (
             <WebGLBoundary>
-              <HeroCanvas progressRef={progressRef} onContextLost={() => setCanvasFailed(true)} />
+              <HeroCanvas
+                progressRef={progressRef}
+                active={canvasVisible}
+                theme={theme}
+                onContextLost={() => setCanvasFailed(true)}
+              />
             </WebGLBoundary>
           )}
         </div>
