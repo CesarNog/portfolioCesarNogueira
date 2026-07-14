@@ -192,22 +192,6 @@ export function IntroSequence() {
     return () => mo.disconnect();
   }, []);
 
-  // canvasWrapRef's opacity is normally GSAP's to own (ramped 0.something→1 by
-  // the segment-B tween below, read from the DOM's current value each time it
-  // scrubs). A theme toggle re-renders this component, and re-rendering with a
-  // theme-derived `style` prop would fight that — React would snap opacity
-  // back down to the new theme's restOpacity even mid-assembly, undoing
-  // GSAP's ramp. So the JSX below only sets a static first-paint default, and
-  // this effect imperatively nudges opacity on a theme change — but only
-  // while still at rest (before the ramp start, 0.22): past that point GSAP
-  // already owns full opacity and a toggle shouldn't dim the assembled scene.
-  useEffect(() => {
-    if (progressRef.current >= 0.22) return;
-    if (canvasWrapRef.current) {
-      canvasWrapRef.current.style.opacity = String(SCENE[theme].restOpacity);
-    }
-  }, [theme]);
-
   const shouldReduce = mounted && (reduce || siteReduced);
 
   // Perf/resilience: gate the Canvas mount on the track's own viewport
@@ -292,8 +276,16 @@ export function IntroSequence() {
 
       // Segment B: canvas ramps from faint backdrop to full presence only
       // once identity/reticle have cleared, so the handoff from text to 3D
-      // reads as sequential rather than simultaneous.
-      tl.to(canvasWrapRef.current, { opacity: 1, duration: 0.2, ease: "power1.inOut" }, 0.22);
+      // reads as sequential rather than simultaneous. Animates a `--gsap-fade`
+      // custom property (0→1), NOT `opacity` directly — see the JSX below for
+      // why: GSAP caches a scrub-tween's start value the first time the
+      // playhead reaches it, so a tween driving `opacity` straight from the
+      // theme's rest value would go stale if the visitor scrolled past this
+      // point, back to rest, toggled the theme, then scrolled forward again
+      // (the tween would animate from its originally-cached start, not the
+      // new theme's value). `--gsap-fade` sidesteps this: it's always a clean
+      // 0→1 regardless of theme, so there's nothing theme-dependent to cache.
+      tl.fromTo(canvasWrapRef.current, { "--gsap-fade": 0 }, { "--gsap-fade": 1, duration: 0.2, ease: "power1.inOut" }, 0.22);
 
       // Segment C: the core's own ignite ramp (CloudCore.tsx) starts at
       // p=0.68. Connector lines/icons are staggered to start at/after that,
@@ -346,15 +338,29 @@ export function IntroSequence() {
             per-theme (SCENE.restOpacity) because a flat 0.16 made the dark
             void's near-black chassis disappear against the near-black
             background entirely, leaving the assembly with no visible
-            "before" to animate from. Wrapped in WebGLBoundary (hard
-            requirement: a Canvas init failure must never take the page
-            down). The Canvas stays mounted for the whole visit and only its
-            render loop is paused off-screen (via the `active` prop →
-            frameloop) — see the canvasVisible note above for why this must
-            NOT be an unmount. Only a genuine, unrecoverable context loss
-            (canvasFailed) actually removes it, leaving an empty wrapper div
-            with the 2D layer and IdentityConsole handoff intact. */}
-        <div ref={canvasWrapRef} className="absolute inset-0" style={{ opacity: SCENE.dark.restOpacity }}>
+            "before" to animate from. React owns `--rest-opacity` (always
+            fresh — recomputed every render from `theme`) and GSAP owns
+            `--gsap-fade` (a clean 0→1 scroll-driven ramp, set on the tween
+            above) as two independent CSS custom properties; `calc()` combines
+            them into the actual opacity. This split — rather than GSAP
+            tweening `opacity` straight from the theme's rest value — is what
+            avoids GSAP's start-value caching going stale on a scroll-away/
+            theme-toggle/scroll-back sequence (see the tween comment above).
+            Wrapped in WebGLBoundary (hard requirement: a Canvas init failure
+            must never take the page down). The Canvas stays mounted for the
+            whole visit and only its render loop is paused off-screen (via the
+            `active` prop → frameloop) — see the canvasVisible note above for
+            why this must NOT be an unmount. Only a genuine, unrecoverable
+            context loss (canvasFailed) actually removes it, leaving an empty
+            wrapper div with the 2D layer and IdentityConsole handoff intact. */}
+        <div
+          ref={canvasWrapRef}
+          className="absolute inset-0"
+          style={{
+            "--rest-opacity": SCENE[theme].restOpacity,
+            opacity: "calc(var(--rest-opacity) + (1 - var(--rest-opacity)) * var(--gsap-fade, 0))",
+          } as React.CSSProperties}
+        >
           {!canvasFailed && (
             <WebGLBoundary>
               <HeroCanvas
