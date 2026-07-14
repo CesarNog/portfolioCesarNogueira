@@ -9,16 +9,27 @@ import { ACCENT_BLUE } from "./materials";
 type HeroCanvasProps = {
   progressRef: React.MutableRefObject<number>;
   /**
-   * Fired once if the WebGL context is lost after creation (GPU driver
-   * reset/crash, some mobile browsers reclaiming contexts on backgrounding).
-   * Left unhandled, a lost context just freezes the canvas as a permanent
-   * blank/frozen rectangle. The parent (IntroSequence) uses this to unmount
-   * the Canvas entirely so nothing dead is left in the tree.
+   * When false, the render loop is paused (`frameloop="never"`) — the Canvas
+   * stays mounted (context intact) but does zero per-frame work while the
+   * intro is scrolled out of view. The parent flips this from an
+   * IntersectionObserver. This is deliberately NOT an unmount: tearing the
+   * Canvas down disposes the WebGL context, which fires `webglcontextlost`,
+   * and repeated scroll-away/scroll-back churn either trips that handler or
+   * exhausts the browser's live-context budget — both leave the 3D
+   * permanently blank. Pausing the loop keeps the context alive and cheap.
+   */
+  active?: boolean;
+  /**
+   * Fired once if the WebGL context is genuinely lost after creation (GPU
+   * driver reset/crash, browser reclaiming a backgrounded context). Because
+   * the Canvas is no longer unmounted on scroll (see `active`), this now only
+   * fires for real failures, not for our own teardown — so the parent can
+   * safely treat it as "hide the 3D for this visit."
    */
   onContextLost?: () => void;
 };
 
-export function HeroCanvas({ progressRef, onContextLost }: HeroCanvasProps) {
+export function HeroCanvas({ progressRef, active = true, onContextLost }: HeroCanvasProps) {
   // Coarse-pointer (touch) devices commonly report devicePixelRatio 2-3;
   // combined with a full-viewport EffectComposer/Bloom pass that's a
   // meaningfully heavier per-frame cost than desktop, on exactly the class
@@ -36,6 +47,7 @@ export function HeroCanvas({ progressRef, onContextLost }: HeroCanvasProps) {
   return (
     <Canvas
       dpr={dpr}
+      frameloop={active ? "always" : "never"}
       camera={{ position: [0, 0.2, 7.5], fov: 40 }}
       gl={{ antialias: true, alpha: true }}
       style={{ position: "absolute", inset: 0 }}
