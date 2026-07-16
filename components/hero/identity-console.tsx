@@ -117,7 +117,7 @@ export function IdentityConsole() {
       <div className="absolute inset-0 -z-10 lg:hidden" aria-hidden>
         <Image
           src="/portrait-mobile.webp"
-          alt=""
+          alt={siteConfig.name}
           fill
           sizes="100vw"
           priority
