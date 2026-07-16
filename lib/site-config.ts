@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "César Augusto Nogueira",
-  firstName: "César A.",
+  firstName: "César Augusto",
   role: "Principal Cloud Architect · Platform Engineering · DevOps · FinOps · AI Infrastructure",
   shortRole: "Principal Cloud Architect & FinOps Consultant",
   tagline:
