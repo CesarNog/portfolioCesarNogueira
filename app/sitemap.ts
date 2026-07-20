@@ -15,20 +15,19 @@ function selfLanguages(url: string) {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteConfig.url;
-  const homeLastModified = new Date("2026-07-09");
-  const caseStudiesLastModified = new Date("2026-07-21");
+  const lastModified = new Date();
 
   return [
     {
       url: base,
-      lastModified: homeLastModified,
+      lastModified,
       changeFrequency: "monthly",
       priority: 1,
       alternates: { languages: selfLanguages(base) },
     },
     {
       url: `${base}/case-studies`,
-      lastModified: caseStudiesLastModified,
+      lastModified,
       changeFrequency: "monthly",
       priority: 0.8,
       alternates: { languages: selfLanguages(`${base}/case-studies`) },
@@ -37,7 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       const url = `${base}/case-studies/${p.id}`;
       return {
         url,
-        lastModified: caseStudiesLastModified,
+        lastModified,
         changeFrequency: "yearly" as const,
         priority: 0.7,
         alternates: { languages: selfLanguages(url) },
