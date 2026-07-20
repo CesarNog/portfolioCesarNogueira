@@ -97,8 +97,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {/* LCP preload — React 19 hoists <link> to <head> automatically */}
-      {/* eslint-disable-next-line @next/next/no-head-element */}
+      {/* LCP preload — React 19 hoists this to <head> automatically */}
       <link rel="preload" as="image" href="/portrait.webp" fetchPriority="high" />
       <body
         className={`${geist.variable} ${geistMono.variable} ${interTight.variable} ${hanken.variable} tracking-tight-body antialiased`}
