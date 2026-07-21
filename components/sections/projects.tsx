@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { m, useReducedMotion } from "motion/react";
 import { Section } from "@/components/sections/section";
 import { Reveal } from "@/components/reveal";
@@ -100,6 +101,13 @@ export function Projects() {
                       </span>
                     ))}
                   </div>
+
+                  <Link
+                    href={`/case-studies/${p.id}`}
+                    className="inline-block text-sm font-medium text-[var(--color-blue)] transition-colors hover:opacity-80"
+                  >
+                    Read the full case study →
+                  </Link>
                 </div>
               </m.article>
             </Reveal>
