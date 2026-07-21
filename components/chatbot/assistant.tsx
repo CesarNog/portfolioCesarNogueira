@@ -204,7 +204,7 @@ export function Assistant() {
         transition={{ duration: DUR.reveal, delay: 0.5, ease: EASE.spring }}
         whileHover={reduce ? undefined : { scale: 1.04, transition: { duration: DUR.micro } }}
         whileTap={reduce ? undefined : { scale: 0.95, transition: { duration: DUR.micro } }}
-        className="fixed bottom-5 right-5 z-floating flex items-center gap-2 rounded-full border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] px-4 py-3 text-sm text-[var(--color-fg)] shadow-2xl transition-colors hover:border-[var(--color-blue)]"
+        className="fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom,0px))] right-5 z-floating flex items-center gap-2 rounded-full border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] px-4 py-3 text-sm text-[var(--color-fg)] shadow-2xl transition-colors hover:border-[var(--color-blue)]"
       >
         <span className="status-dot" />
         <span className="font-medium">{open ? t.assistant.close : t.assistant.launch}</span>
@@ -222,7 +222,7 @@ export function Assistant() {
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.95 }}
             transition={{ duration: 0.32, ease: EASE.spring }}
             style={{ transformOrigin: "bottom right" }}
-            className="panel fixed bottom-20 right-5 z-floating flex h-[76vh] max-h-[min(640px,calc(100dvh-144px))] w-[92vw] max-w-[400px] flex-col overflow-hidden rounded-xl shadow-2xl"
+            className="panel fixed bottom-[calc(5rem+env(safe-area-inset-bottom,0px))] right-4 z-floating flex h-[min(76dvh,calc(100svh-6rem))] max-h-[min(640px,calc(100dvh-9rem))] w-[min(92vw,400px)] flex-col overflow-hidden rounded-xl shadow-2xl"
           >
             {/* Header */}
             <div className="flex items-center gap-3 border-b border-[var(--color-hairline)] px-4 py-3">
@@ -406,7 +406,7 @@ export function Assistant() {
                 e.preventDefault();
                 ask(input);
               }}
-              className="flex items-center gap-2 border-t border-[var(--color-hairline)] p-3"
+              className="flex items-center gap-2 border-t border-[var(--color-hairline)] p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
             >
               <input
                 ref={inputRef}

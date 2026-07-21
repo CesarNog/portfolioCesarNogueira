@@ -227,6 +227,7 @@ export function RecruiterScanner() {
   const [mounted, setMounted] = useState(false);
   const reduce = useReducedMotion();
   const bodyRef = useRef<HTMLDivElement>(null);
+  const verdictRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const { t } = useI18n();
   const s = t.scanner;
@@ -275,10 +276,10 @@ export function RecruiterScanner() {
 
     if (phase === "report") {
       timers.push(setTimeout(() => {
-        if (bodyRef.current) {
-          bodyRef.current.scrollTo({ top: bodyRef.current.scrollHeight, behavior: "smooth" });
-        }
-      }, 120));
+        // Scroll to the verdict card so it lands at the top of the visible area —
+        // scrolling to scrollHeight overshoots past the CTAs on small screens.
+        verdictRef.current?.scrollIntoView({ behavior: reduce ? "instant" : "smooth", block: "start" });
+      }, 280));
     }
 
     return () => timers.forEach(clearTimeout);
@@ -392,7 +393,7 @@ export function RecruiterScanner() {
 
         {/* ── ACT 1: Scanning ─────────────────────────────────────────── */}
         {phase === "scanning" && (
-          <div className="flex h-full flex-col items-center justify-center px-6">
+          <div className="flex min-h-full flex-col items-center justify-center px-6 py-10">
             <div className="w-full max-w-lg">
               {/* Terminal-style header block */}
               <div className="mb-8 rounded-lg border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-5 font-mono">
@@ -461,7 +462,7 @@ export function RecruiterScanner() {
             {phase === "report" && (
               <div>
                 {/* Separator — line draws from center out */}
-                <div className="mb-8 flex items-center gap-3">
+                <div ref={verdictRef} className="mb-8 flex items-center gap-3">
                   <div className="verdict-line h-px flex-1 bg-[var(--color-ok)]/40" />
                   <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--color-ok)]" style={{ animationDelay: "0.15s" }}>{s.assessmentComplete}</span>
                   <div className="verdict-line h-px flex-1 bg-[var(--color-ok)]/40" />
@@ -511,7 +512,7 @@ export function RecruiterScanner() {
                 <div className="block-rise mb-5 rounded-xl border border-[var(--color-hairline)] bg-[var(--color-surface-1)] p-4"
                   style={{ animationDelay: "0.8s" }}>
                   <p className="mb-3 font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">{s.businessImpact}</p>
-                  <div className="grid grid-cols-4 gap-2 text-center">
+                  <div className="grid grid-cols-2 gap-3 text-center sm:grid-cols-4">
                     {IMPACT.map((item, i) => (
                       <div key={item.label}>
                         <p className="font-display text-xl font-bold text-[var(--color-fg)]">{item.value}</p>
@@ -553,7 +554,7 @@ export function RecruiterScanner() {
       </div>
 
       {/* Status bar */}
-      <div className="relative z-10 shrink-0 border-t border-[var(--color-hairline)] px-6 py-3">
+      <div className="relative z-10 shrink-0 border-t border-[var(--color-hairline)] px-6 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <div className="flex items-center justify-between gap-4">
           <p className="font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
             {phase === "scanning" && s.statusScanning}
