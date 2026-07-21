@@ -129,6 +129,7 @@ export default function RootLayout({
                     siteConfig.links.linkedin,
                     siteConfig.links.github,
                     siteConfig.links.x,
+                    "https://up2cloud.tech/about/",
                   ],
                   worksFor: { "@id": `${siteConfig.url}/#organization` },
                   address: {
@@ -166,6 +167,7 @@ export default function RootLayout({
                   email: `mailto:${siteConfig.links.email}`,
                   telephone: siteConfig.links.phone,
                   founder: { "@id": `${siteConfig.url}/#person` },
+                  sameAs: ["https://up2cloud.tech"],
                   areaServed: "Worldwide",
                   priceRange: "$$",
                   knowsAbout: siteConfig.knowsAbout,
