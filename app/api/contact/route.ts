@@ -30,6 +30,13 @@ export async function POST(req: NextRequest) {
   const { name, email, subject, message } = body;
   if (!name || !email || !message) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
+  if (typeof name !== "string" || name.length > 100) return NextResponse.json({ error: "Invalid name" }, { status: 400 });
+  if (typeof email !== "string" || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    return NextResponse.json({ error: "Invalid email" }, { status: 400 });
+  if (subject !== undefined && (typeof subject !== "string" || subject.length > 200))
+    return NextResponse.json({ error: "Invalid subject" }, { status: 400 });
+  if (typeof message !== "string" || message.length > 5000) return NextResponse.json({ error: "Invalid message" }, { status: 400 });
+
   const sentAt = new Date().toLocaleString("en-GB", {
     timeZone: "Europe/Lisbon",
     day: "2-digit", month: "short", year: "numeric",

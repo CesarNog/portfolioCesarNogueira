@@ -7,7 +7,7 @@ export const dynamic = "force-static";
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      { userAgent: "*", allow: "/" },
+      { userAgent: "*", allow: "/", disallow: ["/api/"] },
       // Block AI training crawlers from scraping content without permission
       { userAgent: "GPTBot", disallow: "/" },
       { userAgent: "ChatGPT-User", disallow: "/" },

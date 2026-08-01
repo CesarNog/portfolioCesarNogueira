@@ -5,10 +5,14 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Frame-Options",        "value": "SAMEORIGIN" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy",        "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy",     "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()" }
+        { "key": "X-Frame-Options",                    "value": "SAMEORIGIN" },
+        { "key": "X-Content-Type-Options",             "value": "nosniff" },
+        { "key": "Referrer-Policy",                    "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy",                 "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
+        { "key": "Strict-Transport-Security",          "value": "max-age=63072000; includeSubDomains; preload" },
+        { "key": "Cross-Origin-Opener-Policy",         "value": "same-origin-allow-popups" },
+        { "key": "Cross-Origin-Resource-Policy",       "value": "same-origin" },
+        { "key": "Content-Security-Policy",            "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://static.hotjar.com https://script.hotjar.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://vitals.vercel-insights.com https://va.vercel-scripts.com https://in.hotjar.com https://vc.hotjar.io https://metrics.hotjar.io https://content.hotjar.io https://api.hotjar.com https://www.hotjar.com wss://ws.hotjar.com https://googleads.g.doubleclick.net https://www.googleadservices.com; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests;" }
       ]
     }
   ]
