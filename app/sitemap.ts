@@ -13,21 +13,25 @@ function selfLanguages(url: string) {
   return { en: url, "x-default": url };
 }
 
+// Stable ISO dates — only update when content actually changes to avoid
+// wasting Google's crawl budget signalling "new" on every deployment.
+const HOME_MODIFIED = new Date("2026-07-21");
+const CASE_STUDIES_MODIFIED = new Date("2026-07-21");
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteConfig.url;
-  const lastModified = new Date();
 
   return [
     {
       url: base,
-      lastModified,
+      lastModified: HOME_MODIFIED,
       changeFrequency: "monthly",
       priority: 1,
       alternates: { languages: selfLanguages(base) },
     },
     {
       url: `${base}/case-studies`,
-      lastModified,
+      lastModified: CASE_STUDIES_MODIFIED,
       changeFrequency: "monthly",
       priority: 0.8,
       alternates: { languages: selfLanguages(`${base}/case-studies`) },
@@ -36,7 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       const url = `${base}/case-studies/${p.id}`;
       return {
         url,
-        lastModified,
+        lastModified: CASE_STUDIES_MODIFIED,
         changeFrequency: "yearly" as const,
         priority: 0.7,
         alternates: { languages: selfLanguages(url) },
