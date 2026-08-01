@@ -28,6 +28,8 @@ jobs:
         if: steps.detect.outputs.found == 'true'
         with:
           node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         if: steps.detect.outputs.found == 'true'
