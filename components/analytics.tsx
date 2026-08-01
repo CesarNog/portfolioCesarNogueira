@@ -5,7 +5,11 @@ import { WebVitalsReporter } from "@/components/web-vitals-reporter";
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-SQR8VVTFEK';
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 // Falls back to the registered site ID so Hotjar is always active even without an env var
-const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID || "173193";
+const configuredHotjarId = process.env.NEXT_PUBLIC_HOTJAR_ID;
+const HOTJAR_ID =
+  configuredHotjarId && /^[0-9]+$/.test(configuredHotjarId)
+    ? configuredHotjarId
+    : "173193";
 
 export function Analytics() {
   const gtagId = GA_ID || GOOGLE_ADS_ID;
