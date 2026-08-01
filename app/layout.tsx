@@ -119,7 +119,7 @@ export default function RootLayout({
                   name: siteConfig.name,
                   alternateName: "Cesar Nogueira",
                   url: siteConfig.url,
-                  email: `mailto:${siteConfig.links.email}`,
+                  email: siteConfig.links.email,
                   telephone: siteConfig.links.phone,
                   jobTitle: "Principal Cloud Architect",
                   description: siteConfig.description,
@@ -164,7 +164,7 @@ export default function RootLayout({
                   description:
                     "Independent Principal Cloud Architect and FinOps consultancy — multi-cloud architecture, Platform Engineering, DevOps and cloud cost optimization for enterprise teams worldwide.",
                   image: `${siteConfig.url}/opengraph-image.png`,
-                  email: `mailto:${siteConfig.links.email}`,
+                  email: siteConfig.links.email,
                   telephone: siteConfig.links.phone,
                   founder: { "@id": `${siteConfig.url}/#person` },
                   sameAs: ["https://up2cloud.tech"],
