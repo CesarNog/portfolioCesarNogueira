@@ -20,6 +20,10 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "omgili", disallow: "/" },
       { userAgent: "Diffbot", disallow: "/" },
       { userAgent: "Meta-ExternalAgent", disallow: "/" },
+      { userAgent: "Google-Extended", disallow: "/" },
+      { userAgent: "Amazonbot", disallow: "/" },
+      { userAgent: "PerplexityBot", disallow: "/" },
+      { userAgent: "Applebot-Extended", disallow: "/" },
     ],
     sitemap: `${siteConfig.url}/sitemap.xml`,
   };
