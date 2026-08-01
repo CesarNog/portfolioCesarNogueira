@@ -6,14 +6,16 @@
 ## Pages
 
 - [Home](https://cesarnogueira.tech): Overview, selected work, stack, and contact.
+- [Case Studies](https://cesarnogueira.tech/case-studies): Real cloud, FinOps, and platform engineering engagements with outcomes.
 
 ## About
 
 Cesar Augusto Nogueira is a principal-level consultant specializing in cloud
-architecture (AWS, Azure), platform engineering, Kubernetes, Terraform, DevOps,
-and FinOps. Available for consulting engagements worldwide.
+architecture (GCP, AWS, Azure), platform engineering, Kubernetes, Terraform, DevOps,
+and FinOps. Available for consulting engagements worldwide via UP2CLOUD.
 
 ## Optional
 
-- [LinkedIn](https://www.linkedin.com/in/cesar-nogueira/)
+- [LinkedIn](https://www.linkedin.com/in/cesarnog/)
 - [GitHub](https://github.com/cesarnog)
+- [UP2CLOUD](https://up2cloud.tech)
