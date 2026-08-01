@@ -45,7 +45,9 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     question = String(body?.question || "").slice(0, 600);
-    lang = String(body?.lang || "en").slice(0, 5);
+    const rawLang = String(body?.lang || "en").slice(0, 5);
+    const ALLOWED_LANGS = new Set(["en", "pt", "es", "fr", "zh"]);
+    lang = ALLOWED_LANGS.has(rawLang) ? rawLang : "en";
   } catch {
     return NextResponse.json({ error: "Bad request" }, { status: 400 });
   }
