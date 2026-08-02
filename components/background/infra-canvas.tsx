@@ -297,7 +297,6 @@ export function InfraCanvas() {
     // ── Event listeners ───────────────────────────────────────────────────────
     const onResize = () => {
       resize();
-      ctx.scale(dpr(), dpr()); // reset scale after canvas resize
     };
 
     const onScroll = () => {
