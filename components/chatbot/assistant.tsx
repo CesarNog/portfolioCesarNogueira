@@ -2,9 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, m, useReducedMotion } from "motion/react";
-import { faq, siteConfig } from "@/lib/site-config";
+import { faq } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
-import { AVATAR_SRC } from "@/lib/images";
 import { EASE, DUR } from "@/lib/motion";
 
 // ─── Types ────────────────────────────────────────────────────────────────────

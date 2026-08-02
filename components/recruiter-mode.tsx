@@ -338,12 +338,6 @@ export function RecruiterMode() {
     localStorage.setItem("recruiter-mode", "1");
     setRecruiterOn(true);
   };
-  const disableRecruiter = () => {
-    document.documentElement.removeAttribute("data-recruiter");
-    localStorage.removeItem("recruiter-mode");
-    setRecruiterOn(false);
-  };
-
   const openPanel = () => { enableRecruiter(); setPanelOpen(true); };
   const closePanel = () => { setPanelOpen(false); };
 

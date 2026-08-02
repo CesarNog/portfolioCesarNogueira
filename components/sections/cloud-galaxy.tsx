@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-// inView state kept for future use but ForceGalaxy is now instant SVG
+import { useState } from "react";
 import { Section } from "@/components/sections/section";
 import { ForceGalaxy } from "@/components/background/force-graph";
 import { galaxy, galaxyGroups } from "@/lib/site-config";
@@ -16,19 +15,6 @@ const ACCENT: Record<string, string> = {
 export function CloudGalaxy() {
   const { t } = useI18n();
   const [active, setActive] = useState<string | null>(null);
-  const [inView, setInView] = useState(false);
-  const panelRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = panelRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setInView(true); },
-      { rootMargin: "400px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
 
   return (
     <Section
@@ -38,7 +24,6 @@ export function CloudGalaxy() {
     >
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <div
-          ref={panelRef}
           data-recruiter-dim
           className="panel relative min-h-[360px] overflow-hidden rounded-lg lg:min-h-[420px]"
         >
