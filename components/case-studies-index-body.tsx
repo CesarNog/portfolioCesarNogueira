@@ -12,7 +12,14 @@ export function CaseStudiesIndexBody() {
   const reduce = useReducedMotion();
 
   return (
-    <div className="mt-12 space-y-6">
+    <div>
+      <h1 className="font-display text-[clamp(2rem,4vw+0.5rem,3.25rem)] leading-[1.1] text-[var(--color-fg)] [text-wrap:balance]">
+        {t.caseStudies.title}
+      </h1>
+      <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--color-fg-muted)] sm:text-[17px]">
+        {t.caseStudies.subtitle}
+      </p>
+      <div className="mt-12 space-y-6">
       {projects.map((p, i) => {
         const tr = t.projects[p.id];
         const category = tr?.category ?? p.category;
@@ -42,7 +49,7 @@ export function CaseStudiesIndexBody() {
                   <p className="mt-1 font-mono text-xs text-[var(--color-fg-subtle)]">{client}</p>
                   <p className="mt-3 text-[15px] leading-relaxed text-[var(--color-fg-muted)]">{outcome}</p>
                   <span className="mt-3 inline-block text-sm font-medium text-[var(--color-blue)]">
-                    Read the full case study →
+                    {t.caseStudies.readFull}
                   </span>
                 </div>
               </m.article>
@@ -50,6 +57,7 @@ export function CaseStudiesIndexBody() {
           </Reveal>
         );
       })}
+      </div>
     </div>
   );
 }

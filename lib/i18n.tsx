@@ -235,6 +235,15 @@ type Dict = {
     tabAIChat: string;
     roleStrengths: Record<string, readonly string[]>;
   };
+  caseStudies: {
+    title: string;
+    subtitle: string;
+    breadcrumbHome: string;
+    backToHome: string;
+    readFull: string;
+    similarProblem: string;
+    letsTalk: string;
+  };
 };
 
 const en: Dict = {
@@ -676,6 +685,15 @@ const en: Dict = {
       "ai-infrastructure": ["Infrastructure foundation for AI: GPU scheduling, cost-aware inference platforms", "LLM integrations and RAG over private knowledge bases (production)", "Platform engineering directly applicable to MLOps infrastructure", "AI automation: cost anomaly detection, ops automation agents"],
       "consultant": ["Founder and principal of UP2CLOUD — B2B cloud consultancy (2022–present)", "International delivery: Portugal, Spain, Netherlands, UK, Brazil, US clients", "Enterprise track record: banking, aviation, media, staffing, automotive", "B2B model: fractional architecture, platform builds, FinOps engagements"],
     },
+  },
+  caseStudies: {
+    title: "Case Studies",
+    subtitle: "Real engagements, real numbers — the outcomes behind the résumé.",
+    breadcrumbHome: "Home",
+    backToHome: "← Back to home",
+    readFull: "Read the full case study →",
+    similarProblem: "Have a similar problem to solve?",
+    letsTalk: "Let's talk",
   },
 };
 
@@ -1119,6 +1137,15 @@ const pt: Dict = {
       "consultant": ["Fundador e principal da UP2CLOUD — consultoria cloud B2B (2022–presente)", "Entrega internacional: Portugal, Espanha, Holanda, UK, Brasil, clientes dos EUA", "Histórico enterprise: banca, aviação, media, staffing, automóvel", "Modelo B2B: arquitetura fracionada, construção de plataformas, projetos FinOps"],
     },
   },
+  caseStudies: {
+    title: "Estudos de Caso",
+    subtitle: "Projetos reais, números reais — os resultados por trás do currículo.",
+    breadcrumbHome: "Início",
+    backToHome: "← Voltar ao início",
+    readFull: "Ler o estudo de caso completo →",
+    similarProblem: "Tem um problema parecido para resolver?",
+    letsTalk: "Vamos conversar",
+  },
 };
 
 const es: Dict = {
@@ -1560,6 +1587,15 @@ const es: Dict = {
       "ai-infrastructure": ["Base de infraestructura para IA: programación de GPU, plataformas de inferencia conscientes del coste", "Integraciones LLM y RAG sobre bases de conocimiento privadas (producción)", "Ingeniería de plataforma directamente aplicable a infraestructura MLOps", "Automatización IA: detección de anomalías de coste, agentes de automatización de operaciones"],
       "consultant": ["Fundador y principal de UP2CLOUD — consultoría cloud B2B (2022–presente)", "Entrega internacional: Portugal, España, Países Bajos, UK, Brasil, clientes de EE.UU.", "Historial enterprise: banca, aviación, medios, staffing, automoción", "Modelo B2B: arquitectura fraccionada, construcción de plataformas, proyectos FinOps"],
     },
+  },
+  caseStudies: {
+    title: "Casos de Éxito",
+    subtitle: "Proyectos reales, números reales — los resultados detrás del currículum.",
+    breadcrumbHome: "Inicio",
+    backToHome: "← Volver al inicio",
+    readFull: "Leer el caso de éxito completo →",
+    similarProblem: "¿Tienes un problema similar que resolver?",
+    letsTalk: "Hablemos",
   },
 };
 
@@ -2003,6 +2039,15 @@ const fr: Dict = {
       "consultant": ["Fondateur et principal d'UP2CLOUD — conseil cloud B2B (2022–présent)", "Livraison internationale : Portugal, Espagne, Pays-Bas, Royaume-Uni, Brésil, clients US", "Références entreprise : banque, aviation, médias, staffing, automobile", "Modèle B2B : architecture fractionnée, construction de plateformes, missions FinOps"],
     },
   },
+  caseStudies: {
+    title: "Études de Cas",
+    subtitle: "Missions réelles, chiffres réels — les résultats derrière le CV.",
+    breadcrumbHome: "Accueil",
+    backToHome: "← Retour à l'accueil",
+    readFull: "Lire l'étude de cas complète →",
+    similarProblem: "Un problème similaire à résoudre ?",
+    letsTalk: "Discutons-en",
+  },
 };
 
 const zh: Dict = {
@@ -2444,6 +2489,15 @@ const zh: Dict = {
       "ai-infrastructure": ["AI 基础设施：GPU 调度、成本感知推理平台", "生产环境 LLM 集成与私有知识库 RAG", "平台工程直接适用于 MLOps 基础设施", "AI 自动化：成本异常检测、运维自动化代理"],
       "consultant": ["UP2CLOUD 创始人兼主理人——B2B 云咨询（2022–至今）", "国际交付：葡萄牙、西班牙、荷兰、英国、巴西、美国客户", "企业履历：银行、航空、媒体、人力资源、汽车", "B2B 模式：部分架构服务、平台构建、FinOps 项目"],
     },
+  },
+  caseStudies: {
+    title: "案例研究",
+    subtitle: "真实项目，真实数据 —— 简历背后的成果。",
+    breadcrumbHome: "首页",
+    backToHome: "← 返回首页",
+    readFull: "阅读完整案例研究 →",
+    similarProblem: "有类似的问题需要解决吗？",
+    letsTalk: "联系我",
   },
 };
 

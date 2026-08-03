@@ -26,6 +26,11 @@ export function CaseStudyBody({ project: p }: { project: Project }) {
 
   return (
     <article>
+      <nav aria-label="Breadcrumb" className="mb-8 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
+        <Link href="/" className="transition-colors hover:text-[var(--color-fg)]">{t.palette.home}</Link>
+        <span className="mx-2">/</span>
+        <Link href="/case-studies" className="transition-colors hover:text-[var(--color-fg)]">{t.caseStudies.title}</Link>
+      </nav>
       <Reveal>
         <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-blue)]">
           {category}
@@ -107,7 +112,7 @@ export function CaseStudyBody({ project: p }: { project: Project }) {
       <Reveal delay={0.3}>
         <div className="mt-16 flex flex-col items-start gap-4 border-t border-[var(--color-hairline)] pt-10 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[15px] text-[var(--color-fg-muted)]">
-            Have a similar problem to solve?
+            {t.caseStudies.similarProblem}
           </p>
           <m.div whileTap={reduce ? undefined : { scale: 0.97 }}>
             <Link
@@ -115,7 +120,7 @@ export function CaseStudyBody({ project: p }: { project: Project }) {
               className="inline-flex items-center rounded-md px-6 py-3 text-sm font-medium text-white transition-all hover:opacity-90 hover:-translate-y-px active:translate-y-0"
               style={{ backgroundColor: "var(--color-button-primary)" }}
             >
-              Let&apos;s talk
+              {t.caseStudies.letsTalk}
             </Link>
           </m.div>
         </div>

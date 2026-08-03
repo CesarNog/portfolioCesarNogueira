@@ -22,7 +22,7 @@ export function CaseStudyHeader() {
             href="/"
             className="font-ui text-[13px] text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
           >
-            ← Back to home
+            {t.caseStudies.backToHome}
           </Link>
           <LanguageSwitcher />
           <ThemeToggle />

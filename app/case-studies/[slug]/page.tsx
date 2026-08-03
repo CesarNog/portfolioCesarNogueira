@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { siteConfig, projects } from "@/lib/site-config";
 import { CaseStudyHeader } from "@/components/case-study-header";
@@ -96,11 +95,6 @@ export default async function CaseStudyPage({
       />
       <CaseStudyHeader />
       <main className="mx-auto max-w-3xl px-6 py-20 lg:py-28">
-        <nav aria-label="Breadcrumb" className="mb-8 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
-          <Link href="/" className="transition-colors hover:text-[var(--color-fg)]">Home</Link>
-          <span className="mx-2">/</span>
-          <Link href="/case-studies" className="transition-colors hover:text-[var(--color-fg)]">Case Studies</Link>
-        </nav>
         <CaseStudyBody project={project} />
       </main>
       <SiteFooter />
