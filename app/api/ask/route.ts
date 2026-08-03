@@ -28,7 +28,7 @@ Skills: GCP, AWS, Azure, OCI, Kubernetes, Terraform, Docker, Argo, GitHub Action
 Contact: cesarnogueira1210@gmail.com, LinkedIn linkedin.com/in/cesarnog, GitHub github.com/cesarnog.
 `.trim();
 
-const LANG_NAMES: Record<string, string> = { en: "English", pt: "Portuguese", es: "Spanish", fr: "French", zh: "Chinese" };
+const LANG_NAMES: Record<string, string> = { en: "English", pt: "Brazilian Portuguese", es: "Spanish", fr: "French", zh: "Chinese" };
 
 function buildSystemPrompt(lang: string): string {
   const langName = LANG_NAMES[lang] || "English";

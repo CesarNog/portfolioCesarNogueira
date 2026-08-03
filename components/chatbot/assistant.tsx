@@ -136,6 +136,12 @@ export function Assistant() {
   }, []);
 
   useEffect(() => {
+    const closeIt = () => setOpen(false);
+    document.addEventListener("close-assistant", closeIt);
+    return () => document.removeEventListener("close-assistant", closeIt);
+  }, []);
+
+  useEffect(() => {
     if (open) setTimeout(() => inputRef.current?.focus(), 100);
   }, [open]);
 

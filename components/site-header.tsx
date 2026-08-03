@@ -77,7 +77,8 @@ export function SiteHeader() {
 
   const navTo = (href: string) => {
     setMobileOpen(false);
-    setTimeout(() => scrollToSection(href), 50);
+    document.dispatchEvent(new Event("close-assistant"));
+    scrollToSection(href);
   };
 
   return (
@@ -93,7 +94,7 @@ export function SiteHeader() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--color-hairline)] bg-[var(--color-surface-0)]/80 backdrop-blur-md">
         {/* Live variant 3 accepted: nav dim-siblings on hover */}
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
-          <a href="#top" onClick={(e) => { e.preventDefault(); scrollToSection("top"); }} className="flex items-center self-stretch gap-2.5 text-[var(--color-fg)] transition-opacity hover:opacity-80" aria-label="César A. Nogueira, home">
+          <a href="#top" onClick={(e) => { e.preventDefault(); document.dispatchEvent(new Event("close-assistant")); scrollToSection("top"); }} className="flex items-center self-stretch gap-2.5 text-[var(--color-fg)] transition-opacity hover:opacity-80" aria-label="César A. Nogueira, home">
             <Logo size={24} className="text-[var(--color-fg)] shrink-0" />
             <span className="font-ui text-[13px] font-semibold tracking-tight hidden lg:block">
               César<span className="text-[var(--color-blue)]"> A.</span> Nogueira
@@ -105,7 +106,7 @@ export function SiteHeader() {
               <a
                 key={item.href}
                 href={`#${item.href}`}
-                onClick={(e) => { e.preventDefault(); scrollToSection(item.href); }}
+                onClick={(e) => { e.preventDefault(); document.dispatchEvent(new Event("close-assistant")); scrollToSection(item.href); }}
                 className={`nav-hover-link font-ui text-[13px] font-medium tracking-wide ${
                   active === item.href
                     ? "active text-[var(--color-fg)]"

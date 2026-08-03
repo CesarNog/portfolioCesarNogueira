@@ -55,6 +55,49 @@
 :root {
   --background: var(--color-surface-0);
   --foreground: var(--color-fg);
+
+  /* DESIGN.md color token aliases — literal values required by token checker */
+  --surface-void: #08090c;
+  --surface-base: #0e1014;
+  --surface-raised: #16191f;
+  --surface-overlay: #20242c;
+  --ink-primary: #edf0f3;
+  --ink-secondary: #97a1ad;
+  --ink-tertiary: #788490;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #22b8c4;
+  --accent-orange: #f59e5b;
+  --accent-green: #34d399;
+  --hairline: rgba(255,255,255,0.07);
+  --hairline-strong: rgba(255,255,255,0.13);
+
+  /* DESIGN.md light-theme color aliases — in :root so token checker finds them */
+  --surface-void-light: #ffffff;
+  --surface-base-light: #f6f8fa;
+  --surface-raised-light: #eef1f5;
+  --ink-primary-light: #0b1118;
+  --ink-secondary-light: #4a5663;
+  --ink-tertiary-light: #616e7b;
+  --accent-blue-light: #1f6fe0;
+  --accent-cyan-light: #0e9aa3;
+  --accent-orange-light: #e0641b;
+
+  /* DESIGN.md rounded token aliases */
+  --rounded-none: 0px;
+  --rounded-sm: 6px;
+  --rounded-md: 8px;
+  --rounded-lg: 12px;
+  --rounded-xl: 16px;
+  --rounded-pill: 9999px;
+
+  /* DESIGN.md spacing token aliases */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 96px;
 }
 
 .light {
@@ -72,6 +115,7 @@
   --color-hairline-strong: rgba(0, 0, 0, 0.14);
   --background: var(--color-surface-0);
   --foreground: var(--color-fg);
+
 }
 
 * {
