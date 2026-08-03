@@ -41,6 +41,7 @@ export function CommandPalette() {
 
   const go = (id: string) => () => {
     setOpen(false);
+    document.dispatchEvent(new Event("close-assistant"));
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
   const ext = (url: string) => () => {
