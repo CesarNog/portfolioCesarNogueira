@@ -68,8 +68,8 @@
   --accent-cyan: #22b8c4;
   --accent-orange: #f59e5b;
   --accent-green: #34d399;
-  --hairline: rgba(255, 255, 255, 0.07);
-  --hairline-strong: rgba(255, 255, 255, 0.13);
+  --hairline: rgba(255,255,255,0.07);
+  --hairline-strong: rgba(255,255,255,0.13);
 
   /* DESIGN.md light-theme color aliases — in :root so token checker finds them */
   --surface-void-light: #ffffff;
