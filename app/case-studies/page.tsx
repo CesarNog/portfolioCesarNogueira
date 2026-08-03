@@ -65,12 +65,6 @@ export default function CaseStudiesIndexPage() {
       />
       <CaseStudyHeader />
       <main className="mx-auto max-w-3xl px-6 py-20 lg:py-28">
-        <h1 className="font-display text-[clamp(2rem,4vw+0.5rem,3.25rem)] leading-[1.1] text-[var(--color-fg)] [text-wrap:balance]">
-          {title}
-        </h1>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--color-fg-muted)] sm:text-[17px]">
-          Real engagements, real numbers — the outcomes behind the résumé.
-        </p>
         <CaseStudiesIndexBody />
       </main>
       <SiteFooter />
