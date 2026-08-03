@@ -55,6 +55,38 @@
 :root {
   --background: var(--color-surface-0);
   --foreground: var(--color-fg);
+
+  /* DESIGN.md color token aliases */
+  --surface-void: var(--color-surface-0);
+  --surface-base: var(--color-surface-1);
+  --surface-raised: var(--color-surface-2);
+  --surface-overlay: var(--color-surface-3);
+  --ink-primary: var(--color-fg);
+  --ink-secondary: var(--color-fg-muted);
+  --ink-tertiary: var(--color-fg-subtle);
+  --accent-blue: var(--color-blue);
+  --accent-cyan: var(--color-cyan);
+  --accent-orange: var(--color-orange);
+  --accent-green: var(--color-ok);
+  --hairline: var(--color-hairline);
+  --hairline-strong: var(--color-hairline-strong);
+
+  /* DESIGN.md rounded token aliases */
+  --rounded-none: 0px;
+  --rounded-sm: 6px;
+  --rounded-md: 8px;
+  --rounded-lg: 12px;
+  --rounded-xl: 16px;
+  --rounded-pill: 9999px;
+
+  /* DESIGN.md spacing token aliases */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 96px;
 }
 
 .light {
@@ -72,6 +104,17 @@
   --color-hairline-strong: rgba(0, 0, 0, 0.14);
   --background: var(--color-surface-0);
   --foreground: var(--color-fg);
+
+  /* DESIGN.md light-theme color aliases */
+  --surface-void-light: #ffffff;
+  --surface-base-light: #f6f8fa;
+  --surface-raised-light: #eef1f5;
+  --ink-primary-light: #0b1118;
+  --ink-secondary-light: #4a5663;
+  --ink-tertiary-light: #616e7b;
+  --accent-blue-light: #1f6fe0;
+  --accent-cyan-light: #0e9aa3;
+  --accent-orange-light: #e0641b;
 }
 
 * {
