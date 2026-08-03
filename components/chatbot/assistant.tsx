@@ -33,6 +33,11 @@ export function Assistant() {
   const reduce = useReducedMotion();
   const { t, lang } = useI18n();
 
+  // Always-current lang ref so the fetch uses the live locale even if the
+  // memoized `ask` callback was created in an earlier render.
+  const langRef = useRef(lang);
+  useEffect(() => { langRef.current = lang; }, [lang]);
+
   const getFollowUps = (answer: string): string[] => {
     const lower = answer.toLowerCase();
     const fu = t.assistantFollowUps;
@@ -157,7 +162,7 @@ export function Assistant() {
         const res = await fetch("/api/ask", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question: q, lang }),
+          body: JSON.stringify({ question: q, lang: langRef.current }),
           signal: AbortSignal.timeout(12000),
         });
         if (res.status === 429) {
