@@ -148,13 +148,10 @@ test.describe("Navigation while Hiring Assistant is open", () => {
   });
 
   test("repeated open/close cycles do not break state", async ({ page }) => {
-    const launcher = page.getByRole("button", { name: /ask about|FAQ/i }).first();
-
     for (let i = 0; i < 3; i++) {
-      await launcher.click();
-      await expect(page.getByRole("dialog", { name: /career assistant|assistente|asistente|assistant carrière|AI职业/i })).toBeVisible();
+      await openHiringAssistant(page);
       await page.keyboard.press("Escape");
-      await expect(page.getByRole("dialog", { name: /career assistant|assistente|asistente|assistant carrière|AI职业/i })).not.toBeVisible();
+      await expectAssistantToBeClosed(page);
     }
 
     await expectBodyScrollable(page);
@@ -183,11 +180,13 @@ test.describe("Direct hash and browser navigation", () => {
   test("direct hash URL loads correct section", async ({ page }) => {
     await page.goto("/#experience");
     await page.waitForLoadState("load");
+    // Verify the section exists and the page scrolled from hash navigation.
+    // Full toBeInViewport isn't reliable here: 3D layout shifts can displace
+    // the browser's initial hash scroll after React hydration.
     const section = page.locator("#experience");
-    // Layout shifts from 3D animations can displace initial hash scroll —
-    // scroll the section into view explicitly to verify it exists and is reachable.
-    await section.scrollIntoViewIfNeeded();
-    await expect(section).toBeInViewport({ ratio: 0.05 });
+    await expect(section).toBeAttached();
+    const scrolled = await page.evaluate(() => window.scrollY > 0);
+    expect(scrolled).toBe(true);
   });
 
   test("browser back and forward remain functional", async ({ page }) => {
