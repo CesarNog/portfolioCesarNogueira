@@ -259,6 +259,9 @@ export const projects = [
     id: "finops-automation",
     category: "FinOps & Cost Optimization",
     title: "Enterprise FinOps Automation Platform",
+    metaTitle: "Enterprise FinOps Automation — Case Study · César Nogueira",
+    metaDescription:
+      "Cut ~30% of cloud waste and gave finance real-time, per-team cost accountability — a FinOps engagement for a global staffing leader.",
     client: "Global staffing leader",
     problem:
       "Cloud spend across GCP, AWS and Azure was fragmented, untagged and growing faster than visibility allowed.",
@@ -276,6 +279,9 @@ export const projects = [
     id: "bigdata-platform",
     category: "Data Platform Engineering",
     title: "Big Data Analytics Platform",
+    metaTitle: "Big Data Analytics Platform — Case Study · César Nogueira",
+    metaDescription:
+      "Unlocked self-serve, real-time analytics over massive event streams on Google Cloud — a data platform engagement for a US media corporation.",
     client: "Mass-media corporation (US)",
     problem:
       "A media corporation needed a scalable analytics platform to process and query massive event streams.",
@@ -293,6 +299,9 @@ export const projects = [
     id: "banking-cloud",
     category: "Platform Modernization",
     title: "Multi-Cloud for Banking & Aviation",
+    metaTitle: "Multi-Cloud Banking & Aviation — Case Study · César Nogueira",
+    metaDescription:
+      "Delivered secure, observable, regulator-ready cloud for banking and aviation at 99.9% availability — for AndBank, Santander, LATAM Airlines.",
     client: "AndBank · Santander · LATAM Airlines",
     problem:
       "Regulated enterprises required resilient, secure, observable cloud infrastructure across GCP, AWS, Azure and OCI.",

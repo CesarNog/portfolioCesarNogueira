@@ -6,7 +6,7 @@ import { CaseStudiesIndexBody } from "@/components/case-studies-index-body";
 
 const title = "Case Studies";
 const description =
-  "Real cloud, FinOps, and platform engineering engagements — FinOps automation, big data platforms, and regulated multi-cloud banking infrastructure — delivered by César Nogueira.";
+  "Real cloud, FinOps, and platform engineering engagements — FinOps automation, big data platforms, and regulated banking infrastructure.";
 
 export const metadata: Metadata = {
   title,

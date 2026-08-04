@@ -24,24 +24,23 @@ export async function generateMetadata({
   const project = getProject(slug);
   if (!project) return {};
 
-  const title = `${project.title} — Case Study`;
-  const description = `${project.outcome} Real ${project.category.toLowerCase()} engagement for ${project.client}, delivered by ${siteConfig.name}.`;
+  const { metaTitle: title, metaDescription: description } = project;
   const url = `${siteConfig.url}/case-studies/${project.id}`;
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: { canonical: url },
     openGraph: {
       type: "article",
       url,
-      title: `${title} · ${siteConfig.name}`,
+      title,
       description,
       images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} · ${siteConfig.name}`,
+      title,
       description,
       images: [{ url: "/opengraph-image.png", alt: title }],
     },
