@@ -39,5 +39,9 @@ web/.pnpm-store/
 web/.env.local
 web/.env*.local
 
+# Playwright
+/test-results/
+/playwright-report/
+
 # Playwright skill runner scratch files — regenerated on every run
 .claude/skills/playwright-skill/.temp-execution-*.js
