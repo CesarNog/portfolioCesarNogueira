@@ -38,6 +38,8 @@ export const siteConfig = {
     "Observability",
     "AI Infrastructure",
   ],
+  caseStudiesDescription:
+    "Real cloud, FinOps, and platform engineering engagements — FinOps automation, big data platforms, and regulated banking infrastructure.",
   links: {
     linkedin: "https://www.linkedin.com/in/cesarnog/",
     github: "https://github.com/cesarnog",

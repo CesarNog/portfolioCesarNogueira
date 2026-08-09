@@ -5,8 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { CaseStudiesIndexBody } from "@/components/case-studies-index-body";
 
 const title = "Case Studies";
-const description =
-  "Real cloud, FinOps, and platform engineering engagements — FinOps automation, big data platforms, and regulated banking infrastructure.";
+const description = siteConfig.caseStudiesDescription;
 
 export const metadata: Metadata = {
   title,

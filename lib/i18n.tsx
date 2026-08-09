@@ -79,6 +79,10 @@ type Dict = {
     formSuccess: string;
     formSuccessDesc: string;
     formError: string;
+    formNameRequired: string;
+    formEmailRequired: string;
+    formEmailInvalid: string;
+    formMessageRequired: string;
     rowLabels: {
       email: string;
       linkedin: string;
@@ -105,6 +109,7 @@ type Dict = {
     verified: string;
     loadingGalaxy: string;
     operatingModel: string;
+    finopsTrendDisclosure: string;
     monthlyCostLabel: string;
     filterAll: string;
     filterEurope: string;
@@ -416,6 +421,10 @@ const en: Dict = {
     formSuccess: "Message sent",
     formSuccessDesc: "Cesar will be in touch within 24 hours.",
     formError: "Something went wrong. Email directly:",
+    formNameRequired: "Name is required.",
+    formEmailRequired: "Email is required.",
+    formEmailInvalid: "Enter a valid email address.",
+    formMessageRequired: "Message is required.",
     rowLabels: {
       email: "Email",
       linkedin: "LinkedIn",
@@ -442,6 +451,7 @@ const en: Dict = {
     verified: "verified",
     loadingGalaxy: "loading galaxy…",
     operatingModel: "Operating model",
+    finopsTrendDisclosure: "Illustrative trend · based on a real ~30% reduction at Randstad Digital (11-month window)",
     monthlyCostLabel: "Monthly cloud spend · optimized",
     filterAll: "All",
     filterEurope: "Europe",
@@ -867,6 +877,10 @@ const pt: Dict = {
     formSuccess: "Mensagem enviada",
     formSuccessDesc: "O Cesar responderá em 24 horas.",
     formError: "Algo correu mal. Envie diretamente para:",
+    formNameRequired: "O nome é obrigatório.",
+    formEmailRequired: "O email é obrigatório.",
+    formEmailInvalid: "Insira um endereço de email válido.",
+    formMessageRequired: "A mensagem é obrigatória.",
     rowLabels: {
       email: "Email",
       linkedin: "LinkedIn",
@@ -893,6 +907,7 @@ const pt: Dict = {
     verified: "verificadas",
     loadingGalaxy: "carregando galáxia…",
     operatingModel: "Modelo operacional",
+    finopsTrendDisclosure: "Tendência ilustrativa · baseada em redução real de ~30% na Randstad Digital (janela de 11 meses)",
     monthlyCostLabel: "Custo mensal cloud · otimizado",
     filterAll: "Todos",
     filterEurope: "Europa",
@@ -1318,6 +1333,10 @@ const es: Dict = {
     formSuccess: "Mensaje enviado",
     formSuccessDesc: "Cesar te responderá en 24 horas.",
     formError: "Algo salió mal. Escribe directamente a:",
+    formNameRequired: "El nombre es obligatorio.",
+    formEmailRequired: "El email es obligatorio.",
+    formEmailInvalid: "Introduce una dirección de email válida.",
+    formMessageRequired: "El mensaje es obligatorio.",
     rowLabels: {
       email: "Email",
       linkedin: "LinkedIn",
@@ -1344,6 +1363,7 @@ const es: Dict = {
     verified: "verificadas",
     loadingGalaxy: "cargando galaxia…",
     operatingModel: "Modelo operativo",
+    finopsTrendDisclosure: "Tendencia ilustrativa · basada en una reducción real de ~30% en Randstad Digital (ventana de 11 meses)",
     monthlyCostLabel: "Gasto mensual cloud · optimizado",
     filterAll: "Todos",
     filterEurope: "Europa",
@@ -1769,6 +1789,10 @@ const fr: Dict = {
     formSuccess: "Message envoyé",
     formSuccessDesc: "Cesar vous répondra dans les 24 heures.",
     formError: "Une erreur s'est produite. Écrivez directement à :",
+    formNameRequired: "Le nom est requis.",
+    formEmailRequired: "L'email est requis.",
+    formEmailInvalid: "Saisissez une adresse email valide.",
+    formMessageRequired: "Le message est requis.",
     rowLabels: {
       email: "Email",
       linkedin: "LinkedIn",
@@ -1795,6 +1819,7 @@ const fr: Dict = {
     verified: "vérifiées",
     loadingGalaxy: "chargement de la galaxie…",
     operatingModel: "Modèle opérationnel",
+    finopsTrendDisclosure: "Tendance illustrative · basée sur une réduction réelle de ~30% chez Randstad Digital (fenêtre de 11 mois)",
     monthlyCostLabel: "Dépenses cloud mensuelles · optimisées",
     filterAll: "Tous",
     filterEurope: "Europe",
@@ -2220,6 +2245,10 @@ const zh: Dict = {
     formSuccess: "消息已发送",
     formSuccessDesc: "Cesar将在24小时内与您联系。",
     formError: "出现错误。请直接发邮件至：",
+    formNameRequired: "姓名为必填项。",
+    formEmailRequired: "邮箱为必填项。",
+    formEmailInvalid: "请输入有效的邮箱地址。",
+    formMessageRequired: "消息为必填项。",
     rowLabels: {
       email: "邮箱",
       linkedin: "LinkedIn",
@@ -2246,6 +2275,7 @@ const zh: Dict = {
     verified: "已验证",
     loadingGalaxy: "加载星系中…",
     operatingModel: "运营模型",
+    finopsTrendDisclosure: "示意性趋势 · 基于Randstad Digital实际降低约30%的成本（11个月窗口期）",
     monthlyCostLabel: "每月云支出 · 已优化",
     filterAll: "全部",
     filterEurope: "欧洲",

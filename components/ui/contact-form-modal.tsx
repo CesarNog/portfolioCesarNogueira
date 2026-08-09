@@ -50,10 +50,10 @@ export function ContactFormModal({ open, onClose }: Props) {
 
   function validate() {
     const errors = { name: "", email: "", message: "" };
-    if (!form.name.trim()) errors.name = "Name is required.";
-    if (!form.email.trim()) errors.email = "Email is required.";
-    else if (!validateEmail(form.email)) errors.email = "Enter a valid email address.";
-    if (!form.message.trim()) errors.message = "Message is required.";
+    if (!form.name.trim()) errors.name = c.formNameRequired;
+    if (!form.email.trim()) errors.email = c.formEmailRequired;
+    else if (!validateEmail(form.email)) errors.email = c.formEmailInvalid;
+    if (!form.message.trim()) errors.message = c.formMessageRequired;
     setFieldErrors(errors);
     return !errors.name && !errors.email && !errors.message;
   }

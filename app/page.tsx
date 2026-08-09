@@ -19,6 +19,12 @@ const InfraCanvas = dynamic(
 );
 
 // Below-fold sections — split into separate JS chunks, load after first paint
+const FinOps = dynamic(
+  () => import("@/components/sections/finops").then(m => m.FinOps)
+);
+const AiInfra = dynamic(
+  () => import("@/components/sections/ai-infra").then(m => m.AiInfra)
+);
 const GlobalMap = dynamic(
   () => import("@/components/sections/global-map").then(m => m.GlobalMap)
 );
@@ -51,9 +57,11 @@ export default function Home() {
         <Story />
         <ExperienceTimeline />
         <Projects />
+        <FinOps />
         <Trust />
         <GlobalMap />
         <CapabilityMatrix />
+        <AiInfra />
         <Certifications />
         <CloudGalaxy />
         <Testimonials />
