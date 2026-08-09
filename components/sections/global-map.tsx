@@ -214,9 +214,9 @@ export function GlobalMap() {
           <div className="flex flex-wrap gap-x-4 gap-y-2 px-1">
             {[
               { label: t.labels.homeBase, color: "var(--color-ok)" },
-              { label: "Remote",          color: "var(--color-blue)" },
-              { label: "On-site",         color: "var(--color-orange)" },
-              { label: "Hybrid",          color: "var(--color-cyan)" },
+              { label: t.labels.filterRemote,  color: "var(--color-blue)" },
+              { label: t.labels.filterOnsite,  color: "var(--color-orange)" },
+              { label: t.labels.filterHybrid,  color: "var(--color-cyan)" },
             ].map(({ label, color }) => (
               <span
                 key={label}

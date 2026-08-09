@@ -119,6 +119,7 @@ export default function RootLayout({
                   name: siteConfig.name,
                   alternateName: "Cesar Nogueira",
                   url: siteConfig.url,
+                  mainEntityOfPage: { "@id": `${siteConfig.url}/#website` },
                   email: siteConfig.links.email,
                   telephone: siteConfig.links.phone,
                   jobTitle: "Principal Cloud Architect",
