@@ -109,6 +109,7 @@ type Dict = {
     verified: string;
     loadingGalaxy: string;
     operatingModel: string;
+    finopsTrendDisclosure: string;
     monthlyCostLabel: string;
     filterAll: string;
     filterEurope: string;
@@ -450,6 +451,7 @@ const en: Dict = {
     verified: "verified",
     loadingGalaxy: "loading galaxy…",
     operatingModel: "Operating model",
+    finopsTrendDisclosure: "Illustrative trend · based on a real ~30% reduction at Randstad Digital (11-month window)",
     monthlyCostLabel: "Monthly cloud spend · optimized",
     filterAll: "All",
     filterEurope: "Europe",
@@ -905,6 +907,7 @@ const pt: Dict = {
     verified: "verificadas",
     loadingGalaxy: "carregando galáxia…",
     operatingModel: "Modelo operacional",
+    finopsTrendDisclosure: "Tendência ilustrativa · baseada em redução real de ~30% na Randstad Digital (janela de 11 meses)",
     monthlyCostLabel: "Custo mensal cloud · otimizado",
     filterAll: "Todos",
     filterEurope: "Europa",
@@ -1360,6 +1363,7 @@ const es: Dict = {
     verified: "verificadas",
     loadingGalaxy: "cargando galaxia…",
     operatingModel: "Modelo operativo",
+    finopsTrendDisclosure: "Tendencia ilustrativa · basada en una reducción real de ~30% en Randstad Digital (ventana de 11 meses)",
     monthlyCostLabel: "Gasto mensual cloud · optimizado",
     filterAll: "Todos",
     filterEurope: "Europa",
@@ -1815,6 +1819,7 @@ const fr: Dict = {
     verified: "vérifiées",
     loadingGalaxy: "chargement de la galaxie…",
     operatingModel: "Modèle opérationnel",
+    finopsTrendDisclosure: "Tendance illustrative · basée sur une réduction réelle de ~30% chez Randstad Digital (fenêtre de 11 mois)",
     monthlyCostLabel: "Dépenses cloud mensuelles · optimisées",
     filterAll: "Tous",
     filterEurope: "Europe",
@@ -2270,6 +2275,7 @@ const zh: Dict = {
     verified: "已验证",
     loadingGalaxy: "加载星系中…",
     operatingModel: "运营模型",
+    finopsTrendDisclosure: "示意性趋势 · 基于Randstad Digital实际降低约30%的成本（11个月窗口期）",
     monthlyCostLabel: "每月云支出 · 已优化",
     filterAll: "全部",
     filterEurope: "欧洲",

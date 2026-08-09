@@ -119,18 +119,24 @@ export async function POST(req: NextRequest) {
 </body>
 </html>`;
 
-  const r = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    signal: AbortSignal.timeout(9000),
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
-    body: JSON.stringify({
-      from: FROM,
-      to: TO,
-      reply_to: email,
-      subject: subject ? `✉ ${subject} — from ${name}` : `✉ New message from ${name}`,
-      html,
-    }),
-  });
+  let r: Response;
+  try {
+    r = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      signal: AbortSignal.timeout(9000),
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+      body: JSON.stringify({
+        from: FROM,
+        to: TO,
+        reply_to: email,
+        subject: subject ? `✉ ${subject} — from ${name}` : `✉ New message from ${name}`,
+        html,
+      }),
+    });
+  } catch (err) {
+    const isTimeout = err instanceof DOMException && err.name === "TimeoutError";
+    return NextResponse.json({ error: "Send failed" }, { status: isTimeout ? 504 : 502 });
+  }
 
   if (!r.ok) {
     return NextResponse.json({ error: "Send failed" }, { status: 500 });

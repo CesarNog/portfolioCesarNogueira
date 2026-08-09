@@ -6,17 +6,16 @@ async function openHiringAssistant(page: Page) {
   // EN: "Ask about César" / PT-BR|ES: "FAQ Inteligente" / FR: "FAQ IA"
   const launcher = page.getByRole("button", { name: /ask about|FAQ/i }).first();
   await launcher.waitFor({ state: "visible", timeout: 10000 });
-  // Click and retry until the dialog appears — handles React hydration delay
+  // Retry clicking until the dialog appears — handles React hydration delay.
   // (aria-expanded="false" is in SSR HTML so it's not a reliable hydration signal)
-  const dialog = page.getByRole("dialog", { name: /career assistant|assistente|asistente|assistant carrière|AI职业/i });
-  for (let attempt = 0; attempt < 5; attempt++) {
-    const alreadyOpen = await dialog.isVisible().catch(() => false);
-    if (alreadyOpen) break;
-    await launcher.click();
-    await page.waitForTimeout(300);
-  }
   // EN: "AI Career Assistant" / PT-BR: "Assistente de Carreira IA" / ES: "Asistente de Carrera IA"
-  await expect(dialog).toBeVisible({ timeout: 3000 });
+  const dialog = page.getByRole("dialog", { name: /career assistant|assistente|asistente|assistant carrière|AI职业/i });
+  await expect.poll(async () => {
+    if (await dialog.isVisible().catch(() => false)) return true;
+    await launcher.click().catch(() => {});
+    return false;
+  }, { timeout: 8000, intervals: [300] }).toBe(true);
+  await expect(dialog).toBeVisible({ timeout: 2000 });
 }
 
 async function expectAssistantToBeClosed(page: Page) {
@@ -52,8 +51,7 @@ async function expectBodyScrollable(page: Page) {
 // ─── Tests ───────────────────────────────────────────────────────────────────
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/");
-  await page.waitForLoadState("domcontentloaded");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
 });
 
 test.describe("Navigation while Hiring Assistant is open", () => {
@@ -190,8 +188,7 @@ test.describe("Direct hash and browser navigation", () => {
   });
 
   test("browser back and forward remain functional", async ({ page }) => {
-    await page.goto("/");
-    await page.waitForLoadState("domcontentloaded");
+    await page.goto("/", { waitUntil: "domcontentloaded" });
 
     // Scroll to a section
     const navLinks = page.getByRole("navigation", { name: "Main navigation" }).getByRole("link");
@@ -210,8 +207,7 @@ test.describe("Direct hash and browser navigation", () => {
 test.describe("Reduced-motion mode", () => {
   test("navigation works under prefers-reduced-motion", async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.goto("/");
-    await page.waitForLoadState("domcontentloaded");
+    await page.goto("/", { waitUntil: "domcontentloaded" });
 
     await openHiringAssistant(page);
 
