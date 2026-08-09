@@ -62,6 +62,9 @@ export function FinOps() {
               />
             </svg>
           </div>
+          <p className="mt-2 font-mono text-[10px] text-[var(--color-fg-subtle)] opacity-70">
+            Illustrative trend · based on a real ~30% reduction at Randstad Digital (11-month window)
+          </p>
           <div className="mt-4 grid grid-cols-3 gap-3">
             {finops.metrics.slice(0, 3).map((metric) => (
               <div key={metric.label} className="panel-2 rounded-md p-3">

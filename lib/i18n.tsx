@@ -79,6 +79,10 @@ type Dict = {
     formSuccess: string;
     formSuccessDesc: string;
     formError: string;
+    formNameRequired: string;
+    formEmailRequired: string;
+    formEmailInvalid: string;
+    formMessageRequired: string;
     rowLabels: {
       email: string;
       linkedin: string;
@@ -416,6 +420,10 @@ const en: Dict = {
     formSuccess: "Message sent",
     formSuccessDesc: "Cesar will be in touch within 24 hours.",
     formError: "Something went wrong. Email directly:",
+    formNameRequired: "Name is required.",
+    formEmailRequired: "Email is required.",
+    formEmailInvalid: "Enter a valid email address.",
+    formMessageRequired: "Message is required.",
     rowLabels: {
       email: "Email",
       linkedin: "LinkedIn",
@@ -867,6 +875,10 @@ const pt: Dict = {
     formSuccess: "Mensagem enviada",
     formSuccessDesc: "O Cesar responderá em 24 horas.",
     formError: "Algo correu mal. Envie diretamente para:",
+    formNameRequired: "O nome é obrigatório.",
+    formEmailRequired: "O email é obrigatório.",
+    formEmailInvalid: "Insira um endereço de email válido.",
+    formMessageRequired: "A mensagem é obrigatória.",
     rowLabels: {
       email: "Email",
       linkedin: "LinkedIn",
@@ -1318,6 +1330,10 @@ const es: Dict = {
     formSuccess: "Mensaje enviado",
     formSuccessDesc: "Cesar te responderá en 24 horas.",
     formError: "Algo salió mal. Escribe directamente a:",
+    formNameRequired: "El nombre es obligatorio.",
+    formEmailRequired: "El email es obligatorio.",
+    formEmailInvalid: "Introduce una dirección de email válida.",
+    formMessageRequired: "El mensaje es obligatorio.",
     rowLabels: {
       email: "Email",
       linkedin: "LinkedIn",
@@ -1769,6 +1785,10 @@ const fr: Dict = {
     formSuccess: "Message envoyé",
     formSuccessDesc: "Cesar vous répondra dans les 24 heures.",
     formError: "Une erreur s'est produite. Écrivez directement à :",
+    formNameRequired: "Le nom est requis.",
+    formEmailRequired: "L'email est requis.",
+    formEmailInvalid: "Saisissez une adresse email valide.",
+    formMessageRequired: "Le message est requis.",
     rowLabels: {
       email: "Email",
       linkedin: "LinkedIn",
@@ -2220,6 +2240,10 @@ const zh: Dict = {
     formSuccess: "消息已发送",
     formSuccessDesc: "Cesar将在24小时内与您联系。",
     formError: "出现错误。请直接发邮件至：",
+    formNameRequired: "姓名为必填项。",
+    formEmailRequired: "邮箱为必填项。",
+    formEmailInvalid: "请输入有效的邮箱地址。",
+    formMessageRequired: "消息为必填项。",
     rowLabels: {
       email: "邮箱",
       linkedin: "LinkedIn",

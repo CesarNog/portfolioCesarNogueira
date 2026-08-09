@@ -121,6 +121,7 @@ export async function POST(req: NextRequest) {
 
   const r = await fetch("https://api.resend.com/emails", {
     method: "POST",
+    signal: AbortSignal.timeout(9000),
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
     body: JSON.stringify({
       from: FROM,
