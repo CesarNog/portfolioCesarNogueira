@@ -67,7 +67,7 @@ export function ExperienceTimeline() {
 
                 {/* Card */}
                 <m.div
-                  className="panel w-full rounded-lg transition-colors"
+                  className="panel card-shine card-glow w-full rounded-lg"
                   whileHover={reduce ? undefined : cardHover}
                 >
                   <button

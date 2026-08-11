@@ -37,7 +37,7 @@ export function Projects() {
               <m.article
                 data-recruiter-highlight
                 whileHover={reduce ? undefined : cardHover}
-                className="panel grid gap-8 rounded-xl p-8 transition-colors hover:border-[var(--color-hairline-strong)] md:grid-cols-[1fr_2fr]"
+                className="panel card-shine card-glow grid gap-8 rounded-xl p-8 md:grid-cols-[1fr_2fr]"
               >
                 {/* Left: metric + title */}
                 <div className="flex flex-col justify-between gap-6">

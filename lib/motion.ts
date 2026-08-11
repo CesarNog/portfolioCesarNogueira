@@ -59,10 +59,11 @@ export const staggerContainer = {
   },
 } as const;
 
-/** Card hover — subtle lift + border brighten. Applied via whileHover. */
+/** Card hover — lift + scale + glow (pairs with .card-shine / .card-glow CSS). */
 export const cardHover = {
-  y: -2,
-  transition: { duration: DUR.micro, ease: EASE.out },
+  y: -5,
+  scale: 1.012,
+  transition: { duration: 0.25, ease: EASE.out },
 } as const;
 
 /** Button press feedback. Applied via whileTap. */

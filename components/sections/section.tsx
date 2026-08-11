@@ -27,7 +27,7 @@ export function Section({
     >
       <div className="mx-auto max-w-5xl">
         <Reveal>
-          <h2 className="font-display max-w-3xl text-[clamp(1.875rem,4vw+0.5rem,3.75rem)] leading-[1.1] text-[var(--color-fg)] [text-wrap:balance]">
+          <h2 className="gradient-heading font-display max-w-3xl text-[clamp(1.875rem,4vw+0.5rem,3.75rem)] leading-[1.1] [text-wrap:balance]">
             {headline}
           </h2>
           {lead && (
