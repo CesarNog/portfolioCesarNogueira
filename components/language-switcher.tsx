@@ -32,7 +32,7 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
         type="button"
         aria-label={`${current.label}, Language: ${current.name}. Click to change.`}
         aria-expanded={open}
-        aria-haspopup="listbox"
+        aria-haspopup="menu"
         onClick={() => setOpen((o) => !o)}
         className="flex items-center gap-1.5 rounded-md border border-[var(--color-hairline)] px-2 py-1.5 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] hover:text-[var(--color-fg)]"
       >
@@ -55,7 +55,7 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
 
       {open && (
         <div
-          role="listbox"
+          role="menu"
           aria-label="Select language"
           className="absolute right-0 top-full mt-1.5 min-w-[148px] overflow-hidden rounded-lg border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] py-1 shadow-xl"
           style={{ zIndex: 200 }}
@@ -66,8 +66,8 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
               <button
                 key={l.code}
                 type="button"
-                role="option"
-                aria-selected={active}
+                role="menuitemradio"
+                aria-checked={active}
                 onClick={() => { setLang(l.code); setOpen(false); }}
                 className={`flex w-full items-center gap-2.5 px-3 py-2 text-left font-mono text-[11px] transition-colors ${
                   active
