@@ -266,6 +266,7 @@ export function RecruiterMode() {
   const reduce = useReducedMotion();
   const { t, lang } = useI18n();
 
+  const panelRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const chatListRef = useRef<HTMLDivElement>(null);
   const chatInputRef = useRef<HTMLInputElement>(null);
@@ -331,6 +332,28 @@ export function RecruiterMode() {
     const h = (e: KeyboardEvent) => { if (e.key === "Escape") setPanelOpen(false); };
     document.addEventListener("keydown", h);
     return () => document.removeEventListener("keydown", h);
+  }, [panelOpen]);
+
+  // Tab focus trap — WCAG 2.1 SC 2.1.1
+  useEffect(() => {
+    if (!panelOpen || !panelRef.current) return;
+    const dialog = panelRef.current;
+    const trap = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const focusable = dialog.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), input:not([disabled]), textarea:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener("keydown", trap);
+    return () => document.removeEventListener("keydown", trap);
   }, [panelOpen]);
 
   const enableRecruiter = () => {
@@ -446,6 +469,7 @@ export function RecruiterMode() {
             />
 
             <m.div
+              ref={panelRef}
               id={PANEL_ID}
               role="dialog"
               aria-label="AI Hiring Assistant — César A. Nogueira"
