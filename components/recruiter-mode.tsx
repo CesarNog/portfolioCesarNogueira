@@ -436,7 +436,7 @@ export function RecruiterMode() {
         transition={{ duration: 0.5, delay: 1.8, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed bottom-5 left-5 z-floating flex items-center gap-2.5 rounded-full border px-4 py-2.5 text-sm font-medium shadow-2xl transition-all duration-300 ${
           recruiterOn
-            ? "border-[var(--color-blue)] bg-[var(--color-blue)] text-white shadow-[0_0_24px_-6px_var(--color-blue)]"
+            ? "border-[var(--color-blue)] bg-[var(--color-button-primary)] text-white shadow-[0_0_24px_-6px_var(--color-blue)]"
             : "border-[var(--color-blue)]/40 bg-[var(--color-surface-1)] text-[var(--color-fg)] hover:border-[var(--color-blue)] hover:shadow-[0_0_18px_-8px_var(--color-blue)]"
         }`}
       >
@@ -643,7 +643,7 @@ export function RecruiterMode() {
                             type="button"
                             aria-label={`Contact César about ${selectedRole.label} role`}
                             onClick={() => { setPanelOpen(false); setTimeout(() => document.dispatchEvent(new CustomEvent("open-contact-form")), 300); }}
-                            className="inline-flex items-center gap-2 rounded-md bg-[var(--color-blue)] px-4 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-blue)]"
+                            className="inline-flex items-center gap-2 rounded-md bg-[var(--color-button-primary)] px-4 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-blue)]"
                           >
                             {t.recruiterMode.ctaButton}
                           </button>
@@ -723,7 +723,7 @@ export function RecruiterMode() {
                         >
                           <div className={`max-w-[88%] rounded-xl px-4 py-3 text-sm leading-relaxed break-words ${
                             msg.role === "user"
-                              ? "bg-[var(--color-blue)] text-white"
+                              ? "bg-[var(--color-button-primary)] text-white"
                               : "panel-2 text-[var(--color-fg)]"
                           }`}>
                             {msg.role === "bot" && (
@@ -828,7 +828,7 @@ export function RecruiterMode() {
                       type="submit"
                       disabled={chatLoading || !chatInput.trim()}
                       aria-label="Send question"
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[var(--color-blue)] text-sm font-medium text-white disabled:opacity-40 focus-visible:ring-2 focus-visible:ring-[var(--color-blue)]"
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[var(--color-button-primary)] text-sm font-medium text-white disabled:opacity-40 focus-visible:ring-2 focus-visible:ring-[var(--color-blue)]"
                     >
                       ↑
                     </button>

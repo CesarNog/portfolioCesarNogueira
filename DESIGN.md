@@ -12,6 +12,12 @@ colors:
   ink-tertiary: "#788490"
   # Light ink-tertiary updated 2026-06-08: was #697785 (4.27:1 on surface-base-light — WCAG fail), now #616e7b (4.87:1 ✓)
   accent-blue: "#3b82f6"
+  # Solid-fill blue for white text. accent-blue is tuned for accent TEXT,
+  # borders and glows on dark surfaces; as a button fill under #ffffff it is
+  # only 3.68:1 — below WCAG AA. One token cannot serve both roles, so the
+  # fill has its own: #1d6edb on white = 4.88:1. Matches --color-button-primary
+  # in app/globals.css.
+  button-primary-fill: "#1d6edb"
   accent-cyan: "#22b8c4"
   accent-orange: "#f59e5b"
   accent-green: "#34d399"
@@ -75,12 +81,12 @@ spacing:
   3xl: "96px"
 components:
   button-primary:
-    backgroundColor: "{colors.accent-blue}"
+    backgroundColor: "{colors.button-primary-fill}"
     textColor: "#ffffff"
     rounded: "{rounded.md}"
     padding: "12px 24px"
   button-primary-hover:
-    backgroundColor: "{colors.accent-blue}"
+    backgroundColor: "{colors.button-primary-fill}"
     textColor: "#ffffff"
     rounded: "{rounded.md}"
     padding: "12px 24px"

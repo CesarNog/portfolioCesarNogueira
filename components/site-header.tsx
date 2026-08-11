@@ -111,7 +111,7 @@ export function SiteHeader() {
       {/* Skip to main content — accessibility */}
       <a
         href="#top"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-scanner focus:rounded focus:bg-[var(--color-blue)] focus:px-3 focus:py-2 focus:text-sm focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-scanner focus:rounded focus:bg-[var(--color-button-primary)] focus:px-3 focus:py-2 focus:text-sm focus:text-white"
       >
         Skip to content
       </a>
