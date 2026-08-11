@@ -226,6 +226,7 @@ export function RecruiterScanner() {
   const [activeScoringIdx, setActiveScoringIdx] = useState(-1);
   const [mounted, setMounted] = useState(false);
   const reduce = useReducedMotion();
+  const dialogRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   const verdictRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
@@ -296,6 +297,28 @@ export function RecruiterScanner() {
     return () => document.removeEventListener("keydown", h);
   }, [phase]);
 
+  // Tab focus trap — WCAG 2.1 SC 2.1.1
+  useEffect(() => {
+    if (phase === "idle" || !dialogRef.current) return;
+    const dialog = dialogRef.current;
+    const trap = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const focusable = dialog.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener("keydown", trap);
+    return () => document.removeEventListener("keydown", trap);
+  }, [phase]);
+
   // ⌘⇧E (Mac) / Ctrl⇧E (Win/Linux) — keyboard shortcut to open scanner
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
@@ -341,6 +364,7 @@ export function RecruiterScanner() {
   return createPortal(
     <>
     <div
+      ref={dialogRef}
       role="dialog"
       aria-label="Candidate Evaluation — César A. Nogueira"
       aria-modal="true"

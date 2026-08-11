@@ -431,7 +431,7 @@ export function Assistant() {
                 disabled={loading || !input.trim()}
                 aria-label="Send message"
                 whileTap={reduce ? undefined : { scale: 0.87, transition: { duration: DUR.micro, ease: EASE.in } }}
-                className="bg-accent accent-blue flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium text-white disabled:opacity-40"
+                className="flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium text-white disabled:opacity-40 bg-[var(--accent-blue-light)]"
               >
                 ↑
               </m.button>
