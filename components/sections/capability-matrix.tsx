@@ -29,9 +29,10 @@ export function CapabilityMatrix() {
             key={c.area}
             initial={reduce ? false : { opacity: 0, y: 10 }}
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+            whileHover={reduce ? undefined : { x: 3, transition: { duration: 0.18, ease: EASE.out } }}
             viewport={{ once: true, margin: "-30px" }}
             transition={{ duration: DUR.reveal, delay: i * 0.05, ease: EASE.out }}
-            className="grid gap-3 py-7 sm:grid-cols-[1fr_2fr] sm:gap-8 lg:grid-cols-[220px_1fr_auto]"
+            className="grid gap-3 py-7 sm:grid-cols-[1fr_2fr] sm:gap-8 lg:grid-cols-[220px_1fr_auto] cursor-default"
           >
             {/* Area + level */}
             <div className="flex items-start gap-3">

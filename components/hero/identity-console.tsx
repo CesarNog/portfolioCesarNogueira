@@ -272,7 +272,16 @@ export function IdentityConsole() {
             transition: { duration: 1.1, delay: DELAYS.photo, ease: EASE.out },
           })}
         >
-          <Image src="/portrait.webp" alt={siteConfig.name} fill sizes="52vw" className="object-cover object-top" priority loading="eager" />
+          {/* Levitation wrapper — Y-only so it doesn't fight the parent's entrance scale */}
+          <m.div
+            className="absolute inset-0"
+            {...(!reduce && entered ? {
+              animate: { y: [0, -8, 0] },
+              transition: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.3 },
+            } : {})}
+          >
+            <Image src="/portrait.webp" alt={siteConfig.name} fill sizes="52vw" className="object-cover object-top" priority loading="eager" />
+          </m.div>
           {/* Live variant 2 accepted: gradient drift — boundary slowly oscillates */}
           <div className="hero-gradient-drift absolute inset-0" />
           <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[var(--color-surface-0)] to-transparent" />

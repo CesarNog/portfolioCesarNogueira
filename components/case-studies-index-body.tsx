@@ -33,7 +33,7 @@ export function CaseStudiesIndexBody() {
             <Link href={`/case-studies/${p.id}`} className="block">
               <m.article
                 whileHover={reduce ? undefined : cardHover}
-                className="panel grid gap-6 rounded-xl p-6 transition-colors hover:border-[var(--color-hairline-strong)] sm:grid-cols-[auto_1fr] sm:items-center sm:p-8"
+                className="panel card-shine card-glow grid gap-6 rounded-xl p-6 sm:grid-cols-[auto_1fr] sm:items-center sm:p-8"
               >
                 <div className="text-left sm:text-center">
                   <p className="font-display text-4xl text-[var(--color-fg)]">{p.metric}</p>

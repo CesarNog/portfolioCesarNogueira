@@ -506,6 +506,125 @@ body.tab-hidden .aurora-blob {
   background: color-mix(in oklab, var(--color-blue) 3%, var(--color-surface-1));
 }
 
+/* ════════════════════════════════════════════════════════════════════════════
+   2026 ANIMATION SYSTEM — gradient headings, card shine, hover glow, levitation
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Animated gradient text ───────────────────────────────────────────────── */
+/* Slow color sweep: near-white → brand blue → cloud cyan → near-white.
+   -webkit-text-fill-color wins over `color` in Chrome/Safari; `color:
+   transparent` + background-clip covers Firefox. The reduced-motion branch
+   resets every property so the text stays legible without animation. */
+@keyframes gradient-pan {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+.gradient-heading {
+  background: linear-gradient(
+    90deg,
+    var(--color-fg)   0%,
+    var(--color-blue) 28%,
+    var(--color-cyan) 55%,
+    var(--color-fg)   100%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gradient-pan 8s ease infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gradient-heading {
+    animation: none;
+    -webkit-text-fill-color: var(--color-fg);
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    background: none;
+    color: var(--color-fg);
+  }
+}
+[data-reduce-motion="1"] .gradient-heading {
+  animation: none;
+  -webkit-text-fill-color: var(--color-fg);
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  background: none;
+  color: var(--color-fg);
+}
+
+/* ── Levitation float ─────────────────────────────────────────────────────── */
+/* Sinusoidal hover for hero portrait and selected featured elements. */
+@keyframes levitate {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-8px); }
+}
+.animate-levitate {
+  animation: levitate 5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-levitate { animation: none; }
+}
+[data-reduce-motion="1"] .animate-levitate { animation: none; }
+
+/* ── Card shine — diagonal light sweep on hover ───────────────────────────── */
+/* A single-pass shimmer that fires once on hover / focus-within, then resets.
+   Uses ::after so the host element keeps its own border-radius clip. */
+@keyframes card-shine {
+  from { transform: translateX(-200%) skewX(-20deg); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  to   { transform: translateX(350%) skewX(-20deg); opacity: 0; }
+}
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+.card-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    color-mix(in oklab, white 7%, transparent) 50%,
+    transparent 65%
+  );
+  transform: translateX(-200%) skewX(-20deg);
+  pointer-events: none;
+  z-index: 1;
+}
+.card-shine:hover::after,
+.card-shine:focus-within::after {
+  animation: card-shine 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-shine::after { display: none; }
+}
+[data-reduce-motion="1"] .card-shine::after { display: none; }
+
+/* ── Card hover glow ─────────────────────────────────────────────────────── */
+/* Adds a blue edge glow + box-shadow lift on hover to interactive cards.
+   Intended to pair with .card-shine on the same element. */
+.card-glow {
+  transition:
+    border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow   0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-glow:hover {
+  border-color: color-mix(in oklab, var(--color-blue) 35%, var(--color-hairline));
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--color-blue) 10%, transparent),
+    0 12px 40px -16px color-mix(in oklab, var(--color-blue) 28%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-glow { transition: none; }
+  .card-glow:hover { box-shadow: none; border-color: var(--color-hairline-strong); }
+}
+[data-reduce-motion="1"] .card-glow { transition: none; }
+[data-reduce-motion="1"] .card-glow:hover { box-shadow: none; border-color: var(--color-hairline-strong); }
+
 /* ─── Print stylesheet — clean CV output ─────────────────────────────────── */
 @media print {
   /* Force light mode colors */
