@@ -65,6 +65,10 @@
   --ink-secondary: #97a1ad;
   --ink-tertiary: #788490;
   --accent-blue: #3b82f6;
+  /* Mirrors DESIGN.md colors.button-primary-fill. Same value as
+     --color-button-primary; this alias exists so the token checker can resolve
+     the spec, following the convention of the other aliases in this block. */
+  --button-primary-fill: #1d6edb;
   --accent-cyan: #22b8c4;
   --accent-orange: #f59e5b;
   --accent-green: #34d399;
