@@ -4,7 +4,7 @@ import { CaseStudyHeader } from "@/components/case-study-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CaseStudiesIndexBody } from "@/components/case-studies-index-body";
 
-const title = "Case Studies";
+const title = "Cloud, FinOps & Data Case Studies";
 const description = siteConfig.caseStudiesDescription;
 
 export const metadata: Metadata = {
