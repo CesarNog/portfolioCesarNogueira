@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { IntroSequence } from "@/components/hero/intro-sequence";
 import { IdentityConsole } from "@/components/hero/identity-console";
 import { Story } from "@/components/sections/story";
 import { ExperienceTimeline } from "@/components/sections/experience-timeline";
@@ -16,6 +15,10 @@ import { Testimonials } from "@/components/sections/testimonials";
 // mismatch for reduced-motion visitors).
 const InfraCanvas = dynamic(
   () => import("@/components/background/infra-canvas").then(m => m.InfraCanvas)
+);
+
+const IntroSequence = dynamic(
+  () => import("@/components/hero/intro-sequence").then(m => m.IntroSequence)
 );
 
 // Below-fold sections — split into separate JS chunks, load after first paint

@@ -25,6 +25,7 @@ export function ContactFormModal({ open, onClose }: Props) {
   const [fieldErrors, setFieldErrors] = useState({ name: "", email: "", message: "" });
   const firstInputRef = useRef<HTMLInputElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   // Focus first field on open
   useEffect(() => {
@@ -38,6 +39,28 @@ export function ContactFormModal({ open, onClose }: Props) {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
+
+  // Tab focus trap — WCAG 2.1 SC 2.1.1
+  useEffect(() => {
+    if (!open || !dialogRef.current) return;
+    const dialog = dialogRef.current;
+    const trap = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const focusable = dialog.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), input:not([disabled]), textarea:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener("keydown", trap);
+    return () => document.removeEventListener("keydown", trap);
+  }, [open]);
 
   // Lock body scroll when open
   useEffect(() => {
@@ -103,6 +126,7 @@ export function ContactFormModal({ open, onClose }: Props) {
 
           {/* Dialog */}
           <m.div
+            ref={dialogRef}
             role="dialog"
             aria-modal="true"
             aria-label="Send a message to Cesar"

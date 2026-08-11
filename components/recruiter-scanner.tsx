@@ -160,7 +160,7 @@ function SkillBar({ skill, visible, labels, text }: { skill: typeof SKILLS[numbe
             <span className="font-mono text-[10px] text-[var(--color-fg-subtle)]" style={{ display: "inline-block", transform: expanded ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.18s" }}>▾</span>
           </div>
         </div>
-        <div className="relative h-1 w-full overflow-hidden rounded-full bg-[var(--color-surface-3)]" role="progressbar" aria-valuenow={skill.score} aria-valuemin={0} aria-valuemax={100}>
+        <div className="relative h-1 w-full overflow-hidden rounded-full bg-[var(--color-surface-3)]" role="progressbar" aria-valuenow={skill.score} aria-valuemin={0} aria-valuemax={100} aria-label={`${text?.label ?? skill.label}, ${skill.score} percent`}>
           <m.div
             className="h-full w-full origin-left"
             style={{ backgroundColor: scoreColor(skill.score) }}
