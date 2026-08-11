@@ -18,8 +18,7 @@ const InfraCanvas = dynamic(
 );
 
 const IntroSequence = dynamic(
-  () => import("@/components/hero/intro-sequence").then(m => m.IntroSequence),
-  { ssr: false }
+  () => import("@/components/hero/intro-sequence").then(m => m.IntroSequence)
 );
 
 // Below-fold sections — split into separate JS chunks, load after first paint
