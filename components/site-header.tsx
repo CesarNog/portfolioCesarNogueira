@@ -60,6 +60,31 @@ export function SiteHeader() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
+  // Tab focus trap for mobile nav dialog.
+  useEffect(() => {
+    if (!mobileOpen || !menuRef.current) return;
+    const dialog = menuRef.current;
+    const focusable = () => dialog.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    // Move focus into the dialog on open.
+    (focusable()[0] as HTMLElement | undefined)?.focus();
+    const trap = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const els = focusable();
+      if (!els.length) return;
+      const first = els[0];
+      const last = els[els.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener("keydown", trap);
+    return () => document.removeEventListener("keydown", trap);
+  }, [mobileOpen]);
+
   const openPalette = () => {
     document.dispatchEvent(
       new KeyboardEvent("keydown", { key: "k", metaKey: true, bubbles: true }),
@@ -177,6 +202,7 @@ export function SiteHeader() {
               ref={menuRef}
               id="mobile-nav"
               role="dialog"
+              aria-modal="true"
               aria-label="Navigation menu"
               initial={reduce ? { opacity: 0 } : { opacity: 0, x: "100%" }}
               animate={{ opacity: 1, x: 0 }}
