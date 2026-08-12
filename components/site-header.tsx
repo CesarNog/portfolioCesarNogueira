@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, m, useReducedMotion, useScroll, useSpring } from "motion/react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -119,14 +120,14 @@ export function SiteHeader() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--color-hairline)] bg-[var(--color-surface-0)]/80 backdrop-blur-md">
         {/* Live variant 3 accepted: nav dim-siblings on hover */}
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
-          <a href="#top" onClick={(e) => { e.preventDefault(); document.dispatchEvent(new Event("close-assistant")); scrollToSection("top"); }} className="flex items-center self-stretch gap-2.5 text-[var(--color-fg)] transition-opacity hover:opacity-80" aria-label="César A. Nogueira, home">
+          <a href="#top" onClick={(e) => { e.preventDefault(); document.dispatchEvent(new Event("close-assistant")); scrollToSection("top"); }} className="flex shrink-0 items-center self-stretch gap-2.5 text-[var(--color-fg)] transition-opacity hover:opacity-80" aria-label="César A. Nogueira, home">
             <Logo size={24} className="text-[var(--color-fg)] shrink-0" />
-            <span className="font-ui text-[13px] font-semibold tracking-tight hidden lg:block">
+            <span className="whitespace-nowrap font-ui text-[13px] font-semibold tracking-tight hidden lg:block">
               César<span className="text-[var(--color-blue)]"> A.</span> Nogueira
             </span>
           </a>
-          <span className="hidden md:block h-4 w-px bg-[var(--color-hairline-strong)] mx-2" aria-hidden />
-          <nav aria-label="Main navigation" className="nav-hover-dim hidden items-center gap-6 md:flex">
+          <span className="hidden md:block h-4 w-px bg-[var(--color-hairline-strong)] mx-1.5" aria-hidden />
+          <nav aria-label="Main navigation" className="nav-hover-dim hidden items-center gap-4 lg:gap-5 md:flex">
             {NAV.map((item) => (
               <a
                 key={item.href}
@@ -162,6 +163,17 @@ export function SiteHeader() {
               </svg>
               <kbd className="text-[var(--color-fg-muted)]">⌘K</kbd>
             </button>
+            <Link
+              href="/connect"
+              aria-label="Connect via MCP — for AI agents"
+              className="hidden items-center gap-1.5 rounded-md border border-[var(--color-cyan)]/30 px-2 py-1.5 font-mono text-[11px] uppercase tracking-wider text-[var(--color-cyan)] transition-colors hover:border-[var(--color-cyan)]/60 hover:bg-[var(--color-cyan)]/10 lg:flex"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M9 2v6M15 2v6M6 8h12l-1 5a5 5 0 0 1-10 0z" />
+                <path d="M12 19v3" />
+              </svg>
+              MCP
+            </Link>
             <LanguageSwitcher className="hidden sm:flex" />
             <ThemeToggle />
             {/* Mobile hamburger */}
@@ -254,6 +266,17 @@ export function SiteHeader() {
                   {t.palette.commandPalette}
                   <kbd className="font-mono text-[11px] text-[var(--color-fg-subtle)]">⌘K</kbd>
                 </button>
+                <Link
+                  href="/connect"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex w-full items-center gap-1.5 rounded-md border border-[var(--color-cyan)]/30 px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-[var(--color-cyan)] transition-colors hover:border-[var(--color-cyan)]/60 hover:bg-[var(--color-cyan)]/10"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M9 2v6M15 2v6M6 8h12l-1 5a5 5 0 0 1-10 0z" />
+                    <path d="M12 19v3" />
+                  </svg>
+                  Connect via MCP
+                </Link>
               </div>
             </m.div>
           </>

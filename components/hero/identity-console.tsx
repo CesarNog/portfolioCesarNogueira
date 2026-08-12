@@ -115,7 +115,7 @@ export function IdentityConsole() {
     >
       {/* Mobile: portrait as background, content on top */}
       <div className="absolute inset-0 -z-10 lg:hidden" aria-hidden>
-        <PortraitMatrix src="/portrait-mobile.webp" alt={siteConfig.name} className="h-full w-full" />
+        <PortraitMatrix src="/portrait-bust.webp" alt={siteConfig.name} className="h-full w-full" focusY={0.5} />
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-surface-0)]/10 via-[var(--color-surface-0)]/60 to-[var(--color-surface-0)]" />
       </div>
 
@@ -270,7 +270,7 @@ export function IdentityConsole() {
               transition: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.3 },
             } : {})}
           >
-            <PortraitMatrix src="/portrait.webp" alt={siteConfig.name} className="h-full w-full" />
+            <PortraitMatrix src="/portrait-bust.webp" alt={siteConfig.name} className="h-full w-full" focusY={0.5} />
           </m.div>
           {/* Live variant 2 accepted: gradient drift — boundary slowly oscillates */}
           <div className="hero-gradient-drift absolute inset-0" />
