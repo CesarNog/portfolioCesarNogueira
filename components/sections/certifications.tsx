@@ -1,9 +1,11 @@
 "use client";
 
+import { m, useReducedMotion } from "motion/react";
 import { Section } from "@/components/sections/section";
 import { Reveal } from "@/components/reveal";
 import { certifications } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
+import { EASE } from "@/lib/motion";
 
 // ─── Provider logos (accurate SVG reproductions of official brand marks) ───────
 
@@ -97,6 +99,7 @@ function providerAccent(group: string): { bg: string; border: string; check: str
 
 export function Certifications() {
   const { t } = useI18n();
+  const reduce = useReducedMotion();
 
   return (
     <Section
@@ -109,13 +112,14 @@ export function Certifications() {
           const accent = providerAccent(cat.group);
           return (
             <Reveal key={cat.group} delay={i * 0.08}>
-              <div
+              <m.div
                 data-recruiter-highlight
-                className="group relative flex h-full flex-col overflow-hidden rounded-xl border bg-[var(--color-surface-1)] transition-colors"
+                whileHover={reduce ? undefined : { y: -3, transition: { duration: 0.2, ease: EASE.out } }}
+                className="group relative flex h-full flex-col overflow-hidden rounded-xl border bg-[var(--color-surface-1)] transition-[border-color,box-shadow] hover:shadow-lg"
                 style={{ borderColor: accent.border }}
               >
                 {/* Top accent strip */}
-                <div className="h-[3px] w-full transition-opacity group-hover:opacity-70" style={{ backgroundColor: accent.bg }} />
+                <div className="h-[3px] w-full" style={{ backgroundColor: accent.bg }} />
 
                 <div className="flex flex-1 flex-col p-6">
                   {/* Provider logo + count */}
@@ -141,11 +145,13 @@ export function Certifications() {
                     {cat.items.map((it) => (
                       <li key={it.name} className="flex items-start gap-3">
                         <span
-                          className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white"
+                          className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-white"
                           style={{ backgroundColor: accent.bg }}
                           aria-hidden
                         >
-                          ✓
+                          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="2,6 5,9 10,3" />
+                          </svg>
                         </span>
                         <div className="flex-1 min-w-0">
                           <span className="text-[14px] leading-snug text-[var(--color-fg)]">{it.name}</span>
@@ -162,7 +168,7 @@ export function Certifications() {
                     ))}
                   </ul>
                 </div>
-              </div>
+              </m.div>
             </Reveal>
           );
         })}

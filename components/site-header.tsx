@@ -132,6 +132,7 @@ export function SiteHeader() {
                 key={item.href}
                 href={`#${item.href}`}
                 onClick={(e) => { e.preventDefault(); document.dispatchEvent(new Event("close-assistant")); scrollToSection(item.href); }}
+                aria-current={active === item.href ? "true" : undefined}
                 className={`nav-hover-link font-ui text-[13px] font-medium tracking-wide ${
                   active === item.href
                     ? "active text-[var(--color-fg)]"
@@ -144,7 +145,7 @@ export function SiteHeader() {
           </nav>
           <div className="flex items-center gap-1.5">
             <span className="group hidden lg:flex items-center gap-1.5 rounded-full border border-[var(--color-ok)]/30 bg-[var(--color-ok)]/8 px-2.5 py-1 mr-1 transition-[border-color] duration-200 hover:border-[var(--color-ok)]/60">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-ok)] animate-pulse" aria-hidden />
+              <span className="status-dot shrink-0" aria-hidden />
               <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-ok)]">{t.hero.available.split(" ")[0]}</span>
               <span className="overflow-hidden whitespace-nowrap font-mono text-[10px] uppercase tracking-wider text-[var(--color-ok)] max-w-0 group-hover:max-w-[9rem] transition-[max-width] duration-300 ease-out opacity-0 group-hover:opacity-100">
                 {t.hero.available.includes(" ") ? ` ${t.hero.available.slice(t.hero.available.indexOf(" ") + 1)}` : ""}
@@ -180,6 +181,8 @@ export function SiteHeader() {
         </div>
 
         <m.div
+          role="progressbar"
+          aria-label="Page reading progress"
           className="h-px origin-left bg-gradient-to-r from-[var(--color-blue)] via-[var(--color-cyan)] to-[var(--color-blue)]"
           style={{ scaleX, boxShadow: "0 0 6px 0 color-mix(in oklab, var(--color-blue) 55%, transparent)" }}
         />
@@ -215,9 +218,11 @@ export function SiteHeader() {
                 <button
                   onClick={() => setMobileOpen(false)}
                   aria-label="Close navigation"
-                  className="flex h-11 w-11 items-center justify-center text-lg leading-none text-[var(--color-fg-subtle)] hover:text-[var(--color-fg)]"
+                  className="flex h-11 w-11 items-center justify-center text-[var(--color-fg-subtle)] hover:text-[var(--color-fg)]"
                 >
-                  ✕
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
                 </button>
               </div>
               <nav aria-label="Mobile navigation" className="flex-1 overflow-y-auto p-4">
