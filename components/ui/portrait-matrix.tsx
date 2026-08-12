@@ -23,11 +23,27 @@ const GLYPHS =
   "アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789<>{}=+*#$%&/\\".split("");
 const CELL = 9; // px per character cell, CSS pixels
 
-function coverCrop(nw: number, nh: number, cw: number, ch: number) {
-  const s = Math.max(cw / nw, ch / nh);
+// zoom > 1 crops in tighter than a plain object-fit: cover; focusX/focusY (0-1,
+// fractions of the source image) pick the point that stays centered in frame —
+// e.g. for a full-body photo, focus on the face instead of the default
+// horizontal-center/top-aligned cover crop.
+function coverCrop(
+  nw: number,
+  nh: number,
+  cw: number,
+  ch: number,
+  zoom: number,
+  focusX: number,
+  focusY: number,
+) {
+  const s = Math.max(cw / nw, ch / nh) * zoom;
   const sw = Math.min(cw / s, nw);
   const sh = Math.min(ch / s, nh);
-  return { sx: (nw - sw) / 2, sy: 0, sw, sh }; // object-position: top → sy fixed at 0
+  const maxSx = nw - sw;
+  const maxSy = nh - sh;
+  const sx = Math.max(0, Math.min(maxSx, focusX * nw - sw / 2));
+  const sy = Math.max(0, Math.min(maxSy, focusY * nh - sh / 2));
+  return { sx, sy, sw, sh };
 }
 
 // Luminance (0-1) → rgba string: dark green → brand green → near-white hotspot.
@@ -48,10 +64,18 @@ export function PortraitMatrix({
   src,
   alt,
   className = "",
+  zoom = 1,
+  focusX = 0.5,
+  focusY = 0,
 }: {
   src: string;
   alt: string;
   className?: string;
+  /** > 1 crops in tighter than object-fit: cover — use to frame a face inside a wider source photo. */
+  zoom?: number;
+  /** Fraction (0-1) of the source image width/height to keep centered in frame. */
+  focusX?: number;
+  focusY?: number;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -108,7 +132,7 @@ export function PortraitMatrix({
       cols = Math.max(1, Math.ceil(cw / CELL));
       rows = Math.max(1, Math.ceil(ch / CELL));
 
-      const { sx, sy, sw, sh } = coverCrop(img.naturalWidth, img.naturalHeight, cw, ch);
+      const { sx, sy, sw, sh } = coverCrop(img.naturalWidth, img.naturalHeight, cw, ch, zoom, focusX, focusY);
       offscreen.width = cols;
       offscreen.height = rows;
       octx.imageSmoothingEnabled = true;
@@ -168,7 +192,7 @@ export function PortraitMatrix({
       img.removeEventListener("load", onLoad);
       ro.disconnect();
     };
-  }, [reduce, src]);
+  }, [reduce, src, zoom, focusX, focusY]);
 
   return (
     <div ref={containerRef} className={`relative overflow-hidden bg-black ${className}`}>
@@ -183,6 +207,16 @@ export function PortraitMatrix({
         fetchPriority="high"
       />
       <canvas ref={canvasRef} role="img" aria-label={alt} className="absolute inset-0 h-full w-full" />
+      {/* Vignette — fades the grid to black at the edges so the effect reads as a
+          lit subject emerging from darkness instead of a hard-edged noise rectangle. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 75% 70% at 50% 42%, transparent 45%, rgba(0,0,0,0.55) 78%, #000 100%)",
+        }}
+      />
     </div>
   );
 }
