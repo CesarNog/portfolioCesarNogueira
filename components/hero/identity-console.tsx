@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { m, useMotionTemplate, useMotionValue, useReducedMotion } from "motion/react";
 import { siteConfig, stats, cvByLang } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
-import Image from "next/image";
 import { Counter } from "@/components/ui/counter";
 import { Magnetic } from "@/components/ui/magnetic";
 import { EASE, DUR, buttonPress } from "@/lib/motion";
 import { RecruiterScanner } from "@/components/recruiter-scanner";
+import { PortraitMatrix } from "@/components/ui/portrait-matrix";
 import { useTypewriter } from "@/hooks/use-typewriter";
 
 // Staggered hero entrance — each layer reveals 120ms after the previous
@@ -115,17 +115,7 @@ export function IdentityConsole() {
     >
       {/* Mobile: portrait as background, content on top */}
       <div className="absolute inset-0 -z-10 lg:hidden" aria-hidden>
-        <Image
-          src="/portrait-mobile.webp"
-          alt={siteConfig.name}
-          fill
-          sizes="100vw"
-          priority
-          loading="eager"
-          fetchPriority="high"
-          className="object-cover object-top"
-          style={{ opacity: 0.30 }}
-        />
+        <PortraitMatrix src="/portrait-mobile.webp" alt={siteConfig.name} className="h-full w-full" />
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-surface-0)]/10 via-[var(--color-surface-0)]/60 to-[var(--color-surface-0)]" />
       </div>
 
@@ -280,7 +270,7 @@ export function IdentityConsole() {
               transition: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.3 },
             } : {})}
           >
-            <Image src="/portrait.webp" alt={siteConfig.name} fill sizes="52vw" className="object-cover object-top" priority loading="eager" />
+            <PortraitMatrix src="/portrait.webp" alt={siteConfig.name} className="h-full w-full" />
           </m.div>
           {/* Live variant 2 accepted: gradient drift — boundary slowly oscillates */}
           <div className="hero-gradient-drift absolute inset-0" />
