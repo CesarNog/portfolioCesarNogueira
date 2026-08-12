@@ -20,8 +20,8 @@ export function Testimonials() {
         {testimonials.map((testimonial, i) => (
           <m.figure
             key={testimonial.name}
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+            initial={reduce ? false : { opacity: 0, y: 24, filter: "blur(4px)" }}
+            whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: DUR.reveal, delay: i * 0.1, ease: EASE.out }}
             className={`py-12 ${i % 2 === 1 ? "lg:pl-16 xl:pl-24" : ""}`}
@@ -30,7 +30,7 @@ export function Testimonials() {
             <blockquote className="relative">
               {/* Decorative opening mark */}
               <span
-                className="absolute -top-6 -left-2 font-display text-7xl leading-none text-[var(--color-blue)]/15 select-none"
+                className="absolute -top-6 -left-2 font-display text-7xl leading-none text-[var(--color-blue)]/25 select-none"
                 aria-hidden
               >
                 &ldquo;
@@ -44,14 +44,14 @@ export function Testimonials() {
             <figcaption className="mt-8 flex items-center gap-4">
               {/* Initials avatar */}
               <div
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-surface-2)] font-mono text-[13px] font-medium text-[var(--color-fg-muted)]"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-surface-2)] font-display text-[13px] font-medium text-[var(--color-fg-muted)]"
                 aria-hidden
               >
                 {testimonial.name.split(" ").map(n => n[0]).join("").slice(0, 2)}
               </div>
               <div>
                 <p className="text-sm font-semibold text-[var(--color-fg)]">{testimonial.name}</p>
-                <p className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
+                <p className="font-mono text-[12px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
                   {testimonial.title}
                 </p>
               </div>

@@ -48,7 +48,7 @@ export function ContactConsole() {
             </div>
             <dl className="mt-6 divide-y divide-[var(--color-hairline)]">
               {rows.map((r) => (
-                <div key={r.k} className="flex items-center justify-between gap-4 py-3">
+                <div key={r.k} className="flex items-center justify-between gap-4 rounded-md py-3 px-2 -mx-2 transition-colors hover:bg-[var(--color-surface-2)]">
                   <dt className="font-mono text-xs uppercase tracking-wider text-[var(--color-fg-subtle)]">
                     {r.k}
                   </dt>
@@ -105,17 +105,19 @@ export function ContactConsole() {
                   href={siteConfig.links.linkedin}
                   target="_blank"
                   rel="noreferrer"
+                  aria-label="LinkedIn profile (opens in new tab)"
                   className="inline-flex items-center justify-center rounded-md border border-[var(--color-hairline-strong)] px-4 py-2.5 text-sm text-[var(--color-fg)] transition-colors hover:border-[var(--color-fg-muted)]"
                 >
-                  LinkedIn ↗
+                  LinkedIn <span aria-hidden> ↗</span>
                 </a>
                 <a
                   href={siteConfig.links.cv}
                   target="_blank"
                   rel="noreferrer"
+                  aria-label="Download CV (opens in new tab)"
                   className="inline-flex items-center justify-center rounded-md border border-[var(--color-hairline-strong)] px-4 py-2.5 text-sm text-[var(--color-fg)] transition-colors hover:border-[var(--color-fg-muted)]"
                 >
-                  {t.contact.downloadCv} ↓
+                  {t.contact.downloadCv} <span aria-hidden>↓</span>
                 </a>
               </div>
               <a
