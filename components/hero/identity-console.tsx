@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { m, useMotionTemplate, useMotionValue, useReducedMotion } from "motion/react";
+import { m, useMotionTemplate, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
 import { siteConfig, stats, cvByLang } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
 import { Counter } from "@/components/ui/counter";
@@ -25,6 +25,17 @@ export function IdentityConsole() {
   const mouseX = useMotionValue(-1000);
   const mouseY = useMotionValue(-1000);
   const spotlight = useMotionTemplate`radial-gradient(520px at ${mouseX}px ${mouseY}px, color-mix(in oklab, var(--color-blue) 5%, transparent) 0%, transparent 70%)`;
+
+  // Portrait parallax — cursor position within the hero (normalized -0.5..0.5)
+  // drives a small spring-smoothed tilt/shift on the photo, so it reads as a
+  // physical layer with depth rather than a flat, static image.
+  const parallaxX = useMotionValue(0);
+  const parallaxY = useMotionValue(0);
+  const parallaxSpringX = useSpring(parallaxX, { stiffness: 120, damping: 18, mass: 0.6 });
+  const parallaxSpringY = useSpring(parallaxY, { stiffness: 120, damping: 18, mass: 0.6 });
+  const photoShiftX = useTransform(parallaxSpringX, [-0.5, 0.5], [-14, 14]);
+  const photoRotateY = useTransform(parallaxSpringX, [-0.5, 0.5], [-4, 4]);
+  const photoRotateX = useTransform(parallaxSpringY, [-0.5, 0.5], [4, -4]);
 
   // Continuous-handoff fix: this section mounts at the same time as the
   // pinned IntroSequence sitting above it, so a mount-triggered entrance
@@ -107,10 +118,14 @@ export function IdentityConsole() {
         const rect = e.currentTarget.getBoundingClientRect();
         mouseX.set(e.clientX - rect.left);
         mouseY.set(e.clientY - rect.top);
+        parallaxX.set((e.clientX - rect.left) / rect.width - 0.5);
+        parallaxY.set((e.clientY - rect.top) / rect.height - 0.5);
       }}
       onMouseLeave={reduce ? undefined : () => {
         mouseX.set(-1000);
         mouseY.set(-1000);
+        parallaxX.set(0);
+        parallaxY.set(0);
       }}
     >
       {/* Mobile: portrait as background, content on top */}
@@ -256,15 +271,19 @@ export function IdentityConsole() {
         <m.div
           className="relative hidden lg:block"
           aria-hidden
+          style={{ perspective: 1200 }}
           {...(reduce ? {} : {
             initial: { opacity: 0, scale: 1.03 },
             animate: entered ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.03 },
             transition: { duration: 1.1, delay: DELAYS.photo, ease: EASE.out },
           })}
         >
-          {/* Levitation wrapper — Y-only so it doesn't fight the parent's entrance scale */}
+          {/* Levitation + parallax wrapper — continuous Y float (animate) composes with
+              cursor-driven x/rotateX/rotateY (style, spring-smoothed motion values) on the
+              same element; Motion merges both into one transform, so they don't fight. */}
           <m.div
             className="absolute inset-0"
+            style={!reduce ? { x: photoShiftX, rotateX: photoRotateX, rotateY: photoRotateY } : undefined}
             {...(!reduce && entered ? {
               animate: { y: [0, -8, 0] },
               transition: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.3 },

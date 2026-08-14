@@ -162,9 +162,9 @@ export function PortraitMatrix({
     };
 
     const frame = (t: number) => {
-      if (ready && t - last > 110) {
+      if (ready && t - last > 80) {
         last = t;
-        const flickerCount = Math.max(8, Math.floor(cols * rows * 0.02));
+        const flickerCount = Math.max(10, Math.floor(cols * rows * 0.03));
         for (let n = 0; n < flickerCount; n++) {
           const i = rnd(glyphIdx.length);
           if (lum[i] >= 0.045) {
