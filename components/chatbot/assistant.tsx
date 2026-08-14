@@ -5,6 +5,7 @@ import { AnimatePresence, m, useReducedMotion } from "motion/react";
 import { faq } from "@/lib/site-config";
 import { useI18n } from "@/lib/i18n";
 import { EASE, DUR } from "@/lib/motion";
+import { useFooterVisible } from "@/hooks/use-footer-visible";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -61,6 +62,16 @@ export function Assistant() {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const footerVisible = useFooterVisible();
+  // Gates the footer-visibility fade behind the one-time entrance delay below —
+  // without this, every re-show after scrolling away from the footer would
+  // replay the initial "arrival" delay instead of fading back in immediately.
+  const [entered, setEntered] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setEntered(true), reduce ? 0 : 500);
+    return () => clearTimeout(timer);
+  }, [reduce]);
 
   const listRef = useRef<HTMLDivElement>(null);
   const lastAnswerRef = useRef<HTMLDivElement>(null);
@@ -210,8 +221,17 @@ export function Assistant() {
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
         initial={reduce ? false : { opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: DUR.reveal, delay: 0.5, ease: EASE.spring }}
+        animate={
+          !entered
+            ? undefined
+            : footerVisible
+              ? { opacity: 0, y: reduce ? 0 : 10 }
+              : { opacity: 1, y: 0 }
+        }
+        transition={{ duration: DUR.reveal, ease: EASE.spring }}
+        style={{ pointerEvents: entered && footerVisible ? "none" : "auto" }}
+        aria-hidden={footerVisible}
+        tabIndex={footerVisible ? -1 : 0}
         whileHover={reduce ? undefined : { scale: 1.04, transition: { duration: DUR.micro } }}
         whileTap={reduce ? undefined : { scale: 0.95, transition: { duration: DUR.micro } }}
         className="fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom,0px))] right-5 z-floating flex items-center gap-2 rounded-full border border-[var(--color-hairline-strong)] bg-[var(--color-surface-1)] px-4 py-3 text-sm text-[var(--color-fg)] shadow-2xl transition-colors hover:border-[var(--color-blue)]"

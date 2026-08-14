@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, m, useReducedMotion } from "motion/react";
 import { useI18n } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site-config";
+import { useFooterVisible } from "@/hooks/use-footer-visible";
 
 // ─── Role profiles ────────────────────────────────────────────────────────────
 
@@ -265,6 +266,16 @@ export function RecruiterMode() {
 
   const reduce = useReducedMotion();
   const { t, lang } = useI18n();
+  const footerVisible = useFooterVisible();
+
+  // Gates the footer-visibility fade behind the one-time entrance delay below —
+  // without this, every re-show after scrolling away from the footer would
+  // replay the initial 1.8s "arrival" delay instead of fading back in immediately.
+  const [entered, setEntered] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setEntered(true), reduce ? 0 : 1800);
+    return () => clearTimeout(timer);
+  }, [reduce]);
 
   const panelRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
@@ -432,8 +443,17 @@ export function RecruiterMode() {
         aria-expanded={panelOpen}
         aria-controls={PANEL_ID}
         initial={reduce ? false : { opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: 1.8, ease: [0.22, 1, 0.36, 1] }}
+        animate={
+          !entered
+            ? undefined
+            : footerVisible
+              ? { opacity: 0, x: reduce ? 0 : -12 }
+              : { opacity: 1, x: 0 }
+        }
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        style={{ pointerEvents: entered && footerVisible ? "none" : "auto" }}
+        aria-hidden={footerVisible}
+        tabIndex={footerVisible ? -1 : 0}
         className={`fixed bottom-5 left-5 z-floating flex items-center gap-2.5 rounded-full border px-4 py-2.5 text-sm font-medium shadow-2xl transition-all duration-300 ${
           recruiterOn
             ? "border-[var(--color-blue)] bg-[var(--color-button-primary)] text-white shadow-[0_0_24px_-6px_var(--color-blue)]"
