@@ -683,7 +683,7 @@ const en: Dict = {
     quickImpact: "Impact",
     quickCredentials: "Credentials",
     quickCareer: "Career",
-    hiringAssistant: "Hiring Assistant",
+    hiringAssistant: "Recruiters",
     tabRoleFit: "Role Fit",
     tabAIChat: "AI Chat",
     roleStrengths: {
@@ -1139,7 +1139,7 @@ const pt: Dict = {
     quickImpact: "Impacto",
     quickCredentials: "Credenciais",
     quickCareer: "Carreira",
-    hiringAssistant: "Assistente de Recrutamento",
+    hiringAssistant: "Recrutadores",
     tabRoleFit: "Fit do Cargo",
     tabAIChat: "Chat IA",
     roleStrengths: {
@@ -1595,7 +1595,7 @@ const es: Dict = {
     quickImpact: "Impacto",
     quickCredentials: "Credenciales",
     quickCareer: "Carrera",
-    hiringAssistant: "Asistente de Contratación",
+    hiringAssistant: "Reclutadores",
     tabRoleFit: "Ajuste al Rol",
     tabAIChat: "Chat IA",
     roleStrengths: {
@@ -2051,7 +2051,7 @@ const fr: Dict = {
     quickImpact: "Impact",
     quickCredentials: "Références",
     quickCareer: "Carrière",
-    hiringAssistant: "Assistant Recrutement",
+    hiringAssistant: "Recruteurs",
     tabRoleFit: "Adéquation Poste",
     tabAIChat: "Chat IA",
     roleStrengths: {
@@ -2507,7 +2507,7 @@ const zh: Dict = {
     quickImpact: "业务影响",
     quickCredentials: "资质证书",
     quickCareer: "职业历程",
-    hiringAssistant: "招聘助手",
+    hiringAssistant: "招聘",
     tabRoleFit: "岗位匹配",
     tabAIChat: "AI 对话",
     roleStrengths: {
