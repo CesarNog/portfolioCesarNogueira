@@ -68,6 +68,18 @@ export function Assistant() {
   // without this, every re-show after scrolling away from the footer would
   // replay the initial "arrival" delay instead of fading back in immediately.
   const [entered, setEntered] = useState(false);
+
+  // The recruiter side panel (~440-460px wide, right-anchored) sits above this
+  // launcher's default position — slide it clear of the panel instead of
+  // letting the two overlap.
+  const [recruiterPanelOpen, setRecruiterPanelOpen] = useState(false);
+  useEffect(() => {
+    const onToggle = (e: Event) => {
+      setRecruiterPanelOpen((e as CustomEvent<{ open: boolean }>).detail.open);
+    };
+    document.addEventListener("recruiter-panel-toggle", onToggle);
+    return () => document.removeEventListener("recruiter-panel-toggle", onToggle);
+  }, []);
   useEffect(() => {
     const timer = setTimeout(() => setEntered(true), reduce ? 0 : 500);
     return () => clearTimeout(timer);
@@ -225,10 +237,14 @@ export function Assistant() {
           !entered
             ? undefined
             : footerVisible
-              ? { opacity: 0, y: reduce ? 0 : 10 }
-              : { opacity: 1, y: 0 }
+              ? { opacity: 0, y: reduce ? 0 : 10, x: 0 }
+              // Slide clear of the recruiter side panel (~460px wide, right-anchored)
+              // instead of sitting on top of it. The shift is applied regardless of
+              // `reduce` — it's a functional repositioning, not decorative motion —
+              // only its duration collapses to an instant snap.
+              : { opacity: 1, y: 0, x: recruiterPanelOpen ? -488 : 0 }
         }
-        transition={{ duration: DUR.reveal, ease: EASE.spring }}
+        transition={{ duration: reduce ? 0 : DUR.reveal, ease: EASE.spring }}
         style={{ pointerEvents: entered && footerVisible ? "none" : "auto" }}
         aria-hidden={footerVisible}
         tabIndex={footerVisible ? -1 : 0}
