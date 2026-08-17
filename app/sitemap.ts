@@ -17,6 +17,7 @@ function selfLanguages(url: string) {
 // wasting Google's crawl budget signalling "new" on every deployment.
 const HOME_MODIFIED = new Date("2026-07-21");
 const CASE_STUDIES_MODIFIED = new Date("2026-07-21");
+const CONNECT_MODIFIED = new Date("2026-08-12");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteConfig.url;
@@ -35,6 +36,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
       alternates: { languages: selfLanguages(`${base}/case-studies`) },
+    },
+    {
+      url: `${base}/connect`,
+      lastModified: CONNECT_MODIFIED,
+      changeFrequency: "monthly",
+      priority: 0.6,
+      alternates: { languages: selfLanguages(`${base}/connect`) },
     },
     ...projects.map((p) => {
       const url = `${base}/case-studies/${p.id}`;
