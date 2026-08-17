@@ -307,6 +307,12 @@ export function RecruiterMode() {
     }
   }, [panelOpen]);
 
+  // Tell other floating widgets (chat launcher) this panel is covering the
+  // right edge of the screen, so they can get out of its way.
+  useEffect(() => {
+    document.dispatchEvent(new CustomEvent("recruiter-panel-toggle", { detail: { open: panelOpen } }));
+  }, [panelOpen]);
+
   // Focus input when switching to chat tab
   useEffect(() => {
     if (tab === "chat" && panelOpen) {
