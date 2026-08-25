@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useReducedMotion } from "motion/react";
@@ -126,6 +126,17 @@ export function IntroSequence() {
   // layer and the scroll-scrubbed handoff into IdentityConsole are
   // completely independent of the canvas, so they keep working normally.
   const [canvasFailed, setCanvasFailed] = useState(false);
+  // Bumped to force a full HeroCanvas + WebGLBoundary remount after a context
+  // loss (see handleContextLost below) — a clean remount reinitializes WebGL
+  // from scratch and is enough to recover the vast majority of real-world
+  // `webglcontextlost` events, which on mobile are usually transient (the
+  // tab was briefly backgrounded, the OS reclaimed GPU memory under pressure)
+  // rather than a genuinely broken GPU/driver.
+  const [canvasKey, setCanvasKey] = useState(0);
+  // Timestamps of recent context losses, so repeated losses in a short window
+  // (a real crash loop, not a one-off backgrounding blip) still fall back to
+  // `canvasFailed` instead of remounting forever.
+  const contextLossesRef = useRef<number[]>([]);
   // Perf/resilience: once this 120vh track has scrolled well out of view
   // (visitor has moved on to Story/ExperienceTimeline/etc.), there is no
   // reason for the R3F Canvas to keep rendering every frame indefinitely.
@@ -194,6 +205,18 @@ export function IntroSequence() {
 
   const shouldReduce = mounted && (reduce || siteReduced);
 
+  // See canvasKey/contextLossesRef above: remount on loss (bounded), only
+  // give up permanently after 3 losses inside a 30s window.
+  const handleContextLost = useCallback(() => {
+    const now = Date.now();
+    contextLossesRef.current = [...contextLossesRef.current, now].filter((t) => now - t < 30_000);
+    if (contextLossesRef.current.length >= 3) {
+      setCanvasFailed(true);
+    } else {
+      setCanvasKey((k) => k + 1);
+    }
+  }, []);
+
   // Perf/resilience: gate the Canvas mount on the track's own viewport
   // intersection so it stops rendering (and frees its GPU resources) once
   // the visitor has scrolled well past it, rather than running
@@ -254,10 +277,15 @@ export function IntroSequence() {
               (window as unknown as { __introProgress?: number }).__introProgress = self.progress;
             }
           },
-          onRefresh: () => {
-            progressRef.current = 0;
+          // Resync from the trigger's own recalculated progress rather than
+          // hardcoding 0 — a refresh happens on any layout change (including
+          // the guarded resize handler below), and this used to snap a
+          // visitor mid-scroll straight back to the start of the pinned
+          // track instead of preserving their actual position.
+          onRefresh: (self) => {
+            progressRef.current = self.progress;
             if (progressBarRef.current) {
-              progressBarRef.current.style.transform = `scaleX(0)`;
+              progressBarRef.current.style.transform = `scaleX(${self.progress})`;
             }
           },
         },
@@ -316,8 +344,19 @@ export function IntroSequence() {
       }
     }, trackRef);
 
-    // Refresh ScrollTrigger on window resize to recalculate pin/scroll positions
+    // Refresh ScrollTrigger on a genuine resize (orientation change, window
+    // resize) to recalculate pin/scroll positions — but NOT on a pure height
+    // change from the mobile browser chrome (URL bar) auto-hiding as the
+    // visitor scrolls, which fires a `resize` event on every scroll tick on
+    // most mobile browsers. Refreshing on those was resetting/recalculating
+    // the pinned track mid-scroll, which combined with the old onRefresh
+    // above (progress hardcoded to 0) made the intro visibly stutter or
+    // restart while scrolling on phones — the most common real-world trigger
+    // for "the 3D animation doesn't work" on mobile.
+    let lastWidth = window.innerWidth;
     const handleResize = () => {
+      if (window.innerWidth === lastWidth) return;
+      lastWidth = window.innerWidth;
       ScrollTrigger.refresh();
     };
     window.addEventListener("resize", handleResize);
@@ -362,12 +401,13 @@ export function IntroSequence() {
           } as React.CSSProperties}
         >
           {!canvasFailed && (
-            <WebGLBoundary>
+            <WebGLBoundary key={canvasKey}>
               <HeroCanvas
+                key={canvasKey}
                 progressRef={progressRef}
                 active={canvasVisible}
                 theme={theme}
-                onContextLost={() => setCanvasFailed(true)}
+                onContextLost={handleContextLost}
               />
             </WebGLBoundary>
           )}
