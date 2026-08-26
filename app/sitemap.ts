@@ -16,7 +16,7 @@ function selfLanguages(url: string) {
 // Stable ISO dates — only update when content actually changes to avoid
 // wasting Google's crawl budget signalling "new" on every deployment.
 const HOME_MODIFIED = new Date("2026-07-21");
-const CASE_STUDIES_MODIFIED = new Date("2026-07-21");
+export const CASE_STUDIES_MODIFIED = new Date("2026-07-21");
 const CONNECT_MODIFIED = new Date("2026-08-12");
 
 export default function sitemap(): MetadataRoute.Sitemap {
