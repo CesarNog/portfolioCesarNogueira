@@ -1,21 +1,44 @@
-# Cesar Augusto Nogueira
+# César Nogueira: Principal Cloud Architect & FinOps Consultant
 
-> Principal Cloud, Platform, DevOps & FinOps consultant. This portfolio showcases
-> cloud architecture, platform engineering, and cost-optimization work.
+> AGENT-READY · HUMANS WELCOME
+>
+> Personal portfolio of César Augusto Nogueira, a Principal Cloud Architect
+> and FinOps Consultant based in Portugal, remote worldwide. 10+ years across
+> GCP, AWS and Azure — founder of UP2CLOUD, an independent B2B consultancy
+> for cloud architecture, platform engineering, DevOps and FinOps. Available
+> for international projects.
 
-## Pages
+## Main sections
 
-- [Home](https://cesarnogueira.tech): Overview, selected work, stack, and contact.
-- [Case Studies](https://cesarnogueira.tech/case-studies): Real cloud, FinOps, and platform engineering engagements with outcomes.
+- [Home](https://cesarnogueira.tech/): Identity, live capability matrix, experience timeline, engineering galaxy, certifications, testimonials.
+- [Case studies](https://cesarnogueira.tech/case-studies): Real client engagements — problem, architecture, tech stack, measurable outcome.
+- [Connect (MCP)](https://cesarnogueira.tech/connect): Connect this portfolio to an AI client so an agent can inspect experience, check availability, and book an intro.
 
-## About
+## Case studies
 
-Cesar Augusto Nogueira is a principal-level consultant specializing in cloud
-architecture (GCP, AWS, Azure), platform engineering, Kubernetes, Terraform, DevOps,
-and FinOps. Available for consulting engagements worldwide via UP2CLOUD.
+- [Enterprise FinOps Automation](https://cesarnogueira.tech/case-studies/finops-automation): Cut ~30% of cloud waste for a global staffing leader — automated tagging, chargeback and executive cost visibility across GCP, AWS and Azure.
+- [Big Data Analytics Platform](https://cesarnogueira.tech/case-studies/bigdata-platform): 10× analytics throughput for a US media corporation — self-serve, real-time BigQuery analytics via Apache Beam / Dataflow.
+- [Multi-Cloud for Banking & Aviation](https://cesarnogueira.tech/case-studies/banking-cloud): 99.9% availability for AndBank, Santander and LATAM Airlines — secure, observable, regulator-ready cloud across GCP, AWS, Azure and OCI.
 
-## Optional
+## MCP / machine interfaces
 
-- [LinkedIn](https://www.linkedin.com/in/cesarnog/)
-- [GitHub](https://github.com/cesarnog)
-- [UP2CLOUD](https://up2cloud.tech)
+- MCP endpoint (Streamable HTTP, JSON-RPC 2.0): https://cesarnogueira.tech/api/mcp
+- Plain-JSON resume + case studies + availability: https://cesarnogueira.tech/api/resume.json
+- Plain-text resume: https://cesarnogueira.tech/api/resume.txt
+- Agent instructions: https://cesarnogueira.tech/AGENTS.md
+
+Four tools over MCP: `get_resume`, `list_case_studies`, `check_availability`, `book_intro`.
+
+## Proof points
+
+- 10+ years in cloud, across GCP, AWS, Azure and OCI.
+- 40+ cloud projects delivered.
+- 5 certifications: 2× Google Cloud Professional Cloud Architect, Google Cloud Associate Cloud Engineer, AWS Cloud Practitioner, Azure Fundamentals (AZ-900).
+- ~30% average cloud waste removed on FinOps engagements.
+- Clients include AndBank, Santander, LATAM Airlines, Randstad, Accenture, NTT Data, CI&T.
+
+## Contact
+
+- LinkedIn: https://www.linkedin.com/in/cesarnog/
+- Email: cesarnogueira1210@gmail.com
+- CV: https://cesarnogueira.tech/curriculum/CV_CesarANogueira_Cloud_EN_US.pdf
