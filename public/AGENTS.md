@@ -35,8 +35,11 @@ infrastructure.
 ## Other machine interfaces
 
 - MCP endpoint (Streamable HTTP, JSON-RPC 2.0): https://cesarnogueira.tech/api/mcp
+- MCP server card: https://cesarnogueira.tech/.well-known/mcp/server.json
+- Agent skill: https://cesarnogueira.tech/.well-known/agent-skills/portfolio-mcp/SKILL.md
 - Plain-JSON resume + case studies + availability: https://cesarnogueira.tech/api/resume.json
 - Plain-text resume: https://cesarnogueira.tech/api/resume.txt
+- Structured content index: https://cesarnogueira.tech/ai-index.json
 - LLM index: https://cesarnogueira.tech/llms.txt
 
 ### MCP tools
