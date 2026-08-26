@@ -50,6 +50,13 @@ const TOOLS = [
   { name: "book_intro", desc: "Send a project intro request straight to César's inbox." },
 ];
 
+const PLAIN_ENDPOINTS = [
+  { path: "/api/resume.json", desc: "resume + case studies, JSON" },
+  { path: "/api/resume.txt", desc: "resume, plain text" },
+  { path: "/llms.txt", desc: "LLM index" },
+  { path: "/AGENTS.md", desc: "agent instructions" },
+];
+
 const TRY_PROMPTS = [
   `What has ${siteConfig.name.split(" ")[0]} shipped? Give me a quick summary of his experience.`,
   "Show me his case studies — what outcomes has he actually delivered?",
@@ -185,6 +192,29 @@ export function ConnectBody() {
           </m.div>
         ))}
       </div>
+
+      {/* Plain-HTTP fallback for scripts/curl/agents that don't speak MCP —
+          same underlying facts as the four tools above (lib/agent-resume.ts
+          is the shared source for both). */}
+      <m.div {...enter(0.12)} className="mt-12 border-t border-[var(--color-hairline)] pt-8">
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
+          Prefer plain HTTP?
+        </p>
+        <div className="mt-3 grid gap-2 sm:grid-cols-2">
+          {PLAIN_ENDPOINTS.map((e) => (
+            <a
+              key={e.path}
+              href={e.path}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center justify-between gap-3 rounded-lg border border-[var(--color-hairline)] px-4 py-2.5 font-mono text-[13px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-hairline-strong)] hover:text-[var(--color-fg)]"
+            >
+              <span>{e.path}</span>
+              <span className="text-[11px] text-[var(--color-fg-subtle)]">{e.desc}</span>
+            </a>
+          ))}
+        </div>
+      </m.div>
     </div>
   );
 }

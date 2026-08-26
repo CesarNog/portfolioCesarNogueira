@@ -3,7 +3,8 @@ export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
 import { getIp, isRateLimited } from "@/lib/rate-limit";
-import { siteConfig, stats, experience, certifications, projects, capabilities } from "@/lib/site-config";
+import { siteConfig } from "@/lib/site-config";
+import { buildResume, buildCaseStudies, buildAvailability } from "@/lib/agent-resume";
 
 /**
  * MCP server for the portfolio — lets AI agents (Claude, ChatGPT, Kimi,
@@ -122,49 +123,12 @@ async function bookIntro(args: Record<string, unknown>, ip: string) {
 
 async function callTool(name: string, args: Record<string, unknown>, ip: string) {
   switch (name) {
-    case "get_resume": {
-      const payload = {
-        name: siteConfig.name,
-        role: siteConfig.role,
-        tagline: siteConfig.tagline,
-        location: siteConfig.location,
-        company: siteConfig.company,
-        stats: stats.map((s) => ({ label: s.label, value: `${"prefix" in s ? s.prefix : ""}${s.value}${s.suffix}` })),
-        experience: experience.map((e) => ({
-          company: e.company,
-          role: e.role,
-          period: e.period,
-          outcome: e.outcome,
-        })),
-        certifications: certifications.flatMap((c) => c.items.map((it) => it.name)),
-        capabilities: capabilities.map((c) => ({ area: c.area, level: c.level })),
-        cv: siteConfig.links.cv,
-        contact: siteConfig.links.email,
-      };
-      return textResult(JSON.stringify(payload, null, 2));
-    }
-    case "list_case_studies": {
-      const payload = projects.map((p) => ({
-        title: p.title,
-        client: p.client,
-        problem: p.problem,
-        architecture: p.architecture,
-        tech: p.tech,
-        outcome: p.outcome,
-        metric: `${p.metric} ${p.metricLabel}`,
-        url: `${siteConfig.url}/case-studies/${p.id}`,
-      }));
-      return textResult(JSON.stringify(payload, null, 2));
-    }
-    case "check_availability": {
-      const payload = {
-        availability: siteConfig.availability,
-        location: siteConfig.location,
-        responseTime: siteConfig.responseTime,
-        contact: siteConfig.links.email,
-      };
-      return textResult(JSON.stringify(payload, null, 2));
-    }
+    case "get_resume":
+      return textResult(JSON.stringify(buildResume(), null, 2));
+    case "list_case_studies":
+      return textResult(JSON.stringify(buildCaseStudies(), null, 2));
+    case "check_availability":
+      return textResult(JSON.stringify(buildAvailability(), null, 2));
     case "book_intro":
       return bookIntro(args, ip);
     default:
