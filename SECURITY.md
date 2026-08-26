@@ -1,21 +1,13 @@
 # Security Policy
 
-## Supported Versions
+This is César Nogueira's personal portfolio ([cesarnogueira.tech](https://cesarnogueira.tech)) —
+a Next.js site with a few small serverless endpoints: a contact form, an
+AI chat assistant proxy, and a public, read-mostly MCP server. There's no
+bug bounty program, but responsible disclosure is welcome.
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+## Reporting a vulnerability
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+Email cesarnogueira1210@gmail.com with details and, if possible, steps to
+reproduce. Please don't open a public GitHub issue for security reports.
 
-## Reporting a Vulnerability
-
-Use this section to tell people how to report a vulnerability.
-
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Machine-readable version: https://cesarnogueira.tech/.well-known/security.txt
