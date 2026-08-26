@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
 import { MotionToggle } from "@/components/motion-toggle";
 
@@ -35,6 +36,24 @@ export function SiteFooter() {
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
               </svg>
             </a>
+            {/* MCP badge — mirrors the header's pill treatment (site-header.tsx)
+                so the agent-facing endpoint has the same presence here as on
+                the homepage. Case-study pages use this shared footer but
+                case-study-header.tsx carries no MCP link of its own, so
+                without this those pages — exactly the deep, evidence-heavy
+                content an agent researching César would fetch — had zero MCP
+                affordance. */}
+            <Link
+              href="/connect"
+              aria-label="Connect via MCP — for AI agents"
+              className="flex items-center gap-1.5 rounded-md border border-[var(--color-cyan)]/30 px-2 py-1.5 font-mono text-[11px] uppercase tracking-wider text-[var(--color-cyan)] transition-colors hover:border-[var(--color-cyan)]/60 hover:bg-[var(--color-cyan)]/10"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M9 2v6M15 2v6M6 8h12l-1 5a5 5 0 0 1-10 0z" />
+                <path d="M12 19v3" />
+              </svg>
+              MCP
+            </Link>
             <MotionToggle />
           </div>
         </div>
