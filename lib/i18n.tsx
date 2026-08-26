@@ -28,6 +28,10 @@ type Dict = {
     scroll: string;
     scan: string;
     calibrating: string;
+    tagline: string;
+    coreLabel: string;
+    modules: string[];
+    outcomes: string[];
   };
   hero: {
     available: string;
@@ -267,6 +271,10 @@ const en: Dict = {
     scroll: "Scroll to initialize",
     scan: "INFRA SCAN",
     calibrating: "CALIBRATING",
+    tagline: "From fragmented cloud estates to observable, cost-efficient platforms.",
+    coreLabel: "CONTROL PLANE",
+    modules: ["Architecture", "Platform Engineering", "FinOps", "AI Infrastructure"],
+    outcomes: ["Multi-cloud", "−30% waste", "99.9% availability"],
   },
   hero: {
     available: "Available for global consulting",
@@ -730,6 +738,10 @@ const pt: Dict = {
     scroll: "Role para iniciar",
     scan: "SCAN DE INFRA",
     calibrating: "CALIBRANDO",
+    tagline: "De ambientes cloud fragmentados a plataformas observáveis e eficientes em custo.",
+    coreLabel: "CONTROL PLANE",
+    modules: ["Arquitetura", "Engenharia de Plataformas", "FinOps", "Infraestrutura de IA"],
+    outcomes: ["Multi-cloud", "−30% desperdício", "99,9% disponibilidade"],
   },
   hero: {
     available: "Disponível para consultoria global",
@@ -1193,6 +1205,10 @@ const es: Dict = {
     scroll: "Desplázate para iniciar",
     scan: "ESCANEO DE INFRA",
     calibrating: "CALIBRANDO",
+    tagline: "De entornos cloud fragmentados a plataformas observables y eficientes en coste.",
+    coreLabel: "CONTROL PLANE",
+    modules: ["Arquitectura", "Ingeniería de Plataformas", "FinOps", "Infraestructura de IA"],
+    outcomes: ["Multi-cloud", "−30% desperdicio", "99,9% disponibilidad"],
   },
   hero: {
     available: "Disponible para consultoría global",
@@ -1656,6 +1672,10 @@ const fr: Dict = {
     scroll: "Faites défiler pour lancer",
     scan: "SCAN INFRA",
     calibrating: "CALIBRAGE",
+    tagline: "D'environnements cloud fragmentés à des plateformes observables et rentables.",
+    coreLabel: "CONTROL PLANE",
+    modules: ["Architecture", "Ingénierie de Plateformes", "FinOps", "Infrastructure IA"],
+    outcomes: ["Multi-cloud", "−30% de gaspillage", "99,9% de disponibilité"],
   },
   hero: {
     available: "Disponible pour des missions de conseil",
@@ -2119,6 +2139,10 @@ const zh: Dict = {
     scroll: "滚动以启动",
     scan: "基础设施扫描",
     calibrating: "校准中",
+    tagline: "从分散的云环境，到可观测、高性价比的平台。",
+    coreLabel: "控制平面",
+    modules: ["架构", "平台工程", "FinOps", "AI基础设施"],
+    outcomes: ["多云", "−30% 浪费", "99.9% 可用性"],
   },
   hero: {
     available: "可提供全球咨询服务",
