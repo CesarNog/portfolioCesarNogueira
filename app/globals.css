@@ -629,6 +629,21 @@ body.tab-hidden .aurora-blob {
 [data-reduce-motion="1"] .card-glow { transition: none; }
 [data-reduce-motion="1"] .card-glow:hover { box-shadow: none; border-color: var(--color-hairline-strong); }
 
+/* ── Rolling status bar (ticker-bar.tsx) ────────────────────────────────── */
+/* Content is duplicated by the component so translateX(-50%) — exactly one
+   copy's width — loops seamlessly back to the start. */
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-ticker {
+  animation: ticker-scroll 32s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-ticker { animation: none; }
+}
+[data-reduce-motion="1"] .animate-ticker { animation: none; }
+
 /* ─── Print stylesheet — clean CV output ─────────────────────────────────── */
 @media print {
   /* Force light mode colors */

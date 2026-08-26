@@ -7,6 +7,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useI18n } from "@/lib/i18n";
 import { Logo } from "@/components/logo";
+import { TickerBar } from "@/components/ticker-bar";
 
 const NAV = [
   { href: "summary", label: "Summary" },
@@ -95,7 +96,7 @@ export function SiteHeader() {
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const HEADER_H = 56;
+    const HEADER_H = 56 + 28; // header + the fixed ticker bar above it
     const OFFSET   = 16;
     const top = el.getBoundingClientRect().top + window.scrollY - HEADER_H - OFFSET;
     window.scrollTo({ top, behavior: "smooth" });
@@ -117,7 +118,9 @@ export function SiteHeader() {
         Skip to content
       </a>
 
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--color-hairline)] bg-[var(--color-surface-0)]/80 backdrop-blur-md">
+      <TickerBar />
+
+      <header className="fixed inset-x-0 top-7 z-50 border-b border-[var(--color-hairline)] bg-[var(--color-surface-0)]/80 backdrop-blur-md">
         {/* Live variant 3 accepted: nav dim-siblings on hover */}
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
           <a href="#top" onClick={(e) => { e.preventDefault(); document.dispatchEvent(new Event("close-assistant")); scrollToSection("top"); }} className="flex shrink-0 items-center self-stretch gap-2.5 text-[var(--color-fg)] transition-opacity hover:opacity-80" aria-label="César A. Nogueira, home">
