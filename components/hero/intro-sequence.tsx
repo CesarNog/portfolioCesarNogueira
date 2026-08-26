@@ -37,6 +37,18 @@ const ORBIT_ICONS: { src: string; name: string; x: number; y: number; domain: "b
   { src: "/icons/docker.svg", name: "Docker", x: 66, y: 81, domain: "cyan" },
 ];
 
+// The four capability modules the providers/tools above actually feed into —
+// same labels + Domain-Color Rule accents as the real Capability Matrix
+// section further down the page (lib/site-config.ts `capabilities`), so this
+// scene previews real claims instead of inventing new ones. FinOps and AI
+// Infrastructure intentionally share the orange accent, matching that data.
+const MODULE_ACCENTS = ["blue", "cyan", "orange", "orange"] as const;
+
+// Three measurable outcomes, verbatim from the site's own case-study data
+// (lib/site-config.ts: ~30% cloud waste removed, 99.9% availability SLA) —
+// the "result" beat the brief asks for, kept to a strict three so it reads
+// as a conclusion, not another list.
+
 /**
  * Cinematic scroll-scrubbed opening (reference: naramcharan.me, adapted to
  * this brand): a pinned track carrying a five-beat arc —
@@ -97,6 +109,10 @@ export function IntroSequence() {
   const scrollHintRef = useRef<HTMLDivElement>(null);
   const iconsRef = useRef<HTMLDivElement>(null);
   const linesRef = useRef<SVGSVGElement>(null);
+  const taglineRef = useRef<HTMLParagraphElement>(null);
+  const coreLabelRef = useRef<HTMLDivElement>(null);
+  const modulesRef = useRef<HTMLDivElement>(null);
+  const outcomesRef = useRef<HTMLDivElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef(0);
   const [overlayFit, setOverlayFit] = useState(1);
@@ -246,6 +262,18 @@ export function IntroSequence() {
     [overlayFit],
   );
 
+  // The modules row was originally sandwiched in the horizontal gap between
+  // the GCP/Kubernetes icons at the ring's mid-height — fine at overlayFit=1,
+  // but as overlayFit shrinks toward its 0.6 floor on narrower aspect ratios
+  // (tablet portrait, tall phones) it pulls those icons inward and collapses
+  // that gap, so the labels started overlapping the icons/chassis blocks
+  // behind them. Anchoring below the ring's lowest icon by a fixed real-pixel
+  // gap (the same scaling `scaledIcons` already applies) keeps a constant
+  // visual clearance regardless of aspect ratio, instead of a static
+  // Tailwind offset that assumed the ring never changes shape.
+  const lowestIconY = Math.max(...ORBIT_ICONS.map((icon) => icon.y));
+  const moduleTop = `calc(${52 + (lowestIconY - 52) * overlayFit}% + 48px)`;
+
   // Documented exception to the "Motion for all animation" rule: this scene
   // needs scroll PINNING + scrubbed timeline orchestration, which GSAP
   // ScrollTrigger provides and Motion's useScroll/useTransform do not
@@ -315,19 +343,35 @@ export function IntroSequence() {
       // 0→1 regardless of theme, so there's nothing theme-dependent to cache.
       tl.fromTo(canvasWrapRef.current, { "--gsap-fade": 0 }, { "--gsap-fade": 1, duration: 0.2, ease: "power1.inOut" }, 0.22);
 
+      // Tagline fills the space the identity block vacated at ~0.18 instead
+      // of leaving it empty for the rest of the sequence — it fades in early
+      // and stays, since it never competes with the real hero below (that
+      // scene only starts once this one's pin releases at p=1).
+      tl.fromTo(taglineRef.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.14 }, 0.24);
+
       // Segment C: the core's own ignite ramp (CloudCore.tsx) starts at
-      // p=0.68. Connector lines/icons are staggered to start at/after that,
-      // not before it (previously lines started at 0.72 while ignite didn't
-      // begin until 0.82 — the diagram appeared to precede activation
-      // instead of following from it). Each icon is still preceded by its
-      // own connection line drawing outward from the already-igniting core.
+      // p=0.68 — the core label lands with it, so the abstract glowing cube
+      // gets an explicit "this is the control plane" read the moment it
+      // lights up, before anything else arrives. Connector lines/icons are
+      // staggered to start right after (not before ignite, so activation
+      // reads as the cause, the diagram as the effect), retimed tighter
+      // (0.018 apart instead of 0.025) than the original pass so there's
+      // room left in the track for the new "translation" and "result" beats
+      // below without lengthening the pinned track itself.
+      tl.fromTo(coreLabelRef.current, { opacity: 0 }, { opacity: 1, duration: 0.06 }, 0.68);
       if (linesRef.current) {
         const lines = Array.from(linesRef.current.querySelectorAll("line"));
         lines.forEach((line, i) => {
-          tl.to(
+          // Flow-in reveal: dashes travel inward as the line arrives (strokeDashoffset
+          // 28 → 0 alongside the opacity fade), reading as a directional pulse from
+          // provider to core rather than a static line snapping to visible. Settles to
+          // a fixed offset once landed — a one-shot flow, not a perpetual loop, per the
+          // "stable final states" constraint (nothing left pulsing indefinitely).
+          tl.fromTo(
             line,
-            { opacity: 1, duration: 0.05, ease: "power1.out" },
-            0.7 + i * 0.025,
+            { opacity: 0, strokeDashoffset: 28 },
+            { opacity: 1, strokeDashoffset: 0, duration: 0.09, ease: "power2.out" },
+            0.68 + i * 0.018,
           );
         });
       }
@@ -338,7 +382,38 @@ export function IntroSequence() {
             chip,
             { opacity: 0, y: 18, scale: 0.85 },
             { opacity: 1, y: 0, scale: 1, duration: 0.06, ease: "power2.out" },
-            0.715 + i * 0.025,
+            0.695 + i * 0.018,
+          );
+        });
+      }
+
+      // "Translation": the flows the providers just drew feed the four
+      // capability modules — arrives after the last provider icon (~0.80),
+      // reading as the next causal beat rather than a simultaneous one.
+      if (modulesRef.current) {
+        const modules = Array.from(modulesRef.current.children);
+        modules.forEach((mod, i) => {
+          tl.fromTo(
+            mod,
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.05, ease: "power2.out" },
+            0.82 + i * 0.02,
+          );
+        });
+      }
+
+      // "Result": the modules converge into the three measurable outcomes —
+      // the sequence's conclusion, landing just before the pin releases
+      // (~1.0) into IdentityConsole, so the scene ends on a stated result
+      // rather than a shrug.
+      if (outcomesRef.current) {
+        const outcomes = Array.from(outcomesRef.current.children);
+        outcomes.forEach((outcome, i) => {
+          tl.fromTo(
+            outcome,
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.05, ease: "power2.out" },
+            0.9 + i * 0.02,
           );
         });
       }
@@ -367,7 +442,68 @@ export function IntroSequence() {
     };
   }, [shouldReduce]);
 
-  if (shouldReduce) return null;
+  // Reduced motion gets a complete, static reading of the same narrative —
+  // tagline, providers, capability modules, outcomes — instead of nothing.
+  // The old behavior (returning null) was fine while this scene carried no
+  // unique information ("purely atmospheric" — see the file-level comment
+  // history), but the tagline/modules/outcomes above are real claims now,
+  // and DESIGN.md's own a11y rule is that no information may depend solely
+  // on motion. No WebGL is fetched here: `HeroCanvas` is a client-only
+  // dynamic import that only loads once actually rendered, and this branch
+  // never renders it.
+  if (shouldReduce) {
+    return (
+      <div className="relative overflow-hidden bg-[var(--color-surface-0)] py-16 sm:py-20" aria-hidden>
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-8 px-6 text-center">
+          <p className="max-w-[min(90vw,32rem)] font-ui text-[0.9375rem] leading-[1.5] text-[var(--color-fg-muted)] [text-wrap:balance]">
+            {t.intro.tagline}
+          </p>
+          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--color-blue)]">
+            <span className="h-2 w-2 rounded-full bg-[var(--color-blue)]" />
+            {t.intro.coreLabel}
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            {ORBIT_ICONS.map((icon) => (
+              <div
+                key={icon.name}
+                className="flex h-12 w-12 items-center justify-center rounded-lg border p-2"
+                style={{
+                  backgroundColor: "color-mix(in oklab, var(--color-surface-1) 80%, transparent)",
+                  borderColor: `color-mix(in oklab, var(--color-${icon.domain}) 35%, var(--color-hairline-strong))`,
+                }}
+              >
+                <Image src={icon.src} alt={icon.name} width={28} height={28} unoptimized />
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+            {t.intro.modules.map((label, i) => (
+              <span
+                key={label}
+                className="flex items-center gap-1.5 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--color-fg-muted)]"
+              >
+                <span
+                  className="h-1.5 w-1.5 shrink-0 rounded-full"
+                  style={{ backgroundColor: `var(--color-${MODULE_ACCENTS[i]})` }}
+                />
+                {label}
+              </span>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+            {t.intro.outcomes.map((label) => (
+              <span
+                key={label}
+                className="whitespace-nowrap font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-[var(--color-fg)]"
+              >
+                {label}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div ref={trackRef} className="relative h-[120vh]" aria-hidden>
@@ -454,6 +590,18 @@ export function IntroSequence() {
           </p>
         </div>
 
+        {/* Tagline — fills the space the identity block above vacates as it
+            drifts out (~p=0.18), instead of leaving that upper third empty
+            for the rest of the sequence while the assembly plays out below
+            it. One line, quiet, never competes with IdentityConsole's own
+            copy after the handoff. */}
+        <p
+          ref={taglineRef}
+          className="absolute inset-x-0 top-[15vh] px-6 text-center font-ui text-[0.9375rem] leading-[1.5] text-[var(--color-fg-muted)] opacity-0 [text-wrap:balance] [@media(max-height:520px)]:top-[8vh]"
+        >
+          <span className="mx-auto block max-w-[min(90vw,32rem)]">{t.intro.tagline}</span>
+        </p>
+
         {/* Scroll prompt — bottom center. `env(safe-area-inset-bottom)` keeps
             it clear of notched-phone home indicators/gesture bars even if
             the base offset is ever tightened; short/landscape viewports pull
@@ -497,19 +645,25 @@ export function IntroSequence() {
                 x1={x1} y1={y1} x2={icon.cx} y2={icon.cy}
                 // Dashed on purpose: dotted links are the standard visual for
                 // network connections in architecture diagrams. Screen-space
-                // dashes via non-scaling-stroke; visibility gated by an
-                // opacity tween in segment C (a dashoffset "draw" trick does
-                // NOT work here — non-scaling-stroke makes dash patterns
-                // screen-space, ignoring pathLength normalization, which
-                // leaked faint dashed rays over the at-rest identity block).
-                // Stroke color matches the icon's domain (see ORBIT_ICONS)
-                // so the diagram itself, not just the 3D core, shows
-                // architecture vs. platform/DevOps as distinct connections.
-                strokeDasharray="5 7"
+                // dashes via non-scaling-stroke; a *phase-shift* dashoffset
+                // tween (28 → 0, see segment C above) reads as directional
+                // flow without needing pathLength normalization — that only
+                // matters for a "draw the whole path" reveal, which non-
+                // scaling-stroke genuinely can't do (dash patterns would stay
+                // screen-space and leak faint rays over the at-rest identity
+                // block), but a phase shift is just moving the same repeating
+                // pattern, which works fine regardless. Tighter dash + higher
+                // opacity than the original pass (was 5/7 @ 0.45) for
+                // contrast against the near-black background. Stroke color
+                // matches the icon's domain (see ORBIT_ICONS) so the diagram
+                // itself, not just the 3D core, shows architecture vs.
+                // platform/DevOps as distinct connections.
+                strokeDasharray="4 5"
                 stroke={icon.domain === "cyan" ? "var(--color-cyan)" : "var(--color-blue)"}
-                strokeOpacity="0.45"
+                strokeOpacity="0.7"
+                strokeWidth="1.1"
                 vectorEffect="non-scaling-stroke"
-                style={{ opacity: 0 }}
+                style={{ opacity: 0, strokeDashoffset: 28 }}
               />
             );
           })}
@@ -536,6 +690,78 @@ export function IntroSequence() {
             >
               <Image src={icon.src} alt={icon.name} width={34} height={34} unoptimized />
             </div>
+          ))}
+        </div>
+
+        {/* Core label — lands with the ignite ramp so the 3D core (an
+            abstract glowing cube on its own) reads immediately as "this is
+            the control plane" rather than decoration. Anchored to the same
+            52%-down point the icon ring/lines use as their center, but
+            placed ABOVE it (not below): the gap to the nearest icons is
+            ~21% of stage height above center (AWS/Azure) vs. only ~7% below
+            (GCP/Kubernetes) — as overlayFit shrinks the ring toward center
+            on narrow phones, that below-center gap collapses first and the
+            label visibly crossed through the GCP chip. The above-center gap
+            starts wide enough that it stays clear even at overlayFit's 0.6
+            floor. */}
+        <div
+          ref={coreLabelRef}
+          className="absolute left-1/2 top-[52%] -translate-x-1/2 -translate-y-16 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--color-blue)] opacity-0"
+        >
+          {t.intro.coreLabel}
+        </div>
+
+        {/* "Translation" — the four capability modules the flows above
+            actually feed, so a first-time visitor doesn't have to recognize
+            all six logos to get the point. Same labels/accents as the real
+            Capability Matrix section further down the page. Wraps to two
+            rows on narrow viewports rather than shrinking past legibility.
+            `top` is computed (moduleTop above), not a static Tailwind class —
+            see that comment for why: it has to track the ring's actual
+            radius, not assume a fixed one. */}
+        <div
+          ref={modulesRef}
+          className="absolute left-1/2 flex w-[min(92vw,30rem)] -translate-x-1/2 flex-wrap items-center justify-center gap-x-5 gap-y-2"
+          style={{ top: moduleTop }}
+        >
+          {t.intro.modules.map((label, i) => (
+            <span
+              key={label}
+              className="flex items-center gap-1.5 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--color-fg-muted)] opacity-0"
+            >
+              <span
+                className="h-1.5 w-1.5 shrink-0 rounded-full"
+                style={{ backgroundColor: `var(--color-${MODULE_ACCENTS[i]})` }}
+              />
+              {label}
+            </span>
+          ))}
+        </div>
+
+        {/* "Result" — the sequence's conclusion: three measurable outcomes,
+            verbatim from the site's own case-study data (see the const above)
+            so this scene previews real claims rather than decorative stats.
+            Sits low, clear of the icon ring above it on every viewport since
+            it no longer competes for space with the scroll prompt (already
+            faded out by the time this arrives at p≈0.9). Bottom offset is
+            larger by default than on `sm:` up: the site's fixed floating
+            chat/recruiter pills (bottom-5, ~44px tall) span nearly the full
+            width on narrow phones, so a centered outcomes row at the same
+            40px offset used on desktop (where the pills sit clear at the
+            edges) visibly collided with them. Short/landscape viewports
+            (phones where vertical room is scarcer than horizontal) keep the
+            tighter offset since the pills don't span center there either. */}
+        <div
+          ref={outcomesRef}
+          className="absolute inset-x-0 bottom-[calc(5.5rem_+_env(safe-area-inset-bottom))] flex flex-wrap items-center justify-center gap-x-6 gap-y-2 px-6 sm:bottom-[calc(2.5rem_+_env(safe-area-inset-bottom))] [@media(max-height:520px)]:bottom-[calc(1rem_+_env(safe-area-inset-bottom))]"
+        >
+          {t.intro.outcomes.map((label) => (
+            <span
+              key={label}
+              className="whitespace-nowrap font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-[var(--color-fg)] opacity-0"
+            >
+              {label}
+            </span>
           ))}
         </div>
 
