@@ -92,6 +92,7 @@ type Dict = {
     };
   };
   statsLabels: string[];
+  ticker: string[];
   labels: {
     problem: string;
     architecture: string;
@@ -434,6 +435,13 @@ const en: Dict = {
     },
   },
   statsLabels: ["Years in Tech", "Cloud Projects", "Certifications", "Cloud Waste Removed"],
+  ticker: [
+    "AVAILABLE FOR GLOBAL CONSULTING",
+    "PRINCIPAL CLOUD ARCHITECT & FINOPS CONSULTANT",
+    "10+ YEARS · GCP · AWS · AZURE",
+    "AGENT-READY — CONNECT VIA MCP",
+    "BASED IN PORTUGAL · REMOTE WORLDWIDE",
+  ],
   labels: {
     problem: "The Challenge",
     architecture: "The Approach",
@@ -890,6 +898,13 @@ const pt: Dict = {
     },
   },
   statsLabels: ["Anos em Tecnologia", "Projetos Cloud", "Certificações", "Desperdício Cloud Removido"],
+  ticker: [
+    "DISPONÍVEL PARA CONSULTORIA GLOBAL",
+    "PRINCIPAL CLOUD ARCHITECT E CONSULTOR FINOPS",
+    "10+ ANOS · GCP · AWS · AZURE",
+    "PRONTO PARA AGENTES — CONECTE VIA MCP",
+    "BASEADO EM PORTUGAL · REMOTO NO MUNDO TODO",
+  ],
   labels: {
     problem: "O Desafio",
     architecture: "A Abordagem",
@@ -1346,6 +1361,13 @@ const es: Dict = {
     },
   },
   statsLabels: ["Años en Tecnología", "Proyectos Cloud", "Certificaciones", "Residuos Cloud Eliminados"],
+  ticker: [
+    "DISPONIBLE PARA CONSULTORÍA GLOBAL",
+    "PRINCIPAL CLOUD ARCHITECT Y CONSULTOR FINOPS",
+    "10+ AÑOS · GCP · AWS · AZURE",
+    "LISTO PARA AGENTES — CONECTA VÍA MCP",
+    "CON BASE EN PORTUGAL · REMOTO EN TODO EL MUNDO",
+  ],
   labels: {
     problem: "El Desafío",
     architecture: "El Enfoque",
@@ -1802,6 +1824,13 @@ const fr: Dict = {
     },
   },
   statsLabels: ["Ans dans la Tech", "Projets Cloud", "Certifications", "Gaspillage Cloud Éliminé"],
+  ticker: [
+    "DISPONIBLE POUR DU CONSEIL À L'INTERNATIONAL",
+    "PRINCIPAL CLOUD ARCHITECT ET CONSULTANT FINOPS",
+    "10+ ANS · GCP · AWS · AZURE",
+    "PRÊT POUR LES AGENTS — CONNECTEZ-VOUS VIA MCP",
+    "BASÉ AU PORTUGAL · À DISTANCE DANS LE MONDE ENTIER",
+  ],
   labels: {
     problem: "Le Défi",
     architecture: "L'Approche",
@@ -2258,6 +2287,13 @@ const zh: Dict = {
     },
   },
   statsLabels: ["技术年限", "云项目", "认证", "云浪费削减"],
+  ticker: [
+    "可承接全球咨询项目",
+    "首席云架构师 & FinOps 顾问",
+    "10+ 年经验 · GCP · AWS · AZURE",
+    "支持 AI 代理 — 通过 MCP 连接",
+    "常驻葡萄牙 · 全球远程协作",
+  ],
   labels: {
     problem: "挑战",
     architecture: "方法",
