@@ -37,23 +37,17 @@ colors:
   accent-blue-light: "#1f6fe0"
   accent-cyan-light: "#0e9aa3"
   accent-orange-light: "#e0641b"
-  # `--color-*` / `--background` aliases below: app/globals.css defines the
-  # site's actual CSS custom properties under these literal names
-  # (--color-surface-0, --color-fg, --color-blue, --color-hairline,
-  # --background, etc.) — the design-token names above (surface-void,
-  # ink-primary, accent-blue, hairline) are a second, human-readable alias
-  # layer over the same values, added so design tooling can resolve them
-  # by name. Both sets must stay in sync; these mirror --color-button-primary
-  # → button-primary-fill above.
-  background: "#08090c"
-  color-surface-0: "#08090c"
-  color-surface-1: "#0e1014"
-  color-surface-2: "#16191f"
-  color-fg: "#edf0f3"
-  color-fg-muted: "#97a1ad"
-  color-fg-subtle: "#788490"
-  color-blue: "#3b82f6"
-  color-hairline: "rgba(255,255,255,0.07)"
+  # Note: deliberately NOT aliasing --background/--color-surface-0/--color-fg/
+  # --color-blue/--color-hairline/etc. here even though driftguard flags them
+  # as "not mapped" — those CSS variables are legitimately theme-reactive
+  # (redefined inside .light in app/globals.css), so any single static value
+  # given here is only ever correct for one theme. A prior attempt at this
+  # (see git history) mapped them to their dark-mode values and drew harder
+  # "value mismatch" errors instead, because driftguard's checker evaluated
+  # them against the light theme. The bare-name aliases above (surface-void,
+  # ink-primary, accent-blue, hairline, ...) are intentionally the only
+  # token-checker aliases in this file — they're static single-theme values
+  # with no .light override, so they can't have this problem.
 typography:
   display:
     fontFamily: "Inter Tight, Geist, sans-serif"

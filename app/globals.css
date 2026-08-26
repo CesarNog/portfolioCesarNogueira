@@ -57,6 +57,10 @@
   --foreground: var(--color-fg);
 
   /* DESIGN.md color token aliases — literal values required by token checker */
+  /* Mirrors DESIGN.md colors.primary (Cloud Blue). Same value as --accent-blue;
+     a distinct static alias exists because the token checker resolves
+     `colors.primary` against a CSS variable literally named --primary. */
+  --primary: #3b82f6;
   --surface-void: #08090c;
   --surface-base: #0e1014;
   --surface-raised: #16191f;
