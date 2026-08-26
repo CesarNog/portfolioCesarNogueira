@@ -57,6 +57,13 @@ export function SiteFooter() {
             <MotionToggle />
           </div>
         </div>
+        {/* Tech-stack credit — rubenmarcus.dev's footer has the same kind of
+            line ("Built with Astro · Svelte · Three.js · GSAP"). Costs
+            nothing to be honest about since the stack is already fully
+            documented in this repo's own CLAUDE.md — just surfacing it. */}
+        <p className="font-mono text-[11px] text-[var(--color-fg-subtle)]">
+          Built with Next.js &middot; Tailwind CSS &middot; Motion &middot; Three.js
+        </p>
       </div>
     </footer>
   );
