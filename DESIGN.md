@@ -2,6 +2,10 @@
 name: César A. Nogueira Portfolio
 description: Principal Cloud Architect and FinOps specialist portfolio — earned, precise, international.
 colors:
+  # Primary brand color — Cloud Blue, the architecture accent (see "Primary"
+  # below). Same value as accent-blue; a distinct top-level key exists
+  # because design tooling looks for `colors.primary` specifically.
+  primary: "#3b82f6"
   # Dark theme (default) — normative values
   surface-void: "#08090c"
   surface-base: "#0e1014"
@@ -33,6 +37,23 @@ colors:
   accent-blue-light: "#1f6fe0"
   accent-cyan-light: "#0e9aa3"
   accent-orange-light: "#e0641b"
+  # `--color-*` / `--background` aliases below: app/globals.css defines the
+  # site's actual CSS custom properties under these literal names
+  # (--color-surface-0, --color-fg, --color-blue, --color-hairline,
+  # --background, etc.) — the design-token names above (surface-void,
+  # ink-primary, accent-blue, hairline) are a second, human-readable alias
+  # layer over the same values, added so design tooling can resolve them
+  # by name. Both sets must stay in sync; these mirror --color-button-primary
+  # → button-primary-fill above.
+  background: "#08090c"
+  color-surface-0: "#08090c"
+  color-surface-1: "#0e1014"
+  color-surface-2: "#16191f"
+  color-fg: "#edf0f3"
+  color-fg-muted: "#97a1ad"
+  color-fg-subtle: "#788490"
+  color-blue: "#3b82f6"
+  color-hairline: "rgba(255,255,255,0.07)"
 typography:
   display:
     fontFamily: "Inter Tight, Geist, sans-serif"
