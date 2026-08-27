@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: OG_TITLE,
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     creator: "@cesarnog_eu",
     title: OG_TITLE,
     description: siteConfig.description,
-    images: [{ url: "/opengraph-image.png", alt: OG_TITLE }],
+    images: [{ url: "/opengraph-image", alt: OG_TITLE }],
   },
   robots: {
     index: true,
@@ -164,7 +164,7 @@ export default function RootLayout({
                   url: siteConfig.url,
                   description:
                     "Independent Principal Cloud Architect and FinOps consultancy — multi-cloud architecture, Platform Engineering, DevOps and cloud cost optimization for enterprise teams worldwide.",
-                  image: `${siteConfig.url}/opengraph-image.png`,
+                  image: `${siteConfig.url}/opengraph-image`,
                   email: siteConfig.links.email,
                   telephone: siteConfig.links.phone,
                   founder: { "@id": `${siteConfig.url}/#person` },
