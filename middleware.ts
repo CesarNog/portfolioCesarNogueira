@@ -18,12 +18,24 @@ import { buildResumeText } from "@/lib/agent-resume";
  * "Mozilla/5.0" in their UA specifically to receive JS-rendered pages, so
  * this doesn't touch SEO — only genuinely non-browser clients (curl,
  * wget, python-requests, most simple bots/AI-agent HTTP clients) match.
+ *
+ * Second exclusion, found by testing against the live site after shipping
+ * the first version: social link-unfurling bots (Slack, Twitter/X,
+ * Facebook, LinkedIn, WhatsApp, Telegram, Discord, iMessage) also carry no
+ * Mozilla token, but they exist specifically to scrape this page's
+ * `<meta property="og:*">` tags (app/layout.tsx) to build a share-preview
+ * card — a "recruiter-first" portfolio's link getting shared with no title/
+ * image/description because the preview bot got plain text instead of HTML
+ * would be a real, user-visible regression. These must always get the real
+ * page, same as a browser.
  */
 const BROWSER_ENGINE = /Mozilla\/5\.0|AppleWebKit|Gecko\/|Chrome\/|Safari\/|Firefox\/|Edg\//i;
+const LINK_PREVIEW_BOT =
+  /Slackbot|Twitterbot|facebookexternalhit|LinkedInBot|WhatsApp|TelegramBot|Discordbot|SkypeUriPreview|iMessage|Applebot(?!-Extended)/i;
 
 export function middleware(req: NextRequest) {
   const ua = req.headers.get("user-agent") ?? "";
-  if (BROWSER_ENGINE.test(ua)) return NextResponse.next();
+  if (BROWSER_ENGINE.test(ua) || LINK_PREVIEW_BOT.test(ua)) return NextResponse.next();
 
   return new NextResponse(buildResumeText(), {
     headers: { "Content-Type": "text/plain; charset=utf-8" },
