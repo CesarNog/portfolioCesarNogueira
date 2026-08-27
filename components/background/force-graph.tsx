@@ -156,26 +156,28 @@ export function ForceGalaxy({
 
   return (
     <div ref={containerRef} className={`relative h-full w-full ${className}`} style={{ overflow: "hidden" }}>
-      {/* Zoom controls */}
-      <div className="absolute bottom-3 right-3 z-10 flex flex-col gap-1" aria-label="Zoom controls">
+      {/* Zoom controls — 44x44px min (WCAG touch-target guidance), not the
+          previous 28x28px: this panel is drag/pinch-zoomable, so these are
+          real controls on touch devices, not decorative desktop-only chrome. */}
+      <div className="absolute bottom-3 right-3 z-10 flex flex-col gap-2" aria-label="Zoom controls">
         <button
           type="button"
           onClick={() => setZoom(z => Math.min(MAX_ZOOM, z * 1.25))}
           aria-label="Zoom in"
-          className="flex h-7 w-7 items-center justify-center rounded border border-[var(--color-hairline)] bg-[var(--color-surface-1)] font-mono text-[13px] text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] hover:text-[var(--color-fg)]"
+          className="flex h-11 w-11 cursor-pointer items-center justify-center rounded border border-[var(--color-hairline)] bg-[var(--color-surface-1)] font-mono text-base text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] hover:text-[var(--color-fg)]"
         >+</button>
         <button
           type="button"
           onClick={() => setZoom(z => Math.max(MIN_ZOOM, z * 0.8))}
           aria-label="Zoom out"
-          className="flex h-7 w-7 items-center justify-center rounded border border-[var(--color-hairline)] bg-[var(--color-surface-1)] font-mono text-[13px] text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] hover:text-[var(--color-fg)]"
+          className="flex h-11 w-11 cursor-pointer items-center justify-center rounded border border-[var(--color-hairline)] bg-[var(--color-surface-1)] font-mono text-base text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] hover:text-[var(--color-fg)]"
         >−</button>
         {(zoom !== 1 || pan.x !== 0 || pan.y !== 0) && (
           <button
             type="button"
             onClick={resetView}
             aria-label="Reset view"
-            className="flex h-7 w-7 items-center justify-center rounded border border-[var(--color-hairline)] bg-[var(--color-surface-1)] font-mono text-[9px] uppercase tracking-wider text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] hover:text-[var(--color-fg)]"
+            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded border border-[var(--color-hairline)] bg-[var(--color-surface-1)] font-mono text-[10px] uppercase tracking-wider text-[var(--color-fg-subtle)] transition-colors hover:border-[var(--color-hairline-strong)] hover:text-[var(--color-fg)]"
           >↺</button>
         )}
       </div>
