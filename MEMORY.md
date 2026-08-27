@@ -77,19 +77,25 @@ again from an already-fixed base.
   before each new PR per this repo's convention (never stack on
   already-merged history; if the PR for this branch was already merged,
   restart from `origin/master`).
-- Latest commit here refines `middleware.ts`'s bot-detection (allowlist, see
-  above). Not yet pushed as a PR at the moment this was written — do that
-  next if picking this up cold: `git push`, then open a PR against `master`.
+- The `middleware.ts` allowlist refinement was pushed and opened as
+  **PR #89** (updates this file superseded the "not yet pushed" note above).
+  CI green (`type-check`/`lint` passed on both the push and pull_request
+  runs), `mergeable_state: "clean"`, zero unresolved review threads. Base
+  (`master` @ `0323c82`) hasn't moved since. **Awaiting the user's merge —
+  do not merge PRs on this repo without being explicitly told to.**
 - Verified live on cesarnogueira.tech after #88 merged: `og:image` correctly
   resolves to `/opengraph-image` (200), Twitterbot/etc. get real HTML,
-  sitemap/JSON-LD/manifest all healthy.
+  sitemap/JSON-LD/manifest all healthy. Not yet re-verified against #89's
+  changes specifically since #89 hasn't merged.
 
 ## Next immediate step
-Push the current commit, open a PR, watch its CI, merge. After that,
-nothing else is queued — re-verify production once more after merge (same
-checks as above: og:image resolves, preview bots get HTML, curl/agent UAs
-get plain text) since that's this session's established habit and it's
-caught two real, otherwise-invisible regressions so far.
+Nothing to push — PR #89 is fully ready and just needs the user's review/
+merge. If picking this up cold and #89 has since merged: re-verify
+production once more (og:image resolves, preview bots get HTML, curl/agent
+UAs get plain text) — this session's established habit, and it's caught two
+real, otherwise-invisible regressions so far. If #89 is still open, there's
+nothing actionable until the user responds — don't invent further changes on
+top of a green, unreviewed PR.
 
 If picking this up fresh: re-read `AGENTS.md`/`llms.txt`/`.well-known/*` on
 the live site before adding more agent-discoverability surfaces — they're
