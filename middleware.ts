@@ -21,8 +21,28 @@ import { buildResumeText } from "@/lib/agent-resume";
  */
 const BROWSER_ENGINE = /Mozilla\/5\.0|AppleWebKit|Gecko\/|Chrome\/|Safari\/|Firefox\/|Edg\//i;
 
+/**
+ * Link-preview crawlers must always get the HTML, never the resume.
+ *
+ * These fetch a URL purely to read its <meta> tags and build the card shown
+ * when someone shares a link, and most identify themselves with a bare
+ * product token ("Twitterbot/1.0") carrying no browser-engine string — so
+ * BROWSER_ENGINE alone does not match them and they would be served
+ * text/plain. Plain text has no og:* tags, so every share of this site on
+ * LinkedIn, X, Facebook, Slack or WhatsApp would render as a bare URL with
+ * no title, description or image.
+ *
+ * Checked before BROWSER_ENGINE: some of these (WhatsApp, Discordbot) do
+ * include "Mozilla/5.0" and would pass anyway, but relying on that would
+ * make the guarantee depend on each vendor's UA string rather than on
+ * intent.
+ */
+const LINK_PREVIEW_BOT =
+  /facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|WhatsApp|TelegramBot|Discordbot|redditbot|Pinterest|SkypeUriPreview|vkShare|Embedly|iframely|Mastodon|Bluesky/i;
+
 export function middleware(req: NextRequest) {
   const ua = req.headers.get("user-agent") ?? "";
+  if (LINK_PREVIEW_BOT.test(ua)) return NextResponse.next();
   if (BROWSER_ENGINE.test(ua)) return NextResponse.next();
 
   return new NextResponse(buildResumeText(), {
