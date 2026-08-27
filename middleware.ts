@@ -12,30 +12,30 @@ import { buildResumeText } from "@/lib/agent-resume";
  * /api/resume.* endpoints (lib/agent-resume.ts) — one more surface, same
  * facts, no duplication.
  *
- * Deliberately conservative: this must NEVER show plain text to an actual
- * human visitor, so it only fires when the User-Agent contains no browser
- * engine token at all. Modern search crawlers (Googlebot, Bingbot) include
- * "Mozilla/5.0" in their UA specifically to receive JS-rendered pages, so
- * this doesn't touch SEO — only genuinely non-browser clients (curl,
- * wget, python-requests, most simple bots/AI-agent HTTP clients) match.
- *
- * Second exclusion, found by testing against the live site after shipping
- * the first version: social link-unfurling bots (Slack, Twitter/X,
- * Facebook, LinkedIn, WhatsApp, Telegram, Discord, iMessage) also carry no
- * Mozilla token, but they exist specifically to scrape this page's
- * `<meta property="og:*">` tags (app/layout.tsx) to build a share-preview
- * card — a "recruiter-first" portfolio's link getting shared with no title/
- * image/description because the preview bot got plain text instead of HTML
- * would be a real, user-visible regression. These must always get the real
- * page, same as a browser.
+ * Rebuilt from a blocklist to an allowlist. The first version fired
+ * whenever the UA had no browser-engine token — which broke social
+ * link-preview bots (Slack, Twitter/X, Facebook, LinkedIn, WhatsApp,
+ * Telegram, Discord, Apple): none of them carry a Mozilla token either,
+ * so they fell into the same bucket as curl/GPTBot and got plain text
+ * instead of the HTML their `<meta property="og:*">` scraper needs —
+ * a real regression for a recruiter-first portfolio's link sharing.
+ * Patching that hole with a growing exclusion list is exactly the
+ * whack-a-mole this design invites (uptime monitors, SEO auditors,
+ * accessibility scanners, RSS readers... anything not yet thought of
+ * would hit the same bug next). Testing rubenmarcus.dev directly with an
+ * unrecognized UA and a stripped-down AhrefsBot UA (no Mozilla token)
+ * showed it returns HTML for both — its actual logic is an allowlist of
+ * specific known bare-HTTP-client/agent signatures, defaulting to HTML
+ * for everything else. Matched that here: default is always HTML (safe
+ * for humans, browsers, preview bots, and anything unrecognized), plain
+ * text only for the specific clients below.
  */
-const BROWSER_ENGINE = /Mozilla\/5\.0|AppleWebKit|Gecko\/|Chrome\/|Safari\/|Firefox\/|Edg\//i;
-const LINK_PREVIEW_BOT =
-  /Slackbot|Twitterbot|facebookexternalhit|LinkedInBot|WhatsApp|TelegramBot|Discordbot|SkypeUriPreview|iMessage|Applebot(?!-Extended)/i;
+const KNOWN_AGENT_OR_SCRIPT =
+  /\bcurl\/|\bWget\/|python-requests|Go-http-client|HTTPie|PostmanRuntime|okhttp|node-fetch|GPTBot|ChatGPT-User|OAI-SearchBot|ClaudeBot|Claude-User|anthropic-ai|PerplexityBot|cohere-ai|Google-Extended|CCBot|Bytespider|Diffbot|Amazonbot/i;
 
 export function middleware(req: NextRequest) {
   const ua = req.headers.get("user-agent") ?? "";
-  if (BROWSER_ENGINE.test(ua) || LINK_PREVIEW_BOT.test(ua)) return NextResponse.next();
+  if (!KNOWN_AGENT_OR_SCRIPT.test(ua)) return NextResponse.next();
 
   return new NextResponse(buildResumeText(), {
     headers: { "Content-Type": "text/plain; charset=utf-8" },
