@@ -88,9 +88,21 @@ export function ForceGalaxy({
   const W = 520;
   const H = 400;
 
+  // `window` doesn't exist during SSR, so this always rendered the full
+  // galaxy server-side — a mobile client's very first render then computed
+  // the reduced list immediately, mismatching the server-sent HTML and
+  // forcing React to blow away and rebuild this whole SVG subtree on
+  // hydration (visible as a snap/glitch right as this lazily-mounted
+  // section scrolls into view). Gating on `mounted` makes the first client
+  // render match the server exactly; the reduction to one-node-per-group
+  // only happens in a later, purely client-side re-render, which is a
+  // normal update, not a hydration mismatch.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   // On mobile (≤768px) cap nodes to reduce DOM count below 1000
   const visibleGalaxy = useMemo(() => {
-    if (typeof window !== "undefined" && window.innerWidth <= 768) {
+    if (mounted && window.innerWidth <= 768) {
       // Keep one representative node per group — prioritise high-value nodes
       const seen = new Set<string>();
       return galaxy.filter(n => {
@@ -100,7 +112,7 @@ export function ForceGalaxy({
       });
     }
     return galaxy;
-  }, []);
+  }, [mounted]);
 
   const { positions, cx, cy } = useMemo(() => computeLayout(W, H), []);
   const links = LINK_PAIRS.filter(([s, t]) => positions[s] && positions[t]);
