@@ -12,38 +12,34 @@ import { buildResumeText } from "@/lib/agent-resume";
  * /api/resume.* endpoints (lib/agent-resume.ts) — one more surface, same
  * facts, no duplication.
  *
- * Deliberately conservative: this must NEVER show plain text to an actual
- * human visitor, so it only fires when the User-Agent contains no browser
- * engine token at all. Modern search crawlers (Googlebot, Bingbot) include
- * "Mozilla/5.0" in their UA specifically to receive JS-rendered pages, so
- * this doesn't touch SEO — only genuinely non-browser clients (curl,
- * wget, python-requests, most simple bots/AI-agent HTTP clients) match.
- */
-const BROWSER_ENGINE = /Mozilla\/5\.0|AppleWebKit|Gecko\/|Chrome\/|Safari\/|Firefox\/|Edg\//i;
-
-/**
- * Link-preview crawlers must always get the HTML, never the resume.
+ * This is an allowlist, not a blocklist — the shape verified against
+ * rubenmarcus.dev itself: a made-up UA, an AhrefsBot-style UA, and even a
+ * correctly-formatted GPTBot/ClaudeBot UA (both of which include a
+ * "Mozilla/5.0 (compatible; ...)" prefix by convention) all get HTML there.
+ * Only a short list of bare command-line HTTP tools (curl, Wget, HTTPie —
+ * not python-requests, not Go-http-client, not okhttp) actually get plain
+ * text on the reference site. A blocklist of "known preview bots" was tried
+ * here first and broke exactly the thing it was supposed to protect: Slack,
+ * Twitter/X, Facebook, LinkedIn, WhatsApp and friends all identify with no
+ * browser-engine token, so they landed in the same bucket as curl and lost
+ * their `og:*` tags — and any *future* crawler not yet on the list (an SEO
+ * auditor, an uptime monitor, a new preview-bot vendor) would hit the same
+ * bug next. An allowlist has no such blind spot: HTML is always the safe
+ * default, and only what's explicitly recognized here opts into plain text.
  *
- * These fetch a URL purely to read its <meta> tags and build the card shown
- * when someone shares a link, and most identify themselves with a bare
- * product token ("Twitterbot/1.0") carrying no browser-engine string — so
- * BROWSER_ENGINE alone does not match them and they would be served
- * text/plain. Plain text has no og:* tags, so every share of this site on
- * LinkedIn, X, Facebook, Slack or WhatsApp would render as a bare URL with
- * no title, description or image.
- *
- * Checked before BROWSER_ENGINE: some of these (WhatsApp, Discordbot) do
- * include "Mozilla/5.0" and would pass anyway, but relying on that would
- * make the guarantee depend on each vendor's UA string rather than on
- * intent.
+ * Deliberate departure from the reference site: this list also includes
+ * named AI-agent crawlers (GPTBot, ClaudeBot, PerplexityBot, etc.), which
+ * rubenmarcus.dev's own site does NOT special-case — those get HTML there.
+ * Kept here anyway because it directly serves this feature's actual point
+ * (per the paragraph above): an agent hitting the bare domain should get
+ * something useful without first discovering /api/mcp or /llms.txt.
  */
-const LINK_PREVIEW_BOT =
-  /facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|WhatsApp|TelegramBot|Discordbot|redditbot|Pinterest|SkypeUriPreview|vkShare|Embedly|iframely|Mastodon|Bluesky/i;
+const KNOWN_AGENT_OR_SCRIPT =
+  /\bcurl\/?\b|\bWget\/?\b|\bHTTPie\/|python-requests|Go-http-client|PostmanRuntime|okhttp|node-fetch|GPTBot|ChatGPT-User|OAI-SearchBot|ClaudeBot|Claude-User|anthropic-ai|PerplexityBot|cohere-ai|Google-Extended|CCBot|Bytespider|Diffbot|Amazonbot/i;
 
 export function middleware(req: NextRequest) {
   const ua = req.headers.get("user-agent") ?? "";
-  if (LINK_PREVIEW_BOT.test(ua)) return NextResponse.next();
-  if (BROWSER_ENGINE.test(ua)) return NextResponse.next();
+  if (!KNOWN_AGENT_OR_SCRIPT.test(ua)) return NextResponse.next();
 
   return new NextResponse(buildResumeText(), {
     headers: { "Content-Type": "text/plain; charset=utf-8" },
