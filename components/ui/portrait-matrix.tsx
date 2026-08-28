@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
+import { useTheme } from "next-themes";
 
 /**
  * Renders a photo as a night-vision "digital decode" portrait — the subject
@@ -17,6 +18,14 @@ import { useReducedMotion } from "motion/react";
  * a black → green → white ramp. A low-frequency loop rerolls a small
  * percentage of cells each tick (patching only those cells, not a full
  * redraw) for a subtle "decoding" flicker.
+ *
+ * The night-vision/hacker-console read only makes sense against the dark
+ * theme's near-black surfaces. In light theme the effect is a jarring black
+ * rectangle on white, so it's disabled there in favor of the plain photo
+ * (same cover-crop framing, no canvas/glyph decode). Gated behind a mounted
+ * check, same hydration-safety pattern as ThemeToggle: SSR/first paint always
+ * renders the dark decode effect (matching next-themes' defaultTheme="dark"),
+ * and only swaps to the plain photo once the real theme is known client-side.
  */
 
 const GLYPHS =
@@ -81,8 +90,13 @@ export function PortraitMatrix({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const reduce = useReducedMotion();
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isLight = mounted && resolvedTheme === "light";
 
   useEffect(() => {
+    if (isLight) return;
     const container = containerRef.current;
     const canvas = canvasRef.current;
     const img = imgRef.current;
@@ -192,7 +206,26 @@ export function PortraitMatrix({
       img.removeEventListener("load", onLoad);
       ro.disconnect();
     };
-  }, [reduce, src, zoom, focusX, focusY]);
+  }, [isLight, reduce, src, zoom, focusX, focusY]);
+
+  if (isLight) {
+    return (
+      <div ref={containerRef} className={`relative overflow-hidden ${className}`}>
+        <img
+          src={src}
+          alt={alt}
+          className="h-full w-full object-cover"
+          style={{
+            objectPosition: `${focusX * 100}% ${focusY * 100}%`,
+            transform: zoom !== 1 ? `scale(${zoom})` : undefined,
+          }}
+          decoding="async"
+          loading="eager"
+          fetchPriority="high"
+        />
+      </div>
+    );
+  }
 
   return (
     <div ref={containerRef} className={`relative overflow-hidden bg-black ${className}`}>
