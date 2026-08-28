@@ -260,6 +260,7 @@ type Dict = {
     minRead: string;
     relatedCaseStudy: string;
     readFull: string;
+    references: string;
   };
 };
 
@@ -734,6 +735,7 @@ const en: Dict = {
     minRead: "MIN READ",
     relatedCaseStudy: "Read the full case study →",
     readFull: "Read the field report →",
+    references: "References",
   },
 };
 
@@ -1208,6 +1210,7 @@ const pt: Dict = {
     minRead: "MIN DE LEITURA",
     relatedCaseStudy: "Ler o estudo de caso completo →",
     readFull: "Ler o relato de campo →",
+    references: "Referências",
   },
 };
 
@@ -1682,6 +1685,7 @@ const es: Dict = {
     minRead: "MIN DE LECTURA",
     relatedCaseStudy: "Leer el caso de éxito completo →",
     readFull: "Leer el informe de campo →",
+    references: "Referencias",
   },
 };
 
@@ -2156,6 +2160,7 @@ const fr: Dict = {
     minRead: "MIN DE LECTURE",
     relatedCaseStudy: "Lire l'étude de cas complète →",
     readFull: "Lire le rapport de terrain →",
+    references: "Références",
   },
 };
 
@@ -2630,6 +2635,7 @@ const zh: Dict = {
     minRead: "分钟阅读",
     relatedCaseStudy: "阅读完整案例研究 →",
     readFull: "阅读现场记录 →",
+    references: "参考资料",
   },
 };
 

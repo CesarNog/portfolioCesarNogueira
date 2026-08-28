@@ -32,6 +32,12 @@ export type BlogPost = {
   // render when this is absent.
   relatedCaseStudyId?: string;
   body: string[];
+  // External citations backing the technical claims in `body` (standards
+  // bodies, official vendor docs). Every URL here has been fetched and
+  // confirmed live, not guessed at, since a dead or fabricated citation
+  // undermines the "proof, not claims" brand principle worse than having
+  // no citation at all.
+  references: { label: string; url: string }[];
 };
 
 export const blogPosts: BlogPost[] = [
@@ -52,6 +58,10 @@ export const blogPosts: BlogPost[] = [
       "The fix wasn't exotic: resource requests and limits set from actual render-workload profiling rather than guesses, pod priority classes so a launch-day spike from one brand couldn't evict another brand's steady-state pods, and separating the loudest, most bursty workloads onto their own node pools instead of trusting the scheduler to sort it out under pressure. None of that shows up in a demo. It only shows up the first time two clients hit peak load in the same hour and nothing degrades.",
       "The broader lesson carries past rendering. On any shared platform serving multiple external clients, the question that matters isn't whether it can scale. It's what happens to client A when client B has a bad day. Design for that answer before a client ever asks it during an incident call.",
     ],
+    references: [
+      { label: "Kubernetes: Resource Management for Pods and Containers", url: "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/" },
+      { label: "Kubernetes: Pod Priority and Preemption", url: "https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/" },
+    ],
   },
   {
     slug: "observability-is-proof",
@@ -70,6 +80,11 @@ export const blogPosts: BlogPost[] = [
       "That reframes what 'observability' means as a deliverable. It's not enough for New Relic and PagerDuty to be wired up and generating alerts an on-call engineer can act on. The dashboards and the alert history need to be structured so an auditor, who has never seen the architecture before and doesn't have an engineer's patience for context, can look at them and see the compliance story: uptime, access, incident response, all with timestamps.",
       "Building that in from day one, rather than retrofitting it before an audit, changed the economics of the whole engagement. The platform ran at 99.9% availability, which is a real and hard-won number. But the reviews we passed on the first attempt, without a scramble to reconstruct six months of incident history from memory and Slack, were the difference the client actually noticed.",
       "The practical takeaway: when you're designing observability for a regulated workload, ask the compliance team what they'll be asked to prove before you ask the SRE team what they want to see at 3am. Both matter. Only one of them has a deadline that doesn't move.",
+    ],
+    references: [
+      { label: "PCI Security Standards Council: Standards", url: "https://www.pcisecuritystandards.org/standards/" },
+      { label: "NIST SP 800-53 Rev. 5: Security and Privacy Controls", url: "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final" },
+      { label: "AWS Well-Architected Framework", url: "https://aws.amazon.com/architecture/well-architected/" },
     ],
   },
   {
@@ -90,6 +105,10 @@ export const blogPosts: BlogPost[] = [
       "That decision costs something upfront. It means writing the schema registry and the validation layer before you've proven the pipeline works at all, which feels like solving a problem you don't have yet. By the third schema change, it's the reason the platform kept running while the roadmap kept moving.",
       "If I rebuilt this platform today, throughput would still matter, and BigQuery and Beam would still be the right tools for the volume. But the first design review wouldn't start with a load test. It would start with a fake schema change, run through the pipeline, to see what breaks.",
     ],
+    references: [
+      { label: "Apache Beam Documentation", url: "https://beam.apache.org/documentation/" },
+      { label: "Google Cloud: Managing Table Schemas (BigQuery)", url: "https://cloud.google.com/bigquery/docs/managing-table-schemas" },
+    ],
   },
   {
     slug: "governance-before-optimization",
@@ -108,6 +127,10 @@ export const blogPosts: BlogPost[] = [
       "So before a line of automation shipped, the work was organizational: a single tagging taxonomy, agreed on by twelve platform teams who each had a reasonable argument for keeping their own. That negotiation took longer than building the Python jobs that eventually read the tags. It also mattered more. Automation applied to inconsistent metadata just produces inconsistent reports faster.",
       "Once the taxonomy held, the rest followed a familiar shape: scheduled jobs against the CloudHealth and native billing APIs, auto-tagging for resources that slipped through provisioning without one, and a chargeback report finance could read without a translator. The waste we found, about 30% of spend, was real, but it was findable only because every dollar now traced back to a team, an environment and a purpose.",
       "The lesson generalizes past FinOps. Any system that reports on infrastructure inherits the infrastructure's naming discipline. Skip the governance step because it's slower and less visible than shipping a dashboard, and you'll ship a dashboard that lies convincingly.",
+    ],
+    references: [
+      { label: "FinOps Foundation: The FinOps Framework", url: "https://www.finops.org/framework/" },
+      { label: "AWS Whitepaper: Best Practices for Tagging AWS Resources", url: "https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/tagging-best-practices.html" },
     ],
   },
 ];
