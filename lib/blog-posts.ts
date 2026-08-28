@@ -26,11 +26,33 @@ export type BlogPost = {
   dek: string;
   publishedDate: string;
   readMinutes: number;
-  relatedCaseStudyId: string;
+  // Not every post traces back to one of the three named case studies
+  // (some, like a role held before UP2CLOUD, are only in `experience`).
+  // The related-case-study callout in blog-post-body.tsx simply doesn't
+  // render when this is absent.
+  relatedCaseStudyId?: string;
   body: string[];
 };
 
 export const blogPosts: BlogPost[] = [
+  {
+    slug: "noisy-neighbors-real-time-rendering",
+    domain: "platform",
+    domainLabel: "Platform Engineering",
+    title: "Real-Time Rendering Doesn't Forgive Noisy Neighbors",
+    metaDescription:
+      "Configurator lag for one automotive brand is a UX bug. On shared Kubernetes infrastructure serving five, it's every brand's problem at once.",
+    dek: "Configurator lag for one automotive brand is a UX bug. On shared Kubernetes infrastructure serving five, it's every brand's problem at once.",
+    publishedDate: "2026-08-20",
+    readMinutes: 5,
+    body: [
+      "Most Kubernetes horror stories are about scale: too many pods, not enough nodes, an autoscaler that reacts a beat too late. Building infrastructure for a real-time 3D visualization platform, the harder problem wasn't scale. It was that every millisecond of render latency was visible to a customer configuring a car.",
+      "The platform served real-time visualization for several automotive OEM brands at once, including Volkswagen, Lucid, Vinfast, Mitsubishi and Cadillac, on shared multi-cloud infrastructure across AWS and GCP. Each brand's traffic pattern was different: a product launch for one client could spike load overnight, while another ran steady daytime traffic in a different region. Running that on shared Kubernetes clusters made resource utilization efficient. It also meant one brand's traffic spike was, by default, every other brand's latency problem.",
+      "A configurator that renders a car in real time doesn't have the luxury of a queue. A batch job can wait its turn behind a noisy neighbor and nobody notices. A dropped frame during an interactive 3D render is immediately visible to whoever is looking at it, and it's visible on a screen with that brand's name on it, not the platform's. That asymmetry, invisible cost for us, visible cost for the client, is what made noisy-neighbor isolation a design requirement instead of an optimization to get to eventually.",
+      "The fix wasn't exotic: resource requests and limits set from actual render-workload profiling rather than guesses, pod priority classes so a launch-day spike from one brand couldn't evict another brand's steady-state pods, and separating the loudest, most bursty workloads onto their own node pools instead of trusting the scheduler to sort it out under pressure. None of that shows up in a demo. It only shows up the first time two clients hit peak load in the same hour and nothing degrades.",
+      "The broader lesson carries past rendering. On any shared platform serving multiple external clients, the question that matters isn't whether it can scale. It's what happens to client A when client B has a bad day. Design for that answer before a client ever asks it during an incident call.",
+    ],
+  },
   {
     slug: "observability-is-proof",
     domain: "architecture",
