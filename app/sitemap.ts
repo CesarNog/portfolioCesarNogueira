@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { siteConfig, projects } from "@/lib/site-config";
+import { blogPosts } from "@/lib/blog-posts";
 
 export const dynamic = "force-static";
 
@@ -18,6 +19,7 @@ function selfLanguages(url: string) {
 const HOME_MODIFIED = new Date("2026-07-21");
 export const CASE_STUDIES_MODIFIED = new Date("2026-07-21");
 const CONNECT_MODIFIED = new Date("2026-08-12");
+const BLOG_MODIFIED = new Date("2026-08-28");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteConfig.url;
@@ -51,6 +53,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: CASE_STUDIES_MODIFIED,
         changeFrequency: "yearly" as const,
         priority: 0.7,
+        alternates: { languages: selfLanguages(url) },
+      };
+    }),
+    {
+      url: `${base}/blog`,
+      lastModified: BLOG_MODIFIED,
+      changeFrequency: "weekly",
+      priority: 0.7,
+      alternates: { languages: selfLanguages(`${base}/blog`) },
+    },
+    ...blogPosts.map((post) => {
+      const url = `${base}/blog/${post.slug}`;
+      return {
+        url,
+        lastModified: new Date(post.publishedDate),
+        changeFrequency: "yearly" as const,
+        priority: 0.6,
         alternates: { languages: selfLanguages(url) },
       };
     }),

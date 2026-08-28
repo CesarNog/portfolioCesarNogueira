@@ -254,6 +254,13 @@ type Dict = {
     similarProblem: string;
     letsTalk: string;
   };
+  blog: {
+    title: string;
+    subtitle: string;
+    minRead: string;
+    relatedCaseStudy: string;
+    readFull: string;
+  };
 };
 
 const en: Dict = {
@@ -720,6 +727,13 @@ const en: Dict = {
     readFull: "Read the full case study →",
     similarProblem: "Have a similar problem to solve?",
     letsTalk: "Let's talk",
+  },
+  blog: {
+    title: "Field Notes",
+    subtitle: "Long-form field reports on cloud, FinOps, and platform engineering, drawn from real engagements.",
+    minRead: "MIN READ",
+    relatedCaseStudy: "Read the full case study →",
+    readFull: "Read the field report →",
   },
 };
 
@@ -1188,6 +1202,13 @@ const pt: Dict = {
     similarProblem: "Tem um problema parecido para resolver?",
     letsTalk: "Vamos conversar",
   },
+  blog: {
+    title: "Notas de Campo",
+    subtitle: "Relatos de campo sobre cloud, FinOps e engenharia de plataforma, baseados em projetos reais.",
+    minRead: "MIN DE LEITURA",
+    relatedCaseStudy: "Ler o estudo de caso completo →",
+    readFull: "Ler o relato de campo →",
+  },
 };
 
 const es: Dict = {
@@ -1654,6 +1675,13 @@ const es: Dict = {
     readFull: "Leer el caso de éxito completo →",
     similarProblem: "¿Tienes un problema similar que resolver?",
     letsTalk: "Hablemos",
+  },
+  blog: {
+    title: "Notas de Campo",
+    subtitle: "Informes de campo sobre cloud, FinOps e ingeniería de plataformas, basados en proyectos reales.",
+    minRead: "MIN DE LECTURA",
+    relatedCaseStudy: "Leer el caso de éxito completo →",
+    readFull: "Leer el informe de campo →",
   },
 };
 
@@ -2122,6 +2150,13 @@ const fr: Dict = {
     similarProblem: "Un problème similaire à résoudre ?",
     letsTalk: "Discutons-en",
   },
+  blog: {
+    title: "Notes de Terrain",
+    subtitle: "Rapports de terrain sur le cloud, la FinOps et l'ingénierie de plateforme, tirés de missions réelles.",
+    minRead: "MIN DE LECTURE",
+    relatedCaseStudy: "Lire l'étude de cas complète →",
+    readFull: "Lire le rapport de terrain →",
+  },
 };
 
 const zh: Dict = {
@@ -2588,6 +2623,13 @@ const zh: Dict = {
     readFull: "阅读完整案例研究 →",
     similarProblem: "有类似的问题需要解决吗？",
     letsTalk: "联系我",
+  },
+  blog: {
+    title: "现场笔记",
+    subtitle: "关于云计算、FinOps 和平台工程的现场记录，来自真实项目。",
+    minRead: "分钟阅读",
+    relatedCaseStudy: "阅读完整案例研究 →",
+    readFull: "阅读现场记录 →",
   },
 };
 

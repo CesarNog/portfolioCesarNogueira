@@ -40,6 +40,8 @@ export const siteConfig = {
   ],
   caseStudiesDescription:
     "Real cloud, FinOps, and platform engineering engagements — FinOps automation, big data platforms, and regulated banking infrastructure.",
+  blogDescription:
+    "Field reports from cloud, FinOps, and platform engineering work: what broke, what held, and what it cost to find out.",
   links: {
     linkedin: "https://www.linkedin.com/in/cesarnog/",
     github: "https://github.com/cesarnog",

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import { useTheme } from "next-themes";
+import { PORTRAIT_SRC } from "@/lib/images";
 
 /**
  * Renders a photo as a night-vision "digital decode" portrait — the subject
@@ -26,6 +27,12 @@ import { useTheme } from "next-themes";
  * check, same hydration-safety pattern as ThemeToggle: SSR/first paint always
  * renders the dark decode effect (matching next-themes' defaultTheme="dark"),
  * and only swaps to the plain photo once the real theme is known client-side.
+ *
+ * `src` is deliberately a tiny (~220px) source — the decode effect samples it
+ * into a coarse glyph grid, so downsampling artifacts are invisible and a
+ * small file keeps that sampling cheap. That resolution reads as pixelated
+ * once shown directly at full size, so the plain-photo path uses `lightSrc`
+ * (defaults to the full-resolution portrait) instead of reusing `src`.
  */
 
 const GLYPHS =
@@ -71,6 +78,7 @@ function glyphColor(l: number): string {
 
 export function PortraitMatrix({
   src,
+  lightSrc = PORTRAIT_SRC,
   alt,
   className = "",
   zoom = 1,
@@ -78,6 +86,8 @@ export function PortraitMatrix({
   focusY = 0,
 }: {
   src: string;
+  /** Full-resolution photo shown in light theme, in place of the (deliberately tiny) decode-grid source. */
+  lightSrc?: string;
   alt: string;
   className?: string;
   /** > 1 crops in tighter than object-fit: cover — use to frame a face inside a wider source photo. */
@@ -212,7 +222,7 @@ export function PortraitMatrix({
     return (
       <div ref={containerRef} className={`relative overflow-hidden ${className}`}>
         <img
-          src={src}
+          src={lightSrc}
           alt={alt}
           className="h-full w-full object-cover"
           style={{
