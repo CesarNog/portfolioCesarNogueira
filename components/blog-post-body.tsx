@@ -70,6 +70,30 @@ export function BlogPostBody({ post }: { post: BlogPost }) {
         </Reveal>
       )}
 
+      {post.references.length > 0 && (
+        <Reveal delay={0.18}>
+          <div className="mt-10 max-w-2xl border-t border-[var(--color-hairline)] pt-6">
+            <p className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
+              {t.blog.references}
+            </p>
+            <ol className="mt-3 space-y-1.5">
+              {post.references.map((ref) => (
+                <li key={ref.url} className="text-[13px] leading-relaxed">
+                  <a
+                    href={ref.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-[var(--color-fg-muted)] underline decoration-[var(--color-hairline-strong)] underline-offset-2 transition-colors hover:text-accent"
+                  >
+                    {ref.label}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Reveal>
+      )}
+
       <Reveal delay={0.2}>
         <div className="mt-16 flex flex-col items-start gap-4 border-t border-[var(--color-hairline)] pt-10 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[15px] text-[var(--color-fg-muted)]">
