@@ -4,6 +4,7 @@ import Link from "next/link";
 import { m, useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/reveal";
 import { projects } from "@/lib/site-config";
+import { blogPosts, DOMAIN_ACCENT_CLASS } from "@/lib/blog-posts";
 import { useI18n } from "@/lib/i18n";
 
 type Project = (typeof projects)[number];
@@ -23,6 +24,7 @@ export function CaseStudyBody({ project: p }: { project: Project }) {
   const outcome = tr?.outcome ?? p.outcome;
   const lessons = tr?.lessons ?? p.lessons;
   const metricLabel = tr?.metricLabel ?? p.metricLabel;
+  const relatedPost = blogPosts.find((post) => post.relatedCaseStudyId === p.id);
 
   return (
     <article>
@@ -108,6 +110,16 @@ export function CaseStudyBody({ project: p }: { project: Project }) {
           ))}
         </div>
       </Reveal>
+
+      {relatedPost && (
+        <Reveal delay={0.28}>
+          <div className={`mt-10 border-t border-[var(--color-hairline)] pt-6 ${DOMAIN_ACCENT_CLASS[relatedPost.domain]}`}>
+            <Link href={`/blog/${relatedPost.slug}`} className="inline-block text-sm font-medium text-accent">
+              {t.blog.readFull}
+            </Link>
+          </div>
+        </Reveal>
+      )}
 
       <Reveal delay={0.3}>
         <div className="mt-16 flex flex-col items-start gap-4 border-t border-[var(--color-hairline)] pt-10 sm:flex-row sm:items-center sm:justify-between">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Command } from "cmdk";
 import { useTheme } from "next-themes";
 import { siteConfig } from "@/lib/site-config";
@@ -12,6 +13,7 @@ export function CommandPalette() {
   const [open, setOpen] = useState(false);
   const { setTheme } = useTheme();
   const { t } = useI18n();
+  const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
   // ⌘K / Ctrl+K toggle
@@ -48,6 +50,10 @@ export function CommandPalette() {
     setOpen(false);
     window.open(url, "_blank", "noopener");
   };
+  const nav = (path: string) => () => {
+    setOpen(false);
+    router.push(path);
+  };
 
   const s = t.sections;
   const p = t.palette;
@@ -66,6 +72,7 @@ export function CommandPalette() {
     { group: NAV, label: s.stack?.label ?? "Technology", run: go("stack") },
     { group: NAV, label: s.testimonials?.label ?? "Testimonials", run: go("testimonials") },
     { group: NAV, label: s.contact?.label ?? "Contact", run: go("contact") },
+    { group: NAV, label: t.blog.title, run: nav("/blog") },
     { group: ACT, label: p.darkTheme, run: () => { setTheme("dark"); setOpen(false); } },
     { group: ACT, label: p.lightTheme, run: () => { setTheme("light"); setOpen(false); } },
     { group: ACT, label: p.openFaq, run: () => { setOpen(false); document.dispatchEvent(new CustomEvent("open-smart-faq")); } },
