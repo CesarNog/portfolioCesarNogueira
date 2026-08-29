@@ -32,7 +32,15 @@ const ACCENT: Record<string, string> = {
 // Groups and their radial sector angles
 const GROUP_ORDER = ["cloud", "platform", "cicd", "data", "finops", "code"];
 
-function computeLayout(W: number, H: number) {
+// Takes the node list actually being rendered, rather than always laying
+// out the full galaxy: on mobile, `nodes` is the reduced one-per-group set
+// (see `visibleGalaxy` below), so each survivor sits alone in its group and
+// lands exactly on the group's central sector angle (spread collapses to 0
+// automatically since groupNodes.length is 1). Reusing full-galaxy
+// positions for that reduced set was the bug — a group's first-listed node
+// isn't necessarily near its sector's center, so the six survivors bunched
+// unevenly and left half the mobile panel empty.
+function computeLayout(W: number, H: number, nodes: typeof galaxy) {
   const cx = W / 2;
   const cy = H / 2;
   const R = Math.min(W, H) * 0.38;
@@ -43,10 +51,10 @@ function computeLayout(W: number, H: number) {
   const positions: Record<string, { x: number; y: number; group: string }> = {};
 
   groups.forEach((group, gi) => {
-    const groupNodes = galaxy.filter(n => n.group === group);
+    const groupNodes = nodes.filter(n => n.group === group);
     const basAngle = gi * sectorAngle - Math.PI / 2;
     groupNodes.forEach((node, ni) => {
-      const spread = (ni - (groupNodes.length - 1) / 2) * 0.22;
+      const spread = groupNodes.length > 1 ? (ni - (groupNodes.length - 1) / 2) * 0.22 : 0;
       const angle = basAngle + spread;
       const r = R + (ni % 2 === 0 ? 0 : 18);
       positions[node.id] = {
@@ -114,7 +122,7 @@ export function ForceGalaxy({
     return galaxy;
   }, [mounted]);
 
-  const { positions, cx, cy } = useMemo(() => computeLayout(W, H), []);
+  const { positions, cx, cy } = useMemo(() => computeLayout(W, H, visibleGalaxy), [visibleGalaxy]);
   const links = LINK_PAIRS.filter(([s, t]) => positions[s] && positions[t]);
 
   // Trigger stagger reveal once on first viewport entry

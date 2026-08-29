@@ -35,10 +35,22 @@ export function CloudGalaxy() {
             <button
               key={key}
               type="button"
+              aria-pressed={active === key}
               onMouseEnter={() => setActive(key)}
               onMouseLeave={() => setActive(null)}
               onFocus={() => setActive(key)}
               onBlur={() => setActive(null)}
+              // Touch devices fire neither hover nor blur, so tapping did
+              // nothing there. onTouchEnd adds an explicit toggle for that
+              // case; preventDefault suppresses the synthetic mouseover/
+              // click a tap fires ~300ms later for legacy compatibility,
+              // which would otherwise immediately re-trigger onMouseEnter
+              // and undo the toggle. Desktop mouse/keyboard behavior above
+              // is untouched.
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                setActive((a) => (a === key ? null : key));
+              }}
               className={`panel flex items-center justify-between rounded-md px-4 py-3 text-left transition-colors ${
                 active === key ? "border-[var(--color-hairline-strong)]" : ""
               }`}
