@@ -3,14 +3,18 @@
 import Link from "next/link";
 import { m, useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/reveal";
-import { projects } from "@/lib/site-config";
+import { siteConfig, projects } from "@/lib/site-config";
 import { DOMAIN_ACCENT_CLASS, type BlogPost } from "@/lib/blog-posts";
 import { useI18n } from "@/lib/i18n";
+import { BlogAuthor } from "@/components/blog-author";
+import { BlogShare } from "@/components/blog-share";
+import { BlogComments } from "@/components/blog-comments";
 
 export function BlogPostBody({ post }: { post: BlogPost }) {
   const { t } = useI18n();
   const reduce = useReducedMotion();
   const relatedCaseStudy = projects.find((p) => p.id === post.relatedCaseStudyId);
+  const url = `${siteConfig.url}/blog/${post.slug}`;
 
   const date = new Date(post.publishedDate).toLocaleDateString("en-US", {
     year: "numeric",
@@ -39,6 +43,10 @@ export function BlogPostBody({ post }: { post: BlogPost }) {
         <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-[var(--color-fg-muted)] [text-wrap:pretty]">
           {post.dek}
         </p>
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--color-hairline)] pt-6">
+          <BlogAuthor />
+          <BlogShare title={post.title} url={url} />
+        </div>
       </Reveal>
 
       <Reveal delay={0.08}>
@@ -108,6 +116,15 @@ export function BlogPostBody({ post }: { post: BlogPost }) {
               {t.caseStudies.letsTalk}
             </Link>
           </m.div>
+        </div>
+      </Reveal>
+
+      <Reveal delay={0.25}>
+        <div className="mt-16 max-w-2xl border-t border-[var(--color-hairline)] pt-10">
+          <p className="mb-6 font-mono text-[11px] uppercase tracking-wider text-[var(--color-fg-subtle)]">
+            {t.blog.comments}
+          </p>
+          <BlogComments />
         </div>
       </Reveal>
     </article>
