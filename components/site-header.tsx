@@ -146,6 +146,15 @@ export function SiteHeader() {
                 {t.nav[item.href] ?? item.label}
               </a>
             ))}
+            {/* /blog is a separate route, not a homepage anchor, so it renders as a
+                real Link rather than a scrollToSection item — it's never highlighted
+                by the scroll-spy IntersectionObserver above, which only tracks NAV. */}
+            <Link
+              href="/blog"
+              className="nav-hover-link whitespace-nowrap font-ui text-[13px] font-medium tracking-wide text-[var(--color-fg-subtle)]"
+            >
+              {t.blog.title}
+            </Link>
           </nav>
           <div className="flex items-center gap-1.5">
             <span className="group hidden lg:flex items-center gap-1.5 rounded-full border border-[var(--color-ok)]/30 bg-[var(--color-ok)]/8 px-2.5 py-1 mr-1 transition-[border-color] duration-200 hover:border-[var(--color-ok)]/60">
@@ -257,6 +266,15 @@ export function SiteHeader() {
                       </button>
                     </li>
                   ))}
+                  <li>
+                    <Link
+                      href="/blog"
+                      onClick={() => setMobileOpen(false)}
+                      className="block w-full rounded-md px-4 py-3 text-left text-sm text-[var(--color-fg-muted)] transition-colors hover:bg-[var(--color-surface-2)] hover:text-[var(--color-fg)]"
+                    >
+                      {t.blog.title}
+                    </Link>
+                  </li>
                 </ul>
               </nav>
               <div className="space-y-3 border-t border-[var(--color-hairline)] p-4">
