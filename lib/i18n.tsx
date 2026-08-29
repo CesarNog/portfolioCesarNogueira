@@ -261,6 +261,10 @@ type Dict = {
     relatedCaseStudy: string;
     readFull: string;
     references: string;
+    share: string;
+    copyLink: string;
+    copied: string;
+    comments: string;
   };
 };
 
@@ -736,6 +740,10 @@ const en: Dict = {
     relatedCaseStudy: "Read the full case study →",
     readFull: "Read the field report →",
     references: "References",
+    share: "Share",
+    copyLink: "Copy link",
+    copied: "Copied!",
+    comments: "Comments",
   },
 };
 
@@ -1211,6 +1219,10 @@ const pt: Dict = {
     relatedCaseStudy: "Ler o estudo de caso completo →",
     readFull: "Ler o relato de campo →",
     references: "Referências",
+    share: "Compartilhar",
+    copyLink: "Copiar link",
+    copied: "Copiado!",
+    comments: "Comentários",
   },
 };
 
@@ -1686,6 +1698,10 @@ const es: Dict = {
     relatedCaseStudy: "Leer el caso de éxito completo →",
     readFull: "Leer el informe de campo →",
     references: "Referencias",
+    share: "Compartir",
+    copyLink: "Copiar enlace",
+    copied: "¡Copiado!",
+    comments: "Comentarios",
   },
 };
 
@@ -2161,6 +2177,10 @@ const fr: Dict = {
     relatedCaseStudy: "Lire l'étude de cas complète →",
     readFull: "Lire le rapport de terrain →",
     references: "Références",
+    share: "Partager",
+    copyLink: "Copier le lien",
+    copied: "Copié !",
+    comments: "Commentaires",
   },
 };
 
@@ -2636,6 +2656,10 @@ const zh: Dict = {
     relatedCaseStudy: "阅读完整案例研究 →",
     readFull: "阅读现场记录 →",
     references: "参考资料",
+    share: "分享",
+    copyLink: "复制链接",
+    copied: "已复制！",
+    comments: "评论",
   },
 };
 
