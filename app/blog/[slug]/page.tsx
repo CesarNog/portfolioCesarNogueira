@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { siteConfig } from "@/lib/site-config";
 import { blogPosts, getBlogPost } from "@/lib/blog-posts";
+import { jsonLdScript } from "@/lib/json-ld";
 import { CaseStudyHeader } from "@/components/case-study-header";
 import { SiteFooter } from "@/components/site-footer";
 import { BlogPostBody } from "@/components/blog-post-body";
@@ -86,7 +87,7 @@ export default async function BlogPostPage({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
       />
       <CaseStudyHeader />
       <main className="mx-auto max-w-3xl px-6 py-20 lg:py-28">

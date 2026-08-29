@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { I18nProvider } from "@/lib/i18n";
 import { MotionProvider } from "@/components/motion-provider";
 import { siteConfig, certifications, capabilities } from "@/lib/site-config";
+import { jsonLdScript } from "@/lib/json-ld";
 import { Analytics } from "@/components/analytics";
 import { ConsoleGreeting } from "@/components/ui/console-greeting";
 import "./globals.css";
@@ -110,7 +111,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
+            __html: jsonLdScript({
               "@context": "https://schema.org",
               "@graph": [
                 {
