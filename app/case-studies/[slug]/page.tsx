@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { siteConfig, projects } from "@/lib/site-config";
+import { jsonLdScript } from "@/lib/json-ld";
 import { CaseStudyHeader } from "@/components/case-study-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CaseStudyBody } from "@/components/case-study-body";
@@ -90,7 +91,7 @@ export default async function CaseStudyPage({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
       />
       <CaseStudyHeader />
       <main className="mx-auto max-w-3xl px-6 py-20 lg:py-28">

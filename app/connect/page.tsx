@@ -3,6 +3,7 @@ import { siteConfig } from "@/lib/site-config";
 import { CaseStudyHeader } from "@/components/case-study-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ConnectBody } from "@/components/connect-body";
+import { jsonLdScript } from "@/lib/json-ld";
 
 const title = "Connect via MCP";
 const description =
@@ -55,7 +56,7 @@ export default function ConnectPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
       />
       <CaseStudyHeader />
       <main className="mx-auto max-w-4xl px-6 py-20 lg:py-28">
