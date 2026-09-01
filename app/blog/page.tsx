@@ -6,7 +6,7 @@ import { CaseStudyHeader } from "@/components/case-study-header";
 import { SiteFooter } from "@/components/site-footer";
 import { BlogIndexBody } from "@/components/blog-index-body";
 
-const title = "Field Notes — Cloud, FinOps & Platform Engineering";
+const title = "Field Notes on Cloud & FinOps";
 const description = siteConfig.blogDescription;
 
 export const metadata: Metadata = {

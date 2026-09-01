@@ -47,7 +47,7 @@ export const blogPosts: BlogPost[] = [
     domainLabel: "Cloud Architecture",
     title: "Whose Name Is on the Pull Request",
     metaDescription:
-      "Notes on running an embedded cloud and FinOps practice since 2022: what clients need in the first weeks of an engagement, how embedding differs from advising, and the real costs of ramp-up time, trust, and time zones that a services page never mentions.",
+      "Notes on running an embedded cloud and FinOps practice since 2022 — what clients need early on, and how embedding differs from advising.",
     dek: "Notes on running an embedded cloud and FinOps practice since 2022: what clients need in the first weeks of an engagement, how embedding differs from advising, and the real costs of ramp-up time, trust, and time zones that a services page never mentions.",
     publishedDate: "2026-08-28",
     readMinutes: 4,
@@ -69,7 +69,7 @@ export const blogPosts: BlogPost[] = [
     domainLabel: "Cloud Architecture",
     title: "Four Clouds, One Compliance Boundary",
     metaDescription:
-      "At everis, isolating PII-handling workloads for banking and aviation clients meant redrawing the same compliance boundary four times, once for each cloud's idea of what a network actually is.",
+      "At everis, isolating PII-handling workloads for banking and aviation clients meant redrawing one compliance boundary for each cloud's idea of a network.",
     dek: "At everis, isolating PII-handling workloads for banking and aviation clients meant redrawing the same compliance boundary four times, once for each cloud's idea of what a network actually is.",
     publishedDate: "2026-08-28",
     readMinutes: 5,
@@ -93,7 +93,7 @@ export const blogPosts: BlogPost[] = [
     domainLabel: "Platform Engineering",
     title: "The Cluster Was the Easy Part",
     metaDescription:
-      "At Accenture Interactive I stood up GKE and CD automation for enterprise clients in months. Training 120+ engineers to trust it, and get certified on it, took the rest of the year.",
+      "At Accenture Interactive, standing up GKE and CD automation took months. Training 120+ engineers to trust and get certified on it took the rest of the year.",
     dek: "At Accenture Interactive I stood up GKE and CD automation for enterprise clients in months. Training 120+ engineers to trust it, and get certified on it, took the rest of the year.",
     publishedDate: "2026-08-28",
     readMinutes: 5,
@@ -116,7 +116,7 @@ export const blogPosts: BlogPost[] = [
     domainLabel: "Platform & Data",
     title: "Self-Serve BigQuery Is an Interface Problem, Not a Data Problem",
     metaDescription:
-      "On a media analytics platform at CI&T, the hard part of letting editors and product managers query BigQuery directly wasn't the warehouse. It was designing curated views, cost guardrails, and naming that a non-engineer could trust without an engineer in the loop.",
+      "On a media analytics platform at CI&T, letting non-engineers query BigQuery directly wasn't a warehouse problem — it was curated views and trustworthy naming.",
     dek: "On a media analytics platform at CI&T, the hard part of letting editors and product managers query BigQuery directly wasn't the warehouse. It was designing curated views, cost guardrails, and naming that a non-engineer could trust without an engineer in the loop.",
     publishedDate: "2026-08-28",
     readMinutes: 5,
@@ -140,7 +140,7 @@ export const blogPosts: BlogPost[] = [
     domainLabel: "FinOps & Cost",
     title: "What It Costs to Keep a Forecast Honest",
     metaDescription:
-      "Getting a cloud cost forecast within a few points of actual spend is not a modeling exercise you finish once. It is a monthly habit of checking the model against reality, and it is the only thing that makes a thousand automated cost actions safe to leave running.",
+      "Getting a cloud cost forecast within a few points of actual spend isn't a modeling exercise you finish once — it's a monthly habit, not a one-time model.",
     dek: "Getting a cloud cost forecast within a few points of actual spend is not a modeling exercise you finish once. It is a monthly habit of checking the model against reality, and it is the only thing that makes a thousand automated cost actions safe to leave running.",
     publishedDate: "2026-08-28",
     readMinutes: 5,
@@ -162,7 +162,7 @@ export const blogPosts: BlogPost[] = [
     domainLabel: "Cloud Architecture",
     title: "Why I Sat the Cloud Architect Exam a Second Time",
     metaDescription:
-      "A cloud certification is not a diploma you hang on a wall once. The services, the pricing, and the guidance underneath it change enough in two years that letting it lapse quietly would have meant letting my own knowledge lapse with it.",
+      "A cloud certification isn't a diploma you hang once. Services and pricing shift enough in two years that letting it lapse means my own knowledge lapsing too.",
     dek: "A cloud certification is not a diploma you hang on a wall once. The services, the pricing, and the guidance underneath it change enough in two years that letting it lapse quietly would have meant letting my own knowledge lapse with it.",
     publishedDate: "2026-08-28",
     readMinutes: 5,
