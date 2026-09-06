@@ -40,11 +40,13 @@ export async function POST(req: NextRequest) {
     ? (process.env.GROK_MODEL || "grok-3-mini")
     : (process.env.GROQ_MODEL || "llama-3.3-70b-versatile");
 
+  // No hardcoded `answer` here (unlike an earlier version of this branch):
+  // that string was English-only and, being non-empty, would have skipped
+  // the client's own (language-aware) fallback entirely — the client falls
+  // back to its localized `t.assistant.fallback` whenever `answer` is
+  // absent, same as the upstream-error branch below.
   if (!key) {
-    return NextResponse.json({
-      fallback: true,
-      answer: "Cesar is a Principal Cloud Architect with 10+ years across GCP, AWS, Azure and OCI, available now for international consulting via UP2CLOUD. For specific questions email cesarnogueira1210@gmail.com.",
-    });
+    return NextResponse.json({ fallback: true });
   }
 
   try {

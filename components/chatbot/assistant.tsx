@@ -185,7 +185,13 @@ export function Assistant() {
         });
       }, 40);
 
-      const fallback = () => matchFaq(q) ?? t.assistant.fallback;
+      // matchFaq() searches the English-only `faq` bank (site-config.ts has no
+      // per-language mirror, same convention as case-study/blog body content),
+      // so it must only be used when the live locale is English — otherwise a
+      // failed/empty API call would leak an English answer into a non-English
+      // conversation. langRef, not `lang`, so a mid-chat language switch takes
+      // effect on the very next fallback too.
+      const fallback = () => (langRef.current === "en" ? matchFaq(q) : null) ?? t.assistant.fallback;
 
       try {
         const res = await fetch("/api/ask", {
