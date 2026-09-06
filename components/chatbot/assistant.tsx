@@ -34,14 +34,20 @@ export function Assistant() {
   const reduce = useReducedMotion();
   const { t, lang } = useI18n();
 
-  // Always-current lang ref so the fetch uses the live locale even if the
-  // memoized `ask` callback was created in an earlier render.
+  // Always-current lang/t refs so an in-flight `ask()` call (up to the 12s
+  // fetch timeout) resolves its fallback text in whatever language is
+  // current when it actually needs it, not whichever language was active
+  // when that particular closure was created — a plain `t`/`lang` dependency
+  // on the memoized `ask` callback isn't enough, since a request already
+  // in flight keeps its own closure regardless of later re-renders.
   const langRef = useRef(lang);
   useEffect(() => { langRef.current = lang; }, [lang]);
+  const tRef = useRef(t);
+  useEffect(() => { tRef.current = t; }, [t]);
 
   const getFollowUps = (answer: string): string[] => {
     const lower = answer.toLowerCase();
-    const fu = t.assistantFollowUps;
+    const fu = tRef.current.assistantFollowUps;
     const map: Record<string, string[]> = {
       kubernetes: fu.kubernetes,
       finops: fu.finops,
@@ -191,7 +197,7 @@ export function Assistant() {
       // failed/empty API call would leak an English answer into a non-English
       // conversation. langRef, not `lang`, so a mid-chat language switch takes
       // effect on the very next fallback too.
-      const fallback = () => (langRef.current === "en" ? matchFaq(q) : null) ?? t.assistant.fallback;
+      const fallback = () => (langRef.current === "en" ? matchFaq(q) : null) ?? tRef.current.assistant.fallback;
 
       try {
         const res = await fetch("/api/ask", {
@@ -201,9 +207,10 @@ export function Assistant() {
           signal: AbortSignal.timeout(12000),
         });
         if (res.status === 429) {
+          const rateLimitText = tRef.current.assistant.rateLimit;
           setMessages((prev) => [
             ...prev,
-            { role: "assistant", text: t.assistant.rateLimit, followUps: getFollowUps(t.assistant.rateLimit) },
+            { role: "assistant", text: rateLimitText, followUps: getFollowUps(rateLimitText) },
           ]);
           return;
         }
@@ -224,9 +231,11 @@ export function Assistant() {
         setLoading(false);
       }
     },
-    // lang + t must be deps: without them the memoized callback keeps the boot
-    // language (en) captured before i18n loads the stored locale, so the first
-    // answer comes back in English on a non-English interface.
+    // lang + t are listed as deps for clarity even though the body above only
+    // reads langRef.current/tRef.current now: those refs are what make a
+    // request already in flight resolve against whatever language is current
+    // when its fallback actually runs, not whichever language was active when
+    // this particular closure was created.
     [loading, reduce, lang, t],
   );
 
