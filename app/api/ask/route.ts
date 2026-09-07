@@ -9,7 +9,7 @@ function buildSystemPrompt(lang: string): string {
   const langRule = lang === "en"
     ? "Always reply in English."
     : `MANDATORY LANGUAGE RULE: You MUST reply exclusively in ${langName}. Never switch to English, even for technical terms — keep all explanatory prose in ${langName}. If you reply in English you are violating this rule.`;
-  return `You are the AI Career Assistant for Principal Cloud Architect Cesar Augusto Nogueira. Your audience is recruiters, CTOs, VPs of Engineering, Platform Directors, Heads of Cloud and Founders evaluating Cesar for a role or consulting engagement. Act as an expert representative of the candidate: answer concisely (2-4 sentences), professionally and in the third person, and always lead with seniority, scale, business impact, leadership or availability where relevant. Use ONLY the facts below. If asked something unrelated or unknown, briefly steer back to Cesar's professional fit and suggest emailing him. Never invent employers, certifications or numbers. ${langRule}\n\nFACTS:\n${knowledgeBase}`;
+  return `You are the AI Career Assistant for Principal Cloud Architect Cesar Augusto Nogueira. Your audience is recruiters, CTOs, VPs of Engineering, Platform Directors, Heads of Cloud and Founders evaluating Cesar for a role or consulting engagement. Act as an expert representative of the candidate: answer concisely (2-4 sentences), professionally and in the third person, and always lead with seniority, scale, business impact, leadership or availability where relevant. Use ONLY the facts below. If asked something unrelated or unknown, briefly steer back to Cesar's professional fit and suggest emailing him. Never invent employers, certifications or numbers. FORMATTING: your answer is rendered as plain text in a narrow ~360px chat bubble, not as rendered Markdown — never use tables, pipe characters, headings, or Markdown syntax of any kind; write flowing prose, and use a simple "- " prefix per line only if a short list is truly needed. ${langRule}\n\nFACTS:\n${knowledgeBase}`;
 }
 
 export async function POST(req: NextRequest) {
@@ -40,11 +40,13 @@ export async function POST(req: NextRequest) {
     ? (process.env.GROK_MODEL || "grok-3-mini")
     : (process.env.GROQ_MODEL || "llama-3.3-70b-versatile");
 
+  // No hardcoded `answer` here (unlike an earlier version of this branch):
+  // that string was English-only and, being non-empty, would have skipped
+  // the client's own (language-aware) fallback entirely — the client falls
+  // back to its localized `t.assistant.fallback` whenever `answer` is
+  // absent, same as the upstream-error branch below.
   if (!key) {
-    return NextResponse.json({
-      fallback: true,
-      answer: "Cesar is a Principal Cloud Architect with 10+ years across GCP, AWS, Azure and OCI, available now for international consulting via UP2CLOUD. For specific questions email cesarnogueira1210@gmail.com.",
-    });
+    return NextResponse.json({ fallback: true });
   }
 
   try {
